@@ -3,9 +3,13 @@
 #   FTP_SERVER      (np. ostudios.ftp.dhosting.pl)
 #   FTP_USERNAME    (użytkownik FTP z panelu / PDF)
 #   FTP_PASSWORD    (hasło — po zmianie w dPanel wklej nowe)
-# Katalog wg dPanel (ścieżka względem rootu FTP — musi kończyć się na /):
-#   relationshipscan.app/public_html/
-# Jeśli po zalogowaniu FTP od razu widzisz pliki strony (bez tego folderu), usuń server-dir.
+# Katalog wg dPanel (ścieżka względem rootu FTP — musi kończyć się na /).
+# MUSI być tym samym katalogiem co „Katalog WWW” / docroot domeny w panelu.
+# Typowe warianty:
+#   /relationshipscan.app/public_html/  — gdy w rootcie FTP widać folder domeny
+#   /public_html/                        — gdy FTP startuje w katalogu konta
+#   /                                    — gdy po zalogowaniu od razu widać index.html
+# Jeśli CI jest zielony, a https://twoja-domena/style.css ma stare kolory — server-dir jest zły.
 
 name: Deploy (FTP → dhosting)
 
@@ -41,3 +45,18 @@ jobs:
           timeout: 300000
           log-level: verbose
           dry-run: false
+
+      - name: Verify live CSS (docroot = server-dir)
+        run: |
+          set -e
+          BODY=$(curl -fsSL "https://relationshipscan.app/style.css?deploy_check=${{ github.run_id }}")
+          echo "$BODY" | head -25
+          if echo "$BODY" | grep -qi 'ff4f9a'; then
+            echo "::error::Na serwerze nadal jest STARY style.css (róż). Pliki idą w złe miejsce — zmień server-dir zgodnie z docroot domeny w panelu hostingu."
+            exit 1
+          fi
+          if ! echo "$BODY" | grep -q '1d4ed8'; then
+            echo "::error::Live style.css nie zawiera oczekiwanej palety (#1d4ed8). Sprawdź server-dir i cache."
+            exit 1
+          fi
+          echo "OK: live style.css wygląda na aktualną wersję z repozytorium."

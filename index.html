@@ -40,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20260419" />
 </head>
 <body class="page page--landing" data-site-entry="pl">
   <header class="site-header">
@@ -252,3 +252,15 @@
   <script src="script.js" defer></script>
 </body>
 </html>
+cd /Users/grzegorznowosielski/indeks-zaufania
+git remote add origin https://github.com/grzegorznowosielski-bot/relationshipscan.git
+git push -u origin main
+git pull origin main --rebase
+git push -u origin main
+echo "# relationshipscan" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/grzegorznowosielski-bot/relationshipscan.git
+git push -u origin main
