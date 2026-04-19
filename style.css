@@ -291,6 +291,11 @@ a.lang-switch__item {
   .nav-toggle {
     display: none;
   }
+
+  /* Panel mobilny tylko <768px — na desktopie zawsze ukryty (uniknięcia „wycieku” menu). */
+  .mobile-nav {
+    display: none !important;
+  }
 }
 
 /* Przycisk hamburgera — mobile */
