@@ -24,16 +24,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # ECONNRESET na „data socket” z FTPS zdarza się z Actions → dhosting: najpierw zwykły FTP:21.
+      # Jak hosting wymusza tylko szyfrowanie, zmień na protocol: ftps-legacy lub ftps.
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Domyślnie root konta FTP (dhosting: zwykle od razu katalog strony).
-          # Jeśli trzeba np. public_html, dodaj secret FTP_REMOTE_DIR i linię:
-          # server-dir: ${{ secrets.FTP_REMOTE_DIR }}
-          # dhosting: zwykle ftps:21; przy błędzie TLS zmień na protocol: ftp
-          protocol: ftps
+          local-dir: ./
+          protocol: ftp
           port: 21
+          timeout: 300000
+          log-level: verbose
           dry-run: false
