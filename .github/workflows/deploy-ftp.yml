@@ -1,0 +1,39 @@
+# Wgranie statycznej strony na dhosting przez FTP po każdym pushu na main.
+# W GitHub: Settings → Secrets and variables → Actions — dodaj:
+#   FTP_SERVER      (np. ostudios.ftp.dhosting.pl)
+#   FTP_USERNAME    (użytkownik FTP z panelu / PDF)
+#   FTP_PASSWORD    (hasło — po zmianie w dPanel wklej nowe)
+# Opcjonalnie: jeśli upload ma iść w podkatalog, ustaw w Action dodatkowy secret
+# FTP_REMOTE_DIR (np. public_html) i odkomentuj wpis server-dir poniżej.
+
+name: Deploy (FTP → dhosting)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-ftp-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Domyślnie root konta FTP (dhosting: zwykle od razu katalog strony).
+          # Jeśli trzeba np. public_html, dodaj secret FTP_REMOTE_DIR i linię:
+          # server-dir: ${{ secrets.FTP_REMOTE_DIR }}
+          # dhosting: zwykle ftps:21; przy błędzie TLS zmień na protocol: ftp
+          protocol: ftps
+          port: 21
+          dry-run: false
