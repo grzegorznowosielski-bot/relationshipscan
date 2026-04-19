@@ -1,0 +1,53 @@
+PRZELEWY24 — krok po kroku (RelationshipScan)
+============================================
+
+WAŻNE: Klucza CRC i danych API NIE wklejasz do GitHuba ani do FTP strony statycznej.
+Trzymasz je tylko w zmiennych środowiskowych hostingu bramki (np. Railway).
+
+1) Panel Przelewy24
+   - Zaloguj się na https://www.przelewy24.pl (lub sandbox: panel testowy).
+   - Moje konto → dane do integracji: Merchant ID, ID sklepu (POS), klucz CRC.
+   - W sandbox używaj osobnych liczb niż na produkcji.
+
+2) Bramka Node (ten folder server/p24/)
+   - Zainstaluj: cd server/p24 && npm install
+   - Lokalnie: skopiuj .env.example → .env i uzupełnij wartości.
+   - Uruchom: npm start
+   - PUBLIC_BASE_URL musi być tym samym publicznym adresem, pod którym działa ten serwer
+     (np. https://twoja-aplikacja.up.railway.app) — bez końcowego /.
+
+3) Hosting bramki (polecane: Railway)
+   - Nowy projekt → Deploy from GitHub repo → wskaż to repozytorium.
+   - Ustaw „Root Directory” / „Working directory” na: server/p24
+   - Build: npm install   Start: npm start
+   - W Variables dodaj (jak w .env.example): P24_MERCHANT_ID, P24_POS_ID, P24_CRC_KEY,
+     P24_SANDBOX, PUBLIC_BASE_URL (URL z Railway po deployu), FRONTEND_URL (https://relationshipscan.app),
+     P24_AMOUNT_GROSZE=2900
+
+4) Adresy w Przelewy24 (jeśli panel wymaga zgłoszenia URL-i)
+   - Powiadomienia (urlStatus):  PUBLIC_BASE_URL + /api/p24/notify
+   - Powrót klienta:             PUBLIC_BASE_URL + /api/p24/return
+   (Są ustawiane automatycznie przez kod — muszą być dostępne po HTTPS.)
+
+5) Strona statyczna (FTP z GitHuba)
+   - W checkout.html i test.html ustaw ten sam adres w:
+     <meta name="p24-api-base" content="https://TWOJ-PUBLIC_BASE_URL" />
+     (bez końcowego /)
+   - Wgraj zmiany przez zwykły push na main (deploy FTP).
+
+6) Test sandbox
+   - P24_SANDBOX=true, kwoty testowe w panelu sandbox.
+   - Po kliknięciu „Zapłać” powinno przekierować na stronę Przelewy24.
+   - Po płatności wracasz na test.html?sid=… — strona odpytuje /api/p24/status aż płatność się zaksięguje.
+
+7) Produkcja
+   - P24_SANDBOX=false, dane produkcyjne z panelu.
+   - Upewnij się, że CRC i ID są z środowiska produkcyjnego.
+
+Problemy
+--------
+- CORS: bramka zezwala na FRONTEND_URL — ustaw dokładnie ten sam adres co strona.
+- 404 na /api/p24/notify: zły deploy bramki albo PUBLIC_BASE_URL.
+- „trnRegister failed”: złe ID/CRC, sandbox vs prod, albo zmienione API (wtedy trzeba REST z dokumentacji developers.przelewy24.pl).
+
+GitHub Actions nie uruchamia płatności — tylko wgrywa statyczne pliki. Bramka musi działać 24/7 na Railway (lub innym hoście).

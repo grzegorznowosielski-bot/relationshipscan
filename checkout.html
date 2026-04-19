@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Dostęp do testu RelationshipScan — symulacja płatności, start testu online." />
   <meta name="robots" content="noindex, follow" />
+  <!-- Publiczny URL bramki P24 (Railway itd.), np. https://xxx.up.railway.app — bez końcowego / -->
+  <meta name="p24-api-base" content="" />
   <title>Płatność — RelationshipScan | Dostęp do testu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20260422" />
+  <link rel="stylesheet" href="style.css?v=20260423" />
 </head>
 <body class="page page--checkout">
   <header class="site-header site-header--minimal">
@@ -20,7 +22,6 @@
 
   <main class="checkout-main">
     <div class="container checkout-wrap reveal">
-      <!-- Karta podsumowania zamówienia (FAKE checkout) -->
       <div class="checkout-card">
         <p class="eyebrow">Podsumowanie</p>
         <h1 class="checkout-card__title">RelationshipScan</h1>
@@ -29,7 +30,11 @@
           <span>Kwota</span>
           <strong class="checkout-card__price">29 zł</strong>
         </div>
-        <p class="checkout-card__fake">Symulacja płatności — bez prawdziwej transakcji. Po kliknięciu przejdziesz do testu.</p>
+        <p class="checkout-card__fake" id="checkout-mode-hint">
+          Uzupełnij w HTML adres bramki Przelewy24 (<code>meta name=&quot;p24-api-base&quot;</code>) — wtedy płatność idzie przez P24. Bez adresu: przejście do testu bez opłaty (tryb dev).
+        </p>
+        <label class="checkout-email-label" for="checkout-email">E-mail (do płatności P24)</label>
+        <input type="email" id="checkout-email" class="checkout-email-input" name="email" autocomplete="email" placeholder="twoj@email.pl" />
         <button type="button" class="btn btn--primary btn--lg btn--block" id="btn-pay" data-next="test.html">
           Zapłać i rozpocznij
         </button>
@@ -40,10 +45,10 @@
 
   <footer class="site-footer site-footer--minimal">
     <div class="container site-footer__inner">
-      <p class="site-footer__note">Bezpieczne przekierowanie do testu po symulacji płatności.</p>
+      <p class="site-footer__note">Płatności obsługuje Przelewy24 — po zaksięgowaniu wracasz do testu w przeglądarce.</p>
     </div>
   </footer>
 
-  <script src="script.js?v=20260422" defer></script>
+  <script src="script.js?v=20260423" defer></script>
 </body>
 </html>

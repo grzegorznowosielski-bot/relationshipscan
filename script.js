@@ -10,6 +10,9 @@
   // --- Stałe: klucz localStorage dla wyniku testu ---
   const STORAGE_KEY = "wynik";
 
+  /** Po udanej płatności P24 (sessionStorage — zakładka) */
+  const P24_PAID_KEY = "relationshipscan_p24_paid";
+
   /**
    * Struktura testu: 20 pytań w 4 sekcjach (5+5+5+5).
    * Skala 1–5: wyższa wartość = większe subiektywne napięcie / niepewność (wyższy wynik).
@@ -268,14 +271,90 @@
     els.forEach((el) => io.observe(el));
   }
 
-  // --- Checkout: symulacja płatności ---
+  // --- Checkout: Przelewy24 (meta p24-api-base) lub przejście do testu bez opłaty ---
   function initCheckout() {
     const btn = document.getElementById("btn-pay");
+    const emailEl = document.getElementById("checkout-email");
     if (!btn) return;
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
+      const api = document.querySelector('meta[name="p24-api-base"]')?.getAttribute("content")?.trim();
       const next = btn.getAttribute("data-next") || "test.html";
-      window.location.href = next;
+      if (!api) {
+        window.location.href = next;
+        return;
+      }
+      btn.disabled = true;
+      try {
+        const r = await fetch(`${api.replace(/\/$/, "")}/api/p24/init`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: (emailEl && emailEl.value) ? emailEl.value.trim() : "" }),
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(j.error || j.details || String(r.status));
+        if (!j.redirectUrl) throw new Error("brak redirectUrl");
+        window.location.href = j.redirectUrl;
+      } catch (e) {
+        alert(
+          "Nie udało się uruchomić Przelewy24. Sprawdź adres bramki (meta p24-api-base), CORS i logi serwera.\n\n" +
+            (e && e.message ? e.message : e)
+        );
+        btn.disabled = false;
+      }
     });
+  }
+
+  /**
+   * Gdy ustawiono p24-api-base: wymaga potwierdzenia płatności (polling ?sid= lub flaga sesji).
+   */
+  async function ensureP24AccessBeforeTest(stepLabel, btnNext, btnPrev) {
+    const api = document.querySelector('meta[name="p24-api-base"]')?.getAttribute("content")?.trim();
+    if (!api) return true;
+
+    try {
+      if (sessionStorage.getItem(P24_PAID_KEY) === "1") return true;
+    } catch (e) {
+      /* ignore */
+    }
+
+    const params = new URLSearchParams(window.location.search || "");
+    const sid = params.get("sid");
+    if (sid) {
+      if (stepLabel) stepLabel.textContent = "Weryfikacja płatności…";
+      if (btnNext) btnNext.disabled = true;
+      if (btnPrev) btnPrev.disabled = true;
+      for (let i = 0; i < 45; i++) {
+        try {
+          const r = await fetch(
+            `${api.replace(/\/$/, "")}/api/p24/status?sessionId=${encodeURIComponent(sid)}`,
+            { credentials: "omit" }
+          );
+          const j = await r.json().catch(() => ({}));
+          if (j.paid) {
+            try {
+              sessionStorage.setItem(P24_PAID_KEY, "1");
+            } catch (e2) {
+              /* ignore */
+            }
+            history.replaceState({}, "", window.location.pathname);
+            if (btnNext) btnNext.disabled = false;
+            if (btnPrev) btnPrev.disabled = false;
+            return true;
+          }
+        } catch (e) {
+          /* kolejna próba */
+        }
+        await new Promise((res) => setTimeout(res, 1000));
+      }
+    }
+
+    try {
+      if (sessionStorage.getItem(P24_PAID_KEY) === "1") return true;
+    } catch (e) {
+      /* ignore */
+    }
+
+    return false;
   }
 
   // --- Test: stan i renderowanie ---
@@ -394,7 +473,23 @@
       document.head.appendChild(s);
     }
 
-    render();
+    (async () => {
+      const ok = await ensureP24AccessBeforeTest(stepLabel, btnNext, btnPrev);
+      if (!ok) {
+        progressBar.style.width = "0%";
+        stepLabel.textContent = "Dostęp";
+        root.innerHTML = `
+          <div class="question-card paywall-card">
+            <p class="question-card__section">Płatność</p>
+            <p class="question-card__text">Żeby rozpocząć test, wykup dostęp (Przelewy24). Jeśli już opłaciłeś/aś, odśwież stronę za chwilę lub wróć z linku po płatności.</p>
+            <p class="checkout-card__fake" style="margin-top:1rem"><a class="btn btn--primary" href="checkout.html">Przejdź do płatności</a></p>
+          </div>`;
+        btnNext.hidden = true;
+        btnPrev.hidden = true;
+        return;
+      }
+      render();
+    })();
   }
 
   function escapeHtml(str) {
