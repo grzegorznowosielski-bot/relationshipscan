@@ -4,12 +4,20 @@
 #   FTP_USERNAME    (użytkownik FTP z panelu / PDF)
 #   FTP_PASSWORD    (hasło — po zmianie w dPanel wklej nowe)
 # Katalog wg dPanel (ścieżka względem rootu FTP — musi kończyć się na /).
-# MUSI być tym samym katalogiem co „Katalog WWW” / docroot domeny w panelu.
-# Typowe warianty:
-#   /relationshipscan.app/public_html/  — gdy w rootcie FTP widać folder domeny
-#   /public_html/                        — gdy FTP startuje w katalogu konta
-#   /                                    — gdy po zalogowaniu od razu widać index.html
-# Jeśli CI jest zielony, a https://twoja-domena/style.css ma stare kolory — server-dir jest zły.
+# MUSI być DOKŁADNIE tym samym katalogiem co „Katalog WWW” / docroot domeny relationshipscan.app.
+#
+# Burdel „public_html/public_html/…” na FTP = pliki szły do ZŁEGO miejsca (zagnieżdżenie),
+# a Apache/nginx serwuje stronę z INNEGO folderu — stąd stary wygląd mimo zielonego CI.
+# Nie wgrywaj „na oko” do drugiego public_html — porównaj ścieżkę z panelem (jedna warstwa).
+#
+# Dla domeny w podkatalogu (w rootcie FTP widać folder relationshipscan.app):
+#   server-dir: /relationshipscan.app/public_html/
+# Gdy panel mówi, że docroot to główny public_html konta (bez podfolderu domeny):
+#   server-dir: /public_html/
+# Nigdy nie kumuluj ścieżek tak, żeby powstało public_html/public_html — to znak błędu.
+#
+# Sprzątanie: po ustawieniu poprawnego server-dir możesz w FileZilli usunąć pusty/nieużywany
+# zagnieżdżony public_html (najpierw upewnij się, który katalog jest docroot w panelu).
 
 name: Deploy (FTP → dhosting)
 
