@@ -4,13 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="canonical" href="https://relationshipscan.app/" />
-  <link rel="alternate" hreflang="pl" href="https://relationshipscan.app/" />
-  <link rel="alternate" hreflang="en" href="https://relationshipscan.app/en/" />
-  <link rel="alternate" hreflang="de" href="https://relationshipscan.app/de/" />
-  <link rel="alternate" hreflang="es" href="https://relationshipscan.app/es/" />
-  <link rel="alternate" hreflang="pt-BR" href="https://relationshipscan.app/pt/" />
-  <link rel="alternate" hreflang="en-IN" href="https://relationshipscan.app/in/" />
-  <link rel="alternate" hreflang="x-default" href="https://relationshipscan.app/en/" />
   <meta name="description" content="RelationshipScan: test relacji online w ok. 5 minut, jasny wynik 0–100 i interpretacja. Uporządkuj sygnały bez zgadywania. Od 29 zł. Materiał edukacyjny." />
   <meta name="keywords" content="RelationshipScan, test relacji, zaufanie w związku, komunikacja w parze, test online" />
   <meta name="robots" content="index, follow" />
@@ -40,9 +33,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20260421" />
+  <link rel="stylesheet" href="style.css?v=20260422" />
 </head>
-<body class="page page--landing" data-site-entry="pl">
+<body class="page page--landing">
   <header class="site-header">
     <div class="container site-header__inner">
       <a class="logo" href="index.html">RelationshipScan</a>
@@ -54,29 +47,12 @@
           <a href="#faq">FAQ</a>
           <a class="btn btn--sm btn--primary" href="checkout.html">Sprawdź — 29 zł</a>
         </nav>
-        <nav class="lang-switch" aria-label="Wersja językowa">
-          <span class="lang-switch__label">Język</span>
-          <span class="lang-switch__item is-current" aria-current="true">PL</span>
-          <a class="lang-switch__item" href="en/index.html" data-lang="en">EN</a>
-          <a class="lang-switch__item" href="de/index.html" data-lang="de">DE</a>
-          <a class="lang-switch__item" href="es/index.html" data-lang="es">ES</a>
-          <a class="lang-switch__item" href="pt/index.html" data-lang="pt">PT</a>
-          <a class="lang-switch__item" href="in/index.html" data-lang="in">IN</a>
-        </nav>
         <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Otwórz menu">
           <span></span><span></span>
         </button>
       </div>
     </div>
     <div id="mobile-nav" class="mobile-nav" hidden>
-      <nav class="lang-switch lang-switch--mobile" aria-label="Wersja językowa">
-        <span class="lang-switch__item is-current" aria-current="true">PL</span>
-        <a class="lang-switch__item" href="en/index.html" data-lang="en">EN</a>
-        <a class="lang-switch__item" href="de/index.html" data-lang="de">DE</a>
-        <a class="lang-switch__item" href="es/index.html" data-lang="es">ES</a>
-        <a class="lang-switch__item" href="pt/index.html" data-lang="pt">PT</a>
-        <a class="lang-switch__item" href="in/index.html" data-lang="in">IN</a>
-      </nav>
       <a href="#how-it-works">Jak to działa</a>
       <a href="#what-you-get">Co dostajesz</a>
       <a href="#pricing">Cena</a>
@@ -249,18 +225,6 @@
     <a class="btn btn--primary btn--lg btn--block" href="checkout.html">Sprawdź RelationshipScan — 29 zł</a>
   </div>
 
-  <script src="script.js?v=20260421" defer></script>
+  <script src="script.js?v=20260422" defer></script>
 </body>
 </html>
-cd /Users/grzegorznowosielski/indeks-zaufania
-git remote add origin https://github.com/grzegorznowosielski-bot/relationshipscan.git
-git push -u origin main
-git pull origin main --rebase
-git push -u origin main
-echo "# relationshipscan" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/grzegorznowosielski-bot/relationshipscan.git
-git push -u origin main

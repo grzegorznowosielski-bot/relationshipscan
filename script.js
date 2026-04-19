@@ -1,7 +1,7 @@
 /**
  * RelationshipScan — wspólny skrypt dla wszystkich stron
  * Odpowiada za: nawigację mobilną, animacje, test (pytania + wynik),
- * zapis/odczyt localStorage, przekierowania checkout/upsell.
+ * zapis/odczyt localStorage, checkout/upsell.
  */
 
 (function () {
@@ -187,170 +187,6 @@
       "Emocjonalna dostępność: często rośnie dystans, chaos emocji albo poczucie, że trudno o przewidywalność i domknięcia.",
     ],
   };
-
-  const LANG_STORAGE_KEY = "relationshipscan_locale";
-
-  /**
-   * Przełącznik wersji językowych: zapis preferencji i nawigacja z zachowaniem kotwicy (#sekcja).
-   */
-  function initLangSwitcher() {
-    const links = document.querySelectorAll(".lang-switch a[data-lang][href]");
-    if (!links.length) return;
-
-    links.forEach((a) => {
-      a.addEventListener("click", (e) => {
-        const lang = a.getAttribute("data-lang");
-        const href = a.getAttribute("href");
-        if (!lang || !href || href === "#") return;
-        try {
-          localStorage.setItem(LANG_STORAGE_KEY, lang);
-        } catch (err) {
-          /* ignore */
-        }
-        e.preventDefault();
-        const base = href.split("#")[0];
-        const hash = window.location.hash || "";
-        window.location.href = base + hash;
-      });
-    });
-  }
-
-  /** Kraje hiszpańskojęzyczne (Europa + Ameryki) → wersja /es/ */
-  const GEO_ES_COUNTRIES = new Set([
-    "ES",
-    "MX",
-    "AR",
-    "CO",
-    "CL",
-    "PE",
-    "VE",
-    "EC",
-    "GT",
-    "CU",
-    "BO",
-    "DO",
-    "HN",
-    "PY",
-    "SV",
-    "NI",
-    "CR",
-    "PA",
-    "UY",
-    "PR",
-    "GQ",
-  ]);
-
-  /** Portugalski → wersja /pt/ (Brazylia + Portugalia + PALOP) */
-  const GEO_PT_COUNTRIES = new Set(["BR", "PT", "AO", "MZ", "GW", "TL", "CV", "ST"]);
-
-  /** Angielski (USA i bliskie rynki) → /en/ */
-  const GEO_EN_COUNTRIES = new Set(["US", "CA", "GB", "IE", "AU", "NZ"]);
-
-  /** Niemiecki (D-A-CH-LI-LU) → wersja /de/ */
-  const GEO_DE_COUNTRIES = new Set(["DE", "AT", "CH", "LI", "LU"]);
-
-  /**
-   * Polska strona główna (data-site-entry="pl"): bez ręcznego wyboru w localStorage
-   * dobiera wersję po kraju z IP; w PL zostaje PL, w USA → EN, Indie → IN, Brazylia/PT → PT,
-   * kraje hiszpańskojęzyczne → ES, DE/AT/CH → DE, pozostałe → EN. Wyłączenie: ?geo=0
-   */
-  function mapCountryToLocale(countryCode) {
-    const cc = String(countryCode || "").toUpperCase();
-    if (cc === "PL") return "pl";
-    if (GEO_ES_COUNTRIES.has(cc)) return "es";
-    if (GEO_PT_COUNTRIES.has(cc)) return "pt";
-    if (cc === "IN") return "in";
-    if (GEO_EN_COUNTRIES.has(cc)) return "en";
-    if (GEO_DE_COUNTRIES.has(cc)) return "de";
-    return "en";
-  }
-
-  function fetchCountryCode() {
-    const ctl = new AbortController();
-    const timer = window.setTimeout(() => ctl.abort(), 4500);
-    return fetch("https://ipapi.co/country/", { signal: ctl.signal, credentials: "omit" })
-      .then((res) => {
-        if (!res.ok) throw new Error("ipapi");
-        return res.text();
-      })
-      .then((text) => {
-        const cc = String(text || "").trim();
-        if (/^[A-Za-z]{2}$/.test(cc)) return cc.toUpperCase();
-        throw new Error("ipapi cc");
-      })
-      .catch(() => {
-        const ctl2 = new AbortController();
-        const t2 = window.setTimeout(() => ctl2.abort(), 4500);
-        return fetch("https://ipwho.is/", { credentials: "omit", signal: ctl2.signal })
-          .then((res) => {
-            if (!res.ok) throw new Error("ipwho");
-            return res.json();
-          })
-          .then((data) => {
-            if (data && data.success !== false && data.country_code) {
-              return String(data.country_code).toUpperCase();
-            }
-            return null;
-          })
-          .catch(() => null)
-          .finally(() => window.clearTimeout(t2));
-      })
-      .finally(() => window.clearTimeout(timer));
-  }
-
-  function initGeoRedirectFromPolishHome() {
-    if (document.body.getAttribute("data-site-entry") !== "pl") return;
-
-    const params = new URLSearchParams(window.location.search || "");
-    if (params.get("geo") === "0") return;
-
-    const hash = window.location.hash || "";
-    const localePaths = {
-      en: "en/index.html",
-      de: "de/index.html",
-      es: "es/index.html",
-      pt: "pt/index.html",
-      in: "in/index.html",
-    };
-
-    let saved = null;
-    try {
-      saved = localStorage.getItem(LANG_STORAGE_KEY);
-    } catch (e) {
-      saved = null;
-    }
-
-    if (saved && saved !== "pl") {
-      const target = localePaths[saved];
-      if (target) window.location.replace(target + hash);
-      return;
-    }
-
-    if (saved === "pl") return;
-
-    try {
-      if (sessionStorage.getItem("relationshipscan_geo_pl") === "1") return;
-    } catch (e) {
-      /* ignore */
-    }
-
-    fetchCountryCode()
-      .then((cc) => {
-        if (!cc) return;
-        const loc = mapCountryToLocale(cc);
-        if (loc === "pl") {
-          try {
-            sessionStorage.setItem("relationshipscan_geo_pl", "1");
-          } catch (e2) {
-            /* ignore */
-          }
-          return;
-        }
-        const target = localePaths[loc];
-        if (target) window.location.replace(target + hash);
-      })
-      .catch(() => {});
-  }
 
   // --- Wspólne: rok w stopce ---
   function setYear() {
@@ -664,9 +500,7 @@
   // --- Bootstrap wg adresu strony ---
   function boot() {
     document.documentElement.classList.add("js");
-    initGeoRedirectFromPolishHome();
     setYear();
-    initLangSwitcher();
     initMobileNav();
     initReveal();
     initCheckout();
