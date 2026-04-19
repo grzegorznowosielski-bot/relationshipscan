@@ -225,10 +225,58 @@ p:last-child {
   margin-left: auto;
 }
 
-@media (min-width: 768px) {
-  .site-header__end {
-    gap: 1rem;
-  }
+/* Przycisk hamburgera i panel — najpierw style mobilne, potem @media desktop nadpisuje display
+   (wcześniej .nav-toggle { display: flex } był PO media query i znów pokazywał hamburger na desktopie
+   przy niewidocznym panelu — „menu nie działa”). */
+
+.nav-toggle {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-white);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem var(--container) 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-white);
+}
+
+.mobile-nav[hidden] {
+  display: none !important;
+}
+
+.mobile-nav a:not(.btn) {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.35rem 0;
+}
+
+.mobile-nav .lang-switch--mobile {
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 0.65rem;
+  margin-bottom: 0.35rem;
+  border-bottom: 1px solid var(--color-border);
 }
 
 /* --- Przełącznik języka (landing) --- */
@@ -284,69 +332,22 @@ a.lang-switch__item {
 }
 
 @media (min-width: 768px) {
+  .site-header__end {
+    gap: 1rem;
+  }
+
   .nav {
     display: flex;
   }
 
   .nav-toggle {
-    display: none;
+    display: none !important;
   }
 
   /* Panel mobilny tylko <768px — na desktopie zawsze ukryty (uniknięcia „wycieku” menu). */
   .mobile-nav {
     display: none !important;
   }
-}
-
-/* Przycisk hamburgera — mobile */
-.nav-toggle {
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-bg-white);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.nav-toggle span {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: var(--color-text);
-  border-radius: 2px;
-}
-
-.mobile-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 1rem var(--container) 1.25rem;
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-bg-white);
-}
-
-.mobile-nav[hidden] {
-  display: none !important;
-}
-
-.mobile-nav a:not(.btn) {
-  color: var(--color-text);
-  text-decoration: none;
-  font-weight: 500;
-  padding: 0.35rem 0;
-}
-
-.mobile-nav .lang-switch--mobile {
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding-bottom: 0.65rem;
-  margin-bottom: 0.35rem;
-  border-bottom: 1px solid var(--color-border);
 }
 
 /* --- Przyciski --- */
