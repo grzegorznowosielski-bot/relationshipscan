@@ -46,7 +46,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          # Od rootu konta FTP (wiodący /), zgodnie ze ścieżką w dPanelu
+          # Panel: ~/relationshipscan.app/public_html/ (= docroot) → przy rootcie FTP = ~ użyj:
           server-dir: /relationshipscan.app/public_html/
           protocol: ftp
           port: 21
