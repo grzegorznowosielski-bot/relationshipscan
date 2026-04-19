@@ -48,9 +48,8 @@ jobs:
           local-dir: ./
           # Panel: ~/relationshipscan.app/public_html/ (= docroot) → przy rootcie FTP = ~ użyj:
           server-dir: /relationshipscan.app/public_html/
-          # Czyści zawartość server-dir i wgrywa od zera zgodnie z repo (usuwa śmieci / złe kopie).
-          # Nie trzymaj w tym katalogu niczego tylko na serwerze (np. kopii ZIP) — zniknie przy deployu.
-          dangerous-clean-slate: true
+          # dangerous-clean-slate: true usuwa cały server-dir PRZED uploadem — jeśli upload/weryfikacja
+          # pójdzie źle, strona zostaje pusta (404). Czyszczenie rób ręcznie w FileZilli albo jednorazowo.
           protocol: ftp
           port: 21
           timeout: 300000
@@ -60,14 +59,21 @@ jobs:
       - name: Verify live CSS (docroot = server-dir)
         run: |
           set -e
-          BODY=$(curl -fsSL "https://relationshipscan.app/style.css?deploy_check=${{ github.run_id }}")
-          echo "$BODY" | head -25
+          URL="https://relationshipscan.app/style.css?deploy_check=${{ github.run_id }}"
+          HTTP=$(curl -sS -L -o /tmp/rs-style.css -w "%{http_code}" "$URL")
+          echo "HTTP $HTTP ← $URL"
+          head -35 /tmp/rs-style.css || true
+          if [ "$HTTP" != "200" ]; then
+            echo "::error::style.css nie jest pod HTTP 200 (masz $HTTP). FTP mógł wgrać pliki obok prawdziwego docroot — porównaj server-dir z FileZillą i panelem."
+            exit 1
+          fi
+          BODY=$(cat /tmp/rs-style.css)
           if echo "$BODY" | grep -qi 'ff4f9a'; then
-            echo "::error::Na serwerze nadal jest STARY style.css (róż). Pliki idą w złe miejsce — zmień server-dir zgodnie z docroot domeny w panelu hostingu."
+            echo "::error::Na serwerze nadal jest STARY style.css (róż). Zmień server-dir zgodnie z docroot domeny."
             exit 1
           fi
           if ! echo "$BODY" | grep -q '1d4ed8'; then
-            echo "::error::Live style.css nie zawiera oczekiwanej palety (#1d4ed8). Sprawdź server-dir i cache."
+            echo "::error::Odpowiedź 200, ale brak #1d4ed8 — to nie nasz style.css lub pusty plik."
             exit 1
           fi
           echo "OK: live style.css wygląda na aktualną wersję z repozytorium."
