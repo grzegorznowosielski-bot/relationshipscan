@@ -48,6 +48,9 @@ jobs:
           local-dir: ./
           # Panel: ~/relationshipscan.app/public_html/ (= docroot) → przy rootcie FTP = ~ użyj:
           server-dir: /relationshipscan.app/public_html/
+          # Czyści zawartość server-dir i wgrywa od zera zgodnie z repo (usuwa śmieci / złe kopie).
+          # Nie trzymaj w tym katalogu niczego tylko na serwerze (np. kopii ZIP) — zniknie przy deployu.
+          dangerous-clean-slate: true
           protocol: ftp
           port: 21
           timeout: 300000
