@@ -365,18 +365,46 @@
     const panel = document.getElementById("mobile-nav");
     if (!toggle || !panel) return;
 
-    toggle.addEventListener("click", () => {
-      const open = panel.hasAttribute("hidden");
-      if (open) panel.removeAttribute("hidden");
-      else panel.setAttribute("hidden", "");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    function syncAria() {
+      toggle.setAttribute("aria-expanded", panel.hidden ? "false" : "true");
+    }
+
+    function closeMenu() {
+      panel.hidden = true;
+      syncAria();
+    }
+
+    function openMenu() {
+      panel.hidden = false;
+      syncAria();
+    }
+
+    syncAria();
+
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (panel.hidden) openMenu();
+      else closeMenu();
     });
 
     panel.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => {
-        panel.setAttribute("hidden", "");
-        toggle.setAttribute("aria-expanded", "false");
-      });
+      a.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === "Escape" && !panel.hidden) closeMenu();
+      },
+      true
+    );
+
+    document.addEventListener("click", (e) => {
+      if (panel.hidden) return;
+      const t = e.target;
+      if (!(t instanceof Node)) return;
+      if (toggle.contains(t) || panel.contains(t)) return;
+      closeMenu();
     });
   }
 

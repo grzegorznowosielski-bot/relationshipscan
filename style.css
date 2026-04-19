@@ -260,6 +260,25 @@ p:last-child {
   background: var(--color-bg-white);
 }
 
+/* Mobile: panel poza flow nagłówka — leży nad treścią main (bez „niewidzialnych” linków pod hero). */
+@media (max-width: 767.98px) {
+  .site-header {
+    z-index: 80;
+  }
+
+  .mobile-nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 90;
+    max-height: min(70vh, 28rem);
+    overflow-y: auto;
+    box-shadow: 0 12px 40px rgba(18, 19, 26, 0.12);
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 .mobile-nav[hidden] {
   display: none !important;
 }
