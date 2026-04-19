@@ -3,8 +3,9 @@
 #   FTP_SERVER      (np. ostudios.ftp.dhosting.pl)
 #   FTP_USERNAME    (użytkownik FTP z panelu / PDF)
 #   FTP_PASSWORD    (hasło — po zmianie w dPanel wklej nowe)
-# Opcjonalnie: jeśli upload ma iść w podkatalog, ustaw w Action dodatkowy secret
-# FTP_REMOTE_DIR (np. public_html) i odkomentuj wpis server-dir poniżej.
+# Katalog wg dPanel (ścieżka względem rootu FTP — musi kończyć się na /):
+#   relationshipscan.app/public_html/
+# Jeśli po zalogowaniu FTP od razu widzisz pliki strony (bez tego folderu), usuń server-dir.
 
 name: Deploy (FTP → dhosting)
 
@@ -33,6 +34,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
+          server-dir: relationshipscan.app/public_html/
           protocol: ftp
           port: 21
           timeout: 300000
