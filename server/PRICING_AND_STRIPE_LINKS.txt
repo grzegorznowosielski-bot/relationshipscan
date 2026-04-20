@@ -1,0 +1,20 @@
+RelationshipScan — ceny i linki Stripe (warstwa strony)
+=======================================================
+
+MAPOWANIE (script.js):
+  - pl  → 39 zł  + STRIPE_LINK_PLN
+  - en, in → $9.99  + STRIPE_LINK_USD
+  - de, es, pt → €9.99  + STRIPE_LINK_EUR
+
+GDZIE WKLEIĆ LINKI (script.js, ok. linia po normalizeLocale):
+  const STRIPE_LINK_PLN = "https://buy.stripe.com/...";
+  const STRIPE_LINK_USD = "https://buy.stripe.com/...";
+  const STRIPE_LINK_EUR = "https://buy.stripe.com/...";
+
+Obecnie wszystkie trzy mogą wskazywać ten sam link testowy — przed produkcją
+ustaw osobne Payment Linki w walucie PLN / USD / EUR.
+
+Tekst ceny na stronie wyniku / paywallu buduje się z:
+  getPriceDisplayCompact(locale) + RESULT_LAYOUT_UI[locale].priceSuffix
+
+Powrót po płatności (session_id): server/STRIPE_PAYMENT_LINK_SETUP.txt

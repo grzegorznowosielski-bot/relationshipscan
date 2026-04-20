@@ -12,7 +12,6 @@
   const STORAGE_DETAILS_KEY = "wynik_details";
   const PAID_KEY = "paid";
   const TEST_SESSION_KEY = "relationshipscan_test_session_v1";
-  const STRIPE_LINK = "https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00";
 
   function readPaidFlag() {
     try {
@@ -648,6 +647,64 @@
     const value = String(locale || "").toLowerCase();
     return LOCALE_PATHS[value] ? value : "en";
   }
+
+  /** Payment Link (Stripe Dashboard) — wklej osobno dla PLN / USD / EUR. */
+  const STRIPE_LINK_PLN = "https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00";
+  const STRIPE_LINK_USD = "https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00";
+  const STRIPE_LINK_EUR = "https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00";
+
+  function getBillingCurrency(locale) {
+    const L = normalizeLocale(locale);
+    if (L === "pl") return "pln";
+    if (L === "en" || L === "in") return "usd";
+    return "eur";
+  }
+
+  function getStripeLinkForLocale(locale) {
+    const c = getBillingCurrency(locale);
+    if (c === "pln") return STRIPE_LINK_PLN;
+    if (c === "usd") return STRIPE_LINK_USD;
+    return STRIPE_LINK_EUR;
+  }
+
+  function getPriceDisplayCompact(locale) {
+    switch (getBillingCurrency(locale)) {
+      case "pln":
+        return "39 zł";
+      case "usd":
+        return "$9.99";
+      default:
+        return "€9.99";
+    }
+  }
+
+  function formatPremiumPriceLine(locale) {
+    const L = normalizeLocale(locale);
+    const ui = RESULT_LAYOUT_UI[L] || RESULT_LAYOUT_UI.en;
+    return `${getPriceDisplayCompact(L)} · ${ui.priceSuffix}`;
+  }
+
+  function getPriceCheckoutHint(locale) {
+    const L = normalizeLocale(locale);
+    const t = {
+      en: "Final price and payment method are shown at checkout.",
+      pl: "Ostateczna cena i metoda płatności są widoczne przy finalizacji zakupu.",
+      de: "Der endgültige Preis und die Zahlungsmethode werden im Checkout angezeigt.",
+      es: "El precio final y el método de pago se muestran en el checkout.",
+      pt: "O preço final e o método de pagamento aparecem no checkout.",
+      in: "Final price and payment method are shown at checkout.",
+    };
+    return t[L] || t.en;
+  }
+
+  const UPSELL_PRICE_NOTE = {
+    en: "one-time access · full report",
+    pl: "jednorazowy dostęp · pełny raport",
+    de: "Einmaliger Zugriff · vollständiger Bericht",
+    es: "Acceso único · informe completo",
+    pt: "Acesso único · relatório completo",
+    in: "one-time access · full report",
+  };
 
   function setLang(locale) {
     const normalized = normalizeLocale(locale);
@@ -1471,7 +1528,7 @@
       scoreLabel: "Current Trust Index",
       valueHeading: "What you unlock",
       valueItems: ["Full analysis", "Risk alerts", "Relationship trajectory", "Timeline (3-6 months)", "Action plan"],
-      priceLine: "39 PLN · one-time payment",
+      priceSuffix: "one-time payment",
       ctaButton: "Unlock full report",
       ctaSecondary: "See what changes the outcome",
       unlockedTitle: "Full insights unlocked",
@@ -1520,7 +1577,7 @@
       scoreLabel: "Aktualny Trust Index",
       valueHeading: "Co odblokowujesz",
       valueItems: ["Pelna analiza", "Alerty ryzyka", "Trajektoria relacji", "Timeline (3-6 miesiecy)", "Plan dzialania"],
-      priceLine: "39 PLN · jednorazowa platnosc",
+      priceSuffix: "jednorazowa płatność",
       ctaButton: "Odblokuj pełny raport",
       ctaSecondary: "Zobacz, co zmienia wynik",
       unlockedTitle: "Pelny wglad odblokowany",
@@ -1570,7 +1627,7 @@
       scoreLabel: "Aktueller Trust Index",
       valueHeading: "Was du freischaltest",
       valueItems: ["Vollständige Analyse", "Risikohinweise", "Beziehungsverlauf", "Timeline (3-6 Monate)", "Aktionsplan"],
-      priceLine: "39 PLN · einmalige Zahlung",
+      priceSuffix: "einmalige Zahlung",
       ctaButton: "Vollständigen Bericht freischalten",
       ctaSecondary: "Sieh, was das Ergebnis verändert",
       unlockedTitle: "Voller Einblick freigeschaltet",
@@ -1619,7 +1676,7 @@
       scoreLabel: "Trust Index actual",
       valueHeading: "Lo que desbloqueas",
       valueItems: ["Analisis completo", "Alertas de riesgo", "Trayectoria de la relacion", "Timeline (3-6 meses)", "Plan de accion"],
-      priceLine: "39 PLN · pago unico",
+      priceSuffix: "pago único",
       ctaButton: "Desbloquear informe completo",
       ctaSecondary: "Ver que cambia el resultado",
       unlockedTitle: "Análisis completo desbloqueado",
@@ -1668,7 +1725,7 @@
       scoreLabel: "Trust Index atual",
       valueHeading: "O que voce desbloqueia",
       valueItems: ["Analise completa", "Alertas de risco", "Trajetoria do relacionamento", "Timeline (3-6 meses)", "Plano de acao"],
-      priceLine: "39 PLN · pagamento unico",
+      priceSuffix: "pagamento único",
       ctaButton: "Desbloquear relatório completo",
       ctaSecondary: "Veja o que muda o resultado",
       unlockedTitle: "Análise completa desbloqueada",
@@ -1717,7 +1774,7 @@
       scoreLabel: "Current Trust Index",
       valueHeading: "What you unlock",
       valueItems: ["Full analysis", "Risk alerts", "Relationship trajectory", "Timeline (3-6 months)", "Action plan"],
-      priceLine: "39 PLN · one-time payment",
+      priceSuffix: "one-time payment",
       ctaButton: "Unlock full report",
       ctaSecondary: "See what changes the outcome",
       unlockedTitle: "Full insights unlocked",
@@ -1858,7 +1915,8 @@
   }
 
   function renderPaywallModalText(lang) {
-    const text = paywallModalText[lang] || paywallModalText.en;
+    const resolved = normalizeLocale(lang || getModalLang());
+    const text = paywallModalText[resolved] || paywallModalText.en;
     setText("report-lock-title", text.title);
     setText("report-lock-body", text.subtitle);
     setText("report-lock-cta", text.button);
@@ -3775,14 +3833,14 @@
 
   function appendLangToStripeLinks() {
     const locale = getFlowLocale();
-    const links = document.querySelectorAll(`a[href^="${STRIPE_LINK}"]`);
+    const base = getStripeLinkForLocale(locale);
     const origin = window.location.origin;
     const successUrl = `${origin}/success.html?lang=${encodeURIComponent(locale)}&session_id={CHECKOUT_SESSION_ID}`;
     const cancelPath = getFlowPageUrl("result", locale);
     const cancelUrl = new URL(cancelPath, window.location.origin).toString();
-    links.forEach((a) => {
+    document.querySelectorAll('a[href*="buy.stripe.com"]').forEach((a) => {
       try {
-        const url = new URL(a.getAttribute("href"), window.location.origin);
+        const url = new URL(base);
         url.searchParams.set("lang", locale);
         url.searchParams.set("success_url", successUrl);
         url.searchParams.set("cancel_url", cancelUrl);
@@ -3791,6 +3849,28 @@
         // Ignore malformed URLs.
       }
     });
+  }
+
+  function initMarketPages() {
+    let path = (window.location.pathname || "").toLowerCase();
+    if (path.length > 1 && path.endsWith("/")) {
+      path = path.slice(0, -1);
+    }
+    const locale = getFlowLocale();
+    const compact = getPriceDisplayCompact(locale);
+    const isCheckout = path.endsWith("/checkout.html") || path.endsWith("/checkout") || path.endsWith("/checkout/index.html");
+    const isUpsell = path.endsWith("/upsell.html") || path.endsWith("/upsell") || path.endsWith("/upsell/index.html");
+    if (isCheckout) {
+      const priceEl = document.querySelector(".checkout-card__price");
+      if (priceEl) priceEl.textContent = compact;
+      setText("checkout-price-hint", getPriceCheckoutHint(locale));
+    }
+    if (isUpsell) {
+      const amt = document.querySelector(".price-tag__amount");
+      const note = document.querySelector(".price-tag__note");
+      if (amt) amt.textContent = compact;
+      if (note) note.textContent = UPSELL_PRICE_NOTE[locale] || UPSELL_PRICE_NOTE.en;
+    }
   }
 
   // --- Wspólne: menu mobilne ---
@@ -4198,7 +4278,8 @@
     setText("premium-value-item-3", ui.valueItems[2]);
     setText("premium-value-item-4", ui.valueItems[3]);
     setText("premium-value-item-5", ui.valueItems[4]);
-    setText("premium-price-line", ui.priceLine);
+    setText("premium-price-line", formatPremiumPriceLine(lang));
+    setText("premium-price-hint", getPriceCheckoutHint(lang));
     setText("premium-cta", ui.ctaButton);
     setText("premium-note-1", ui.notes[0]);
     setText("premium-note-2", ui.notes[1]);
@@ -4383,6 +4464,9 @@
     const reportHomeLink = document.getElementById("report-footer-home-link");
     if (reportBackLink) reportBackLink.setAttribute("href", getFlowPageUrl("result", locale));
     if (reportHomeLink) reportHomeLink.setAttribute("href", LOCALE_PATHS[locale] || LOCALE_PATHS.en);
+    if (document.getElementById("report-lock-title")) {
+      renderPaywallModalText(locale);
+    }
   }
 
   // --- Wynik: odczyt localStorage i wypełnienie DOM ---
@@ -5035,6 +5119,7 @@
     const lang = getFlowLocale();
     console.log("LANG ACTIVE:", lang);
     appendLangToStripeLinks();
+    initMarketPages();
     setYear();
     initLegalFooter();
     initLangSwitcher();
