@@ -15,6 +15,7 @@ jobs:
 
       - name: FTP Deploy (public_html)
         id: ftp_public
+        continue-on-error: true
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ostudios.ftp.dhosting.pl
@@ -28,6 +29,7 @@ jobs:
 
       - name: FTP Deploy (relationshipscan public_html)
         id: ftp_rel
+        continue-on-error: true
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ostudios.ftp.dhosting.pl
@@ -41,6 +43,7 @@ jobs:
 
       - name: FTP Deploy (domains relationshipscan public_html)
         id: ftp_domains
+        continue-on-error: true
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ostudios.ftp.dhosting.pl
@@ -51,6 +54,15 @@ jobs:
           timeout: 120000
           log-level: verbose
           server-dir: /domains/relationshipscan.app/public_html/
+
+      - name: Ensure at least one FTP target succeeded
+        run: |
+          if [ "${{ steps.ftp_public.outcome }}" = "success" ] || [ "${{ steps.ftp_rel.outcome }}" = "success" ] || [ "${{ steps.ftp_domains.outcome }}" = "success" ]; then
+            echo "At least one FTP target succeeded."
+            exit 0
+          fi
+          echo "All FTP targets failed."
+          exit 1
 
       - name: Verify live content marker
         run: |
