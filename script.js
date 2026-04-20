@@ -1687,6 +1687,230 @@
     return map[severity];
   }
 
+  const BENCHMARK_SCORES = {
+    overall: 68,
+    communication: 70,
+    emotional: 66,
+    stability: 69,
+    clarity: 65,
+  };
+
+  function getComparisonBand(score, average) {
+    const diff = Number(score) - Number(average);
+    if (Math.abs(diff) <= 4) return "around";
+    return diff > 0 ? "above" : "below";
+  }
+
+  function getBenchmarkLabels(locale) {
+    const map = {
+      en: {
+        heading: "How you compare",
+        average: "Average",
+        above: "Above average",
+        around: "Around average",
+        below: "Below average",
+        dimensions: {
+          overall: "Overall score",
+          communication: "Communication",
+          emotional: "Emotional closeness",
+          stability: "Stability",
+          clarity: "Clarity",
+        },
+      },
+      pl: {
+        heading: "Jak wypadasz na tle benchmarku",
+        average: "Srednia",
+        above: "Powyzej sredniej",
+        around: "W okolicy sredniej",
+        below: "Ponizej sredniej",
+        dimensions: {
+          overall: "Wynik ogolny",
+          communication: "Komunikacja",
+          emotional: "Bliskosc emocjonalna",
+          stability: "Stabilnosc",
+          clarity: "Klarownosc",
+        },
+      },
+      de: {
+        heading: "Vergleich mit dem Benchmark",
+        average: "Durchschnitt",
+        above: "Über dem Durchschnitt",
+        around: "Nahe am Durchschnitt",
+        below: "Unter dem Durchschnitt",
+        dimensions: {
+          overall: "Gesamtwert",
+          communication: "Kommunikation",
+          emotional: "Emotionale Nähe",
+          stability: "Stabilität",
+          clarity: "Klarheit",
+        },
+      },
+      es: {
+        heading: "Cómo te comparas",
+        average: "Promedio",
+        above: "Por encima del promedio",
+        around: "Cerca del promedio",
+        below: "Por debajo del promedio",
+        dimensions: {
+          overall: "Puntuación general",
+          communication: "Comunicación",
+          emotional: "Cercanía emocional",
+          stability: "Estabilidad",
+          clarity: "Claridad",
+        },
+      },
+      pt: {
+        heading: "Como você se compara",
+        average: "Média",
+        above: "Acima da média",
+        around: "Perto da média",
+        below: "Abaixo da média",
+        dimensions: {
+          overall: "Pontuação geral",
+          communication: "Comunicação",
+          emotional: "Proximidade emocional",
+          stability: "Estabilidade",
+          clarity: "Clareza",
+        },
+      },
+      in: {
+        heading: "How you compare",
+        average: "Average",
+        above: "Above average",
+        around: "Around average",
+        below: "Below average",
+        dimensions: {
+          overall: "Overall score",
+          communication: "Communication",
+          emotional: "Emotional closeness",
+          stability: "Stability",
+          clarity: "Clarity",
+        },
+      },
+    };
+    return map[locale] || map.en;
+  }
+
+  function getRiskAlertLabels(locale) {
+    const map = {
+      en: {
+        heading: "Risk alerts",
+        none: "No critical alert triggered based on current thresholds.",
+        clarity: {
+          title: "Clarity risk: unclear intent layer",
+          body:
+            "Your clarity score is below the critical threshold. This usually means you are forced to interpret too much between the lines, which increases decision friction. In this state, even neutral signals can be read as threat signals.",
+        },
+        emotional: {
+          title: "Emotional risk: unstable emotional base",
+          body:
+            "Your emotional score is below the critical threshold. Connection may still be present, but it is not stable enough to regulate stress consistently. This increases reactivity and lowers confidence in difficult moments.",
+        },
+        inconsistency: {
+          title: "Inconsistency risk: dimensions are out of sync",
+          body:
+            "The spread between your strongest and weakest dimensions exceeds 15 points. This indicates structural imbalance: one area may look stable while another keeps injecting uncertainty into the system. Without targeted correction, progress can feel temporary.",
+        },
+      },
+      pl: {
+        heading: "Alerty ryzyka",
+        none: "Brak krytycznych alertow przy aktualnych progach.",
+        clarity: {
+          title: "Ryzyko klarownosci: niejasna warstwa intencji",
+          body:
+            "Wynik klarownosci jest ponizej progu krytycznego. To zwykle oznacza nadmiar domyslow i zbyt malo jawnych ustalen, co zwieksza ryzyko blednej oceny sytuacji. W tym stanie nawet neutralne sygnaly sa latwo odczytywane jako zagrozenie.",
+        },
+        emotional: {
+          title: "Ryzyko emocjonalne: niestabilna baza emocjonalna",
+          body:
+            "Wynik bliskosci emocjonalnej jest ponizej progu krytycznego. Kontakt moze byc obecny, ale nie daje stabilnej regulacji stresu. To podnosi reaktywnosc i utrudnia spokojne domykanie trudnych tematow.",
+        },
+        inconsistency: {
+          title: "Ryzyko niespojnosci: obszary dzialaja nierowno",
+          body:
+            "Roznica miedzy najsilniejszym i najslabszym obszarem przekracza 15 punktow. To sygnal nierownowagi strukturalnej: poprawa w jednym obszarze nie kompensuje kosztu w drugim. Bez precyzyjnej korekty efekt poprawy moze byc nietrwaly.",
+        },
+      },
+      de: {
+        heading: "Risikohinweise",
+        none: "Bei den aktuellen Schwellen wurde kein kritischer Alarm ausgelöst.",
+        clarity: {
+          title: "Klarheitsrisiko: unklare Intentionsebene",
+          body:
+            "Der Klarheitswert liegt unter dem kritischen Schwellenwert. Das bedeutet meist zu viel Interpretation und zu wenig explizite Absprachen. Dadurch steigt das Risiko von Fehlentscheidungen deutlich.",
+        },
+        emotional: {
+          title: "Emotionales Risiko: instabile emotionale Basis",
+          body:
+            "Der Wert für emotionale Nähe liegt unter dem kritischen Schwellenwert. Verbindung kann vorhanden sein, reguliert Stress aber nicht zuverlässig. Das erhöht Reaktivität in schwierigen Situationen.",
+        },
+        inconsistency: {
+          title: "Inkonsistenzrisiko: Dimensionen laufen auseinander",
+          body:
+            "Die Differenz zwischen stärkster und schwächster Dimension liegt über 15 Punkten. Das spricht für ein strukturelles Ungleichgewicht. Fortschritt wirkt dann oft nur kurzfristig.",
+        },
+      },
+      es: {
+        heading: "Alertas de riesgo",
+        none: "No se activó ninguna alerta crítica con los umbrales actuales.",
+        clarity: {
+          title: "Riesgo de claridad: capa de intención poco clara",
+          body:
+            "La puntuación de claridad está por debajo del umbral crítico. Esto suele implicar demasiada interpretación y pocos acuerdos explícitos. En ese estado aumentan los errores de lectura de señales.",
+        },
+        emotional: {
+          title: "Riesgo emocional: base emocional inestable",
+          body:
+            "La puntuación emocional está por debajo del umbral crítico. Puede haber conexión, pero no con la estabilidad necesaria para regular el estrés. Eso incrementa la reactividad en momentos difíciles.",
+        },
+        inconsistency: {
+          title: "Riesgo de inconsistencia: dimensiones desalineadas",
+          body:
+            "La diferencia entre la dimensión más fuerte y la más débil supera los 15 puntos. Esto indica desequilibrio estructural: una mejora parcial no compensa la presión del área más débil.",
+        },
+      },
+      pt: {
+        heading: "Alertas de risco",
+        none: "Nenhum alerta crítico foi acionado com os limites atuais.",
+        clarity: {
+          title: "Risco de clareza: camada de intenção pouco clara",
+          body:
+            "A pontuação de clareza está abaixo do limite crítico. Isso costuma indicar interpretação excessiva e poucos acordos explícitos. Nesse cenário, o risco de leitura incorreta aumenta.",
+        },
+        emotional: {
+          title: "Risco emocional: base emocional instável",
+          body:
+            "A pontuação emocional está abaixo do limite crítico. Pode haver conexão, mas sem consistência para regular o estresse. Isso eleva a reatividade em momentos de pressão.",
+        },
+        inconsistency: {
+          title: "Risco de inconsistência: dimensões desalinhadas",
+          body:
+            "A diferença entre a dimensão mais forte e a mais fraca supera 15 pontos. Isso aponta desequilíbrio estrutural e tende a tornar avanços menos duráveis.",
+        },
+      },
+      in: {
+        heading: "Risk alerts",
+        none: "No critical alert triggered based on current thresholds.",
+        clarity: {
+          title: "Clarity risk: unclear intent layer",
+          body:
+            "Your clarity score is below the critical threshold. This usually means you are forced to interpret too much between the lines, which increases decision friction. In this state, even neutral signals can be read as threat signals.",
+        },
+        emotional: {
+          title: "Emotional risk: unstable emotional base",
+          body:
+            "Your emotional score is below the critical threshold. Connection may still be present, but it is not stable enough to regulate stress consistently. This increases reactivity and lowers confidence in difficult moments.",
+        },
+        inconsistency: {
+          title: "Inconsistency risk: dimensions are out of sync",
+          body:
+            "The spread between your strongest and weakest dimensions exceeds 15 points. This indicates structural imbalance: one area may look stable while another keeps injecting uncertainty into the system. Without targeted correction, progress can feel temporary.",
+        },
+      },
+    };
+    return map[locale] || map.en;
+  }
+
   function getAreaInterpretation(areaKey, score) {
     const severity = getSeverity(100 - score);
     const byArea = {
@@ -2461,6 +2685,10 @@
     setText("report-signals-heading", ui.signal[0]);
     setText("report-signal-label-1", ui.signal[1]);
     setText("report-signal-label-2", ui.signal[2]);
+    const benchmarkUi = getBenchmarkLabels(locale);
+    const alertsUi = getRiskAlertLabels(locale);
+    setText("report-benchmark-heading", benchmarkUi.heading);
+    setText("report-alerts-heading", alertsUi.heading);
     setText("report-disclaimer-text", RESULT_SIGNAL_LINE_BY_LOCALE[locale] || RESULT_SIGNAL_LINE_BY_LOCALE.en);
     setText("report-back-link", ui.back);
   }
@@ -2560,6 +2788,8 @@
     const trustEl = document.getElementById("report-trust-body");
     const scenariosEl = document.getElementById("report-scenarios-body");
     const nextStepsEl = document.getElementById("report-next-steps-body");
+    const benchmarkGridEl = document.getElementById("report-benchmark-grid");
+    const alertsEl = document.getElementById("report-alerts");
     const donutEl = document.getElementById("report-donut");
     const donutValueEl = document.getElementById("report-donut-value");
     const lockOverlay = document.getElementById("report-lock-overlay");
@@ -2655,6 +2885,8 @@
       trustEl.innerHTML = "";
       scenariosEl.innerHTML = "";
       nextStepsEl.innerHTML = "";
+      if (benchmarkGridEl) benchmarkGridEl.innerHTML = "";
+      if (alertsEl) alertsEl.innerHTML = "";
       return;
     }
 
@@ -2679,6 +2911,13 @@
       behavior: Math.max(0, Math.min(100, Number(details.areas.behavior || score))),
       trust: Math.max(0, Math.min(100, Number(details.areas.trust || score))),
     };
+    const benchmarkScores = {
+      overall: score,
+      communication: areaScores.communication,
+      emotional: areaScores.emotional,
+      stability: areaScores.behavior,
+      clarity: areaScores.trust,
+    };
 
     const renderMap = [
       { domPrefix: "communication", areaKey: "communication" },
@@ -2702,6 +2941,68 @@
       const bar = document.getElementById(`report-bar-${entry.domPrefix}`);
       if (bar) bar.style.width = `${scoreValue}%`;
     });
+
+    if (benchmarkGridEl) {
+      const benchmarkUi = getBenchmarkLabels(locale);
+      const cards = ["overall", "communication", "emotional", "stability", "clarity"]
+        .map((key) => {
+          const userScore = Math.round(benchmarkScores[key]);
+          const averageScore = BENCHMARK_SCORES[key];
+          const bandKey = getComparisonBand(userScore, averageScore);
+          const comparisonLabel = benchmarkUi[bandKey] || benchmarkUi.around;
+          return `
+            <article class="report-benchmark-card">
+              <div class="report-benchmark-card__head">
+                <h3>${escapeHtml(benchmarkUi.dimensions[key])}</h3>
+                <p class="report-benchmark-card__score">${userScore}/100</p>
+              </div>
+              <p class="report-benchmark-card__meta">${escapeHtml(benchmarkUi.average)}: ${averageScore}/100</p>
+              <p class="report-benchmark-card__result">${escapeHtml(comparisonLabel)}</p>
+            </article>
+          `;
+        })
+        .join("");
+      benchmarkGridEl.innerHTML = cards;
+    }
+
+    if (alertsEl) {
+      const alertsUi = getRiskAlertLabels(locale);
+      const alertItems = [];
+      const clarityScore = benchmarkScores.clarity;
+      const emotionalScore = benchmarkScores.emotional;
+      const areaSpreadValues = [
+        benchmarkScores.communication,
+        benchmarkScores.emotional,
+        benchmarkScores.stability,
+        benchmarkScores.clarity,
+      ];
+      const spread = Math.max(...areaSpreadValues) - Math.min(...areaSpreadValues);
+
+      if (clarityScore < 60) {
+        alertItems.push(alertsUi.clarity);
+      }
+      if (emotionalScore < 60) {
+        alertItems.push(alertsUi.emotional);
+      }
+      if (spread > 15) {
+        alertItems.push(alertsUi.inconsistency);
+      }
+
+      if (!alertItems.length) {
+        alertsEl.innerHTML = `<p class="report-alerts__empty">${escapeHtml(alertsUi.none)}</p>`;
+      } else {
+        alertsEl.innerHTML = alertItems
+          .map(
+            (item) => `
+              <article class="report-alert-card">
+                <h3>${escapeHtml(item.title)}</h3>
+                <p>${escapeHtml(item.body)}</p>
+              </article>
+            `
+          )
+          .join("");
+      }
+    }
 
     const contentByLocale = {
       en: {
