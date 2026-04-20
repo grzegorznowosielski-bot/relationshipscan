@@ -156,8 +156,8 @@
       area: "communication",
       reverse: false,
       text: {
-        en: "I feel comfortable discussing difficult topics with my partner.",
-        pl: "Czuje sie komfortowo, rozmawiajac z partnerem_ka o trudnych tematach.",
+        en: "I can talk about difficult things with my partner without feeling tense.",
+        pl: "Mogę rozmawiać z partnerem o trudnych sprawach bez napięcia.",
         de: "Ich fuehle mich wohl dabei, mit meinem Partner ueber schwierige Themen zu sprechen.",
         es: "Me siento comodo al hablar de temas dificiles con mi pareja.",
         pt: "Eu me sinto confortavel ao discutir temas dificeis com meu parceiro.",
@@ -169,8 +169,8 @@
       area: "behavior",
       reverse: true,
       text: {
-        en: "My partner's behavior has become less predictable over time.",
-        pl: "Zachowanie mojego partnera_ki stalo sie z czasem mniej przewidywalne.",
+        en: "Lately, my partner’s behavior feels less predictable than before.",
+        pl: "Ostatnio zachowanie mojego partnera wydaje się mniej przewidywalne niż wcześniej.",
         de: "Das Verhalten meines Partners ist mit der Zeit weniger vorhersehbar geworden.",
         es: "El comportamiento de mi pareja se ha vuelto menos predecible con el tiempo.",
         pt: "O comportamento do meu parceiro ficou menos previsivel com o tempo.",
@@ -182,8 +182,8 @@
       area: "communication",
       reverse: false,
       text: {
-        en: "We openly talk about our expectations in the relationship.",
-        pl: "Otwarcie rozmawiamy o naszych oczekiwaniach w relacji.",
+        en: "We’re clear about what we expect from each other.",
+        pl: "Mamy jasność co do tego, czego od siebie oczekujemy.",
         de: "Wir sprechen offen ueber unsere Erwartungen in der Beziehung.",
         es: "Hablamos abiertamente sobre nuestras expectativas en la relacion.",
         pt: "Falamos abertamente sobre nossas expectativas no relacionamento.",
@@ -195,8 +195,8 @@
       area: "emotional",
       reverse: true,
       text: {
-        en: "I sometimes feel emotionally distant from my partner.",
-        pl: "Czasami czuje sie emocjonalnie oddalony_a od mojego partnera_ki.",
+        en: "Sometimes I feel a distance between us, even when we’re together.",
+        pl: "Czasami czuję między nami dystans, nawet gdy jesteśmy razem.",
         de: "Ich fuehle mich manchmal emotional von meinem Partner distanziert.",
         es: "A veces me siento emocionalmente distante de mi pareja.",
         pt: "As vezes me sinto emocionalmente distante do meu parceiro.",
@@ -208,8 +208,8 @@
       area: "communication",
       reverse: false,
       text: {
-        en: "When something feels wrong, we address it directly.",
-        pl: "Gdy cos wydaje sie nie tak, zajmujemy sie tym od razu i bezposrednio.",
+        en: "When something feels off, we actually talk about it.",
+        pl: "Gdy coś jest nie tak, potrafimy o tym naprawdę porozmawiać.",
         de: "Wenn sich etwas falsch anfuehlt, sprechen wir es direkt an.",
         es: "Cuando algo se siente mal, lo abordamos directamente.",
         pt: "Quando algo parece errado, nos lidamos com isso diretamente.",
@@ -221,8 +221,8 @@
       area: "behavior",
       reverse: true,
       text: {
-        en: "I notice changes in my partner's communication style.",
-        pl: "Zauwazam zmiany w stylu komunikacji mojego partnera_ki.",
+        en: "I’ve noticed small changes in how my partner communicates.",
+        pl: "Zauważam drobne zmiany w sposobie komunikacji mojego partnera.",
         de: "Ich bemerke Veraenderungen im Kommunikationsstil meines Partners.",
         es: "Noto cambios en el estilo de comunicacion de mi pareja.",
         pt: "Eu noto mudancas no estilo de comunicacao do meu parceiro.",
@@ -234,8 +234,8 @@
       area: "emotional",
       reverse: false,
       text: {
-        en: "I feel secure about where our relationship is going.",
-        pl: "Czuje sie pewnie co do tego, dokad zmierza nasza relacja.",
+        en: "I feel confident about where this relationship is going.",
+        pl: "Mam poczucie, że wiem, dokąd zmierza ta relacja.",
         de: "Ich fuehle mich sicher, wohin sich unsere Beziehung entwickelt.",
         es: "Me siento seguro sobre hacia donde va nuestra relacion.",
         pt: "Eu me sinto seguro sobre para onde nosso relacionamento esta indo.",
@@ -247,8 +247,8 @@
       area: "trust",
       reverse: true,
       text: {
-        en: "My partner avoids certain topics or conversations.",
-        pl: "Moj partner_ka unika niektorych tematow lub rozmow.",
+        en: "There are topics my partner seems to avoid.",
+        pl: "Są tematy, których mój partner unika.",
         de: "Mein Partner vermeidet bestimmte Themen oder Gespraeche.",
         es: "Mi pareja evita ciertos temas o conversaciones.",
         pt: "Meu parceiro evita certos assuntos ou conversas.",
@@ -260,8 +260,8 @@
       area: "communication",
       reverse: false,
       text: {
-        en: "We are able to resolve conflicts without escalation.",
-        pl: "Potrafimy rozwiazywac konflikty bez eskalacji.",
+        en: "We can disagree without things getting out of control.",
+        pl: "Potrafimy się nie zgadzać bez eskalacji.",
         de: "Wir koennen Konflikte loesen, ohne dass sie eskalieren.",
         es: "Podemos resolver conflictos sin escalada.",
         pt: "Conseguimos resolver conflitos sem escalada.",
@@ -273,8 +273,8 @@
       area: "emotional",
       reverse: true,
       text: {
-        en: "I feel unsure how my partner truly feels about me.",
-        pl: "Czuje sie niepewnie co do tego, co moj partner_ka naprawde do mnie czuje.",
+        en: "At times, I’m not sure how my partner really feels about me.",
+        pl: "Bywają momenty, gdy nie jestem pewien/pewna, co partner naprawdę czuje.",
         de: "Ich bin unsicher, was mein Partner wirklich fuer mich empfindet.",
         es: "Me siento inseguro sobre lo que realmente siente mi pareja por mi.",
         pt: "Eu me sinto inseguro sobre o que meu parceiro realmente sente por mim.",
@@ -286,8 +286,8 @@
       area: "behavior",
       reverse: false,
       text: {
-        en: "My partner's actions are consistent with their words.",
-        pl: "Dzialania mojego partnera_ki sa spojne z jego_jej slowami.",
+        en: "What my partner says usually matches what they do.",
+        pl: "To, co mówi partner, zwykle pokrywa się z tym, co robi.",
         de: "Die Handlungen meines Partners stimmen mit seinen Worten ueberein.",
         es: "Las acciones de mi pareja son consistentes con sus palabras.",
         pt: "As acoes do meu parceiro sao consistentes com suas palavras.",
@@ -299,8 +299,8 @@
       area: "trust",
       reverse: true,
       text: {
-        en: "I sometimes question my partner's intentions.",
-        pl: "Czasami kwestionuje intencje mojego partnera_ki.",
+        en: "I sometimes question what’s really behind my partner’s actions.",
+        pl: "Czasami zastanawiam się, co naprawdę stoi za jego/jej zachowaniem.",
         de: "Ich hinterfrage manchmal die Absichten meines Partners.",
         es: "A veces cuestiono las intenciones de mi pareja.",
         pt: "As vezes eu questiono as intencoes do meu parceiro.",
@@ -312,8 +312,8 @@
       area: "emotional",
       reverse: false,
       text: {
-        en: "We spend meaningful time together regularly.",
-        pl: "Regularnie spedzamy razem wartosciowy czas.",
+        en: "We still spend time together that actually feels meaningful.",
+        pl: "Nadal spędzamy razem czas, który ma dla mnie znaczenie.",
         de: "Wir verbringen regelmaessig bedeutungsvolle Zeit miteinander.",
         es: "Pasamos tiempo de calidad juntos con regularidad.",
         pt: "Passamos tempo significativo juntos regularmente.",
@@ -325,8 +325,8 @@
       area: "behavior",
       reverse: true,
       text: {
-        en: "My partner becomes defensive when asked simple questions.",
-        pl: "Moj partner_ka staje sie defensywny_a przy prostych pytaniach.",
+        en: "My partner gets defensive even in simple conversations.",
+        pl: "Mój partner potrafi się bronić nawet przy prostych pytaniach.",
         de: "Mein Partner reagiert defensiv, wenn einfache Fragen gestellt werden.",
         es: "Mi pareja se pone a la defensiva cuando se le hacen preguntas simples.",
         pt: "Meu parceiro fica defensivo quando recebe perguntas simples.",
@@ -338,8 +338,8 @@
       area: "emotional",
       reverse: false,
       text: {
-        en: "I feel emotionally supported in this relationship.",
-        pl: "Czuje sie emocjonalnie wspierany_a w tej relacji.",
+        en: "I feel emotionally supported when it matters.",
+        pl: "Czuję wsparcie emocjonalne wtedy, gdy jest potrzebne.",
         de: "Ich fuehle mich in dieser Beziehung emotional unterstuetzt.",
         es: "Me siento emocionalmente apoyado en esta relacion.",
         pt: "Eu me sinto emocionalmente apoiado neste relacionamento.",
@@ -351,8 +351,8 @@
       area: "behavior",
       reverse: true,
       text: {
-        en: "There are behaviors that I find difficult to explain.",
-        pl: "Sa zachowania, ktore trudno mi wyjasnic.",
+        en: "Some behaviors don’t fully make sense to me.",
+        pl: "Niektóre zachowania partnera są dla mnie trudne do zrozumienia.",
         de: "Es gibt Verhaltensweisen, die ich schwer erklaeren kann.",
         es: "Hay comportamientos que me resulta dificil explicar.",
         pt: "Ha comportamentos que eu acho dificil explicar.",
@@ -364,8 +364,8 @@
       area: "trust",
       reverse: false,
       text: {
-        en: "I trust my partner's explanations without hesitation.",
-        pl: "Ufnie przyjmuje wyjasnienia mojego partnera_ki bez wahania.",
+        en: "I trust what my partner tells me without overthinking it.",
+        pl: "Ufam temu, co mówi partner, bez nadmiernego analizowania.",
         de: "Ich vertraue den Erklaerungen meines Partners ohne Zoegern.",
         es: "Confio en las explicaciones de mi pareja sin dudar.",
         pt: "Eu confio nas explicacoes do meu parceiro sem hesitar.",
@@ -377,8 +377,8 @@
       area: "trust",
       reverse: true,
       text: {
-        en: "I feel a shift in how my partner treats me.",
-        pl: "Czuje zmiane w tym, jak moj partner_ka mnie traktuje.",
+        en: "I feel like something in the dynamic has shifted.",
+        pl: "Mam poczucie, że coś w tej relacji się zmieniło.",
         de: "Ich spuere eine Veraenderung darin, wie mein Partner mich behandelt.",
         es: "Siento un cambio en la forma en que mi pareja me trata.",
         pt: "Sinto uma mudanca na forma como meu parceiro me trata.",
@@ -390,8 +390,8 @@
       area: "communication",
       reverse: false,
       text: {
-        en: "We communicate clearly about boundaries.",
-        pl: "Komunikujemy sie jasno w sprawie granic.",
+        en: "We are clear about boundaries and respect them.",
+        pl: "Mamy jasno określone granice i ich przestrzegamy.",
         de: "Wir kommunizieren klar ueber Grenzen.",
         es: "Nos comunicamos con claridad sobre los limites.",
         pt: "Nos comunicamos com clareza sobre limites.",
@@ -403,8 +403,8 @@
       area: "trust",
       reverse: true,
       text: {
-        en: "I feel a growing sense of uncertainty in this relationship.",
-        pl: "Czuje narastajace poczucie niepewnosci w tej relacji.",
+        en: "I feel more uncertainty in this relationship than before.",
+        pl: "Czuję więcej niepewności niż wcześniej.",
         de: "Ich fuehle in dieser Beziehung eine wachsende Unsicherheit.",
         es: "Siento una creciente sensacion de incertidumbre en esta relacion.",
         pt: "Sinto uma crescente sensacao de incerteza neste relacionamento.",
@@ -429,7 +429,10 @@
       back: "Back",
       backHome: "Back to home",
       loading: "Calculating your result…",
-      disclaimer: "Answer based on recent weeks. There are no right or wrong answers.",
+      disclaimer: "This takes about 2 minutes. Answer instinctively — don’t overthink.",
+      progress1: "Quick check — you're almost done",
+      progress2: "30 seconds left",
+      micro: "There are no right or wrong answers.",
     },
     pl: {
       title: "Skan — RelationshipScan",
@@ -446,7 +449,10 @@
       back: "Wstecz",
       backHome: "Powrót na stronę główną",
       loading: "Liczymy Twój wynik…",
-      disclaimer: "Odpowiadaj na podstawie ostatnich tygodni. Nie ma dobrych ani złych odpowiedzi.",
+      disclaimer: "To zajmie około 2 minut. Odpowiadaj intuicyjnie — bez analizowania.",
+      progress1: "Jeszcze chwila — już prawie koniec",
+      progress2: "Zostało około 30 sekund",
+      micro: "Nie ma tu dobrych ani złych odpowiedzi.",
     },
     de: {
       title: "Scan — RelationshipScan",
@@ -463,7 +469,10 @@
       back: "Zurück",
       backHome: "Zur Startseite",
       loading: "Dein Ergebnis wird berechnet…",
-      disclaimer: "Antworte auf Basis der letzten Wochen. Es gibt keine richtigen oder falschen Antworten.",
+      disclaimer: "Das dauert etwa 2 Minuten. Antworte intuitiv — nicht zu viel nachdenken.",
+      progress1: "Kurzer Check — du bist fast fertig",
+      progress2: "Noch etwa 30 Sekunden",
+      micro: "Es gibt hier keine richtigen oder falschen Antworten.",
     },
     es: {
       title: "Scan — RelationshipScan",
@@ -480,7 +489,10 @@
       back: "Atras",
       backHome: "Volver al inicio",
       loading: "Calculando tu resultado…",
-      disclaimer: "Responde segun las ultimas semanas. No hay respuestas correctas o incorrectas.",
+      disclaimer: "Esto toma unos 2 minutos. Responde de forma intuitiva — sin pensarlo demasiado.",
+      progress1: "Un momento — ya casi terminas",
+      progress2: "Quedan unos 30 segundos",
+      micro: "No hay respuestas correctas o incorrectas.",
     },
     pt: {
       title: "Scan — RelationshipScan",
@@ -497,7 +509,10 @@
       back: "Voltar",
       backHome: "Voltar ao inicio",
       loading: "Calculando seu resultado…",
-      disclaimer: "Responda com base nas ultimas semanas. Nao existem respostas certas ou erradas.",
+      disclaimer: "Isso leva cerca de 2 minutos. Responda de forma intuitiva — sem pensar demais.",
+      progress1: "Só mais um pouco — já está quase",
+      progress2: "Faltam cerca de 30 segundos",
+      micro: "Não há respostas certas ou erradas.",
     },
     in: {
       title: "Scan — RelationshipScan",
@@ -514,7 +529,10 @@
       back: "Back",
       backHome: "Back to home",
       loading: "Calculating your result…",
-      disclaimer: "Answer based on recent weeks. There are no right or wrong answers.",
+      disclaimer: "This takes about 2 minutes. Answer instinctively — don’t overthink.",
+      progress1: "Quick check — you're almost done",
+      progress2: "30 seconds left",
+      micro: "There are no right or wrong answers.",
     },
   };
 
@@ -2081,6 +2099,14 @@
 
       progressBar.style.width = `${(step / total) * 100}%`;
       stepLabel.textContent = uiCopy.stepLabel(step, total);
+      if (disclaimerEl) {
+        disclaimerEl.textContent =
+          step === 7
+            ? uiCopy.progress1
+            : step >= 8 && step <= 9
+              ? uiCopy.progress2
+              : uiCopy.disclaimer;
+      }
 
       const selected = answers[index];
       root.innerHTML = `
@@ -2102,6 +2128,7 @@
             .join("")}
         </div>
         <p class="scale-legend"><span>1 = ${escapeHtml(uiCopy.scaleLabels[1])}</span><span>5 = ${escapeHtml(uiCopy.scaleLabels[5])}</span></p>
+        <p class="scale-micro">${escapeHtml(uiCopy.micro)}</p>
       `;
 
       btnPrev.hidden = false;
