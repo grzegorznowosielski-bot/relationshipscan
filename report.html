@@ -37,6 +37,7 @@
         <h1 id="report-title">Your full relationship analysis</h1>
         <p class="report-ref"><span id="report-index-label">Trust Index:</span> <strong id="report-score">—</strong></p>
         <p class="report-header__sub" id="report-subhead">A structured premium view of your current relationship signals and decision risk.</p>
+        <p class="report-header__insight" id="report-personalized-insight"></p>
       </header>
 
       <section class="report-card reveal" aria-labelledby="report-overview-title">
@@ -115,11 +116,13 @@
             <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-safety"></span></div>
           </div>
         </div>
+        <p class="report-chart-note" id="report-chart-note"></p>
       </section>
 
       <section class="report-card reveal" aria-labelledby="report-benchmark-heading">
         <h2 id="report-benchmark-heading">How you compare</h2>
         <div class="report-benchmark-grid" id="report-benchmark-grid"></div>
+        <p class="report-benchmark-note" id="report-benchmark-note"></p>
       </section>
 
       <section class="report-card reveal" aria-labelledby="report-alerts-heading">
@@ -127,52 +130,82 @@
         <div class="report-alerts" id="report-alerts"></div>
       </section>
 
-      <section class="report-card reveal" aria-labelledby="report-summary-heading">
-        <h2 id="report-summary-heading">1. Summary</h2>
-        <div class="prose prose--report" id="report-summary-body"></div>
+      <section class="report-card report-card--accent reveal" aria-labelledby="report-trajectory-heading">
+        <h2 id="report-trajectory-heading">Relationship trajectory</h2>
+        <div class="report-trajectory" id="report-trajectory"></div>
       </section>
 
-      <section class="report-card reveal" aria-labelledby="report-profile-heading">
-        <h2 id="report-profile-heading">2. Your Relationship Profile</h2>
-        <div class="prose prose--report" id="report-profile-body"></div>
+      <section class="report-card reveal" aria-labelledby="report-timeline-heading">
+        <h2 id="report-timeline-heading">Timeline (3-6 months)</h2>
+        <div class="report-timeline" id="report-timeline"></div>
       </section>
 
-      <section class="report-card reveal">
-        <h2 id="report-comm-heading">3. Communication Patterns</h2>
+      <section class="report-card reveal" aria-labelledby="report-outcome-heading">
+        <h2 id="report-outcome-heading">What changes the outcome</h2>
+        <div class="report-outcome" id="report-outcome"></div>
+      </section>
+
+      <section class="report-card reveal" aria-labelledby="report-comm-heading">
+        <h2 id="report-comm-heading">Communication</h2>
+        <div class="report-dimension-meta">
+          <p class="report-dimension-score" id="report-dim-communication-score">—</p>
+          <p class="report-dimension-label" id="report-dim-communication-label">—</p>
+        </div>
         <div class="prose prose--report" id="report-communication-body"></div>
+        <ul class="report-list" id="report-communication-checks"></ul>
       </section>
 
-      <section class="report-card reveal">
-        <h2 id="report-emotion-heading">4. Emotional Distance</h2>
+      <section class="report-card reveal" aria-labelledby="report-emotion-heading">
+        <h2 id="report-emotion-heading">Emotional closeness</h2>
+        <div class="report-dimension-meta">
+          <p class="report-dimension-score" id="report-dim-emotional-score">—</p>
+          <p class="report-dimension-label" id="report-dim-emotional-label">—</p>
+        </div>
         <div class="prose prose--report" id="report-emotional-body"></div>
+        <ul class="report-list" id="report-emotional-checks"></ul>
       </section>
 
-      <section class="report-card reveal">
-        <h2 id="report-behavior-heading">5. Behavioral Changes</h2>
-        <div class="prose prose--report" id="report-behavior-body"></div>
+      <section class="report-card reveal" aria-labelledby="report-stability-heading">
+        <h2 id="report-stability-heading">Stability</h2>
+        <div class="report-dimension-meta">
+          <p class="report-dimension-score" id="report-dim-stability-score">—</p>
+          <p class="report-dimension-label" id="report-dim-stability-label">—</p>
+        </div>
+        <div class="prose prose--report" id="report-stability-body"></div>
+        <ul class="report-list" id="report-stability-checks"></ul>
       </section>
 
-      <section class="report-card report-card--accent reveal">
-        <h2 id="report-trust-heading">6. Trust Signals</h2>
-        <div class="prose prose--report" id="report-trust-body"></div>
+      <section class="report-card reveal" aria-labelledby="report-clarity-heading">
+        <h2 id="report-clarity-heading">Clarity</h2>
+        <div class="report-dimension-meta">
+          <p class="report-dimension-score" id="report-dim-clarity-score">—</p>
+          <p class="report-dimension-label" id="report-dim-clarity-label">—</p>
+        </div>
+        <div class="prose prose--report" id="report-clarity-body"></div>
+        <ul class="report-list" id="report-clarity-checks"></ul>
       </section>
 
-      <section class="report-card reveal">
-        <h2 id="report-scenarios-heading">7. Possible Scenarios</h2>
-        <ul class="report-list" id="report-scenarios-body"></ul>
+      <section class="report-card reveal" aria-labelledby="report-pattern-heading">
+        <h2 id="report-pattern-heading">Recurring pattern</h2>
+        <div class="prose prose--report" id="report-pattern-body"></div>
       </section>
 
-      <section class="report-card reveal">
-        <h2 id="report-next-heading">8. What You Can Do Next</h2>
+      <section class="report-card reveal" aria-labelledby="report-meaning-heading">
+        <h2 id="report-meaning-heading">Overall meaning</h2>
+        <div class="prose prose--report" id="report-meaning-body"></div>
+      </section>
+
+      <section class="report-card reveal" aria-labelledby="report-next-heading">
+        <h2 id="report-next-heading">Practical next steps</h2>
         <ul class="report-list" id="report-next-steps-body"></ul>
       </section>
 
-      <section class="report-card reveal" aria-labelledby="report-signals-heading">
-        <h2 id="report-signals-heading">Signal intensity</h2>
-        <div class="report-analysis-grid">
-          <article class="analysis-area-card"><p class="analysis-area-card__label" id="report-signal-label-1">High attention</p><p class="analysis-area-card__text" id="report-signal-text-1"></p></article>
-          <article class="analysis-area-card"><p class="analysis-area-card__label" id="report-signal-label-2">Monitor</p><p class="analysis-area-card__text" id="report-signal-text-2"></p></article>
-        </div>
+      <section class="report-card report-card--accent reveal" aria-labelledby="report-recheck-heading">
+        <h2 id="report-recheck-heading">Track change in 2-3 weeks</h2>
+        <div class="prose prose--report" id="report-recheck-body"></div>
+        <p class="report-recheck-cta-wrap">
+          <a class="btn btn--accent" href="test.html" id="report-recheck-cta">Re-run scan</a>
+        </p>
       </section>
 
       <section class="disclaimer-box disclaimer-box--compact reveal">

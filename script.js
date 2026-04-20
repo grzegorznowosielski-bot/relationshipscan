@@ -11,7 +11,6 @@
   const STORAGE_KEY = "wynik";
   const STORAGE_DETAILS_KEY = "wynik_details";
   const PAID_KEY = "paid";
-  const LOCALE_KEY = "relationshipscan_locale";
   const TEST_SESSION_KEY = "relationshipscan_test_session_v1";
   const STRIPE_LINK = "https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00";
   const LOCALE_PATHS = {
@@ -418,12 +417,18 @@
       title: "Scan — RelationshipScan",
       stepLabel: (step, total) => `Question ${step} of ${total}`,
       scaleLabels: {
-        1: "Strongly disagree",
-        2: "Disagree",
+        1: "No",
+        2: "Rather no",
         3: "Not sure",
-        4: "Agree",
-        5: "Strongly agree",
+        4: "Rather yes",
+        5: "Yes",
       },
+      progressHints: {
+        early: "This takes less than a minute",
+        mid: "You are already halfway through",
+        late: "Just a moment — you are finishing",
+      },
+      scaleAria: "Answer scale",
       next: "Next",
       seeResult: "See result",
       back: "Back",
@@ -436,12 +441,18 @@
       title: "Skan — RelationshipScan",
       stepLabel: (step, total) => `Pytanie ${step} z ${total}`,
       scaleLabels: {
-        1: "Zdecydowanie nie",
+        1: "Nie",
         2: "Raczej nie",
-        3: "Trudno powiedzieć",
+        3: "Nie wiem",
         4: "Raczej tak",
-        5: "Zdecydowanie tak",
+        5: "Tak",
       },
+      progressHints: {
+        early: "Zajmie to mniej niż minutę",
+        mid: "Już połowa za Tobą",
+        late: "Jeszcze chwila — kończysz",
+      },
+      scaleAria: "Skala odpowiedzi",
       next: "Dalej",
       seeResult: "Zobacz wynik",
       back: "Wstecz",
@@ -454,12 +465,18 @@
       title: "Scan — RelationshipScan",
       stepLabel: (step, total) => `Frage ${step} von ${total}`,
       scaleLabels: {
-        1: "Stimme überhaupt nicht zu",
-        2: "Stimme eher nicht zu",
+        1: "Nein",
+        2: "Eher nein",
         3: "Unsicher",
-        4: "Stimme eher zu",
-        5: "Stimme voll zu",
+        4: "Eher ja",
+        5: "Ja",
       },
+      progressHints: {
+        early: "Das dauert weniger als eine Minute",
+        mid: "Du bist schon zur Hälfte durch",
+        late: "Nur noch kurz — du bist fast fertig",
+      },
+      scaleAria: "Antwortskala",
       next: "Weiter",
       seeResult: "Ergebnis sehen",
       back: "Zurück",
@@ -472,12 +489,18 @@
       title: "Scan — RelationshipScan",
       stepLabel: (step, total) => `Pregunta ${step} de ${total}`,
       scaleLabels: {
-        1: "Totalmente en desacuerdo",
-        2: "En desacuerdo",
-        3: "No estoy seguro",
-        4: "De acuerdo",
-        5: "Totalmente de acuerdo",
+        1: "No",
+        2: "Mas bien no",
+        3: "No se",
+        4: "Mas bien si",
+        5: "Si",
       },
+      progressHints: {
+        early: "Tarda menos de un minuto",
+        mid: "Ya vas por la mitad",
+        late: "Un momento más — ya casi terminas",
+      },
+      scaleAria: "Escala de respuestas",
       next: "Siguiente",
       seeResult: "Ver resultado",
       back: "Atras",
@@ -490,12 +513,18 @@
       title: "Scan — RelationshipScan",
       stepLabel: (step, total) => `Pergunta ${step} de ${total}`,
       scaleLabels: {
-        1: "Discordo totalmente",
-        2: "Discordo",
-        3: "Não tenho certeza",
-        4: "Concordo",
-        5: "Concordo totalmente",
+        1: "Nao",
+        2: "Mais para nao",
+        3: "Nao sei",
+        4: "Mais para sim",
+        5: "Sim",
       },
+      progressHints: {
+        early: "Leva menos de um minuto",
+        mid: "Voce ja chegou na metade",
+        late: "So mais um pouco — voce esta terminando",
+      },
+      scaleAria: "Escala de respostas",
       next: "Proximo",
       seeResult: "Ver resultado",
       back: "Voltar",
@@ -508,12 +537,18 @@
       title: "Scan — RelationshipScan",
       stepLabel: (step, total) => `Question ${step} of ${total}`,
       scaleLabels: {
-        1: "Strongly disagree",
-        2: "Disagree",
+        1: "No",
+        2: "Rather no",
         3: "Not sure",
-        4: "Agree",
-        5: "Strongly agree",
+        4: "Rather yes",
+        5: "Yes",
       },
+      progressHints: {
+        early: "This takes less than a minute",
+        mid: "You are already halfway through",
+        late: "Just a moment — you are finishing",
+      },
+      scaleAria: "Answer scale",
       next: "Next",
       seeResult: "See result",
       back: "Back",
@@ -532,18 +567,12 @@
     if (path === "/pt" || path.startsWith("/pt/")) return "pt";
     if (path === "/in" || path.startsWith("/in/")) return "in";
     if (path === "/en" || path.startsWith("/en/")) return "en";
-    return "en";
+    return null;
   }
 
   function getCurrentLocale() {
-    const paramLang = new URLSearchParams(window.location.search).get("lang");
-    if (paramLang && LOCALE_PATHS[String(paramLang).toLowerCase()]) {
-      return String(paramLang).toLowerCase();
-    }
-    const byPath = getLocaleFromPath(window.location.pathname || "/");
-    if (byPath) return byPath;
     try {
-      const saved = localStorage.getItem(LOCALE_KEY);
+      const saved = localStorage.getItem(LANG_KEY);
       if (saved && LOCALE_PATHS[saved]) return saved;
     } catch (e) {
       // Ignore storage issues.
@@ -577,25 +606,15 @@
   }
 
   function getFlowLocale() {
+    const byPath = getLocaleFromPath(window.location.pathname || "/");
+    if (byPath) return setLang(byPath);
     const stored = getStoredLang();
     if (stored) return stored;
-    const paramLang = new URLSearchParams(window.location.search).get("lang");
-    if (paramLang && LOCALE_PATHS[String(paramLang).toLowerCase()]) {
-      return setLang(paramLang);
-    }
-    return setLang(getLocaleFromPath(window.location.pathname || "/"));
+    return setLang("en");
   }
 
   function getTestLocale() {
-    const paramLang = new URLSearchParams(window.location.search).get("lang");
-    if (paramLang && LOCALE_PATHS[String(paramLang).toLowerCase()]) {
-      return setLang(paramLang);
-    }
-    const stored = getStoredLang();
-    if (stored) return setLang(stored);
-    const byPath = getLocaleFromPath(window.location.pathname || "/");
-    if (byPath && LOCALE_PATHS[byPath]) return setLang(byPath);
-    return setLang(getFlowLocale());
+    return getFlowLocale();
   }
 
   function getFlowPageUrl(pageName, locale) {
@@ -603,9 +622,16 @@
     const path = String(window.location.pathname || "").toLowerCase();
     const localizedPrefix = `/${normalizedLocale}/`;
     if (path.startsWith(localizedPrefix)) {
-      return `${localizedPrefix}${pageName}.html?lang=${encodeURIComponent(normalizedLocale)}`;
+      return `${localizedPrefix}${pageName}`;
     }
     return `${pageName}.html?lang=${encodeURIComponent(normalizedLocale)}`;
+  }
+
+  function getQueryLang() {
+    const value = new URLSearchParams(window.location.search).get("lang");
+    if (!value) return null;
+    const normalized = String(value).toLowerCase();
+    return LOCALE_PATHS[normalized] ? normalized : null;
   }
 
   function buildQuestionList(locale) {
@@ -715,8 +741,12 @@
     const labels = {
       en: { low: "Fragile", mid: "Mixed", high: "Stable" },
       pl: { low: "Kruche", mid: "Mieszane", high: "Stabilne" },
+      de: { low: "Kritisch", mid: "Gemischt", high: "Stabil" },
+      es: { low: "Fragil", mid: "Mixto", high: "Estable" },
+      pt: { low: "Fragil", mid: "Misto", high: "Estavel" },
+      in: { low: "Fragile", mid: "Mixed", high: "Stable" },
     };
-    const lang = locale === "pl" ? "pl" : "en";
+    const lang = labels[locale] ? locale : "en";
     return labels[lang][segment] || labels[lang].mid;
   }
 
@@ -1280,9 +1310,74 @@
   };
 
   function getAreaContent(locale, areaKey, segment) {
-    const lang = locale === "pl" ? "pl" : "en";
-    const langContent = AREA_CONTENT[lang] || AREA_CONTENT.en;
-    return langContent[areaKey][segment];
+    if (AREA_CONTENT[locale] && AREA_CONTENT[locale][areaKey] && AREA_CONTENT[locale][areaKey][segment]) {
+      return AREA_CONTENT[locale][areaKey][segment];
+    }
+
+    const fallbackByLocale = {
+      de: {
+        names: {
+          communication: "Kommunikation",
+          emotional: "Emotionale Nahe",
+          behavior: "Verhaltenskonsistenz",
+          trust: "Klarheit und Vertrauen",
+        },
+        titles: { low: "unter Druck", mid: "gemischt", high: "stabiler" },
+        body: {
+          low: "In diesem Bereich ist die Unsicherheit derzeit hoch und beeinflusst Entscheidungen direkt.",
+          mid: "Dieser Bereich zeigt gemischte Signale und braucht klarere Absprachen.",
+          high: "Dieser Bereich wirkt derzeit stabiler und stutzt die Gesamtstruktur der Beziehung.",
+        },
+      },
+      es: {
+        names: {
+          communication: "Comunicacion",
+          emotional: "Cercania emocional",
+          behavior: "Consistencia conductual",
+          trust: "Claridad y confianza",
+        },
+        titles: { low: "bajo presion", mid: "mixto", high: "mas estable" },
+        body: {
+          low: "En esta area la incertidumbre es alta y ya afecta decisiones clave.",
+          mid: "Esta area muestra señales mixtas y requiere acuerdos mas concretos.",
+          high: "Esta area aparece mas estable y sostiene mejor la estructura general.",
+        },
+      },
+      pt: {
+        names: {
+          communication: "Comunicacao",
+          emotional: "Proximidade emocional",
+          behavior: "Consistencia comportamental",
+          trust: "Clareza e confianca",
+        },
+        titles: { low: "sob pressao", mid: "misto", high: "mais estavel" },
+        body: {
+          low: "Nesta area a incerteza esta alta e ja afeta decisoes importantes.",
+          mid: "Esta area mostra sinais mistos e pede acordos mais claros.",
+          high: "Esta area esta mais estavel e sustenta melhor a estrutura geral.",
+        },
+      },
+      in: {
+        names: {
+          communication: "Communication",
+          emotional: "Emotional closeness",
+          behavior: "Behavior consistency",
+          trust: "Clarity and trust",
+        },
+        titles: { low: "under pressure", mid: "mixed", high: "more stable" },
+        body: {
+          low: "Uncertainty in this area is high and already affects key decisions.",
+          mid: "This area shows mixed signals and needs clearer agreements.",
+          high: "This area looks more stable and supports the wider relationship structure.",
+        },
+      },
+    };
+
+    const localized = fallbackByLocale[locale] || fallbackByLocale.in;
+    return {
+      title: `${localized.names[areaKey]}: ${localized.titles[segment]}`,
+      body: localized.body[segment],
+    };
   }
 
   const RESULT_LAYOUT_UI = {
@@ -1313,11 +1408,13 @@
       lockedLabel: "Locked",
       previewLabels: ["Communication", "Stability", "Transparency", "Emotional safety"],
       previewOverlay: "Locked preview",
-      ctaHeading: "Unlock full report",
-      ctaBody:
-        "At this stage, most people still rely on intuition. The full report helps you step back and see the situation more clearly.",
-      priceLine: "One-time access - 39 zł",
+      paywallHook: "A partial score can hide the decision you actually need.",
+      scoreLabel: "Current Trust Index",
+      valueHeading: "What you unlock",
+      valueItems: ["Full analysis", "Risk alerts", "Relationship trajectory", "Timeline (3-6 months)", "Action plan"],
+      priceLine: "39 PLN · one-time payment",
       ctaButton: "Unlock full report",
+      ctaSecondary: "See what changes the outcome",
       unlockedTitle: "Full insights unlocked",
       unlockedBody: "You now have access to the complete analysis. Continue to your premium report.",
       unlockedButton: "Go to full report",
@@ -1360,11 +1457,13 @@
       lockedLabel: "Zablokowane",
       previewLabels: ["Komunikacja", "Stabilność", "Przejrzystość", "Bezpieczeństwo emocjonalne"],
       previewOverlay: "Podgląd zablokowany",
-      ctaHeading: "Odblokuj pełny raport",
-      ctaBody:
-        "Na tym etapie większość osób nadal działa intuicyjnie. Pełny raport pomaga spojrzeć na sytuację z większym dystansem i większą jasnością.",
-      priceLine: "Jednorazowy dostęp - 39 zł",
+      paywallHook: "Czesciowy wynik moze ukrywac decyzje, ktora i tak musisz podjac.",
+      scoreLabel: "Aktualny Trust Index",
+      valueHeading: "Co odblokowujesz",
+      valueItems: ["Pelna analiza", "Alerty ryzyka", "Trajektoria relacji", "Timeline (3-6 miesiecy)", "Plan dzialania"],
+      priceLine: "39 PLN · jednorazowa platnosc",
       ctaButton: "Odblokuj pełny raport",
+      ctaSecondary: "Zobacz, co zmienia wynik",
       unlockedTitle: "Pelny wglad odblokowany",
       unlockedBody: "Masz teraz dostep do pelnej analizy. Przejdz do swojego raportu premium.",
       unlockedButton: "Przejdz do pelnego raportu",
@@ -1408,11 +1507,13 @@
       lockedLabel: "Gesperrt",
       previewLabels: ["Kommunikation", "Stabilität", "Transparenz", "Emotionale Sicherheit"],
       previewOverlay: "Gesperrte Vorschau",
-      ctaHeading: "Vollständigen Bericht freischalten",
-      ctaBody:
-        "In dieser Phase handeln viele Menschen noch intuitiv. Der vollständige Bericht hilft dir, klarer und mit mehr Abstand zu sehen.",
-      priceLine: "Einmaliger Zugang - 39 zł",
+      paywallHook: "Ein Teilwert zeigt nicht, welche Entscheidung wirklich ansteht.",
+      scoreLabel: "Aktueller Trust Index",
+      valueHeading: "Was du freischaltest",
+      valueItems: ["Vollständige Analyse", "Risikohinweise", "Beziehungsverlauf", "Timeline (3-6 Monate)", "Aktionsplan"],
+      priceLine: "39 PLN · einmalige Zahlung",
       ctaButton: "Vollständigen Bericht freischalten",
+      ctaSecondary: "Sieh, was das Ergebnis verändert",
       unlockedTitle: "Voller Einblick freigeschaltet",
       unlockedBody: "Du hast jetzt Zugriff auf die vollständige Analyse. Weiter zu deinem Premium-Bericht.",
       unlockedButton: "Zum vollständigen Bericht",
@@ -1455,11 +1556,13 @@
       lockedLabel: "Bloqueado",
       previewLabels: ["Comunicación", "Estabilidad", "Transparencia", "Seguridad emocional"],
       previewOverlay: "Vista previa bloqueada",
-      ctaHeading: "Desbloquear informe completo",
-      ctaBody:
-        "En esta etapa, la mayoría de personas aún decide por intuición. El informe completo te ayuda a ver la situación con más claridad.",
-      priceLine: "Acceso único - 39 zł",
+      paywallHook: "Un resultado parcial no muestra la decisión de fondo.",
+      scoreLabel: "Trust Index actual",
+      valueHeading: "Lo que desbloqueas",
+      valueItems: ["Analisis completo", "Alertas de riesgo", "Trayectoria de la relacion", "Timeline (3-6 meses)", "Plan de accion"],
+      priceLine: "39 PLN · pago unico",
       ctaButton: "Desbloquear informe completo",
+      ctaSecondary: "Ver que cambia el resultado",
       unlockedTitle: "Análisis completo desbloqueado",
       unlockedBody: "Ahora tienes acceso al análisis completo. Continúa a tu informe premium.",
       unlockedButton: "Ir al informe completo",
@@ -1502,11 +1605,13 @@
       lockedLabel: "Bloqueado",
       previewLabels: ["Comunicação", "Estabilidade", "Transparência", "Segurança emocional"],
       previewOverlay: "Prévia bloqueada",
-      ctaHeading: "Desbloquear relatório completo",
-      ctaBody:
-        "Nesta fase, a maioria das pessoas ainda age pela intuição. O relatório completo ajuda você a enxergar a situação com mais clareza.",
-      priceLine: "Acesso único - 39 zł",
+      paywallHook: "Um resultado parcial nao mostra a decisao real em jogo.",
+      scoreLabel: "Trust Index atual",
+      valueHeading: "O que voce desbloqueia",
+      valueItems: ["Analise completa", "Alertas de risco", "Trajetoria do relacionamento", "Timeline (3-6 meses)", "Plano de acao"],
+      priceLine: "39 PLN · pagamento unico",
       ctaButton: "Desbloquear relatório completo",
+      ctaSecondary: "Veja o que muda o resultado",
       unlockedTitle: "Análise completa desbloqueada",
       unlockedBody: "Agora você tem acesso à análise completa. Continue para o seu relatório premium.",
       unlockedButton: "Ir para o relatório completo",
@@ -1549,11 +1654,13 @@
       lockedLabel: "Locked",
       previewLabels: ["Communication", "Stability", "Transparency", "Emotional safety"],
       previewOverlay: "Locked preview",
-      ctaHeading: "Unlock full report",
-      ctaBody:
-        "At this stage, most people still rely on intuition. The full report helps you step back and see the situation more clearly.",
-      priceLine: "One-time access - 39 zł",
+      paywallHook: "A partial score can hide the decision you actually need.",
+      scoreLabel: "Current Trust Index",
+      valueHeading: "What you unlock",
+      valueItems: ["Full analysis", "Risk alerts", "Relationship trajectory", "Timeline (3-6 months)", "Action plan"],
+      priceLine: "39 PLN · one-time payment",
       ctaButton: "Unlock full report",
+      ctaSecondary: "See what changes the outcome",
       unlockedTitle: "Full insights unlocked",
       unlockedBody: "You now have access to the complete analysis. Continue to your premium report.",
       unlockedButton: "Go to full report",
@@ -1911,6 +2018,1255 @@
     return map[locale] || map.en;
   }
 
+  function getTrajectoryContent(locale) {
+    const map = {
+      en: {
+        heading: "Relationship trajectory",
+        avgLabel: "avg",
+        varianceLabel: "variance",
+        stable: {
+          label: "Stable",
+          text:
+            "Your relationship trajectory is currently stable. The average stays high and the spread between key areas is controlled, so the system is not pulled in opposite directions. You are not relying on one strong area to hide a weak one. Communication, emotional closeness, behavioral consistency and clarity are moving in a compatible way. This usually means the relationship can absorb tension without losing structure. The practical priority is maintenance: keep clear agreements, keep follow-through visible, and review whether signals remain aligned over time.",
+        },
+        unstableGrowth: {
+          label: "Unstable growth",
+          text:
+            "Your relationship trajectory shows unstable growth. The overall level is high, but the distance between the strongest and weakest areas is wide enough to create friction. In practice, this means progress is real but uneven: one part of the relationship improves while another keeps reintroducing uncertainty. The risk is false confidence caused by strong headline scores. If you do not close the weak area, tension can return during stress peaks. The next step is precise correction in the lowest dimension and short weekly checks on visible behavior.",
+        },
+        unstable: {
+          label: "Unstable",
+          text:
+            "Your relationship trajectory is unstable at this stage. The average is not strong enough to offset the internal spread, and the profile suggests uneven regulation across key areas. You may experience moments of closeness followed by periods of confusion or defensiveness. This pattern drains trust because outcomes become hard to predict. The issue is not one bad day but repeated inconsistency in the relationship system. Priority now is to reduce variance first: tighten expectations, define response rules for conflict, and track whether behavior becomes more coherent week by week.",
+        },
+        declining: {
+          label: "Declining",
+          text:
+            "Your relationship trajectory is declining based on the current signal pattern. The overall average is below the stability threshold, which means uncertainty is now structurally dominant. In this state, even small ruptures can escalate because the baseline is already weak. Waiting passively usually deepens drift and increases emotional cost. The key risk is normalization of low-quality interaction: less clarity, less safety, and lower trust recovery. Immediate action is required: define non-negotiable boundaries, test for concrete follow-through, and reassess trajectory after a short, specific intervention window.",
+        },
+      },
+      pl: {
+        heading: "Trajektoria relacji",
+        avgLabel: "srednia",
+        varianceLabel: "rozrzut",
+        stable: {
+          label: "Stabilna",
+          text:
+            "Trajektoria tej relacji jest obecnie stabilna. Sredni wynik pozostaje wysoki, a roznice miedzy obszarami sa pod kontrola, wiec system nie rozjezdza sie wewnetrznie. Nie opierasz obrazu relacji na jednym mocnym punkcie, ktory maskuje slabosci. Komunikacja, bliskosc emocjonalna, przewidywalnosc zachowan i klarownosc poruszaja sie w zblizonym kierunku. Taki profil zwykle lepiej znosi napiecie bez utraty struktury. Priorytetem nie jest rewolucja, tylko utrzymanie standardu: jasne ustalenia, widoczny follow-through i regularna kontrola spojnosci sygnalow.",
+        },
+        unstableGrowth: {
+          label: "Niestabilny wzrost",
+          text:
+            "Trajektoria pokazuje niestabilny wzrost. Wynik ogolny jest wysoki, ale rozrzut miedzy najmocniejszym i najslabszym obszarem jest na tyle duzy, ze generuje tarcie. W praktyce oznacza to realna poprawe, ale nierowna: jeden fragment relacji sie wzmacnia, a inny nadal produkuje niepewnosc. Najwiekszym ryzykiem jest falszywe poczucie bezpieczenstwa oparte na samym wyniku koncowym. Bez domkniecia najslabszego obszaru napiecie bedzie wracac w momentach presji. Kolejny krok to precyzyjna korekta tam, gdzie wynik jest najnizszy, i cotygodniowy pomiar zachowan.",
+        },
+        unstable: {
+          label: "Niestabilna",
+          text:
+            "Trajektoria relacji jest na tym etapie niestabilna. Sredni poziom nie jest wystarczajaco mocny, by zrownowazyc wewnetrzny rozrzut sygnalow, a profil pokazuje nierowna regulacje kluczowych obszarow. Mozesz odczuwac okresy bliskosci, po ktorych wraca chaos interpretacyjny albo defensywnosc. Taki uklad oslabia zaufanie, bo efekty staja sie trudne do przewidzenia. Problemem nie jest pojedynczy incydent, tylko powtarzalna niespojnosc systemu relacji. Priorytet na teraz: najpierw zmniejszyc rozrzut, doprecyzowac oczekiwania i sprawdzac, czy zachowania staja sie bardziej spojne z tygodnia na tydzien.",
+        },
+        declining: {
+          label: "Spadkowa",
+          text:
+            "Trajektoria relacji jest spadkowa wedlug aktualnego ukladu sygnalow. Srednia pozostaje ponizej progu stabilnosci, co oznacza, ze niepewnosc zaczyna dominowac strukturalnie. W takim stanie nawet drobne zaklocenia latwo eskaluja, bo baza jest oslabiona. Bierne czekanie zwykle poglebia dystans i podnosi koszt emocjonalny. Najwieksze ryzyko to normalizacja slabego standardu kontaktu: mniej klarownosci, mniej bezpieczenstwa i slabsza odbudowa zaufania. Potrzebna jest szybka interwencja: twarde granice, konkretne testy follow-through i ponowna ocena po krotkim okresie dzialania.",
+        },
+      },
+      de: {
+        heading: "Beziehungsverlauf",
+        avgLabel: "durchschnitt",
+        varianceLabel: "streuung",
+        stable: {
+          label: "Stabil",
+          text:
+            "Der Beziehungsverlauf ist aktuell stabil. Der Durchschnittswert bleibt hoch und die Differenz zwischen den Kernbereichen ist kontrolliert, daher zieht das System nicht in gegensätzliche Richtungen. Ein starker Bereich überdeckt keinen schwachen Bereich. Kommunikation, emotionale Nähe, Verhaltenskonsistenz und Klarheit entwickeln sich kompatibel. Dieses Profil kann Spannung in der Regel ohne strukturellen Verlust verarbeiten. Der nächste Schritt ist konsequente Pflege: klare Absprachen, sichtbares Follow-through und regelmäßige Prüfung der Signal-Konsistenz.",
+        },
+        unstableGrowth: {
+          label: "Instabiles Wachstum",
+          text:
+            "Der Beziehungsverlauf zeigt instabiles Wachstum. Das Gesamtniveau ist hoch, aber der Abstand zwischen stärkster und schwächster Dimension erzeugt spürbare Reibung. Fortschritt ist vorhanden, jedoch ungleich verteilt. Eine starke Dimension kann dabei Unsicherheit in einer schwachen Dimension verdecken. Das Risiko ist ein zu positives Gesamtbild trotz struktureller Lücke. Wird die schwächste Dimension nicht gezielt stabilisiert, kehrt Druck in Belastungsphasen schnell zurück. Priorität hat jetzt die präzise Korrektur im schwächsten Bereich mit kurzen, messbaren Wochenchecks.",
+        },
+        unstable: {
+          label: "Instabil",
+          text:
+            "Der Beziehungsverlauf ist derzeit instabil. Der Durchschnitt reicht nicht aus, um die interne Streuung zu kompensieren, und das Profil zeigt eine ungleichmäßige Regulation der wichtigsten Bereiche. Dadurch wechseln sich Nähe und Verunsicherung häufig ab. Diese Dynamik schwächt Vertrauen, weil Ergebnisse schwer planbar werden. Es geht nicht um einzelne Ereignisse, sondern um wiederkehrende Inkonsistenz im System. Der wirksamste Hebel ist zunächst die Streuung zu senken: Erwartungen klären, Konfliktregeln festlegen und beobachtbares Verhalten wöchentlich prüfen.",
+        },
+        declining: {
+          label: "Abnehmend",
+          text:
+            "Der Beziehungsverlauf ist nach aktueller Datenlage abnehmend. Der Durchschnitt liegt unter der Stabilitätsschwelle, wodurch Unsicherheit strukturell dominiert. In diesem Zustand können selbst kleine Störungen überproportional eskalieren. Passives Abwarten verstärkt meist Distanz und emotionalen Aufwand. Das Kernrisiko ist die Gewöhnung an niedrige Interaktionsqualität: weniger Klarheit, weniger Sicherheit, schwächere Vertrauensregeneration. Notwendig ist sofortiges Gegensteuern mit klaren Grenzen, konkreten Follow-through-Tests und einer erneuten Bewertung nach einem kurzen Interventionsfenster.",
+        },
+      },
+      es: {
+        heading: "Trayectoria de la relacion",
+        avgLabel: "promedio",
+        varianceLabel: "variacion",
+        stable: {
+          label: "Estable",
+          text:
+            "La trayectoria de la relación es estable en este momento. El promedio se mantiene alto y la diferencia entre áreas clave está controlada, por lo que el sistema no se descompensa. No dependes de un área fuerte para tapar una débil. Comunicación, cercanía emocional, consistencia de conducta y claridad avanzan de forma compatible. Este perfil suele tolerar tensión sin perder estructura. La prioridad práctica es sostener el estándar: acuerdos claros, seguimiento visible y revisión periódica de coherencia entre señales.",
+        },
+        unstableGrowth: {
+          label: "Crecimiento inestable",
+          text:
+            "La trayectoria muestra crecimiento inestable. El nivel general es alto, pero la distancia entre la dimensión más fuerte y la más débil genera fricción real. Hay progreso, pero no de manera uniforme. Una parte mejora mientras otra sigue introduciendo incertidumbre. El riesgo principal es una sensación de seguridad basada solo en el resultado global. Si no se corrige el punto más débil, la presión reaparece en momentos de estrés. El siguiente paso es intervenir de forma precisa en esa dimensión y medir cambios conductuales cada semana.",
+        },
+        unstable: {
+          label: "Inestable",
+          text:
+            "La trayectoria de la relación es inestable en esta fase. El promedio no alcanza para compensar la dispersión interna y el perfil refleja regulación desigual en áreas críticas. Puedes notar fases de conexión seguidas por confusión o defensividad. Esa oscilación erosiona confianza porque los resultados dejan de ser previsibles. No es un problema aislado, sino una inconsistencia repetida del sistema relacional. La prioridad inmediata es reducir varianza: aclarar expectativas, definir reglas de respuesta en conflicto y comprobar si la conducta se alinea semana a semana.",
+        },
+        declining: {
+          label: "En deterioro",
+          text:
+            "La trayectoria de la relación está en deterioro según el patrón actual. El promedio se mantiene por debajo del umbral de estabilidad y la incertidumbre pasa a dominar la estructura. En ese estado, incluso rupturas pequeñas pueden escalar con rapidez. Esperar sin intervenir suele ampliar la distancia y aumentar el costo emocional. El riesgo central es normalizar una interacción de baja calidad: menos claridad, menos seguridad y menor recuperación de confianza. Se requiere acción inmediata con límites firmes, pruebas concretas de cumplimiento y nueva evaluación en una ventana corta.",
+        },
+      },
+      pt: {
+        heading: "Trajetoria do relacionamento",
+        avgLabel: "media",
+        varianceLabel: "variacao",
+        stable: {
+          label: "Estavel",
+          text:
+            "A trajetória do relacionamento está estável no momento. A média permanece alta e a diferença entre áreas-chave está controlada, então o sistema não opera em direções opostas. Uma dimensão forte não está mascarando uma dimensão fraca. Comunicação, proximidade emocional, consistência de comportamento e clareza evoluem de forma compatível. Esse perfil costuma absorver tensão sem perder estrutura. O foco agora é manutenção disciplinada: acordos claros, follow-through visível e revisão periódica da coerência dos sinais.",
+        },
+        unstableGrowth: {
+          label: "Crescimento instavel",
+          text:
+            "A trajetória indica crescimento instável. O nível geral é alto, mas a distância entre a dimensão mais forte e a mais fraca gera atrito relevante. Há progresso, porém de forma desigual. Uma parte melhora enquanto outra continua produzindo incerteza. O principal risco é confiar demais no placar final e ignorar a lacuna estrutural. Sem correção direcionada na área mais fraca, a pressão tende a voltar nos momentos de estresse. O próximo passo é intervenção precisa nesse ponto e checagens semanais com evidência comportamental.",
+        },
+        unstable: {
+          label: "Instavel",
+          text:
+            "A trajetória do relacionamento está instável nesta fase. A média não é suficiente para compensar a variação interna e o perfil mostra regulação desigual nas áreas mais importantes. Isso cria ciclos de aproximação seguidos por confusão ou defensividade. Esse padrão reduz confiança porque os resultados ficam menos previsíveis. O problema não é um episódio isolado, mas uma inconsistência recorrente do sistema relacional. A prioridade é reduzir variação: alinhar expectativas, definir regras para conflito e monitorar se o comportamento fica mais coerente semana após semana.",
+        },
+        declining: {
+          label: "Em declinio",
+          text:
+            "A trajetória do relacionamento está em declínio com base no padrão atual. A média fica abaixo do limiar de estabilidade e a incerteza passa a dominar a estrutura. Nesse estado, até rupturas pequenas podem escalar rapidamente. Esperar sem ação tende a ampliar distância e custo emocional. O risco central é normalizar uma interação de baixa qualidade: menos clareza, menos segurança e pior recuperação de confiança. É necessária ação imediata com limites objetivos, testes concretos de follow-through e reavaliação em uma janela curta de intervenção.",
+        },
+      },
+      in: {
+        heading: "Relationship trajectory",
+        avgLabel: "avg",
+        varianceLabel: "variance",
+        stable: {
+          label: "Stable",
+          text:
+            "Your relationship trajectory is currently stable. The average stays high and the spread between key areas is controlled, so the system is not pulled in opposite directions. You are not relying on one strong area to hide a weak one. Communication, emotional closeness, behavioral consistency and clarity are moving in a compatible way. This usually means the relationship can absorb tension without losing structure. The practical priority is maintenance: keep clear agreements, keep follow-through visible, and review whether signals remain aligned over time.",
+        },
+        unstableGrowth: {
+          label: "Unstable growth",
+          text:
+            "Your relationship trajectory shows unstable growth. The overall level is high, but the distance between the strongest and weakest areas is wide enough to create friction. In practice, this means progress is real but uneven: one part of the relationship improves while another keeps reintroducing uncertainty. The risk is false confidence caused by strong headline scores. If you do not close the weak area, tension can return during stress peaks. The next step is precise correction in the lowest dimension and short weekly checks on visible behavior.",
+        },
+        unstable: {
+          label: "Unstable",
+          text:
+            "Your relationship trajectory is unstable at this stage. The average is not strong enough to offset the internal spread, and the profile suggests uneven regulation across key areas. You may experience moments of closeness followed by periods of confusion or defensiveness. This pattern drains trust because outcomes become hard to predict. The issue is not one bad day but repeated inconsistency in the relationship system. Priority now is to reduce variance first: tighten expectations, define response rules for conflict, and track whether behavior becomes more coherent week by week.",
+        },
+        declining: {
+          label: "Declining",
+          text:
+            "Your relationship trajectory is declining based on the current signal pattern. The overall average is below the stability threshold, which means uncertainty is now structurally dominant. In this state, even small ruptures can escalate because the baseline is already weak. Waiting passively usually deepens drift and increases emotional cost. The key risk is normalization of low-quality interaction: less clarity, less safety, and lower trust recovery. Immediate action is required: define non-negotiable boundaries, test for concrete follow-through, and reassess trajectory after a short, specific intervention window.",
+        },
+      },
+    };
+
+    const content = map[locale] || map.en;
+    return {
+      heading: content.heading,
+      avgLabel: content.avgLabel,
+      varianceLabel: content.varianceLabel,
+      stable: content.stable,
+      unstableGrowth: content.unstableGrowth,
+      unstable: content.unstable,
+      declining: content.declining,
+    };
+  }
+
+  function getRelationshipTrajectory(areaScores) {
+    const values = [
+      Number(areaScores.communication || 0),
+      Number(areaScores.emotional || 0),
+      Number(areaScores.behavior || 0),
+      Number(areaScores.trust || 0),
+    ];
+    const avgScore = values.reduce((sum, value) => sum + value, 0) / values.length;
+    const variance = Math.max(...values) - Math.min(...values);
+    let label = "unstable";
+
+    if (avgScore >= 70 && variance < 15) label = "stable";
+    else if (avgScore >= 70 && variance >= 15) label = "unstableGrowth";
+    else if (avgScore >= 40 && variance >= 15) label = "unstable";
+    else if (avgScore < 40) label = "declining";
+
+    return {
+      label,
+      avgScore: Math.round(avgScore),
+      variance: Math.round(variance),
+    };
+  }
+
+  function collectRiskAlerts(locale, benchmarkScores) {
+    const alertsUi = getRiskAlertLabels(locale);
+    const alertItems = [];
+    const clarityScore = benchmarkScores.clarity;
+    const emotionalScore = benchmarkScores.emotional;
+    const areaSpreadValues = [
+      benchmarkScores.communication,
+      benchmarkScores.emotional,
+      benchmarkScores.stability,
+      benchmarkScores.clarity,
+    ];
+    const spread = Math.max(...areaSpreadValues) - Math.min(...areaSpreadValues);
+
+    if (clarityScore < 60) {
+      alertItems.push(alertsUi.clarity);
+    }
+    if (emotionalScore < 60) {
+      alertItems.push(alertsUi.emotional);
+    }
+    if (spread > 15) {
+      alertItems.push(alertsUi.inconsistency);
+    }
+
+    return { alertsUi, alertItems };
+  }
+
+  function getTimelineContent(locale) {
+    const map = {
+      en: {
+        heading: "Timeline (3-6 months)",
+        avgLabel: "avg",
+        varianceLabel: "variance",
+        alertsLabel: "alerts",
+        positive: "Positive direction",
+        stableSensitive: "Stable but sensitive",
+        unstable: "Unstable direction",
+        declining: "Declining direction",
+        shortTerm: "Short-term (weeks)",
+        midTerm: "Mid-term (2-3 months)",
+        longTerm: "Longer-term (3-6 months)",
+        high: {
+          short:
+            "Current dynamics should stay generally predictable if your current standards are maintained. Day-to-day friction can still appear, but repair is likely to be faster.",
+          mid:
+            "By month two or three, you should see stronger consistency between conversations and behavior. Trust recovery cycles should get shorter, not longer.",
+          long:
+            "In a 3-6 month window, the relationship can consolidate into a stable pattern with lower decision pressure. The main risk is complacency, not collapse.",
+        },
+        mid: {
+          short:
+            "In the next weeks, results will likely look mixed: some good days, then returns of old friction. You may notice uneven effort between areas.",
+          mid:
+            "Over 2-3 months, unresolved weak spots can start dictating the tone of the relationship. Improvements remain possible, but they will feel reversible.",
+          long:
+            "Within 3-6 months, the direction depends on whether weak areas are actively corrected. Without correction, uncertainty stays elevated and decisions stay harder.",
+        },
+        low: {
+          short:
+            "In the coming weeks, conflict cost is likely to rise faster than repair quality. Emotional load can increase even when conversations still happen.",
+          mid:
+            "By month two or three, distance and defensiveness may become the default response loop. Clear agreements become harder to hold.",
+          long:
+            "Over 3-6 months, structural decline becomes more likely: lower clarity, weaker trust repair and more unstable outcomes. Passive waiting usually worsens this path.",
+        },
+      },
+      pl: {
+        heading: "Timeline (3-6 miesiecy)",
+        avgLabel: "srednia",
+        varianceLabel: "rozrzut",
+        alertsLabel: "alerty",
+        positive: "Kierunek pozytywny",
+        stableSensitive: "Stabilnie, ale wrazliwie",
+        unstable: "Kierunek niestabilny",
+        declining: "Kierunek spadkowy",
+        shortTerm: "Krotki termin (tygodnie)",
+        midTerm: "Sredni termin (2-3 miesiace)",
+        longTerm: "Dluzszy termin (3-6 miesiecy)",
+        high: {
+          short:
+            "Obecna dynamika powinna pozostac przewidywalna, jesli utrzymacie biezacy standard relacji. Tarcia beda sie pojawiac, ale domykanie napiec powinno byc szybsze.",
+          mid:
+            "Po 2-3 miesiacach powinno byc widac lepsza spojność miedzy rozmowami a zachowaniem. Cykle odbudowy zaufania powinny sie skaracac, a nie wydluzac.",
+          long:
+            "W perspektywie 3-6 miesiecy relacja moze wejsc w trwalszy, stabilny uklad z mniejsza presja decyzyjna. Najwiekszym ryzykiem jest rozluznienie dyscypliny, nie nagly kryzys.",
+        },
+        mid: {
+          short:
+            "W najblizszych tygodniach przebieg bedzie raczej mieszany: dobre dni beda przeplatac sie powrotem starych tarc. Wysilek miedzy obszarami moze pozostac nierowny.",
+          mid:
+            "W ciagu 2-3 miesiecy niedomkniete slabosci zaczna mocniej narzucac ton relacji. Poprawa jest mozliwa, ale bedzie odczuwana jako nietrwale zwyciestwo.",
+          long:
+            "W horyzoncie 3-6 miesiecy kierunek zalezy od tego, czy najslabsze obszary beda korygowane aktywnie. Bez korekty niepewnosc utrzyma sie na podwyzszonym poziomie.",
+        },
+        low: {
+          short:
+            "W kolejnych tygodniach koszt konfliktu prawdopodobnie bedzie rosnac szybciej niz jakosc naprawy. Obciazenie emocjonalne moze wzrastac mimo dalszych rozmow.",
+          mid:
+            "Po 2-3 miesiacach dystans i defensywnosc moga stac sie domyslnym wzorcem reakcji. Utrzymanie jasnych ustalen bedzie coraz trudniejsze.",
+          long:
+            "W perspektywie 3-6 miesiecy rosnie ryzyko dalszego spadku: mniej klarownosci, slabsza odbudowa zaufania i bardziej niestabilne rezultaty. Bierne czekanie zwykle pogarsza ten tor.",
+        },
+      },
+      de: {
+        heading: "Timeline (3-6 Monate)",
+        avgLabel: "durchschnitt",
+        varianceLabel: "streuung",
+        alertsLabel: "alarme",
+        positive: "Positive Richtung",
+        stableSensitive: "Stabil, aber sensibel",
+        unstable: "Instabile Richtung",
+        declining: "Abnehmende Richtung",
+        shortTerm: "Kurzfristig (Wochen)",
+        midTerm: "Mittelfristig (2-3 Monate)",
+        longTerm: "Langfristiger (3-6 Monate)",
+        high: {
+          short:
+            "Die aktuelle Dynamik bleibt voraussichtlich berechenbar, wenn der jetzige Standard gehalten wird.",
+          mid:
+            "Nach zwei bis drei Monaten sollte die Konsistenz zwischen Gespräch und Verhalten sichtbar steigen.",
+          long:
+            "Im 3-6-Monatsfenster ist eine stabilere Gesamtstruktur wahrscheinlich, sofern Disziplin erhalten bleibt.",
+        },
+        mid: {
+          short:
+            "In den nächsten Wochen bleibt das Bild gemischt: Fortschritt wechselt mit alten Reibungsmustern.",
+          mid:
+            "Über 2-3 Monate prägen offene Schwachstellen den Beziehungston deutlich stärker.",
+          long:
+            "In 3-6 Monaten entscheidet gezielte Korrektur der Schwachstellen über Richtung und Stabilität.",
+        },
+        low: {
+          short:
+            "Kurzfristig steigt der Konfliktpreis vermutlich schneller als die Qualität der Reparatur.",
+          mid:
+            "Nach zwei bis drei Monaten können Distanz und Abwehr zur Standardschleife werden.",
+          long:
+            "In 3-6 Monaten wird struktureller Abbau wahrscheinlicher, wenn keine harte Korrektur erfolgt.",
+        },
+      },
+      es: {
+        heading: "Timeline (3-6 meses)",
+        avgLabel: "promedio",
+        varianceLabel: "variacion",
+        alertsLabel: "alertas",
+        positive: "Direccion positiva",
+        stableSensitive: "Estable pero sensible",
+        unstable: "Direccion inestable",
+        declining: "Direccion de deterioro",
+        shortTerm: "Corto plazo (semanas)",
+        midTerm: "Medio plazo (2-3 meses)",
+        longTerm: "Plazo mas largo (3-6 meses)",
+        high: {
+          short:
+            "La dinamica actual deberia seguir predecible si se mantiene el estandar presente.",
+          mid:
+            "En 2-3 meses deberia verse mas consistencia entre lo que se habla y lo que se hace.",
+          long:
+            "En 3-6 meses es probable consolidar una estructura mas estable con menor presion decisional.",
+        },
+        mid: {
+          short:
+            "En las proximas semanas el resultado sera mixto: avance parcial y regreso de fricciones antiguas.",
+          mid:
+            "En 2-3 meses, los puntos debiles no corregidos marcaran el tono de la relacion.",
+          long:
+            "En 3-6 meses la direccion dependera de corregir de forma activa las areas debiles.",
+        },
+        low: {
+          short:
+            "A corto plazo, el costo del conflicto puede crecer mas rapido que la reparacion.",
+          mid:
+            "En 2-3 meses, distancia y defensividad pueden convertirse en patron dominante.",
+          long:
+            "En 3-6 meses aumenta el riesgo de deterioro estructural si no hay intervencion clara.",
+        },
+      },
+      pt: {
+        heading: "Timeline (3-6 meses)",
+        avgLabel: "media",
+        varianceLabel: "variacao",
+        alertsLabel: "alertas",
+        positive: "Direcao positiva",
+        stableSensitive: "Estavel, mas sensivel",
+        unstable: "Direcao instavel",
+        declining: "Direcao de declinio",
+        shortTerm: "Curto prazo (semanas)",
+        midTerm: "Medio prazo (2-3 meses)",
+        longTerm: "Prazo maior (3-6 meses)",
+        high: {
+          short:
+            "A dinamica atual tende a permanecer previsivel se o padrao atual for mantido.",
+          mid:
+            "Em 2-3 meses, a consistencia entre conversa e comportamento deve aumentar.",
+          long:
+            "No horizonte de 3-6 meses, a relacao pode consolidar uma estrutura mais estavel.",
+        },
+        mid: {
+          short:
+            "Nas proximas semanas o quadro tende a ser misto, com avanços e recaidas.",
+          mid:
+            "Em 2-3 meses, pontos fracos nao resolvidos passam a definir o tom da relacao.",
+          long:
+            "Em 3-6 meses, a direcao depende da correcao ativa das areas mais fracas.",
+        },
+        low: {
+          short:
+            "No curto prazo, o custo do conflito pode subir mais rapido que o reparo.",
+          mid:
+            "Em 2-3 meses, distancia e defensividade podem virar o padrao dominante.",
+          long:
+            "Em 3-6 meses, cresce o risco de declinio estrutural sem intervencao objetiva.",
+        },
+      },
+      in: {
+        heading: "Timeline (3-6 months)",
+        avgLabel: "avg",
+        varianceLabel: "variance",
+        alertsLabel: "alerts",
+        positive: "Positive direction",
+        stableSensitive: "Stable but sensitive",
+        unstable: "Unstable direction",
+        declining: "Declining direction",
+        shortTerm: "Short-term (weeks)",
+        midTerm: "Mid-term (2-3 months)",
+        longTerm: "Longer-term (3-6 months)",
+        high: {
+          short:
+            "Current dynamics should stay predictable if your current standards are maintained.",
+          mid:
+            "By month two or three, consistency between conversations and behaviour should improve.",
+          long:
+            "In 3-6 months, the relationship can consolidate into a more stable pattern.",
+        },
+        mid: {
+          short:
+            "In coming weeks, you may see mixed progress with returns of old friction.",
+          mid:
+            "Over 2-3 months, unresolved weak spots can start shaping the relationship tone.",
+          long:
+            "Within 3-6 months, direction depends on active correction of weak areas.",
+        },
+        low: {
+          short:
+            "In the short term, conflict cost may rise faster than repair quality.",
+          mid:
+            "By 2-3 months, distance and defensiveness may become the default loop.",
+          long:
+            "In 3-6 months, structural decline is likely without targeted intervention.",
+        },
+      },
+    };
+
+    const content = map[locale] || map.en;
+    return {
+      heading: content.heading,
+      avgLabel: content.avgLabel,
+      varianceLabel: content.varianceLabel,
+      alertsLabel: content.alertsLabel,
+      positive: content.positive || map.en.positive,
+      stableSensitive: content.stableSensitive || map.en.stableSensitive,
+      unstable: content.unstable || map.en.unstable,
+      declining: content.declining || map.en.declining,
+      shortTerm: content.shortTerm || map.en.shortTerm,
+      midTerm: content.midTerm || map.en.midTerm,
+      longTerm: content.longTerm || map.en.longTerm,
+      high: content.high || map.en.high,
+      mid: content.mid || map.en.mid,
+      low: content.low || map.en.low,
+    };
+  }
+
+  function getRelationshipTimeline(avgScore, alertCount) {
+    let state = "unstable";
+    let variant = "mid";
+
+    if (avgScore >= 70 && alertCount === 0) {
+      state = "positive";
+      variant = "high";
+    } else if (avgScore >= 70 && alertCount > 0) {
+      state = "stableSensitive";
+      variant = "mid";
+    } else if (avgScore >= 40 && alertCount > 1) {
+      state = "unstable";
+      variant = "mid";
+    } else if (avgScore < 40) {
+      state = "declining";
+      variant = "low";
+    }
+
+    return { state, variant };
+  }
+
+  function getScoreRange(score) {
+    if (score >= 70) return "high";
+    if (score >= 40) return "mid";
+    return "low";
+  }
+
+  function getWeakestAreaKey(areaScores) {
+    const normalized = {
+      communication: Number(areaScores.communication || 0),
+      emotional: Number(areaScores.emotional || 0),
+      stability: Number(areaScores.behavior || areaScores.stability || 0),
+      clarity: Number(areaScores.trust || areaScores.clarity || 0),
+    };
+    const sorted = Object.entries(normalized).sort((a, b) => a[1] - b[1]);
+    return sorted[0] ? sorted[0][0] : "communication";
+  }
+
+  function getPersonalizedInsightSentence(locale, score, areaScores) {
+    const range = getScoreRange(score);
+    const weakestArea = getWeakestAreaKey(areaScores);
+    const pool = {
+      en: {
+        high: {
+          communication: "Your strong score still depends on unresolved communication repair.",
+          emotional: "High results, yet emotional distance still drives your decision risk.",
+          stability: "Strong score, but behavior consistency still threatens your momentum.",
+          clarity: "Your profile is high, but unclear intent still weakens trust.",
+        },
+        mid: {
+          communication: "Your momentum slows whenever hard conversations stay unfinished.",
+          emotional: "Mid score, but emotional distance keeps stretching your uncertainty.",
+          stability: "Your mixed result reflects inconsistent behavior after tense moments.",
+          clarity: "Your uncertainty grows when intentions stay unclear week after week.",
+        },
+        low: {
+          communication: "Low score and blocked conversations are accelerating disconnection.",
+          emotional: "Low stability plus emotional distance is draining your repair capacity.",
+          stability: "Your low result tracks repeated behavior breaks after conflict.",
+          clarity: "Low score with unclear signals keeps you in constant doubt.",
+        },
+      },
+      pl: {
+        high: {
+          communication: "Mocny wynik nadal oslabia brak domkniec w komunikacji.",
+          emotional: "Wysoki wynik, ale dystans emocjonalny podnosi Twoje ryzyko decyzji.",
+          stability: "Wysoki wynik, lecz niespojne zachowania oslabiaja obecny trend.",
+          clarity: "Profil jest wysoki, ale niejasne intencje oslabiaja zaufanie.",
+        },
+        mid: {
+          communication: "Twoj trend hamuje, gdy trudne rozmowy zostaja niedokonczone.",
+          emotional: "Wynik sredni, ale dystans emocjonalny dalej zwieksza niepewnosc.",
+          stability: "Mieszany wynik pokazuje niespojne zachowania po napieciach.",
+          clarity: "Niepewnosc rosnie, gdy intencje pozostaja niejasne tygodniami.",
+        },
+        low: {
+          communication: "Niski wynik i zablokowane rozmowy przyspieszaja oddalenie.",
+          emotional: "Niska stabilnosc i dystans emocjonalny oslabiaja zdolnosc naprawy.",
+          stability: "Niski wynik pokazuje powtarzalne pekniecia zachowan po konflikcie.",
+          clarity: "Niski wynik i niejasne sygnaly utrzymuja Cię w watpliwosciach.",
+        },
+      },
+      de: {
+        high: {
+          communication: "Dein starker Wert hängt weiter an offener Kommunikationsreparatur.",
+          emotional: "Hoher Score, doch emotionale Distanz treibt weiter Entscheidungsrisiko.",
+          stability: "Starker Score, aber Verhaltenskonsistenz gefährdet deinen aktuellen Fortschritt.",
+          clarity: "Dein Profil ist hoch, doch unklare Intention schwächt Vertrauen.",
+        },
+        mid: {
+          communication: "Dein Verlauf bremst, sobald schwierige Gespräche offen bleiben.",
+          emotional: "Mittlerer Score, doch emotionale Distanz erhöht weiter Unsicherheit.",
+          stability: "Dein gemischter Wert zeigt inkonsistentes Verhalten nach Spannung.",
+          clarity: "Unsicherheit wächst, wenn Intentionen wochenlang unklar bleiben.",
+        },
+        low: {
+          communication: "Niedriger Score und blockierte Gespräche beschleunigen die Entkopplung.",
+          emotional: "Niedrige Stabilität plus Distanz schwächen deine Reparaturkapazität stark.",
+          stability: "Dein niedriger Wert zeigt wiederholte Verhaltensbrüche nach Konflikten.",
+          clarity: "Niedriger Score und unklare Signale halten dauerhaften Zweifel aktiv.",
+        },
+      },
+      es: {
+        high: {
+          communication: "Tu puntaje alto aún depende de reparaciones comunicativas pendientes.",
+          emotional: "Resultado alto, pero distancia emocional mantiene tu riesgo decisional.",
+          stability: "Puntaje alto, aunque consistencia conductual amenaza tu avance actual.",
+          clarity: "Perfil alto, pero intención poco clara sigue debilitando confianza.",
+        },
+        mid: {
+          communication: "Tu avance se frena cuando conversaciones difíciles quedan abiertas.",
+          emotional: "Puntaje medio, pero distancia emocional mantiene alta incertidumbre.",
+          stability: "Tu resultado mixto refleja conductas inconsistentes tras tensión.",
+          clarity: "La incertidumbre crece cuando las intenciones siguen poco claras.",
+        },
+        low: {
+          communication: "Puntaje bajo y conversaciones bloqueadas aceleran el distanciamiento.",
+          emotional: "Baja estabilidad y distancia emocional agotan capacidad de reparación.",
+          stability: "Tu resultado bajo muestra rupturas conductuales repetidas tras conflicto.",
+          clarity: "Puntaje bajo y señales confusas sostienen duda constante.",
+        },
+      },
+      pt: {
+        high: {
+          communication: "Seu score alto ainda depende de reparo comunicacional pendente.",
+          emotional: "Resultado alto, mas distância emocional mantém risco decisório elevado.",
+          stability: "Score alto, porém consistência comportamental ameaça progresso atual.",
+          clarity: "Perfil alto, mas intenção pouco clara enfraquece confiança.",
+        },
+        mid: {
+          communication: "Seu ritmo cai quando conversas difíceis ficam sem fechamento.",
+          emotional: "Score médio, mas distância emocional mantém incerteza elevada.",
+          stability: "Resultado misto reflete comportamento inconsistente após tensão.",
+          clarity: "A incerteza cresce quando intenções seguem pouco claras.",
+        },
+        low: {
+          communication: "Score baixo e conversas bloqueadas aceleram afastamento relacional.",
+          emotional: "Baixa estabilidade e distância emocional drenam capacidade de reparo.",
+          stability: "Seu resultado baixo mostra rupturas comportamentais após conflitos.",
+          clarity: "Score baixo e sinais confusos mantêm dúvida constante.",
+        },
+      },
+      in: null,
+    };
+
+    const dictionary = pool[locale] || pool.en;
+    const selected =
+      (dictionary[range] && dictionary[range][weakestArea]) ||
+      (pool.en[range] && pool.en[range][weakestArea]) ||
+      pool.en.mid.communication;
+    return {
+      sentence: selected,
+      logic: {
+        scoreRange: range,
+        weakestArea,
+      },
+    };
+  }
+
+  function getOutcomeActionsContent(locale) {
+    const map = {
+      en: {
+        heading: "What changes the outcome",
+        highImpact: "High impact actions",
+        mediumImpact: "Medium impact actions",
+        lowImpact: "Low impact actions",
+        whyLabel: "Why",
+        changeLabel: "Change",
+        high: {
+          highImpact: [
+            {
+              title: "Close one unresolved loop every week",
+              explanation: "Pick one recurring conflict and document a concrete decision with owner and deadline.",
+              why: "Unresolved loops recreate uncertainty even when overall scores are high.",
+              change: "Lowers variance and keeps gains from being reversed.",
+            },
+            {
+              title: "Run a weekly trust evidence check",
+              explanation: "List two promises made and whether each was fully completed by week end.",
+              why: "Trust shifts on visible follow-through, not intention.",
+              change: "Strengthens clarity and behavioral consistency together.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Set a conflict timeout protocol",
+              explanation: "When escalation starts, pause for 20 minutes and restart with one defined agenda item.",
+              why: "Fast escalation destroys repair quality.",
+              change: "Improves emotional regulation during pressure moments.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Reduce passive irritation signals",
+              explanation: "Replace sarcasm or silent withdrawal with one direct sentence about the issue.",
+              why: "Low-level hostility compounds over time.",
+              change: "Prevents background tension from eroding progress.",
+            },
+          ],
+        },
+        mid: {
+          highImpact: [
+            {
+              title: "Define red-line behaviors with immediate consequence",
+              explanation: "Agree on 2-3 behaviors that are not acceptable and what happens if they repeat.",
+              why: "Ambiguous limits keep unstable dynamics alive.",
+              change: "Creates predictability and reduces defensive cycling.",
+            },
+            {
+              title: "Install a 14-day repair sprint",
+              explanation: "For two weeks, track one weak area daily with a yes/no completion rule.",
+              why: "Mid profiles improve only when weak spots are operationalized.",
+              change: "Turns abstract intent into measurable correction.",
+            },
+            {
+              title: "Use fact-assumption separation before major talks",
+              explanation: "Write what was observed versus what is inferred before entering difficult discussions.",
+              why: "Inference-heavy conversations inflate conflict.",
+              change: "Raises clarity and lowers misinterpretation cost.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Schedule one structured check-in weekly",
+              explanation: "30 minutes, fixed order: facts, impact, next step, deadline.",
+              why: "Unstructured talks drift and reopen closed topics.",
+              change: "Increases communication efficiency and follow-through.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Limit third-party influence",
+              explanation: "Avoid making core relationship decisions from outside opinions in reactive states.",
+              why: "External noise amplifies uncertainty.",
+              change: "Keeps decisions tied to observed dynamics, not pressure.",
+            },
+          ],
+        },
+        low: {
+          highImpact: [
+            {
+              title: "Set a 30-day stabilization contract",
+              explanation: "Define minimum behavior standards and review compliance twice per week.",
+              why: "Low profiles need immediate structure to stop decline.",
+              change: "Prevents further drift and creates a baseline for re-evaluation.",
+            },
+            {
+              title: "Stop ambiguity at source",
+              explanation: "Any contradiction between words and actions must be addressed within 24 hours.",
+              why: "Delayed confrontation normalizes distrust.",
+              change: "Cuts uncertainty accumulation and clarifies intent.",
+            },
+            {
+              title: "Decide on threshold-based continuation",
+              explanation: "Set 2-3 measurable conditions required to continue the relationship after 6 weeks.",
+              why: "Open-ended waiting increases emotional and cognitive cost.",
+              change: "Restores agency and decision clarity.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Reduce conflict channel width",
+              explanation: "Discuss one issue at a time; block multi-topic escalation.",
+              why: "Topic stacking overwhelms repair capacity.",
+              change: "Improves focus and short-term regulation.",
+            },
+            {
+              title: "Use written follow-up after hard talks",
+              explanation: "Summarize agreements in writing immediately after discussion.",
+              why: "Memory drift recreates disputes.",
+              change: "Increases accountability and lowers reinterpretation.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Adjust non-critical logistics first",
+              explanation: "Remove small recurring stressors in schedule and routines.",
+              why: "It does not fix structural issues alone.",
+              change: "Frees bandwidth for higher-impact interventions.",
+            },
+          ],
+        },
+      },
+      pl: {
+        heading: "Co zmienia wynik",
+        highImpact: "Dzialania o wysokim wplywie",
+        mediumImpact: "Dzialania o srednim wplywie",
+        lowImpact: "Dzialania o nizszym wplywie",
+        whyLabel: "Dlaczego",
+        changeLabel: "Zmiana",
+        high: {
+          highImpact: [
+            {
+              title: "Domykaj jeden niedomkniety temat tygodniowo",
+              explanation: "Wybierz jeden powracajacy konflikt i zapisz konkretna decyzje z odpowiedzialnoscia i terminem.",
+              why: "Niedomkniete petle odtwarzaja niepewnosc mimo dobrego wyniku ogolnego.",
+              change: "Zmniejsza rozrzut miedzy obszarami i stabilizuje trend.",
+            },
+            {
+              title: "Wprowadz tygodniowy audyt dowodow zaufania",
+              explanation: "Sprawdzaj dwie obietnice z tygodnia i czy zostaly domkniete w 100 procentach.",
+              why: "Zaufanie przesuwa sie przez widoczny follow-through, nie przez deklaracje.",
+              change: "Wzmacnia jednoczesnie klarownosc i spojność zachowan.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Ustal protokol timeoutu w konflikcie",
+              explanation: "Przy eskalacji robicie 20 minut przerwy i wracacie do jednego, jasno zdefiniowanego tematu.",
+              why: "Szybka eskalacja psuje jakosc naprawy.",
+              change: "Poprawia regulacje emocjonalna pod presja.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Ogranicz sygnaly pasywnej irytacji",
+              explanation: "Zamiast sarkazmu lub wycofania padnie jedno bezposrednie zdanie o problemie.",
+              why: "Niski poziom wrogosci kumuluje koszt relacji.",
+              change: "Chroni postep przed cichym cofaniem.",
+            },
+          ],
+        },
+        mid: {
+          highImpact: [
+            {
+              title: "Ustal czerwone linie z natychmiastowa konsekwencja",
+              explanation: "Uzgodnijcie 2-3 zachowania nieakceptowalne i co dzieje sie po ich powtorzeniu.",
+              why: "Niejasne granice podtrzymuja niestabilna dynamike.",
+              change: "Buduje przewidywalnosc i zmniejsza defensywne petle.",
+            },
+            {
+              title: "Uruchom 14-dniowy sprint naprawczy",
+              explanation: "Przez dwa tygodnie monitorujcie codziennie najslabszy obszar wedlug reguly wykonane/niewykonane.",
+              why: "Profil mid poprawia sie dopiero po operacyjnym domknieciu slabosci.",
+              change: "Zamienia intencje na mierzalna korekte.",
+            },
+            {
+              title: "Oddziel fakty od domyslow przed trudna rozmowa",
+              explanation: "Przed rozmowa zapiszcie co bylo obserwowalne, a co jest interpretacja.",
+              why: "Rozmowy oparte na domyslach podnosza koszt konfliktu.",
+              change: "Podnosi klarownosc i obniza ryzyko blednej interpretacji.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Wprowadz jeden strukturalny check-in tygodniowo",
+              explanation: "30 minut, stala kolejnosc: fakty, wplyw, nastepny krok, termin.",
+              why: "Niestrukturalne rozmowy rozmywaja decyzje i otwieraja zamkniete tematy.",
+              change: "Zwiksza efektywnosc komunikacji i domykania ustalen.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Ogranicz reaktywny wplyw osob trzecich",
+              explanation: "Nie podejmuj kluczowych decyzji relacyjnych pod naciskiem opinii z zewnatrz.",
+              why: "Szum zewnetrzny zwieksza niepewnosc.",
+              change: "Utrzymuje decyzje na danych z relacji, nie na presji otoczenia.",
+            },
+          ],
+        },
+        low: {
+          highImpact: [
+            {
+              title: "Ustal 30-dniowy kontrakt stabilizacyjny",
+              explanation: "Zdefiniuj minimum zachowan i sprawdzaj wykonanie dwa razy w tygodniu.",
+              why: "Profil low wymaga szybkiej struktury, by zatrzymac spadek.",
+              change: "Zatrzymuje dalszy dryf i tworzy baze do ponownej oceny.",
+            },
+            {
+              title: "Ucinaj niejednoznacznosc u zrodla",
+              explanation: "Kazda rozbieznosc miedzy slowami a zachowaniem jest adresowana maksymalnie w 24 godziny.",
+              why: "Odwlekanie konfrontacji normalizuje brak zaufania.",
+              change: "Zmniejsza narastanie niepewnosci i porzadkuje intencje.",
+            },
+            {
+              title: "Ustal warunki kontynuacji oparte na progach",
+              explanation: "Wyznacz 2-3 mierzalne warunki utrzymania relacji po 6 tygodniach.",
+              why: "Otwarte czekanie zwieksza koszt emocjonalny i decyzyjny.",
+              change: "Przywraca sprawczosc i jasnosc decyzji.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Zwez kanal konfliktu",
+              explanation: "Omawiajcie jeden temat naraz i blokujcie eskalacje wielotematyczna.",
+              why: "Nakladanie tematow przeciąza zdolnosc naprawy.",
+              change: "Poprawia fokus i krotkoterminowa regulacje.",
+            },
+            {
+              title: "Stosuj pisemny follow-up po trudnych rozmowach",
+              explanation: "Po rozmowie od razu zapiszcie uzgodnienia w krotkiej formie.",
+              why: "Rozjazd pamieci odtwarza spory.",
+              change: "Zwiksza odpowiedzialnosc i ogranicza reinterpretacje.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Najpierw usuń drobne stresory organizacyjne",
+              explanation: "Zredukuj powtarzalne drobne obciazenia w planie dnia i logistyce.",
+              why: "To samo nie naprawia problemu strukturalnego.",
+              change: "Uwalnia zasoby na dzialania o duzym wplywie.",
+            },
+          ],
+        },
+      },
+      de: {
+        heading: "Was das Ergebnis verandert",
+        highImpact: "Massnahmen mit hoher Wirkung",
+        mediumImpact: "Massnahmen mit mittlerer Wirkung",
+        lowImpact: "Massnahmen mit niedriger Wirkung",
+        whyLabel: "Warum",
+        changeLabel: "Veranderung",
+        high: {
+          highImpact: [
+            {
+              title: "Eine offene Schleife pro Woche konsequent schliessen",
+              explanation: "Nehmt einen wiederkehrenden Konflikt und haltet eine klare Entscheidung mit Verantwortlichkeit und Frist fest.",
+              why: "Offene Schleifen erzeugen Unsicherheit trotz hoher Gesamtwerte.",
+              change: "Reduziert Streuung und stabilisiert den positiven Trend.",
+            },
+            {
+              title: "Wöchentlichen Evidenz-Check für Vertrauen einführen",
+              explanation: "Prüft zwei Zusagen aus der Woche und ob sie vollständig umgesetzt wurden.",
+              why: "Vertrauen verschiebt sich durch sichtbare Verbindlichkeit, nicht durch Absicht.",
+              change: "Stärkt Klarheit und Verhaltenskonsistenz gleichzeitig.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Timeout-Protokoll für Eskalation festlegen",
+              explanation: "Bei Eskalation 20 Minuten Pause, dann Neustart mit genau einem Agenda-Punkt.",
+              why: "Schnelle Eskalation senkt die Qualität der Reparatur.",
+              change: "Verbessert emotionale Regulation unter Druck.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Passive Gereiztheit aktiv reduzieren",
+              explanation: "Sarkasmus oder Rückzug durch einen direkten Satz zum Problem ersetzen.",
+              why: "Niedrige Feindseligkeit akkumuliert langfristig Schaden.",
+              change: "Schützt Fortschritt vor schleichender Erosion.",
+            },
+          ],
+        },
+        mid: {
+          highImpact: [
+            {
+              title: "Rote Linien mit sofortiger Konsequenz definieren",
+              explanation: "Legt 2-3 nicht akzeptable Verhaltensweisen und die direkte Konsequenz bei Wiederholung fest.",
+              why: "Unklare Grenzen halten instabile Dynamik am Leben.",
+              change: "Erhöht Vorhersehbarkeit und reduziert Abwehrschleifen.",
+            },
+            {
+              title: "14-Tage-Reparatursprint starten",
+              explanation: "Über zwei Wochen täglich den schwächsten Bereich mit Ja/Nein-Regel tracken.",
+              why: "Mid-Profile verbessern sich erst durch operative Korrektur der Schwäche.",
+              change: "Macht Absicht messbar und überprüfbar.",
+            },
+            {
+              title: "Fakten und Annahmen vor harten Gesprächen trennen",
+              explanation: "Vor dem Gespräch schriftlich festhalten: beobachtete Fakten versus Interpretation.",
+              why: "Annahmen erhöhen Konfliktkosten unnötig.",
+              change: "Steigert Klarheit und senkt Fehlinterpretationen.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Einen strukturierten Wochen-Check-in einplanen",
+              explanation: "30 Minuten, feste Reihenfolge: Fakten, Wirkung, nächster Schritt, Frist.",
+              why: "Unstrukturierte Gespräche öffnen geschlossene Themen neu.",
+              change: "Erhöht Effizienz und Umsetzungsquote.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Einfluss Dritter in Reaktivität begrenzen",
+              explanation: "Keine Kernentscheidungen unter externem Druck und emotionalem Peak treffen.",
+              why: "Externer Lärm verstärkt Unsicherheit.",
+              change: "Bindet Entscheidungen wieder an beobachtbare Daten.",
+            },
+          ],
+        },
+        low: {
+          highImpact: [
+            {
+              title: "30-Tage-Stabilisierungsvertrag setzen",
+              explanation: "Mindeststandards für Verhalten definieren und zweimal pro Woche auf Einhaltung prüfen.",
+              why: "Low-Profile brauchen sofortige Struktur, um Abwärtstrend zu stoppen.",
+              change: "Stoppt weiteren Drift und schafft Basis für Neubewertung.",
+            },
+            {
+              title: "Mehrdeutigkeit sofort adressieren",
+              explanation: "Jede Diskrepanz zwischen Worten und Verhalten innerhalb von 24 Stunden klären.",
+              why: "Verzögerung normalisiert Misstrauen.",
+              change: "Senkt Unsicherheitsaufbau und schärft Intentionen.",
+            },
+            {
+              title: "Fortsetzung an Schwellenwerte koppeln",
+              explanation: "2-3 messbare Bedingungen festlegen, die nach sechs Wochen erfüllt sein müssen.",
+              why: "Offenes Warten erhöht emotionalen und kognitiven Preis.",
+              change: "Stellt Handlungsmacht und Entscheidungsklarheit wieder her.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Konfliktkanal verengen",
+              explanation: "Nur ein Thema pro Gespräch und konsequentes Stoppen von Themen-Stapeln.",
+              why: "Themenstapel überlasten Reparaturfähigkeit.",
+              change: "Verbessert Fokus und Kurzzeitregulation.",
+            },
+            {
+              title: "Schriftliches Follow-up nach schwierigen Gesprächen",
+              explanation: "Absprachen direkt nach dem Gespräch kurz schriftlich bestätigen.",
+              why: "Erinnerungsdrift erzeugt alte Streitpunkte neu.",
+              change: "Erhöht Verbindlichkeit und reduziert Reinterpretation.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Kleine organisatorische Stressoren zuerst reduzieren",
+              explanation: "Wiederkehrende Mikro-Belastungen in Alltag und Logistik entfernen.",
+              why: "Allein löst das keine strukturellen Probleme.",
+              change: "Schafft Kapazität für Maßnahmen mit hoher Wirkung.",
+            },
+          ],
+        },
+      },
+      es: {
+        heading: "Que cambia el resultado",
+        highImpact: "Acciones de alto impacto",
+        mediumImpact: "Acciones de impacto medio",
+        lowImpact: "Acciones de bajo impacto",
+        whyLabel: "Por que",
+        changeLabel: "Cambio",
+        high: {
+          highImpact: [
+            {
+              title: "Cerrar una disputa abierta por semana",
+              explanation: "Tomad un conflicto recurrente y dejad una decision concreta con responsable y fecha.",
+              why: "Los bucles abiertos recrean incertidumbre incluso con buena media.",
+              change: "Reduce variacion y sostiene la tendencia positiva.",
+            },
+            {
+              title: "Aplicar revision semanal de evidencia de confianza",
+              explanation: "Revisad dos compromisos de la semana y si se cumplieron al 100 por cien.",
+              why: "La confianza cambia por cumplimiento visible, no por intencion.",
+              change: "Refuerza claridad y consistencia conductual al mismo tiempo.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Definir protocolo de pausa en escalada",
+              explanation: "Si sube la tension, pausa de 20 minutos y retorno con una sola agenda.",
+              why: "La escalada rapida reduce la calidad de reparacion.",
+              change: "Mejora regulacion emocional bajo presion.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Reducir señales de irritacion pasiva",
+              explanation: "Sustituid sarcasmo o retiro silencioso por una frase directa del problema.",
+              why: "La hostilidad baja se acumula y desgasta.",
+              change: "Evita que el progreso se erosione en segundo plano.",
+            },
+          ],
+        },
+        mid: {
+          highImpact: [
+            {
+              title: "Fijar lineas rojas con consecuencia inmediata",
+              explanation: "Acordad 2-3 conductas no aceptables y que pasa si se repiten.",
+              why: "Los limites ambiguos sostienen dinamicas inestables.",
+              change: "Aumenta previsibilidad y baja bucles defensivos.",
+            },
+            {
+              title: "Lanzar sprint de reparacion de 14 dias",
+              explanation: "Durante dos semanas, seguid a diario el area mas debil con regla si/no.",
+              why: "Los perfiles medios mejoran cuando la correccion es operativa.",
+              change: "Convierte intencion en ajuste medible.",
+            },
+            {
+              title: "Separar hechos y suposiciones antes de conversaciones duras",
+              explanation: "Escribid que fue observable y que es inferencia antes de hablar.",
+              why: "Las suposiciones elevan el costo del conflicto.",
+              change: "Sube claridad y reduce errores de lectura.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Programar un check-in estructurado semanal",
+              explanation: "30 minutos con orden fijo: hechos, impacto, siguiente paso, fecha limite.",
+              why: "Las conversaciones sin estructura reabren temas cerrados.",
+              change: "Mejora eficiencia y tasa de cumplimiento.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Limitar influencia externa en modo reactivo",
+              explanation: "No tomar decisiones clave de pareja bajo presion de terceros.",
+              why: "El ruido externo amplifica incertidumbre.",
+              change: "Mantiene decisiones basadas en datos de la relacion.",
+            },
+          ],
+        },
+        low: {
+          highImpact: [
+            {
+              title: "Crear contrato de estabilizacion de 30 dias",
+              explanation: "Definid estandares minimos de conducta y revisad cumplimiento dos veces por semana.",
+              why: "Los perfiles bajos necesitan estructura inmediata para frenar deterioro.",
+              change: "Detiene deriva y crea base para reevaluacion.",
+            },
+            {
+              title: "Cortar la ambiguedad en origen",
+              explanation: "Toda contradiccion entre palabras y actos se aborda en 24 horas.",
+              why: "La demora normaliza desconfianza.",
+              change: "Reduce acumulacion de incertidumbre y aclara intencion.",
+            },
+            {
+              title: "Condicionar continuidad a umbrales medibles",
+              explanation: "Definid 2-3 condiciones cuantificables para continuar tras seis semanas.",
+              why: "Esperar sin marco aumenta costo emocional y decisional.",
+              change: "Recupera agencia y claridad de decision.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Estrechar canal del conflicto",
+              explanation: "Un tema por conversacion y bloqueo de escalada multi-tema.",
+              why: "Acumular temas supera la capacidad de reparacion.",
+              change: "Mejora foco y regulacion de corto plazo.",
+            },
+            {
+              title: "Usar seguimiento escrito tras conversaciones dificiles",
+              explanation: "Documentad acuerdos por escrito justo despues de hablar.",
+              why: "La deriva de memoria reabre disputas.",
+              change: "Aumenta responsabilidad y baja reinterpretacion.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Quitar primero estresores logisticos menores",
+              explanation: "Eliminad pequenas fricciones repetidas en horarios y rutinas.",
+              why: "Por si solo no corrige problemas estructurales.",
+              change: "Libera energia para intervenciones de alto impacto.",
+            },
+          ],
+        },
+      },
+      pt: {
+        heading: "O que muda o resultado",
+        highImpact: "Acoes de alto impacto",
+        mediumImpact: "Acoes de impacto medio",
+        lowImpact: "Acoes de baixo impacto",
+        whyLabel: "Por que",
+        changeLabel: "Mudanca",
+        high: {
+          highImpact: [
+            {
+              title: "Fechar um conflito recorrente por semana",
+              explanation: "Escolham um conflito repetido e registrem decisao concreta com responsavel e prazo.",
+              why: "Ciclos abertos recriam incerteza mesmo com media alta.",
+              change: "Reduz variacao e sustenta o movimento positivo.",
+            },
+            {
+              title: "Fazer revisao semanal de evidencias de confianca",
+              explanation: "Verifiquem duas promessas da semana e se foram cumpridas por completo.",
+              why: "Confianca muda por cumprimento visivel, nao por intencao.",
+              change: "Fortalece clareza e consistencia comportamental.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Definir protocolo de pausa para escalada",
+              explanation: "Quando houver escalada, pausa de 20 minutos e retorno com uma unica pauta.",
+              why: "Escalada rapida reduz qualidade de reparo.",
+              change: "Melhora regulacao emocional sob pressao.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Reduzir sinais de irritacao passiva",
+              explanation: "Troquem sarcasmo ou silencio por uma frase direta sobre o problema.",
+              why: "Hostilidade de baixa intensidade acumula desgaste.",
+              change: "Evita erosao silenciosa do progresso.",
+            },
+          ],
+        },
+        mid: {
+          highImpact: [
+            {
+              title: "Definir linhas vermelhas com consequencia imediata",
+              explanation: "Acordem 2-3 comportamentos inaceitaveis e a consequencia quando se repetirem.",
+              why: "Limites ambiguos mantem dinamica instavel.",
+              change: "Aumenta previsibilidade e reduz ciclos defensivos.",
+            },
+            {
+              title: "Executar sprint de reparo de 14 dias",
+              explanation: "Durante duas semanas, monitorem diariamente a area mais fraca com regra sim/nao.",
+              why: "Perfil medio melhora quando a correcao vira rotina operacional.",
+              change: "Transforma intencao em ajuste mensuravel.",
+            },
+            {
+              title: "Separar fatos de suposicoes antes de conversas dificeis",
+              explanation: "Escrevam o que foi observado e o que e inferencia antes da conversa.",
+              why: "Suposicoes elevam custo de conflito.",
+              change: "Aumenta clareza e reduz erro de interpretacao.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Agendar um check-in estruturado semanal",
+              explanation: "30 minutos com ordem fixa: fatos, impacto, proximo passo, prazo.",
+              why: "Conversa sem estrutura reabre temas ja fechados.",
+              change: "Melhora eficiencia e taxa de execucao.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Limitar influencia externa em estado reativo",
+              explanation: "Evitem decisao central da relacao sob pressao de terceiros.",
+              why: "Ruido externo amplia incerteza.",
+              change: "Mantem decisao baseada em dados reais da relacao.",
+            },
+          ],
+        },
+        low: {
+          highImpact: [
+            {
+              title: "Criar contrato de estabilizacao de 30 dias",
+              explanation: "Definam padroes minimos de comportamento e revisem cumprimento duas vezes por semana.",
+              why: "Perfil low exige estrutura imediata para conter queda.",
+              change: "Interrompe deriva e cria base para reavaliacao.",
+            },
+            {
+              title: "Eliminar ambiguidade na origem",
+              explanation: "Toda contradicao entre fala e acao deve ser tratada em ate 24 horas.",
+              why: "Atraso normaliza desconfianca.",
+              change: "Reduz acumulacao de incerteza e esclarece intencao.",
+            },
+            {
+              title: "Vincular continuidade a limites mensuraveis",
+              explanation: "Definam 2-3 condicoes objetivas para continuidade apos seis semanas.",
+              why: "Esperar sem criterio aumenta custo emocional e decisorio.",
+              change: "Recupera agencia e clareza de decisao.",
+            },
+          ],
+          mediumImpact: [
+            {
+              title: "Estreitar canal de conflito",
+              explanation: "Um tema por conversa e bloqueio de escalada com varios assuntos.",
+              why: "Empilhar temas sobrecarrega capacidade de reparo.",
+              change: "Melhora foco e regulacao de curto prazo.",
+            },
+            {
+              title: "Usar follow-up escrito apos conversas dificeis",
+              explanation: "Registrem acordos por escrito imediatamente apos a conversa.",
+              why: "Deriva de memoria reabre disputas.",
+              change: "Aumenta responsabilizacao e reduz reinterpretacao.",
+            },
+          ],
+          lowImpact: [
+            {
+              title: "Remover primeiro estressores logisticos menores",
+              explanation: "Eliminem pequenas friccoes recorrentes na rotina e agenda.",
+              why: "So isso nao resolve problema estrutural.",
+              change: "Libera energia para acoes de maior impacto.",
+            },
+          ],
+        },
+      },
+      in: null,
+    };
+
+    const base = map.en;
+    const content = map[locale] || base;
+    return {
+      heading: content.heading,
+      highImpact: content.highImpact,
+      mediumImpact: content.mediumImpact,
+      lowImpact: content.lowImpact,
+      whyLabel: content.whyLabel || base.whyLabel,
+      changeLabel: content.changeLabel || base.changeLabel,
+      high: content.high || base.high,
+      mid: content.mid || base.mid,
+      low: content.low || base.low,
+    };
+  }
+
   function getAreaInterpretation(areaKey, score) {
     const severity = getSeverity(100 - score);
     const byArea = {
@@ -2106,7 +3462,6 @@
         const lang = a.getAttribute("data-lang");
         if (!lang) return;
         try {
-          localStorage.setItem(LOCALE_KEY, lang);
           localStorage.setItem(LANG_KEY, lang);
         } catch (e) {
           // Ignore storage issues (private mode, blocked storage).
@@ -2170,28 +3525,10 @@
     const pageLocale = document.body && document.body.getAttribute("data-locale");
     if (!pageLocale || !LOCALE_PATHS[pageLocale]) return;
     try {
-      localStorage.setItem(LOCALE_KEY, pageLocale);
       localStorage.setItem(LANG_KEY, pageLocale);
     } catch (e) {
       // Ignore storage issues.
     }
-  }
-
-  function mapNavigatorToLocale() {
-    const langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
-    for (let i = 0; i < langs.length; i += 1) {
-      const tag = String(langs[i] || "").toLowerCase();
-      const parts = tag.split("-");
-      const base = parts[0] || "";
-      const region = (parts[1] || "").toUpperCase();
-      if (base === "de") return "de";
-      if (base === "es") return "es";
-      if (base === "pl") return "pl";
-      if (base === "pt") return "pt";
-      if (region === "IN" && base === "en") return "in";
-      if (base === "en") return "en";
-    }
-    return "en";
   }
 
   function redirectToLocale(locale) {
@@ -2201,37 +3538,62 @@
     window.location.replace(`${targetPath}${window.location.search}${window.location.hash}`);
   }
 
+  function detectBrowserLocale() {
+    const langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+    for (let i = 0; i < langs.length; i += 1) {
+      const tag = String(langs[i] || "").toLowerCase();
+      const base = tag.split("-")[0] || "";
+      if (base === "pl") return "pl";
+      if (base === "de") return "de";
+      if (base === "es") return "es";
+      if (base === "pt") return "pt";
+      if (base === "en") return "en";
+    }
+    return "en";
+  }
+
   function isMainEntryPath(pathname) {
     return pathname === "/" || pathname === "/index.html";
   }
 
   async function initLocaleByLocation() {
     const path = (window.location.pathname || "").toLowerCase();
-    if (!isMainEntryPath(path)) return;
-
-    let savedLocale = null;
-    try {
-      savedLocale = localStorage.getItem(LOCALE_KEY);
-    } catch (e) {
-      savedLocale = null;
-    }
-
-    if (savedLocale && LOCALE_PATHS[savedLocale]) {
-      if (savedLocale !== "en") redirectToLocale(savedLocale);
+    const urlLocale = getLocaleFromPath(path);
+    if (urlLocale) {
+      setLang(urlLocale);
       return;
     }
 
-    const locale = mapNavigatorToLocale();
-    if (locale !== "en") redirectToLocale(locale);
+    if (isMainEntryPath(path)) {
+      const browserLocale = detectBrowserLocale();
+      setLang(browserLocale);
+      if (browserLocale !== "en") {
+        redirectToLocale(browserLocale);
+      }
+      return;
+    }
+
+    const storedLocale = getStoredLang();
+    if (storedLocale) {
+      setLang(storedLocale);
+      return;
+    }
+    setLang("en");
   }
 
   function appendLangToStripeLinks() {
     const locale = getFlowLocale();
     const links = document.querySelectorAll(`a[href^="${STRIPE_LINK}"]`);
+    const successPath = `success.html?lang=${encodeURIComponent(locale)}`;
+    const cancelPath = getFlowPageUrl("result", locale);
+    const successUrl = new URL(successPath, window.location.origin).toString();
+    const cancelUrl = new URL(cancelPath, window.location.origin).toString();
     links.forEach((a) => {
       try {
         const url = new URL(a.getAttribute("href"), window.location.origin);
         url.searchParams.set("lang", locale);
+        url.searchParams.set("success_url", successUrl);
+        url.searchParams.set("cancel_url", cancelUrl);
         a.setAttribute("href", url.toString());
       } catch (e) {
         // Ignore malformed URLs.
@@ -2319,9 +3681,11 @@
     const progressBar = document.getElementById("progress-bar");
     const stepLabel = document.getElementById("test-step-label");
     const progressPercent = document.getElementById("test-progress-percent");
+    const progressHint = document.getElementById("test-progress-hint");
     const btnNext = document.getElementById("btn-next");
     const btnPrev = document.getElementById("btn-prev");
     const disclaimerEl = document.getElementById("test-disclaimer");
+    const headerBackLink = document.querySelector(".test-header-tools .btn");
 
     if (!root || !form || !progressBar || !stepLabel || !btnNext || !btnPrev) return;
 
@@ -2333,10 +3697,28 @@
     document.documentElement.lang = locale;
     document.title = uiCopy.title;
     if (disclaimerEl) disclaimerEl.textContent = uiCopy.disclaimer;
+    if (headerBackLink) {
+      headerBackLink.textContent = uiCopy.backHome;
+      headerBackLink.setAttribute("href", LOCALE_PATHS[locale] || LOCALE_PATHS.en);
+    }
 
     /** @type {number[]} odpowiedzi 1–5 na indeks pytania */
     const answers = new Array(sessionQuestions.length).fill(null);
     let index = 0;
+
+    function getProgressHintText(step) {
+      if (step <= 3) return uiCopy.progressHints.early;
+      if (step <= 7) return uiCopy.progressHints.mid;
+      return uiCopy.progressHints.late;
+    }
+
+    function animateQuestionSwap(nextIndex) {
+      root.classList.add("question-card--leaving");
+      window.setTimeout(() => {
+        index = nextIndex;
+        render();
+      }, 120);
+    }
 
     function render() {
       const q = sessionQuestions[index];
@@ -2346,13 +3728,14 @@
       progressBar.style.width = `${(step / total) * 100}%`;
       stepLabel.textContent = uiCopy.stepLabel(step, total);
       if (progressPercent) progressPercent.textContent = `${Math.round((step / total) * 100)}%`;
+      if (progressHint) progressHint.textContent = getProgressHintText(step);
       if (disclaimerEl) disclaimerEl.textContent = uiCopy.disclaimer;
 
       const selected = answers[index];
       root.innerHTML = `
         <p class="question-card__section">${escapeHtml(q.sectionTitle)}</p>
         <p class="question-card__text">${escapeHtml(q.text)}</p>
-        <div class="scale-options" role="radiogroup" aria-label="Answer scale">
+        <div class="scale-options" role="radiogroup" aria-label="${escapeHtml(uiCopy.scaleAria)}">
           ${[1, 2, 3, 4, 5]
             .map(
               (val) => `
@@ -2364,25 +3747,33 @@
             )
             .join("")}
         </div>
-        <ul class="scale-label-grid" aria-hidden="true">
+        <div class="scale-label-row" aria-hidden="true">
           ${[1, 2, 3, 4, 5]
-            .map((val) => `<li>${escapeHtml(uiCopy.scaleLabels[val])}</li>`)
+            .map((val) => `<span>${escapeHtml(uiCopy.scaleLabels[val])}</span>`)
             .join("")}
-        </ul>
+        </div>
         <p class="scale-micro">${escapeHtml(uiCopy.micro)}</p>
       `;
 
       btnPrev.hidden = false;
       btnPrev.textContent = index === 0 ? uiCopy.backHome : uiCopy.back;
       btnNext.textContent = index === total - 1 ? uiCopy.seeResult : uiCopy.next;
+      btnNext.disabled = selected == null;
 
-      root.classList.remove("reveal", "is-visible");
+      root.classList.remove("reveal", "is-visible", "question-card--leaving");
       void root.offsetWidth;
       root.classList.add("reveal", "is-visible");
+      window.setTimeout(() => {
+        root.classList.remove("question-card--selected-pulse");
+      }, 220);
 
       root.querySelectorAll('input[name="scale"]').forEach((input) => {
         input.addEventListener("change", () => {
           answers[index] = parseInt(input.value, 10);
+          btnNext.disabled = false;
+          root.classList.remove("question-card--selected-pulse");
+          void root.offsetWidth;
+          root.classList.add("question-card--selected-pulse");
         });
       });
     }
@@ -2393,8 +3784,7 @@
         return;
       }
       if (index < sessionQuestions.length - 1) {
-        index += 1;
-        render();
+        animateQuestionSwap(index + 1);
       } else {
         submitTest();
       }
@@ -2406,8 +3796,7 @@
         window.location.href = homePath;
         return;
       }
-      index -= 1;
-      render();
+      animateQuestionSwap(index - 1);
     }
 
     function flashInvalid() {
@@ -2475,6 +3864,96 @@
     if (el) el.textContent = value;
   }
 
+  function getPaywallTeasers(locale, score, areaScores) {
+    const weakestArea = getWeakestAreaKey(areaScores);
+    const weakestScore = Math.round(
+      weakestArea === "communication"
+        ? areaScores.communication
+        : weakestArea === "emotional"
+          ? areaScores.emotional
+          : weakestArea === "stability"
+            ? areaScores.behavior
+            : areaScores.trust
+    );
+    const clarityScore = Math.round(areaScores.trust);
+    const map = {
+      en: {
+        area: {
+          communication: "communication",
+          emotional: "emotional safety",
+          stability: "stability",
+          clarity: "clarity",
+        },
+        line1: score >= 70 ? "Detected pattern: high score with hidden pressure point." : "Detected pattern: recurring uncertainty loop.",
+        line2:
+          clarityScore < BENCHMARK_SCORES.clarity
+            ? "Clarity score below average. Hidden intent risk detected."
+            : "Clarity score near average. One signal still stays unresolved.",
+        line3: `Weakest area: ${weakestArea}. Current level: ${weakestScore}/100.`,
+      },
+      pl: {
+        area: {
+          communication: "komunikacja",
+          emotional: "bezpieczenstwo emocjonalne",
+          stability: "stabilnosc",
+          clarity: "klarownosc",
+        },
+        line1: score >= 70 ? "Wykryty wzorzec: wysoki wynik z ukrytym punktem nacisku." : "Wykryty wzorzec: powtarzajaca sie petla niepewnosci.",
+        line2:
+          clarityScore < BENCHMARK_SCORES.clarity
+            ? "Wynik klarownosci ponizej sredniej. Wysokie ryzyko blednej oceny."
+            : "Wynik klarownosci blisko sredniej. Jeden sygnal nadal nie jest domkniety.",
+        line3: `Najsłabszy obszar: ${weakestArea}. Biezacy poziom: ${weakestScore}/100.`,
+      },
+      de: {
+        area: {
+          communication: "Kommunikation",
+          emotional: "emotionale Sicherheit",
+          stability: "Stabilität",
+          clarity: "Klarheit",
+        },
+        line1: score >= 70 ? "Erkanntes Muster: hoher Score mit verdecktem Druckpunkt." : "Erkanntes Muster: wiederkehrende Unsicherheitsschleife.",
+        line2:
+          clarityScore < BENCHMARK_SCORES.clarity
+            ? "Klarheitswert unter Durchschnitt. Erhöhtes Fehlinterpretationsrisiko."
+            : "Klarheitswert nahe Durchschnitt. Ein Signal bleibt offen.",
+        line3: `Schwächster Bereich: ${weakestArea}. Aktuelles Niveau: ${weakestScore}/100.`,
+      },
+      es: {
+        area: {
+          communication: "comunicacion",
+          emotional: "seguridad emocional",
+          stability: "estabilidad",
+          clarity: "claridad",
+        },
+        line1: score >= 70 ? "Patron detectado: puntaje alto con punto de presion oculto." : "Patron detectado: ciclo recurrente de incertidumbre.",
+        line2:
+          clarityScore < BENCHMARK_SCORES.clarity
+            ? "Claridad por debajo del promedio. Riesgo alto de lectura incorrecta."
+            : "Claridad cerca del promedio. Una señal sigue sin cierre.",
+        line3: `Area mas debil: ${weakestArea}. Nivel actual: ${weakestScore}/100.`,
+      },
+      pt: {
+        area: {
+          communication: "comunicacao",
+          emotional: "seguranca emocional",
+          stability: "estabilidade",
+          clarity: "clareza",
+        },
+        line1: score >= 70 ? "Padrao detectado: score alto com ponto de pressao oculto." : "Padrao detectado: ciclo recorrente de incerteza.",
+        line2:
+          clarityScore < BENCHMARK_SCORES.clarity
+            ? "Clareza abaixo da media. Risco elevado de interpretacao incorreta."
+            : "Clareza perto da media. Um sinal permanece sem fechamento.",
+        line3: `Area mais fraca: ${weakestArea}. Nivel atual: ${weakestScore}/100.`,
+      },
+      in: null,
+    };
+    const lang = map[locale] || map.en;
+    const weakestLabel = lang.area[weakestArea] || lang.area.communication;
+    return [lang.line1, lang.line2, lang.line3.replace(weakestArea, weakestLabel)];
+  }
+
   function localizeResultPageUi(locale) {
     const lang = RESULT_LAYOUT_UI[locale] ? locale : "en";
     const ui = RESULT_LAYOUT_UI[lang];
@@ -2491,178 +3970,160 @@
     setText("premium-title", ui.premiumTitle);
     setText("premium-subhead", ui.premiumSubhead);
     setText("premium-intro-a", ui.premiumIntro);
+    setText("paywall-emotional-hook", ui.paywallHook);
+    setText("paywall-score-label", ui.scoreLabel);
     setText("locked-title-1", ui.lockedTitles[0]);
     setText("locked-title-2", ui.lockedTitles[1]);
     setText("locked-title-3", ui.lockedTitles[2]);
-    setText("locked-title-4", ui.lockedTitles[3]);
-    setText("locked-title-5", ui.lockedTitles[4]);
-    setText("locked-title-6", ui.lockedTitles[5]);
-    setText("locked-teaser-1", ui.lockedTeaser);
-    setText("locked-teaser-2", ui.lockedTeaser);
-    setText("locked-teaser-3", ui.lockedTeaser);
-    setText("locked-teaser-4", ui.lockedTeaser);
-    setText("locked-teaser-5", ui.lockedTeaser);
-    setText("locked-teaser-6", ui.lockedTeaser);
     setText("locked-label-1", ui.lockedLabel);
     setText("locked-label-2", ui.lockedLabel);
     setText("locked-label-3", ui.lockedLabel);
-    setText("locked-label-4", ui.lockedLabel);
-    setText("locked-label-5", ui.lockedLabel);
-    setText("locked-label-6", ui.lockedLabel);
     setText("preview-bar-label-1", ui.previewLabels[0]);
     setText("preview-bar-label-2", ui.previewLabels[1]);
     setText("preview-bar-label-3", ui.previewLabels[2]);
     setText("preview-bar-label-4", ui.previewLabels[3]);
     setText("locked-preview-label", ui.previewOverlay);
-    setText("premium-cta-heading", ui.ctaHeading);
-    setText("premium-cta-body", ui.ctaBody);
+    setText("premium-value-heading", ui.valueHeading);
+    setText("premium-value-item-1", ui.valueItems[0]);
+    setText("premium-value-item-2", ui.valueItems[1]);
+    setText("premium-value-item-3", ui.valueItems[2]);
+    setText("premium-value-item-4", ui.valueItems[3]);
+    setText("premium-value-item-5", ui.valueItems[4]);
     setText("premium-price-line", ui.priceLine);
     setText("premium-cta", ui.ctaButton);
     setText("premium-note-1", ui.notes[0]);
     setText("premium-note-2", ui.notes[1]);
     setText("premium-note-3", ui.notes[2]);
-    setText("premium-unlocked-title", ui.unlockedTitle);
-    setText("premium-unlocked-body", ui.unlockedBody);
-    setText("go-report-link", ui.unlockedButton);
     setText("result-signal-line", ui.disclaimer);
   }
 
   function localizeReportPageUi(locale) {
     const uiMap = {
       en: {
-        eyebrow: "Premium report",
-        title: "Your full relationship analysis",
-        subhead: "A structured premium view of your current relationship signals and decision risk.",
-        overview: "Overview cards",
-        charts: "Main charts",
-        scale: ["Low uncertainty", "Medium", "High uncertainty"],
-        areas: ["Communication", "Behavioral Consistency", "Trust Stability", "Emotional Connection"],
-        sections: [
-          "1. Summary",
-          "2. Your Relationship Profile",
-          "3. Communication",
-          "4. Emotional Connection",
-          "5. Behavioral Consistency",
-          "6. Trust Stability",
-          "7. Possible Scenarios",
-          "8. What You Can Do Next",
-        ],
-        signal: ["Signal intensity", "High attention", "Monitor"],
+        eyebrow: "Premium relationship report",
+        title: "Full relationship analysis",
+        indexLabel: "Trust Index:",
+        subhead:
+          "This report turns your answers into a structured diagnosis of pressure points, stability, and next decisions.",
+        overview: "Core dimensions",
+        charts: "Score overview and chart",
+        chartNote:
+          "The chart shows where pressure is concentrated and where your relationship still has structural support.",
+        scale: ["Low uncertainty", "Medium uncertainty", "High uncertainty"],
+        areas: ["Communication", "Stability", "Clarity", "Emotional closeness"],
+        comm: "Communication",
+        emotional: "Emotional closeness",
+        stability: "Stability",
+        clarity: "Clarity",
+        pattern: "Recurring pattern",
+        meaning: "Overall meaning",
+        next: "Practical next steps",
+        recheck: "Track change in 2-3 weeks",
+        recheckCta: "Run scan again",
         back: "Back to result",
       },
       pl: {
-        eyebrow: "Raport premium",
-        title: "Twoja pełna analiza relacji",
-        subhead: "Uporządkowany widok premium sygnałów relacyjnych i ryzyka decyzyjnego.",
-        overview: "Karty podsumowania",
-        charts: "Główne wykresy",
-        scale: ["Niska niepewność", "Średnia", "Wysoka niepewność"],
-        areas: ["Komunikacja", "Spójność zachowań", "Stabilność zaufania", "Bliskość emocjonalna"],
-        sections: [
-          "1. Podsumowanie",
-          "2. Profil Twojej relacji",
-          "3. Komunikacja",
-          "4. Bliskość emocjonalna",
-          "5. Spójność zachowań",
-          "6. Stabilność zaufania",
-          "7. Możliwe scenariusze",
-          "8. Co możesz zrobić dalej",
-        ],
-        signal: ["Intensywność sygnałów", "Wysoki priorytet", "Do obserwacji"],
-        back: "Wróć do wyniku",
+        eyebrow: "Raport premium relacji",
+        title: "Pelna analiza relacji",
+        indexLabel: "Trust Index:",
+        subhead:
+          "Ten raport zamienia odpowiedzi w uporzadkowana diagnoze punktow nacisku, stabilnosci i kolejnych decyzji.",
+        overview: "Kluczowe wymiary",
+        charts: "Przeglad wyniku i wykres",
+        chartNote:
+          "Wykres pokazuje, gdzie kumuluje sie nacisk i gdzie relacja ma jeszcze stabilne fundamenty.",
+        scale: ["Niska niepewnosc", "Srednia niepewnosc", "Wysoka niepewnosc"],
+        areas: ["Komunikacja", "Stabilnosc", "Klarownosc", "Bliskosc emocjonalna"],
+        comm: "Komunikacja",
+        emotional: "Bliskosc emocjonalna",
+        stability: "Stabilnosc",
+        clarity: "Klarownosc",
+        pattern: "Powtarzajacy sie wzorzec",
+        meaning: "Znaczenie calego obrazu",
+        next: "Praktyczne kolejne kroki",
+        recheck: "Sprawdz zmiane za 2-3 tygodnie",
+        recheckCta: "Powtorz skan",
+        back: "Wroc do wyniku",
       },
       de: {
-        eyebrow: "Premium-Bericht",
-        title: "Deine vollständige Beziehungsanalyse",
-        subhead: "Strukturierte Premium-Sicht auf Beziehungssignale und Entscheidungsrisiko.",
-        overview: "Übersichtskarten",
-        charts: "Hauptdiagramme",
-        scale: ["Niedrige Unsicherheit", "Mittel", "Hohe Unsicherheit"],
-        areas: ["Kommunikation", "Stabilität", "Transparenz", "Emotionale Sicherheit"],
-        sections: [
-          "1. Zusammenfassung",
-          "2. Dein Beziehungsprofil",
-          "3. Kommunikationsmuster",
-          "4. Emotionale Distanz",
-          "5. Verhaltensänderungen",
-          "6. Vertrauenssignale",
-          "7. Mögliche Szenarien",
-          "8. Was du als Nächstes tun kannst",
-        ],
-        signal: ["Signalintensität", "Hohe Aufmerksamkeit", "Beobachten"],
+        eyebrow: "Premium-Beziehungsbericht",
+        title: "Vollständige Beziehungsanalyse",
+        indexLabel: "Trust Index:",
+        subhead:
+          "Dieser Bericht übersetzt deine Antworten in eine klare Struktur aus Druckpunkten, Stabilität und nächsten Entscheidungen.",
+        overview: "Kern-Dimensionen",
+        charts: "Score-Übersicht und Diagramm",
+        chartNote:
+          "Das Diagramm zeigt, wo Druck sitzt und wo die Beziehung noch tragende Stabilität hat.",
+        scale: ["Niedrige Unsicherheit", "Mittlere Unsicherheit", "Hohe Unsicherheit"],
+        areas: ["Kommunikation", "Stabilität", "Klarheit", "Emotionale Nähe"],
+        comm: "Kommunikation",
+        emotional: "Emotionale Nähe",
+        stability: "Stabilität",
+        clarity: "Klarheit",
+        pattern: "Wiederkehrendes Muster",
+        meaning: "Gesamtbedeutung",
+        next: "Praktische nächste Schritte",
+        recheck: "Veränderung in 2-3 Wochen messen",
+        recheckCta: "Scan erneut starten",
         back: "Zurück zum Ergebnis",
       },
       es: {
-        eyebrow: "Informe premium",
-        title: "Tu análisis completo de la relación",
-        subhead: "Vista premium estructurada de señales relacionales y riesgo de decisión.",
-        overview: "Tarjetas de resumen",
-        charts: "Gráficos principales",
-        scale: ["Baja incertidumbre", "Media", "Alta incertidumbre"],
-        areas: ["Comunicación", "Estabilidad", "Transparencia", "Seguridad emocional"],
-        sections: [
-          "1. Resumen",
-          "2. Perfil de tu relación",
-          "3. Patrones de comunicación",
-          "4. Distancia emocional",
-          "5. Cambios de comportamiento",
-          "6. Señales de confianza",
-          "7. Escenarios posibles",
-          "8. Qué puedes hacer ahora",
-        ],
-        signal: ["Intensidad de señales", "Alta atención", "Monitorear"],
+        eyebrow: "Informe premium de relacion",
+        title: "Analisis completo de la relacion",
+        indexLabel: "Trust Index:",
+        subhead:
+          "Este informe convierte tus respuestas en un mapa claro de presion, estabilidad y decisiones practicas.",
+        overview: "Dimensiones clave",
+        charts: "Resumen de puntuacion y grafico",
+        chartNote:
+          "El grafico muestra donde se concentra la presion y donde aun existe soporte estable.",
+        scale: ["Incertidumbre baja", "Incertidumbre media", "Incertidumbre alta"],
+        areas: ["Comunicacion", "Estabilidad", "Claridad", "Cercania emocional"],
+        comm: "Comunicacion",
+        emotional: "Cercania emocional",
+        stability: "Estabilidad",
+        clarity: "Claridad",
+        pattern: "Patron recurrente",
+        meaning: "Significado global",
+        next: "Siguientes pasos practicos",
+        recheck: "Mide el cambio en 2-3 semanas",
+        recheckCta: "Repetir scan",
         back: "Volver al resultado",
       },
       pt: {
-        eyebrow: "Relatório premium",
-        title: "Sua análise completa de relacionamento",
-        subhead: "Visão premium estruturada de sinais relacionais e risco de decisão.",
-        overview: "Cartões de resumo",
-        charts: "Gráficos principais",
-        scale: ["Baixa incerteza", "Média", "Alta incerteza"],
-        areas: ["Comunicação", "Estabilidade", "Transparência", "Segurança emocional"],
-        sections: [
-          "1. Resumo",
-          "2. Perfil do relacionamento",
-          "3. Padrões de comunicação",
-          "4. Distância emocional",
-          "5. Mudanças de comportamento",
-          "6. Sinais de confiança",
-          "7. Cenários possíveis",
-          "8. O que você pode fazer agora",
-        ],
-        signal: ["Intensidade dos sinais", "Alta atenção", "Monitorar"],
+        eyebrow: "Relatorio premium de relacionamento",
+        title: "Analise completa do relacionamento",
+        indexLabel: "Trust Index:",
+        subhead:
+          "Este relatorio transforma suas respostas em um quadro claro de pressao, estabilidade e proximas decisoes.",
+        overview: "Dimensoes centrais",
+        charts: "Visao de pontuacao e grafico",
+        chartNote:
+          "O grafico mostra onde a pressao se concentra e onde ainda existe base estavel.",
+        scale: ["Baixa incerteza", "Media incerteza", "Alta incerteza"],
+        areas: ["Comunicacao", "Estabilidade", "Clareza", "Proximidade emocional"],
+        comm: "Comunicacao",
+        emotional: "Proximidade emocional",
+        stability: "Estabilidade",
+        clarity: "Clareza",
+        pattern: "Padrao recorrente",
+        meaning: "Significado geral",
+        next: "Proximos passos praticos",
+        recheck: "Acompanhe mudanca em 2-3 semanas",
+        recheckCta: "Refazer scan",
         back: "Voltar ao resultado",
       },
-      in: {
-        eyebrow: "Premium report",
-        title: "Your full relationship analysis",
-        subhead: "A structured premium view of your current relationship signals and decision risk.",
-        overview: "Overview cards",
-        charts: "Main charts",
-        scale: ["Low uncertainty", "Medium", "High uncertainty"],
-        areas: ["Communication", "Stability", "Transparency", "Emotional safety"],
-        sections: [
-          "1. Summary",
-          "2. Your Relationship Profile",
-          "3. Communication Patterns",
-          "4. Emotional Distance",
-          "5. Behavioral Changes",
-          "6. Trust Signals",
-          "7. Possible Scenarios",
-          "8. What You Can Do Next",
-        ],
-        signal: ["Signal intensity", "High attention", "Monitor"],
-        back: "Back to result",
-      },
+      in: null,
     };
     const ui = uiMap[locale] || uiMap.en;
     setText("report-eyebrow", ui.eyebrow);
     setText("report-title", ui.title);
-    setText("report-index-label", "Trust Index:");
+    setText("report-index-label", ui.indexLabel);
     setText("report-subhead", ui.subhead);
     setText("report-overview-title", ui.overview);
     setText("report-score-overview-title", ui.charts);
+    setText("report-chart-note", ui.chartNote);
     setText("report-scale-low", ui.scale[0]);
     setText("report-scale-mid", ui.scale[1]);
     setText("report-scale-high", ui.scale[2]);
@@ -2674,21 +4135,25 @@
     setText("report-bar-title-stability", ui.areas[1]);
     setText("report-bar-title-transparency", ui.areas[2]);
     setText("report-bar-title-safety", ui.areas[3]);
-    setText("report-summary-heading", ui.sections[0]);
-    setText("report-profile-heading", ui.sections[1]);
-    setText("report-comm-heading", ui.sections[2]);
-    setText("report-emotion-heading", ui.sections[3]);
-    setText("report-behavior-heading", ui.sections[4]);
-    setText("report-trust-heading", ui.sections[5]);
-    setText("report-scenarios-heading", ui.sections[6]);
-    setText("report-next-heading", ui.sections[7]);
-    setText("report-signals-heading", ui.signal[0]);
-    setText("report-signal-label-1", ui.signal[1]);
-    setText("report-signal-label-2", ui.signal[2]);
+    setText("report-comm-heading", ui.comm);
+    setText("report-emotion-heading", ui.emotional);
+    setText("report-stability-heading", ui.stability);
+    setText("report-clarity-heading", ui.clarity);
+    setText("report-pattern-heading", ui.pattern);
+    setText("report-meaning-heading", ui.meaning);
+    setText("report-next-heading", ui.next);
+    setText("report-recheck-heading", ui.recheck);
+    setText("report-recheck-cta", ui.recheckCta);
     const benchmarkUi = getBenchmarkLabels(locale);
     const alertsUi = getRiskAlertLabels(locale);
+    const trajectoryUi = getTrajectoryContent(locale);
+    const timelineUi = getTimelineContent(locale);
+    const outcomeUi = getOutcomeActionsContent(locale);
     setText("report-benchmark-heading", benchmarkUi.heading);
     setText("report-alerts-heading", alertsUi.heading);
+    setText("report-trajectory-heading", trajectoryUi.heading);
+    setText("report-timeline-heading", timelineUi.heading);
+    setText("report-outcome-heading", outcomeUi.heading);
     setText("report-disclaimer-text", RESULT_SIGNAL_LINE_BY_LOCALE[locale] || RESULT_SIGNAL_LINE_BY_LOCALE.en);
     setText("report-back-link", ui.back);
   }
@@ -2706,9 +4171,9 @@
     const donutEl = document.getElementById("result-donut");
     const donutValueEl = document.getElementById("result-donut-value");
     const rangeMarker = document.getElementById("result-range-marker");
-    const ctaBlock = document.getElementById("upsell-block");
-    const unlockedBlock = document.getElementById("premium-unlocked");
-    const goReportLink = document.getElementById("go-report-link");
+    const ctaBlock = document.getElementById("premium-block");
+    const personalizedEl = document.getElementById("paywall-personalized-sentence");
+    const paywallScoreValueEl = document.getElementById("paywall-score-value");
     if (!scoreEl || !headlineEl || !leadEl || !interpEl || !insightsEl || !tipsEl) return;
 
     document.documentElement.lang = locale;
@@ -2734,6 +4199,22 @@
     }
 
     const score = Math.max(0, Math.min(100, parseInt(raw, 10)));
+    let details = null;
+    try {
+      const detailsRaw = localStorage.getItem(STORAGE_DETAILS_KEY);
+      details = detailsRaw ? JSON.parse(detailsRaw) : null;
+    } catch (e) {
+      details = null;
+    }
+    if (!details || !details.areas) {
+      details = getFallbackReportDetails(score);
+    }
+    const areaScores = {
+      communication: Math.max(0, Math.min(100, Number(details.areas.communication || score))),
+      emotional: Math.max(0, Math.min(100, Number(details.areas.emotional || details.areas.emotions || score))),
+      behavior: Math.max(0, Math.min(100, Number(details.areas.behavior || score))),
+      trust: Math.max(0, Math.min(100, Number(details.areas.trust || score))),
+    };
     const band = getBand(score);
     const copy = getResultCopyByLocale(locale, band);
     scoreEl.textContent = `${score}/100`;
@@ -2746,120 +4227,388 @@
     if (donutValueEl) donutValueEl.textContent = String(score);
     if (donutEl) donutEl.style.setProperty("--result-percent", `${score}%`);
     if (rangeMarker) rangeMarker.style.left = `${score}%`;
+    if (paywallScoreValueEl) paywallScoreValueEl.textContent = `${score}/100`;
+    if (personalizedEl) {
+      const insight = getPersonalizedInsightSentence(locale, score, areaScores);
+      personalizedEl.textContent = insight.sentence;
+    }
 
-    let hasPaid = false;
+    const previewValues = {
+      communication: Math.round(areaScores.communication),
+      stability: Math.round(areaScores.behavior),
+      transparency: Math.round(areaScores.trust),
+      emotional: Math.round(areaScores.emotional),
+    };
+    setText("preview-bar-value-1", `${previewValues.communication}`);
+    setText("preview-bar-value-2", `${previewValues.stability}`);
+    const barFill1 = document.getElementById("preview-bar-fill-1");
+    const barFill2 = document.getElementById("preview-bar-fill-2");
+    const barFill3 = document.getElementById("preview-bar-fill-3");
+    const barFill4 = document.getElementById("preview-bar-fill-4");
+    if (barFill1) barFill1.style.width = `${previewValues.communication}%`;
+    if (barFill2) barFill2.style.width = `${previewValues.stability}%`;
+    if (barFill3) barFill3.style.width = `${previewValues.transparency}%`;
+    if (barFill4) barFill4.style.width = `${previewValues.emotional}%`;
+
+    const teaserLines = getPaywallTeasers(locale, score, areaScores);
+    setText("locked-teaser-1", teaserLines[0]);
+    setText("locked-teaser-2", teaserLines[1]);
+    setText("locked-teaser-3", teaserLines[2]);
+
+    const isPaid = (() => {
+      try {
+        return localStorage.getItem(PAID_KEY) === "true";
+      } catch (e) {
+        return false;
+      }
+    })();
+
+    if (isPaid) {
+      window.location.href = getFlowPageUrl("report", locale);
+      return;
+    }
+
+    if (ctaBlock) ctaBlock.hidden = false;
+  }
+
+  function initSuccess() {
+    const queryLang = getQueryLang();
+    if (queryLang) setLang(queryLang);
+    const locale = getFlowLocale();
+    document.documentElement.lang = locale;
+
+    const copyByLocale = {
+      en: {
+        title: "Payment confirmed",
+        body: "Finalizing access to your full report...",
+      },
+      pl: {
+        title: "Platnosc potwierdzona",
+        body: "Finalizujemy dostep do pelnego raportu...",
+      },
+      de: {
+        title: "Zahlung bestätigt",
+        body: "Der Zugriff auf den Vollbericht wird vorbereitet...",
+      },
+      es: {
+        title: "Pago confirmado",
+        body: "Estamos finalizando tu acceso al informe completo...",
+      },
+      pt: {
+        title: "Pagamento confirmado",
+        body: "Finalizando seu acesso ao relatorio completo...",
+      },
+      in: {
+        title: "Payment confirmed",
+        body: "Finalizing access to your full report...",
+      },
+    };
+    const ui = copyByLocale[locale] || copyByLocale.en;
+    setText("success-title", ui.title);
+    setText("success-body", ui.body);
+
     try {
-      hasPaid = Boolean(localStorage.getItem(PAID_KEY));
+      localStorage.setItem(PAID_KEY, "true");
+      localStorage.setItem("paidAt", Date.now().toString());
     } catch (e) {
-      hasPaid = false;
+      // Ignore storage issues.
     }
-    if (hasPaid) {
-      document.body.classList.add("has-paid");
-      if (ctaBlock) ctaBlock.hidden = true;
-      if (unlockedBlock) unlockedBlock.hidden = false;
-      if (goReportLink) goReportLink.setAttribute("href", getFlowPageUrl("report", locale));
-    } else {
-      document.body.classList.remove("has-paid");
-      if (ctaBlock) ctaBlock.hidden = false;
-      if (unlockedBlock) unlockedBlock.hidden = true;
-    }
+
+    window.setTimeout(() => {
+      window.location.href = getFlowPageUrl("report", locale);
+    }, 700);
+  }
+
+  function getPremiumReportNarrative(locale) {
+    const map = {
+      en: {
+        opening:
+          "You are looking at the full structure behind your result. This is not a mood snapshot. It is a pressure map showing where the relationship absorbs tension and where it leaks stability. The goal is practical clarity before decisions.",
+        benchmarkNote:
+          "Above average means this area currently supports stability. Below average means this area is pulling your overall direction down.",
+        dimensions: {
+          communication: {
+            body:
+              "Communication in this profile is not defined by how often you talk, but by what happens after difficult moments. Stable communication closes loops. Unstable communication keeps loops open and pushes unresolved meaning into the next conversation. When closure is missing, every new topic starts with hidden backlog. That creates defensive tone, fragmented focus, and rising decision fatigue. The practical cost is high: both partners start reacting to assumptions rather than facts. In this report, communication should be read as operational reliability. If conversations produce concrete decisions, clear responsibilities, and visible follow-through, uncertainty falls quickly. If they produce temporary relief without structural closure, uncertainty compounds even when tone sounds calm.",
+            checks: [
+              "Check whether one difficult topic gets closed with one concrete decision.",
+              "Check whether both sides can repeat the same agreement 24 hours later.",
+              "Check whether conflict reopens old themes or stays within one scope.",
+            ],
+          },
+          emotional: {
+            body:
+              "Emotional closeness here is not about intensity. It is about consistency of emotional availability under ordinary pressure. A relationship can look warm in isolated moments and still feel unsafe in repeated stress windows. When emotional availability drops unpredictably, interpretation load rises and small events feel threatening. That shift changes behavior: less directness, more withdrawal, and slower repair after friction. In practical terms, emotional closeness determines how expensive each conflict becomes. Higher closeness keeps conflict costs contained. Lower closeness turns even moderate tension into prolonged uncertainty. This section should be read as your regulation base: if emotional contact remains accessible during pressure, recovery cycles shorten. If access collapses during pressure, recovery becomes unstable and trust erosion accelerates.",
+            checks: [
+              "Check whether support is available during stress, not only after stress.",
+              "Check whether disagreement leads to distance or to re-engagement.",
+              "Check whether repair happens within hours or drifts across days.",
+            ],
+          },
+          stability: {
+            body:
+              "Stability in this report tracks behavioral consistency across time. Words matter, but repeated behavior defines trust capacity. When behavior patterns remain predictable, the relationship can plan, coordinate, and absorb uncertainty from outside pressures. When behavior shifts without explanation, internal uncertainty rises even if intentions sound positive. The central issue is not perfection. The issue is reliability under repetition. One-off effort does not stabilize the system if weekly behavior keeps diverging from stated agreements. Stability also controls escalation speed: inconsistent routines increase surprise, and surprise increases reactivity. A stable pattern lowers surprise and protects decision quality. Read this area as execution quality: do commitments survive normal friction, calendar pressure, and emotional noise, or do they collapse when pressure appears.",
+            checks: [
+              "Check whether promised actions happen without repeated reminders.",
+              "Check whether daily routines align with declared priorities.",
+              "Check whether follow-through remains stable across two full weeks.",
+            ],
+          },
+          clarity: {
+            body:
+              "Clarity measures how much of the relationship must be guessed versus directly verified. Low clarity forces interpretation. High clarity allows direct decisions. When intent, boundaries, and expectations stay ambiguous, both partners spend energy decoding signals instead of solving issues. That decoding cost accumulates into mistrust, because neutral events get read through uncertainty filters. Clarity does not require overexplaining every emotion. It requires explicit agreements in high-impact zones: commitment, boundaries, priorities, and repair rules. In this profile, clarity is a leverage dimension. Improving it often reduces pressure in multiple areas at once. Weak clarity amplifies every other weakness. Strong clarity limits error, reduces emotional overreaction, and improves coordination speed. This is where decision confidence is either built or undermined.",
+            checks: [
+              "Check whether boundaries are explicit and referenced in real decisions.",
+              "Check whether intent is stated directly before sensitive conversations.",
+              "Check whether both sides know what counts as real repair.",
+            ],
+          },
+        },
+        pattern:
+          "The data shows a repeating cycle, not isolated noise. Pressure rises in one weak area, then spreads into communication and interpretation. Conversations create temporary relief, but unresolved structure returns in the next stress window. This produces a stop-start dynamic: short improvements followed by familiar friction. Confidence drops because outcomes feel inconsistent. Decision quality drops because attention shifts to immediate relief. The key pattern is imbalance between signal strength and execution quality. Strong moments exist, but weak areas still dictate overall direction. Without targeted correction, the same cycle repeats with higher emotional cost.",
+        meaning:
+          "The full picture is clear: this relationship is not defined by one dramatic event, but by repeated structure under pressure. Your strongest areas can still support recovery. Your weakest areas are currently setting the risk ceiling. If you improve only tone, the system remains unstable. If you improve structure, tone follows. The practical meaning is leverage. You do not need to fix everything at once. You need to fix the few mechanisms that keep rebuilding uncertainty.",
+        recheck:
+          "Run the scan again in 2-3 weeks after applying concrete changes. Compare movement in the weakest area first, then check if variance between dimensions narrows. Progress is real when score improves and structure becomes more even.",
+      },
+      pl: {
+        opening:
+          "Patrzysz na pelna strukture stojaca za wynikiem. To nie jest opis nastroju z jednego dnia. To mapa nacisku pokazujaca, gdzie relacja utrzymuje stabilnosc, a gdzie ja traci. Celem jest jasnosc przed decyzja.",
+        benchmarkNote:
+          "Powyzej sredniej oznacza, ze ten obszar wspiera stabilnosc. Ponizej sredniej oznacza, ze ten obszar obniza caly kierunek relacji.",
+        dimensions: {
+          communication: {
+            body:
+              "Komunikacja w tym profilu nie jest mierzona tym, jak czesto rozmawiacie, tylko tym, co dzieje sie po trudnej rozmowie. Stabilna komunikacja domyka petle. Niestabilna komunikacja zostawia petle otwarte i przenosi niedomkniete znaczenia do kolejnych tematow. Gdy domkniecia brakuje, kazda nowa rozmowa startuje z ukrytym zaleglym napieciem. To buduje defensywny ton, rozproszenie i zmeczenie decyzyjne. Koszt jest praktyczny: rosnie liczba domyslow, spada liczba faktow. W tym raporcie komunikacja to jakosc wykonania ustalen. Jezeli rozmowy prowadza do konkretnych decyzji, odpowiedzialnosci i widocznego follow-through, niepewnosc spada. Jezeli daja tylko chwilowe uspokojenie, niepewnosc wraca szybciej i mocniej.",
+            checks: [
+              "Sprawdz, czy trudny temat konczy sie jedna konkretna decyzja.",
+              "Sprawdz, czy obie strony powtarzaja to samo ustalenie po 24 godzinach.",
+              "Sprawdz, czy konflikt trzyma jeden temat, czy wraca do starych petli.",
+            ],
+          },
+          emotional: {
+            body:
+              "Bliskosc emocjonalna nie oznacza stalej intensywnosci. Oznacza stabilna dostepnosc emocjonalna pod normalna presja. Relacja moze miec cieple momenty i jednoczesnie byc niestabilna przy powtarzalnym stresie. Gdy dostepnosc spada nierowno, rosnie koszt interpretacji i nawet male sygnaly zaczynaja byc czytane jako zagrozenie. To zmienia zachowanie: mniej bezposredniosci, wiecej wycofania i wolniejsza naprawa po tarciu. W praktyce bliskosc emocjonalna decyduje, jak drogi staje sie konflikt. Wyzsza bliskosc skraca czas naprawy. Nizsza bliskosc wydluza niepewnosc i obciaza zaufanie. Traktuj ten obszar jako baze regulacji: jesli kontakt jest dostepny pod presja, relacja szybciej wraca do rownowagi.",
+            checks: [
+              "Sprawdz, czy wsparcie jest dostepne w trakcie stresu, nie tylko po nim.",
+              "Sprawdz, czy niezgoda prowadzi do dialogu, czy do dystansu.",
+              "Sprawdz, czy naprawa dzieje sie w godzinach, czy w dniach.",
+            ],
+          },
+          stability: {
+            body:
+              "Stabilnosc opisuje spojnosc zachowan w czasie. Slowa sa wazne, ale to powtarzalne zachowanie buduje zdolnosc do zaufania. Gdy wzorce zachowan sa przewidywalne, relacja moze planowac i utrzymywac spokoj mimo presji zewnętrznej. Gdy zachowanie zmienia sie bez jasnego wyjasnienia, rosnie wewnetrzna niepewnosc nawet przy dobrych deklaracjach. Kluczowy problem to nie idealnosc, tylko powtarzalna wiarygodnosc. Jednorazowy wysilek nie stabilizuje systemu, jesli cotygodniowe zachowanie pozostaje niespojne z ustaleniami. Stabilnosc kontroluje tez tempo eskalacji: niespodzianka podnosi reaktywnosc. Spojnosc obniza niespodzianke i chroni jakosc decyzji. Czytaj ten obszar jako jakosc wykonania: czy zobowiazania przechodza przez normalne tarcie.",
+            checks: [
+              "Sprawdz, czy obietnice sa realizowane bez wielokrotnego przypominania.",
+              "Sprawdz, czy codzienne nawyki zgadzaja sie z deklarowanymi priorytetami.",
+              "Sprawdz, czy follow-through utrzymuje sie przez dwa pelne tygodnie.",
+            ],
+          },
+          clarity: {
+            body:
+              "Klarownosc mierzy, ile w relacji trzeba zgadywac, a ile mozna weryfikowac bezposrednio. Niska klarownosc wymusza domysly. Wysoka klarownosc pozwala podejmowac decyzje bez nadmiaru interpretacji. Gdy intencje, granice i oczekiwania sa niejasne, energia idzie w odszyfrowywanie sygnalow zamiast rozwiazywanie problemu. Ten koszt kumuluje sie i oslabia zaufanie, bo neutralne sytuacje zaczynaja wygladac jak zagrozenie. Klarownosc nie wymaga dlugich wyjasnien do kazdego tematu. Wymaga jawnych ustalen tam, gdzie koszt bledu jest najwyzszy: granice, priorytety i zasady naprawy. To obszar dzwigni. Poprawa klarownosci czesto obniza nacisk w kilku wymiarach naraz i porzadkuje decyzje.",
+            checks: [
+              "Sprawdz, czy granice sa zapisane i realnie uzywane w decyzjach.",
+              "Sprawdz, czy intencja jest mowiona wprost przed trudnym tematem.",
+              "Sprawdz, czy obie strony wiedza, co oznacza realna naprawa.",
+            ],
+          },
+        },
+        pattern:
+          "Dane pokazuja powtarzalny cykl, a nie przypadkowe zdarzenia. Nacisk rośnie w jednym slabszym obszarze, potem przechodzi do komunikacji i interpretacji. Rozmowa daje chwilowe uspokojenie, ale brak domkniecia wraca przy kolejnym stresie. Powstaje uklad stop-start: poprawa, potem nawrot tego samego tarcia. Spada pewnosc, bo rezultat staje sie nierowny. Spada tez jakosc decyzji, bo priorytetem staje sie gaszenie napiecia. Glowny wzorzec to nierownowaga miedzy sila sygnalow a jakoscia wykonania. Bez celowanej korekty cykl bedzie sie powtarzal z wiekszym kosztem emocjonalnym.",
+        meaning:
+          "Caly obraz jest jednoznaczny: relacja nie rozstrzyga sie jednym wydarzeniem, tylko powtarzalna struktura pod presja. Najmocniejsze obszary nadal moga wspierac odbudowe. Najslabsze obszary wyznaczaja obecny limit bezpieczenstwa decyzji. Sama poprawa tonu nie wystarczy. Potrzebna jest poprawa mechaniki relacji. Gdy mechanika sie stabilizuje, ton poprawia sie naturalnie. To raport o dzwigniach, nie o etykietach.",
+        recheck:
+          "Powtorz skan za 2-3 tygodnie po wdrozeniu konkretnych zmian. Najpierw sprawdz ruch w najslabszym obszarze, potem porownaj, czy roznica miedzy wymiarami maleje. Postep jest realny, gdy rosnacy wynik idzie razem ze spadkiem rozrzutu.",
+      },
+      de: {
+        opening:
+          "Du siehst hier die vollständige Struktur hinter deinem Ergebnis. Das ist keine Momentaufnahme, sondern eine belastbare Analyse von Druck, Stabilität und Entscheidungsrisiko.",
+        benchmarkNote:
+          "Über Durchschnitt heißt: dieser Bereich stabilisiert. Unter Durchschnitt heißt: dieser Bereich zieht den Gesamtkurs nach unten.",
+        dimensions: {
+          communication: {
+            body:
+              "Kommunikation wird hier nicht über Gesprächsmenge bewertet, sondern über Abschlussqualität nach Spannung. Stabil ist Kommunikation dann, wenn schwierige Themen mit klaren Entscheidungen enden. Instabil ist sie, wenn offene Schleifen in das nächste Gespräch getragen werden. Dadurch steigt Interpretationslast und sinkt Entscheidungsklarheit. Das erzeugt defensiven Ton und verlängerte Konfliktzyklen. In diesem Profil ist Kommunikation eine Ausführungsfrage. Wenn Gespräche zu verbindlichem Follow-through führen, sinkt Unsicherheit schnell. Ohne Abschluss kehrt Druck zuverlässig zurück.",
+            checks: [
+              "Wird ein schwieriges Thema mit einer konkreten Entscheidung geschlossen?",
+              "Können beide Seiten die gleiche Vereinbarung nach 24 Stunden benennen?",
+              "Bleibt Konflikt auf einem Thema oder öffnet er alte Schleifen?",
+            ],
+          },
+          emotional: {
+            body:
+              "Emotionale Nähe bedeutet in dieser Analyse verlässliche Erreichbarkeit unter Belastung. Nähe zeigt sich nicht in Spitzenmomenten, sondern in der Qualität von Reaktion und Reparatur bei Druck. Fällt Verfügbarkeit unregelmäßig aus, steigen Fehlinterpretationen und Konfliktkosten. Die Folge sind Rückzug, Reaktivität und langsamere Wiederannäherung. Höhere Nähe reduziert Konfliktkosten. Niedrigere Nähe verlängert Unsicherheitsphasen und beschleunigt Vertrauensverschleiß.",
+            checks: [
+              "Ist Unterstützung während Stress verfügbar, nicht nur danach?",
+              "Führt Dissens zu Distanz oder zu erneuter Verbindung?",
+              "Passiert Reparatur in Stunden oder in Tagen?",
+            ],
+          },
+          stability: {
+            body:
+              "Stabilität misst Verhaltenskonsistenz über Zeit. Worte schaffen Orientierung, aber wiederholtes Verhalten schafft Vertrauen. Bei konsistenter Umsetzung bleibt das System planbar. Bei inkonsistenter Umsetzung steigt Überraschung, und Überraschung treibt Reaktivität. Einmalige Anstrengung reicht nicht, wenn Wochenmuster instabil bleiben. Dieser Bereich zeigt, ob Zusagen auch unter Alltagdruck tragen.",
+            checks: [
+              "Werden Zusagen ohne wiederholte Erinnerung umgesetzt?",
+              "Passen Routinen zu erklärten Prioritäten?",
+              "Bleibt Follow-through über zwei Wochen konstant?",
+            ],
+          },
+          clarity: {
+            body:
+              "Klarheit zeigt, wie viel in der Beziehung verifiziert statt geraten wird. Niedrige Klarheit produziert Deutungskosten. Hohe Klarheit senkt Fehlentscheidungen. Wenn Grenzen, Intentionen und Erwartungen diffus bleiben, entsteht Druck in allen anderen Bereichen. Klarheit ist daher Hebel statt Nebenthema. Präzise Regeln in Hochrisikozonen verbessern Koordination und senken Eskalationsgeschwindigkeit.",
+            checks: [
+              "Sind Grenzen explizit und in Entscheidungen sichtbar?",
+              "Werden Intentionen vor sensiblen Gesprächen direkt benannt?",
+              "Ist klar definiert, was als echte Reparatur gilt?",
+            ],
+          },
+        },
+        pattern:
+          "Das Muster ist wiederkehrend: Druck steigt im schwächsten Bereich und verteilt sich dann über Kommunikation und Deutung. Kurzfristige Entlastung ohne strukturellen Abschluss führt zur nächsten Schleife. Dadurch entsteht ein Stop-and-Start-Verlauf mit sinkender Vorhersehbarkeit. Ohne gezielte Korrektur bleibt der Zyklus aktiv.",
+        meaning:
+          "Die Gesamtlage ist strukturell, nicht zufällig. Starke Bereiche sind vorhanden, aber schwache Bereiche setzen aktuell den Risikorahmen. Priorität hat Mechanik vor Rhetorik: klare Regeln, messbares Follow-through, engere Schleifen.",
+        recheck:
+          "Wiederhole den Scan in 2-3 Wochen nach klaren Maßnahmen. Prüfe zuerst den schwächsten Bereich und dann die Streuung zwischen Dimensionen.",
+      },
+      es: {
+        opening:
+          "Este informe muestra la estructura real detras del resultado. No es un resumen ligero. Es un mapa de presion, estabilidad y riesgo de decision.",
+        benchmarkNote:
+          "Por encima del promedio: esta area sostiene estabilidad. Por debajo del promedio: esta area esta tirando del resultado total.",
+        dimensions: {
+          communication: {
+            body:
+              "La comunicacion se evalua por cierre, no por cantidad de conversaciones. Si los temas dificiles terminan con decisiones claras, baja la incertidumbre. Si quedan abiertos, el conflicto se recicla y sube el costo emocional. Este perfil muestra que la calidad de cierre define la calidad de confianza.",
+            checks: [
+              "Comprueba si cada tema dificil termina con una decision concreta.",
+              "Comprueba si ambos repiten el mismo acuerdo al dia siguiente.",
+              "Comprueba si el conflicto mantiene foco o mezcla temas antiguos.",
+            ],
+          },
+          emotional: {
+            body:
+              "La cercania emocional aqui significa disponibilidad consistente bajo presion. No basta con momentos buenos aislados. Cuando la disponibilidad cae de forma irregular, crece la interpretacion defensiva y se alarga la reparacion. Eso reduce seguridad y aumenta fatiga relacional.",
+            checks: [
+              "Comprueba si el apoyo aparece durante el estres, no solo despues.",
+              "Comprueba si el desacuerdo termina en distancia o reconexion.",
+              "Comprueba si la reparacion ocurre en horas o en dias.",
+            ],
+          },
+          stability: {
+            body:
+              "La estabilidad mide consistencia de conducta en el tiempo. Las palabras orientan, pero el comportamiento repetido construye confianza. Si la ejecucion es irregular, cada nueva promesa pierde valor. Este eje indica si la relacion mantiene fiabilidad bajo friccion cotidiana.",
+            checks: [
+              "Comprueba si las promesas se cumplen sin recordatorios constantes.",
+              "Comprueba si la rutina real coincide con prioridades declaradas.",
+              "Comprueba consistencia de seguimiento durante dos semanas.",
+            ],
+          },
+          clarity: {
+            body:
+              "La claridad mide cuanto se verifica y cuanto se adivina. Baja claridad obliga a interpretar. Alta claridad permite decidir. Sin limites y expectativas explicitas, sube el ruido y baja la precision relacional. Este eje tiene efecto multiplicador sobre el resto.",
+            checks: [
+              "Comprueba si los limites estan claros y operativos.",
+              "Comprueba si la intencion se declara antes de temas sensibles.",
+              "Comprueba si ambos comparten la misma definicion de reparacion.",
+            ],
+          },
+        },
+        pattern:
+          "El patron es repetitivo: presion en el area mas debil, alivio parcial, regreso del mismo conflicto. El sistema mejora por momentos pero no consolida. Sin correccion dirigida, la inercia sigue siendo inestable.",
+        meaning:
+          "La lectura global no depende de un evento aislado. Depende de estructura repetida bajo estres. La palanca principal esta en cerrar brechas operativas, no en mejorar solo el tono.",
+        recheck:
+          "Repite el scan en 2-3 semanas tras aplicar cambios concretos. Mira primero el area mas debil y luego la distancia entre dimensiones.",
+      },
+      pt: {
+        opening:
+          "Este relatorio mostra a estrutura real por tras do resultado. Nao e um resumo rapido. E um mapa de pressao, estabilidade e risco de decisao.",
+        benchmarkNote:
+          "Acima da media: esta area sustenta estabilidade. Abaixo da media: esta area puxa o resultado para baixo.",
+        dimensions: {
+          communication: {
+            body:
+              "Comunicacao aqui e medida por fechamento, nao por volume. Quando temas dificeis terminam com decisoes claras, a incerteza cai. Quando ficam abertos, o conflito se repete e o custo emocional sobe. Este perfil mostra que qualidade de fechamento define qualidade de confianca.",
+            checks: [
+              "Verifique se cada tema dificil termina com decisao concreta.",
+              "Verifique se os dois repetem o mesmo acordo no dia seguinte.",
+              "Verifique se o conflito mantem foco em um tema.",
+            ],
+          },
+          emotional: {
+            body:
+              "Proximidade emocional significa disponibilidade consistente sob pressao. Nao basta ter bons momentos isolados. Quando a disponibilidade cai de forma irregular, cresce interpretacao defensiva e o reparo demora mais. Isso reduz seguranca e aumenta desgaste relacional.",
+            checks: [
+              "Verifique se apoio aparece durante o estresse, nao apenas depois.",
+              "Verifique se discordancia leva a distancia ou reconexao.",
+              "Verifique se reparo acontece em horas ou em dias.",
+            ],
+          },
+          stability: {
+            body:
+              "Estabilidade mede consistencia de comportamento no tempo. Palavras orientam, mas repeticao de comportamento constroi confianca. Se execucao e irregular, cada promessa perde valor. Este eixo mostra se a relacao sustenta confiabilidade sob friccao diaria.",
+            checks: [
+              "Verifique se promessas sao cumpridas sem lembrete constante.",
+              "Verifique se rotina real combina com prioridades declaradas.",
+              "Verifique consistencia de follow-through por duas semanas.",
+            ],
+          },
+          clarity: {
+            body:
+              "Clareza mede quanto e verificado e quanto e adivinhado. Baixa clareza aumenta ruido. Alta clareza melhora decisao. Sem limites e expectativas explicitas, o sistema perde precisao relacional e acelera reatividade. Este eixo tem efeito multiplicador.",
+            checks: [
+              "Verifique se limites estao claros e aplicados.",
+              "Verifique se a intencao e dita antes de temas sensiveis.",
+              "Verifique se os dois compartilham definicao de reparo.",
+            ],
+          },
+        },
+        pattern:
+          "O padrao e recorrente: pressao na area mais fraca, alivio parcial e retorno do mesmo ciclo. Ha melhora pontual, mas sem consolidacao estrutural. Sem correcao dirigida, a inercia segue instavel.",
+        meaning:
+          "O quadro geral nao depende de um unico evento. Depende de repeticao estrutural sob estresse. A alavanca principal esta em fechar lacunas de execucao, nao apenas em melhorar o tom.",
+        recheck:
+          "Refaca o scan em 2-3 semanas apos aplicar mudancas concretas. Observe primeiro a area mais fraca e depois a distancia entre dimensoes.",
+      },
+      in: null,
+    };
+    return map[locale] || map.en;
   }
 
   // --- Raport: wynik z testu + podsumowanie i profil dopasowane do pasma ---
   function initReport() {
     const locale = getFlowLocale();
-    let hasPaid = false;
-    try {
-      hasPaid = localStorage.getItem(PAID_KEY) === "true";
-      if (!hasPaid && /stripe\.com/i.test(String(document.referrer || ""))) {
-        localStorage.setItem(PAID_KEY, "true");
-        hasPaid = true;
+    const isPaid = (() => {
+      try {
+        return localStorage.getItem(PAID_KEY) === "true";
+      } catch (e) {
+        return false;
       }
-    } catch (e) {
-      hasPaid = false;
-    }
-
-    const scoreStrong = document.getElementById("report-score");
-    const summaryEl = document.getElementById("report-summary-body");
-    const profileEl = document.getElementById("report-profile-body");
-    const communicationEl = document.getElementById("report-communication-body");
-    const emotionalEl = document.getElementById("report-emotional-body");
-    const behaviorEl = document.getElementById("report-behavior-body");
-    const trustEl = document.getElementById("report-trust-body");
-    const scenariosEl = document.getElementById("report-scenarios-body");
-    const nextStepsEl = document.getElementById("report-next-steps-body");
-    const benchmarkGridEl = document.getElementById("report-benchmark-grid");
-    const alertsEl = document.getElementById("report-alerts");
-    const donutEl = document.getElementById("report-donut");
-    const donutValueEl = document.getElementById("report-donut-value");
-    const lockOverlay = document.getElementById("report-lock-overlay");
-    const lockTitle = document.getElementById("report-lock-title");
-    const lockBody = document.getElementById("report-lock-body");
-    const lockCta = document.getElementById("report-lock-cta");
-    
-    document.documentElement.lang = locale;
-    localizeReportPageUi(locale);
-    document.body.classList.toggle("report-is-locked", !hasPaid);
-    if (lockOverlay) lockOverlay.hidden = hasPaid;
-    const lockCopy = {
-      en: {
-        title: "Unlock full report",
-        body: "Full analysis is available after Stripe payment.",
-        cta: "Continue to Stripe payment",
-      },
-      pl: {
-        title: "Odblokuj pelny raport",
-        body: "Pelna analiza jest dostepna po platnosci Stripe.",
-        cta: "Przejdz do platnosci Stripe",
-      },
-      de: {
-        title: "Vollbericht freischalten",
-        body: "Die vollständige Analyse ist nach der Stripe-Zahlung verfügbar.",
-        cta: "Weiter zur Stripe-Zahlung",
-      },
-      es: {
-        title: "Desbloquear informe completo",
-        body: "El análisis completo está disponible después del pago con Stripe.",
-        cta: "Continuar al pago con Stripe",
-      },
-      pt: {
-        title: "Desbloquear relatório completo",
-        body: "A análise completa fica disponível após o pagamento via Stripe.",
-        cta: "Continuar para pagamento com Stripe",
-      },
-      in: {
-        title: "Unlock full report",
-        body: "Full analysis is available after Stripe payment.",
-        cta: "Continue to Stripe payment",
-      },
-    };
-    const lockUi = lockCopy[locale] || lockCopy.en;
-    if (lockTitle) {
-      lockTitle.textContent = lockUi.title;
-    }
-    if (lockBody) {
-      lockBody.textContent = lockUi.body;
-    }
-    if (lockCta) {
-      lockCta.textContent = lockUi.cta;
-      const stripeUrl = new URL(STRIPE_LINK);
-      stripeUrl.searchParams.set("lang", locale);
-      lockCta.setAttribute("href", stripeUrl.toString());
-    }
-
-    if (
-      !scoreStrong ||
-      !summaryEl ||
-      !profileEl ||
-      !communicationEl ||
-      !emotionalEl ||
-      !behaviorEl ||
-      !trustEl ||
-      !scenariosEl ||
-      !nextStepsEl
-    ) {
+    })();
+    if (!isPaid) {
+      window.location.href = getFlowPageUrl("result", locale);
       return;
     }
+
+    document.documentElement.lang = locale;
+    localizeReportPageUi(locale);
+    document.body.classList.remove("report-is-locked");
+    const lockOverlay = document.getElementById("report-lock-overlay");
+    if (lockOverlay) lockOverlay.hidden = true;
+
+    const required = {
+      scoreStrong: document.getElementById("report-score"),
+      communicationEl: document.getElementById("report-communication-body"),
+      emotionalEl: document.getElementById("report-emotional-body"),
+      stabilityEl: document.getElementById("report-stability-body"),
+      clarityEl: document.getElementById("report-clarity-body"),
+      patternEl: document.getElementById("report-pattern-body"),
+      meaningEl: document.getElementById("report-meaning-body"),
+      nextStepsEl: document.getElementById("report-next-steps-body"),
+      recheckEl: document.getElementById("report-recheck-body"),
+    };
+    if (!required.scoreStrong || !required.communicationEl || !required.emotionalEl || !required.stabilityEl || !required.clarityEl) return;
 
     let raw = null;
     try {
@@ -2867,30 +4616,19 @@
     } catch (e) {
       raw = null;
     }
-
     const score = raw != null && raw !== "" ? Math.max(0, Math.min(100, parseInt(raw, 10))) : null;
-    scoreStrong.textContent = score != null ? `${score}/100` : locale === "pl" ? "brak" : "n/a";
-    if (score != null && donutEl) donutEl.style.setProperty("--result-percent", `${score}%`);
-    if (score != null && donutValueEl) donutValueEl.textContent = String(score);
-
     if (score == null) {
-      summaryEl.innerHTML =
-        locale === "pl"
-          ? "<p>Wykonaj test, aby wygenerować pełny raport premium.</p>"
-          : "<p>Complete the test first to generate your premium report.</p>";
-      profileEl.innerHTML = "";
-      communicationEl.innerHTML = "";
-      emotionalEl.innerHTML = "";
-      behaviorEl.innerHTML = "";
-      trustEl.innerHTML = "";
-      scenariosEl.innerHTML = "";
-      nextStepsEl.innerHTML = "";
-      if (benchmarkGridEl) benchmarkGridEl.innerHTML = "";
-      if (alertsEl) alertsEl.innerHTML = "";
+      required.communicationEl.innerHTML = "";
+      required.emotionalEl.innerHTML = "";
+      required.stabilityEl.innerHTML = "";
+      required.clarityEl.innerHTML = "";
+      required.patternEl.innerHTML = "";
+      required.meaningEl.innerHTML = "";
+      required.nextStepsEl.innerHTML = "";
+      required.recheckEl.innerHTML = "";
       return;
     }
 
-    const band = getBand(score);
     let details = null;
     try {
       const detailsRaw = localStorage.getItem(STORAGE_DETAILS_KEY);
@@ -2898,12 +4636,7 @@
     } catch (e) {
       details = null;
     }
-    if (!details || !details.areas) {
-      details = getFallbackReportDetails(score);
-    }
-
-    const scorePosition = document.getElementById("report-score-position");
-    if (scorePosition) scorePosition.style.left = `${score}%`;
+    if (!details || !details.areas) details = getFallbackReportDetails(score);
 
     const areaScores = {
       communication: Math.max(0, Math.min(100, Number(details.areas.communication || score))),
@@ -2918,225 +4651,161 @@
       stability: areaScores.behavior,
       clarity: areaScores.trust,
     };
+    const trajectory = getRelationshipTrajectory(areaScores);
+    const { alertsUi, alertItems } = collectRiskAlerts(locale, benchmarkScores);
+    const alertCount = alertItems.length;
+    const timelineUi = getTimelineContent(locale);
+    const timeline = getRelationshipTimeline(trajectory.avgScore, alertCount);
+    const outcomeUi = getOutcomeActionsContent(locale);
+    const outcomeVariant = outcomeUi[timeline.variant] || outcomeUi.mid;
+    const narrative = getPremiumReportNarrative(locale);
+
+    required.scoreStrong.textContent = `${score}/100`;
+    const donutEl = document.getElementById("report-donut");
+    const donutValueEl = document.getElementById("report-donut-value");
+    const scorePosition = document.getElementById("report-score-position");
+    if (donutEl) donutEl.style.setProperty("--result-percent", `${score}%`);
+    if (donutValueEl) donutValueEl.textContent = String(score);
+    if (scorePosition) scorePosition.style.left = `${score}%`;
+
+    const personalizedInsightEl = document.getElementById("report-personalized-insight");
+    if (personalizedInsightEl) {
+      const personalInsight = getPersonalizedInsightSentence(locale, score, areaScores);
+      personalizedInsightEl.textContent = personalInsight.sentence;
+    }
 
     const renderMap = [
-      { domPrefix: "communication", areaKey: "communication" },
-      { domPrefix: "safety", areaKey: "emotional" },
-      { domPrefix: "stability", areaKey: "behavior" },
-      { domPrefix: "transparency", areaKey: "trust" },
+      { domPrefix: "communication", areaKey: "communication", scoreId: "report-dim-communication-score", labelId: "report-dim-communication-label" },
+      { domPrefix: "safety", areaKey: "emotional", scoreId: "report-dim-emotional-score", labelId: "report-dim-emotional-label" },
+      { domPrefix: "stability", areaKey: "behavior", scoreId: "report-dim-stability-score", labelId: "report-dim-stability-label" },
+      { domPrefix: "transparency", areaKey: "trust", scoreId: "report-dim-clarity-score", labelId: "report-dim-clarity-label" },
     ];
-
     renderMap.forEach((entry) => {
       const scoreValue = areaScores[entry.areaKey];
       const segment = getAreaSegment(scoreValue);
       const content = getAreaContent(locale, entry.areaKey, segment);
       const segmentLabel = getAreaSegmentLabel(locale, segment);
-
       setText(`report-area-${entry.domPrefix}-score`, `${scoreValue}/100`);
       setText(`report-area-${entry.domPrefix}-label`, segmentLabel);
       setText(`report-area-${entry.domPrefix}-insight`, content.title);
       setText(`report-area-${entry.domPrefix}-text`, content.body);
       setText(`report-bar-label-${entry.domPrefix}`, segmentLabel);
-
+      setText(entry.scoreId, `${scoreValue}/100`);
+      setText(entry.labelId, segmentLabel);
       const bar = document.getElementById(`report-bar-${entry.domPrefix}`);
       if (bar) bar.style.width = `${scoreValue}%`;
     });
 
+    const benchmarkGridEl = document.getElementById("report-benchmark-grid");
     if (benchmarkGridEl) {
       const benchmarkUi = getBenchmarkLabels(locale);
-      const cards = ["overall", "communication", "emotional", "stability", "clarity"]
+      benchmarkGridEl.innerHTML = ["overall", "communication", "emotional", "stability", "clarity"]
         .map((key) => {
           const userScore = Math.round(benchmarkScores[key]);
           const averageScore = BENCHMARK_SCORES[key];
           const bandKey = getComparisonBand(userScore, averageScore);
           const comparisonLabel = benchmarkUi[bandKey] || benchmarkUi.around;
-          return `
-            <article class="report-benchmark-card">
-              <div class="report-benchmark-card__head">
-                <h3>${escapeHtml(benchmarkUi.dimensions[key])}</h3>
-                <p class="report-benchmark-card__score">${userScore}/100</p>
-              </div>
-              <p class="report-benchmark-card__meta">${escapeHtml(benchmarkUi.average)}: ${averageScore}/100</p>
-              <p class="report-benchmark-card__result">${escapeHtml(comparisonLabel)}</p>
-            </article>
-          `;
+          return `<article class="report-benchmark-card"><div class="report-benchmark-card__head"><h3>${escapeHtml(
+            benchmarkUi.dimensions[key]
+          )}</h3><p class="report-benchmark-card__score">${userScore}/100</p></div><p class="report-benchmark-card__meta">${escapeHtml(
+            benchmarkUi.average
+          )}: ${averageScore}/100</p><p class="report-benchmark-card__result">${escapeHtml(comparisonLabel)}</p></article>`;
         })
         .join("");
-      benchmarkGridEl.innerHTML = cards;
+    }
+    const benchmarkNoteEl = document.getElementById("report-benchmark-note");
+    if (benchmarkNoteEl) benchmarkNoteEl.textContent = narrative.benchmarkNote;
+
+    const alertsEl = document.getElementById("report-alerts");
+    if (alertsEl) {
+      alertsEl.innerHTML = alertItems.length
+        ? alertItems
+            .map((item) => `<article class="report-alert-card"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p></article>`)
+            .join("")
+        : `<p class="report-alerts__empty">${escapeHtml(alertsUi.none)}</p>`;
     }
 
-    if (alertsEl) {
-      const alertsUi = getRiskAlertLabels(locale);
-      const alertItems = [];
-      const clarityScore = benchmarkScores.clarity;
-      const emotionalScore = benchmarkScores.emotional;
-      const areaSpreadValues = [
-        benchmarkScores.communication,
-        benchmarkScores.emotional,
-        benchmarkScores.stability,
-        benchmarkScores.clarity,
-      ];
-      const spread = Math.max(...areaSpreadValues) - Math.min(...areaSpreadValues);
+    const trajectoryEl = document.getElementById("report-trajectory");
+    if (trajectoryEl) {
+      const trajectoryContent = getTrajectoryContent(locale);
+      const trajectoryText = trajectoryContent[trajectory.label] || trajectoryContent.unstable;
+      trajectoryEl.innerHTML = `<div class="report-trajectory__header"><p class="report-trajectory__label">${escapeHtml(
+        trajectoryText.label
+      )}</p><p class="report-trajectory__meta">${escapeHtml(trajectoryContent.avgLabel)} ${trajectory.avgScore}/100 | ${escapeHtml(
+        trajectoryContent.varianceLabel
+      )} ${trajectory.variance}</p></div><p class="report-trajectory__body">${escapeHtml(trajectoryText.text)}</p>`;
+    }
 
-      if (clarityScore < 60) {
-        alertItems.push(alertsUi.clarity);
-      }
-      if (emotionalScore < 60) {
-        alertItems.push(alertsUi.emotional);
-      }
-      if (spread > 15) {
-        alertItems.push(alertsUi.inconsistency);
-      }
+    const timelineEl = document.getElementById("report-timeline");
+    if (timelineEl) {
+      const variant = timelineUi[timeline.variant] || timelineUi.mid;
+      const stateLabel = timelineUi[timeline.state] || timelineUi.unstable;
+      timelineEl.innerHTML = `<div class="report-timeline__meta"><p class="report-timeline__state">${escapeHtml(
+        stateLabel
+      )}</p><p class="report-timeline__numbers">${escapeHtml(timelineUi.avgLabel)} ${trajectory.avgScore}/100 | ${escapeHtml(
+        timelineUi.varianceLabel
+      )} ${trajectory.variance} | ${escapeHtml(timelineUi.alertsLabel)} ${alertCount}</p></div><div class="report-timeline__grid"><article class="report-timeline__stage"><h3>${escapeHtml(
+        timelineUi.shortTerm
+      )}</h3><p>${escapeHtml(variant.short)}</p></article><article class="report-timeline__stage"><h3>${escapeHtml(
+        timelineUi.midTerm
+      )}</h3><p>${escapeHtml(variant.mid)}</p></article><article class="report-timeline__stage"><h3>${escapeHtml(
+        timelineUi.longTerm
+      )}</h3><p>${escapeHtml(variant.long)}</p></article></div>`;
+    }
 
-      if (!alertItems.length) {
-        alertsEl.innerHTML = `<p class="report-alerts__empty">${escapeHtml(alertsUi.none)}</p>`;
-      } else {
-        alertsEl.innerHTML = alertItems
+    const outcomeEl = document.getElementById("report-outcome");
+    if (outcomeEl) {
+      const renderActions = (items) =>
+        items
           .map(
-            (item) => `
-              <article class="report-alert-card">
-                <h3>${escapeHtml(item.title)}</h3>
-                <p>${escapeHtml(item.body)}</p>
-              </article>
-            `
+            (item) =>
+              `<article class="report-outcome-action"><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.explanation)}</p><p><strong>${escapeHtml(
+                outcomeUi.whyLabel
+              )}:</strong> ${escapeHtml(item.why)}</p><p><strong>${escapeHtml(outcomeUi.changeLabel)}:</strong> ${escapeHtml(item.change)}</p></article>`
           )
           .join("");
-      }
+      outcomeEl.innerHTML = `<section class="report-outcome-group"><h3>${escapeHtml(
+        outcomeUi.highImpact
+      )}</h3><div class="report-outcome-actions">${renderActions(outcomeVariant.highImpact || [])}</div></section><section class="report-outcome-group"><h3>${escapeHtml(
+        outcomeUi.mediumImpact
+      )}</h3><div class="report-outcome-actions">${renderActions(outcomeVariant.mediumImpact || [])}</div></section>${
+        outcomeVariant.lowImpact && outcomeVariant.lowImpact.length
+          ? `<section class="report-outcome-group"><h3>${escapeHtml(outcomeUi.lowImpact)}</h3><div class="report-outcome-actions">${renderActions(
+              outcomeVariant.lowImpact
+            )}</div></section>`
+          : ""
+      }`;
     }
 
-    const contentByLocale = {
-      en: {
-        summary: `Your score indicates ${escapeHtml(RESULT_COPY[band].label.toLowerCase())} and highlights where decision risk is currently concentrated.`,
-        summary2: "This report combines communication, emotional and behavior signals into one structured view.",
-        profile1: "Your relationship profile shows the current balance between closeness, predictability and trust stability.",
-        profile2: "The model focuses on recurring trends, not isolated moments.",
-        comm2: "Critical point: what happens after tension, and whether key topics are actually closed.",
-        emo2: "Higher emotional load can distort interpretation and increase reactivity.",
-        beh2: "Repeated observable behaviors are more reliable than one-time declarations.",
-        trust2: "Trust improves when words and actions stay aligned over time.",
-        scenarios: [
-          "<strong>Stabilization:</strong> clearer agreements and regular follow-through lower uncertainty.",
-          "<strong>Mixed pattern:</strong> temporary progress alternates with recurring unresolved loops.",
-          "<strong>Escalation risk:</strong> deeper distance and more inconsistent trust signals.",
-        ],
-        next: [
-          "<strong>Choose one priority topic</strong> and define one measurable 7-day step.",
-          "<strong>Separate facts from assumptions</strong> before major decisions.",
-          "<strong>Review trend in one week</strong> and verify if signals become more consistent.",
-        ],
-        signal1: "Highest pressure currently appears in communication and predictability.",
-        signal2: "Track whether difficult conversations produce stable follow-through.",
-      },
-      pl: {
-        summary: `Wynik wskazuje na ${escapeHtml(RESULT_COPY_PL[band].label.toLowerCase())} i pokazuje, gdzie ryzyko decyzji jest najwyzsze.`,
-        summary2: "Raport łączy sygnały komunikacyjne, emocjonalne i behawioralne w jeden uporządkowany obraz.",
-        profile1: "Profil relacji wskazuje, jak obecnie wygląda balans między bliskością, stabilnością i przewidywalnością.",
-        profile2: "To narzędzie pokazuje trendy, a nie pojedyncze zdarzenia.",
-        comm2: "Krytyczne są momenty po napięciu: czy wracacie do tematu i domykacie rozmowę.",
-        emo2: "Wysokie obciążenie emocjonalne utrudnia klarowną ocenę faktów i intencji.",
-        beh2: "Najwięcej mówi powtarzalność codziennych zachowań, a nie jednorazowe deklaracje.",
-        trust2: "Zaufanie rośnie, gdy słowa i działania pozostają spójne przez czas.",
-        scenarios: [
-          "<strong>Stabilizacja:</strong> jasne ustalenia i regularny follow-up zmniejszają niepewność.",
-          "<strong>Wzorzec mieszany:</strong> okresy poprawy przeplatają się z powrotem do starych pętli.",
-          "<strong>Ryzyko eskalacji:</strong> narastanie dystansu i niespójnych sygnałów.",
-        ],
-        next: [
-          "<strong>Wybierz jeden temat priorytetowy</strong> i ustal jeden mierzalny krok na 7 dni.",
-          "<strong>Oddziel fakty od domysłów</strong> przed podjęciem większej decyzji.",
-          "<strong>Sprawdź trend po tygodniu</strong> i oceń, czy sygnały są bardziej spójne.",
-        ],
-        signal1: "Największe napięcie widoczne jest w obszarze komunikacji i przewidywalności.",
-        signal2: "Obserwuj, czy po rozmowach pojawiają się konkretne, stabilne zmiany.",
-      },
-      de: {
-        summary: `Dein Ergebnis zeigt ${escapeHtml(RESULT_COPY_DE[band].label.toLowerCase())} und markiert die Bereiche mit dem höchsten Entscheidungsrisiko.`,
-        summary2: "Der Bericht verbindet Kommunikations-, Emotions- und Verhaltenssignale in einer strukturierten Übersicht.",
-        profile1: "Das Profil zeigt das aktuelle Gleichgewicht zwischen Nähe, Stabilität und Vorhersehbarkeit.",
-        profile2: "Fokus liegt auf wiederkehrenden Mustern, nicht auf Einzelfällen.",
-        comm2: "Entscheidend ist, ob Themen nach Spannung sauber geschlossen werden.",
-        emo2: "Hohe emotionale Last erhöht Reaktivität und erschwert klare Bewertung.",
-        beh2: "Wiederholte beobachtbare Handlungen sind verlässlicher als einmalige Aussagen.",
-        trust2: "Vertrauen steigt, wenn Worte und Handlungen über Zeit konsistent bleiben.",
-        scenarios: [
-          "<strong>Stabilisierung:</strong> klarere Absprachen und Follow-up senken Unsicherheit.",
-          "<strong>Gemischtes Muster:</strong> Fortschritte wechseln sich mit offenen Schleifen ab.",
-          "<strong>Eskalationsrisiko:</strong> mehr Distanz und inkonsistente Signale.",
-        ],
-        next: [
-          "<strong>Wähle ein Prioritätsthema</strong> mit einem messbaren 7-Tage-Schritt.",
-          "<strong>Trenne Fakten von Annahmen</strong> vor größeren Entscheidungen.",
-          "<strong>Prüfe den Trend nach einer Woche</strong> anhand beobachtbarer Signale.",
-        ],
-        signal1: "Höchster Druck zeigt sich aktuell bei Kommunikation und Vorhersehbarkeit.",
-        signal2: "Beobachte, ob Gespräche zu stabilen Folgehandlungen führen.",
-      },
-      es: {
-        summary: `Tu resultado muestra ${escapeHtml(RESULT_COPY_ES[band].label.toLowerCase())} y señala dónde se concentra el mayor riesgo de decisión.`,
-        summary2: "El informe integra señales de comunicación, emoción y conducta en una vista estructurada.",
-        profile1: "El perfil refleja el equilibrio actual entre cercanía, estabilidad y previsibilidad.",
-        profile2: "El enfoque está en patrones repetidos, no en casos aislados.",
-        comm2: "Clave: si los temas difíciles se cierran después de la tensión.",
-        emo2: "Mayor carga emocional aumenta reactividad y reduce claridad.",
-        beh2: "Las conductas repetidas observables pesan más que declaraciones puntuales.",
-        trust2: "La confianza mejora cuando palabras y acciones se mantienen alineadas.",
-        scenarios: [
-          "<strong>Estabilización:</strong> acuerdos claros y seguimiento constante reducen incertidumbre.",
-          "<strong>Patrón mixto:</strong> avances parciales con bucles sin cierre.",
-          "<strong>Riesgo de escalada:</strong> más distancia y señales inconsistentes.",
-        ],
-        next: [
-          "<strong>Elige un tema prioritario</strong> y define un paso medible de 7 días.",
-          "<strong>Separa hechos de suposiciones</strong> antes de decisiones grandes.",
-          "<strong>Revisa el patrón en una semana</strong> con señales observables.",
-        ],
-        signal1: "La presión más alta aparece en comunicación y previsibilidad.",
-        signal2: "Observa si las conversaciones generan cambios estables.",
-      },
-      pt: {
-        summary: `Seu resultado indica ${escapeHtml(RESULT_COPY_PT[band].label.toLowerCase())} e aponta onde o risco de decisão está mais concentrado.`,
-        summary2: "O relatório integra sinais de comunicação, emoção e comportamento em uma visão estruturada.",
-        profile1: "O perfil mostra o equilíbrio atual entre proximidade, estabilidade e previsibilidade.",
-        profile2: "O foco está em padrões recorrentes, não em eventos isolados.",
-        comm2: "Ponto crítico: se temas difíceis são realmente fechados após tensão.",
-        emo2: "Carga emocional alta aumenta reatividade e reduz clareza.",
-        beh2: "Comportamentos repetidos observáveis são mais confiáveis que declarações pontuais.",
-        trust2: "A confiança melhora quando palavras e ações ficam alinhadas no tempo.",
-        scenarios: [
-          "<strong>Estabilização:</strong> acordos claros e follow-up reduzem incerteza.",
-          "<strong>Padrão misto:</strong> avanço parcial com ciclos sem fechamento.",
-          "<strong>Risco de escalada:</strong> mais distância e sinais inconsistentes.",
-        ],
-        next: [
-          "<strong>Escolha um tema prioritário</strong> com um passo mensurável de 7 dias.",
-          "<strong>Separe fatos de suposições</strong> antes de decisões grandes.",
-          "<strong>Revise o padrão em uma semana</strong> com sinais observáveis.",
-        ],
-        signal1: "A maior pressão aparece em comunicação e previsibilidade.",
-        signal2: "Observe se conversas geram mudanças estáveis.",
-      },
-      in: null,
-    };
-    const content = contentByLocale[locale] || contentByLocale.en;
-    const communicationSegment = getAreaSegment(areaScores.communication);
-    const emotionalSegment = getAreaSegment(areaScores.emotional);
-    const behaviorSegment = getAreaSegment(areaScores.behavior);
-    const trustSegment = getAreaSegment(areaScores.trust);
-    const communicationContent = getAreaContent(locale, "communication", communicationSegment);
-    const emotionalContent = getAreaContent(locale, "emotional", emotionalSegment);
-    const behaviorContent = getAreaContent(locale, "behavior", behaviorSegment);
-    const trustContent = getAreaContent(locale, "trust", trustSegment);
+    required.communicationEl.innerHTML = `<p>${escapeHtml(narrative.dimensions.communication.body)}</p>`;
+    required.emotionalEl.innerHTML = `<p>${escapeHtml(narrative.dimensions.emotional.body)}</p>`;
+    required.stabilityEl.innerHTML = `<p>${escapeHtml(narrative.dimensions.stability.body)}</p>`;
+    required.clarityEl.innerHTML = `<p>${escapeHtml(narrative.dimensions.clarity.body)}</p>`;
+    const checksMap = [
+      ["report-communication-checks", narrative.dimensions.communication.checks],
+      ["report-emotional-checks", narrative.dimensions.emotional.checks],
+      ["report-stability-checks", narrative.dimensions.stability.checks],
+      ["report-clarity-checks", narrative.dimensions.clarity.checks],
+    ];
+    checksMap.forEach(([id, items]) => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+    });
 
-    summaryEl.innerHTML = `<p>${content.summary}</p><p>${content.summary2}</p>`;
-    profileEl.innerHTML = `<p>${content.profile1}</p><p>${content.profile2}</p>`;
-    communicationEl.innerHTML = `<p><strong>${escapeHtml(communicationContent.title)}</strong></p><p>${escapeHtml(communicationContent.body)}</p>`;
-    emotionalEl.innerHTML = `<p><strong>${escapeHtml(emotionalContent.title)}</strong></p><p>${escapeHtml(emotionalContent.body)}</p>`;
-    behaviorEl.innerHTML = `<p><strong>${escapeHtml(behaviorContent.title)}</strong></p><p>${escapeHtml(behaviorContent.body)}</p>`;
-    trustEl.innerHTML = `<p><strong>${escapeHtml(trustContent.title)}</strong></p><p>${escapeHtml(trustContent.body)}</p>`;
-    scenariosEl.innerHTML = content.scenarios.map((item) => `<li>${item}</li>`).join("");
-    nextStepsEl.innerHTML = content.next.map((item) => `<li>${item}</li>`).join("");
-    setText("report-signal-text-1", content.signal1);
-    setText("report-signal-text-2", content.signal2);
+    required.patternEl.innerHTML = `<p>${escapeHtml(narrative.pattern)}</p>`;
+    required.meaningEl.innerHTML = `<p>${escapeHtml(narrative.meaning)}</p>`;
+    required.nextStepsEl.innerHTML = (outcomeVariant.highImpact || [])
+      .slice(0, 4)
+      .map((item) => `<li><strong>${escapeHtml(item.title)}:</strong> ${escapeHtml(item.change)}</li>`)
+      .join("");
+    required.recheckEl.innerHTML = `<p>${escapeHtml(narrative.recheck)}</p>`;
+
+    const chartNoteEl = document.getElementById("report-chart-note");
+    if (chartNoteEl && !chartNoteEl.textContent) {
+      chartNoteEl.textContent = narrative.benchmarkNote;
+    }
+    const recheckCta = document.getElementById("report-recheck-cta");
+    if (recheckCta) recheckCta.setAttribute("href", getFlowPageUrl("test", locale));
   }
 
   // --- Bootstrap wg adresu strony ---
@@ -3144,6 +4813,8 @@
     document.documentElement.classList.add("js");
     initLocaleByLocation();
     persistPageLocale();
+    const lang = getFlowLocale();
+    console.log("LANG ACTIVE:", lang);
     appendLangToStripeLinks();
     setYear();
     initLegalFooter();
@@ -3159,10 +4830,13 @@
       path.endsWith("/result.html") || path.endsWith("/result") || path.endsWith("/result/index.html");
     const isReportPage =
       path.endsWith("/report.html") || path.endsWith("/report") || path.endsWith("/report/index.html");
+    const isSuccessPage =
+      path.endsWith("/success.html") || path.endsWith("/success") || path.endsWith("/success/index.html");
 
     if (isTestPage) initTest();
     else if (isResultPage) initResult();
     else if (isReportPage) initReport();
+    else if (isSuccessPage) initSuccess();
   }
 
   if (document.readyState === "loading") {

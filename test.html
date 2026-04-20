@@ -30,12 +30,13 @@
       <div class="test-progress" aria-hidden="true">
         <div class="test-progress__bar" id="progress-bar" style="width: 10%"></div>
       </div>
+      <p class="test-progress-hint" id="test-progress-hint"></p>
 
       <form id="test-form" class="test-form" novalidate>
         <div id="question-root" class="question-card reveal"></div>
         <div class="test-actions">
           <button type="button" class="btn btn--ghost" id="btn-prev" hidden>Back</button>
-          <button type="button" class="btn btn--primary btn--lg btn--accent" id="btn-next">Next</button>
+          <button type="button" class="btn btn--primary btn--lg btn--accent" id="btn-next" disabled>Next</button>
         </div>
       </form>
     </div>
