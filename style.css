@@ -257,10 +257,15 @@ p:last-child {
 .mobile-nav {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 0.75rem;
-  padding: 1rem var(--container) 1.25rem;
+  box-sizing: border-box;
+  width: 100%;
+  /* Use real gutter padding — never var(--container); that is a max-width, not horizontal spacing. */
+  padding: 1rem clamp(1rem, 4vw, 1.35rem) 1.25rem;
   border-bottom: 1px solid var(--color-border);
   background: var(--color-bg-white);
+  text-align: left;
 }
 
 /* Mobile: panel poza flow nagłówka — leży nad treścią main (bez „niewidzialnych” linków pod hero). */
@@ -286,19 +291,34 @@ p:last-child {
   display: none !important;
 }
 
+.mobile-nav .lang-switch--mobile {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  padding-bottom: 0.65rem;
+  margin-bottom: 0.35rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
 .mobile-nav a:not(.btn) {
+  width: 100%;
+  box-sizing: border-box;
   color: var(--color-text);
   text-decoration: none;
   font-weight: 500;
   padding: 0.35rem 0;
+  white-space: normal;
+  line-height: 1.35;
 }
 
-.mobile-nav .lang-switch--mobile {
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding-bottom: 0.65rem;
-  margin-bottom: 0.35rem;
-  border-bottom: 1px solid var(--color-border);
+.mobile-nav .btn {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.25rem;
 }
 
 /* --- Przełącznik języka (landing) --- */
