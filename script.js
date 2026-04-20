@@ -13,6 +13,69 @@
   const PAID_KEY = "paid";
   const TEST_SESSION_KEY = "relationshipscan_test_session_v1";
   const STRIPE_LINK = "https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00";
+
+  function readPaidFlag() {
+    try {
+      if (localStorage.getItem(PAID_KEY) === "true") return true;
+    } catch (e) {
+      // Ignore storage issues.
+    }
+    try {
+      return sessionStorage.getItem(PAID_KEY) === "true";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function writePaidFlag() {
+    try {
+      localStorage.setItem(PAID_KEY, "true");
+      localStorage.setItem("paidAt", Date.now().toString());
+    } catch (e) {
+      // Ignore storage issues.
+    }
+    try {
+      sessionStorage.setItem(PAID_KEY, "true");
+    } catch (e) {
+      // Ignore storage issues.
+    }
+  }
+
+  function clearPaidFlag() {
+    try {
+      localStorage.removeItem(PAID_KEY);
+      localStorage.removeItem("paidAt");
+    } catch (e) {
+      // Ignore storage issues.
+    }
+    try {
+      sessionStorage.removeItem(PAID_KEY);
+    } catch (e) {
+      // Ignore storage issues.
+    }
+  }
+
+  /** Stripe po platnosci czesto wraca na report z session_id / payment_intent zamiast przez success.html. */
+  function syncPaidFromStripeReturnUrl() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get("session_id") || "";
+      const paymentIntent = params.get("payment_intent") || "";
+      const okStripe =
+        (sessionId.startsWith("cs_") && sessionId.length >= 14) ||
+        (paymentIntent.startsWith("pi_") && paymentIntent.length >= 14);
+      if (!okStripe) return;
+      writePaidFlag();
+      params.delete("session_id");
+      params.delete("payment_intent");
+      params.delete("payment_intent_client_secret");
+      const qs = params.toString();
+      const path = window.location.pathname || "";
+      window.history.replaceState({}, "", `${path}${qs ? `?${qs}` : ""}${window.location.hash || ""}`);
+    } catch (e) {
+      // Ignore malformed URLs / history API issues.
+    }
+  }
   const LOCALE_PATHS = {
     en: "/en/",
     de: "/de/",
@@ -3954,12 +4017,7 @@
       const score = scoreData.trustIndex;
       const band = getBand(score);
       const details = buildReportDetails(score, band, sessionQuestions, answers);
-      try {
-        localStorage.removeItem(PAID_KEY);
-        localStorage.removeItem("paidAt");
-      } catch (e) {
-        // Ignore storage issues.
-      }
+      clearPaidFlag();
       try {
         localStorage.setItem(STORAGE_KEY, String(score));
         localStorage.setItem(STORAGE_DETAILS_KEY, JSON.stringify(details));
@@ -4423,13 +4481,7 @@
     setText("locked-teaser-2", teaserLines[1]);
     setText("locked-teaser-3", teaserLines[2]);
 
-    const isPaid = (() => {
-      try {
-        return localStorage.getItem(PAID_KEY) === "true";
-      } catch (e) {
-        return false;
-      }
-    })();
+    const isPaid = readPaidFlag();
 
     if (isPaid) {
       window.location.href = getFlowPageUrl("report", locale);
@@ -4440,6 +4492,7 @@
   }
 
   function initSuccess() {
+    syncPaidFromStripeReturnUrl();
     const queryLang = getQueryLang();
     if (queryLang) setLang(queryLang);
     const locale = getFlowLocale();
@@ -4477,12 +4530,7 @@
     setText("success-title", ui.title);
     setText("success-body", ui.body);
 
-    try {
-      localStorage.setItem(PAID_KEY, "true");
-      localStorage.setItem("paidAt", Date.now().toString());
-    } catch (e) {
-      // Ignore storage issues.
-    }
+    writePaidFlag();
 
     window.setTimeout(() => {
       window.location.href = getFlowPageUrl("report", locale);
@@ -4748,15 +4796,10 @@
 
   // --- Raport: wynik z testu + podsumowanie i profil dopasowane do pasma ---
   function initReport() {
+    syncPaidFromStripeReturnUrl();
     const locale = getFlowLocale();
     const logoLink = document.querySelector(".site-header .logo");
-    const isPaid = (() => {
-      try {
-        return localStorage.getItem(PAID_KEY) === "true";
-      } catch (e) {
-        return false;
-      }
-    })();
+    const isPaid = readPaidFlag();
     if (!isPaid) {
       window.location.href = getFlowPageUrl("result", locale);
       return;
