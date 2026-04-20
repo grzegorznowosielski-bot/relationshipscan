@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: FTP Deploy (path 1)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         continue-on-error: true
         with:
           server: ostudios.ftp.dhosting.pl
@@ -22,11 +22,12 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           protocol: ftp
+          timeout: 120000
+          log-level: verbose
           server-dir: /relationshipscan.app/public_html/
-          passive: true
 
       - name: FTP Deploy (path 2)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         continue-on-error: true
         with:
           server: ostudios.ftp.dhosting.pl
@@ -34,11 +35,12 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           protocol: ftp
+          timeout: 120000
+          log-level: verbose
           server-dir: /public_html/
-          passive: true
 
       - name: FTP Deploy (path 3)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         continue-on-error: true
         with:
           server: ostudios.ftp.dhosting.pl
@@ -46,8 +48,9 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           protocol: ftp
+          timeout: 120000
+          log-level: verbose
           server-dir: /domains/relationshipscan.app/public_html/
-          passive: true
 
       - name: Verify live content marker
         run: |
