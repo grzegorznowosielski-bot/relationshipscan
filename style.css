@@ -2146,9 +2146,14 @@ a.lang-switch__item {
   z-index: 60;
   display: grid;
   place-items: center;
-  padding: 1rem;
+  box-sizing: border-box;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: max(1rem, env(safe-area-inset-top, 0px)) max(1rem, env(safe-area-inset-right, 0px))
+    max(1rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px));
   background: rgba(12, 16, 27, 0.42);
   backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 /* [hidden] must win over display:grid — otherwise the paywall stays visible after payment. */
@@ -2160,6 +2165,10 @@ a.lang-switch__item {
 
 .report-lock-overlay__card {
   width: min(540px, 100%);
+  max-height: min(520px, 100vh - 2rem);
+  max-height: min(520px, 100dvh - 2rem);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: #fff;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
@@ -2177,8 +2186,15 @@ a.lang-switch__item {
   color: var(--color-text-muted);
 }
 
+/* Blokada scrolla pod paywallem (Safari / Chrome mobile) */
+html:has(body.report-is-locked) {
+  overflow: hidden;
+  height: 100%;
+}
+
 .report-is-locked {
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .report-is-locked .report-layout {
