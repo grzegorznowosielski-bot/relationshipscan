@@ -16,8 +16,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=20260420g" />
   <script>
-    if (!localStorage.getItem("paid")) {
-      window.location.href = "result.html";
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var lang = params.get("lang");
+      if (lang) {
+        try {
+          localStorage.setItem("relationshipscan_locale", lang.toLowerCase());
+          localStorage.setItem("lang", lang.toLowerCase());
+        } catch (e) {}
+      }
+      if (params.get("paid") === "true") {
+        try {
+          localStorage.setItem("paid", "true");
+        } catch (e) {}
+      }
+      if (!localStorage.getItem("paid")) {
+        var fallbackLang = (localStorage.getItem("lang") || lang || "en").toLowerCase();
+        var prefix = "";
+        var path = (window.location.pathname || "").toLowerCase();
+        if (path.indexOf("/" + fallbackLang + "/") === 0) {
+          prefix = "/" + fallbackLang + "/";
+        }
+        window.location.href = (prefix ? prefix + "result.html" : "/result.html") + "?lang=" + encodeURIComponent(fallbackLang);
+      }
+    })();
+  </script>
+  <script>
+    if (new URLSearchParams(window.location.search).get("lang") === "pl") {
+      document.documentElement.lang = "pl";
     }
   </script>
 </head>
@@ -31,144 +57,148 @@
   <main class="report-main report-main--premium">
     <div class="container report-layout">
       <header class="report-header reveal">
-        <p class="eyebrow">Full Relationship Analysis</p>
-        <h1>Your premium report</h1>
-        <p class="report-header__sub">
-          A structured, data-driven view of your current relationship dynamics. The goal is clarity: what looks stable, what needs attention, and what to do next.
-        </p>
-        <p class="report-ref" id="report-index-ref">Your Trust Index: <strong id="report-score">—</strong></p>
+        <p class="eyebrow" id="report-eyebrow">Premium report</p>
+        <h1 id="report-title">Your full relationship analysis</h1>
+        <p class="report-ref"><span id="report-index-label">Trust Index:</span> <strong id="report-score">—</strong></p>
+        <p class="report-header__sub" id="report-subhead">A structured premium view of your current relationship signals and decision risk.</p>
       </header>
 
-      <section class="report-card report-card--lead report-score-overview reveal">
-        <h2>Score overview</h2>
-        <p class="report-score-bandline" id="report-score-band">Mixed trust signals</p>
-        <div class="report-score-scale" aria-hidden="true">
-          <div class="report-score-scale__range report-score-scale__range--low">Low uncertainty</div>
-          <div class="report-score-scale__range report-score-scale__range--mid">Medium</div>
-          <div class="report-score-scale__range report-score-scale__range--high">High uncertainty</div>
-          <span class="report-score-scale__marker" id="report-score-position"></span>
-        </div>
-        <p class="report-overview-summary" id="report-overview-summary"></p>
-        <p class="report-overview-note" id="report-overview-note"></p>
-      </section>
-
-      <section class="report-card reveal" aria-labelledby="report-analysis-heading">
-        <h2 id="report-analysis-heading">4-area analysis</h2>
+      <section class="report-card reveal" aria-labelledby="report-overview-title">
+        <h2 id="report-overview-title">Overview cards</h2>
         <div class="report-analysis-grid">
           <article class="analysis-area-card">
             <div class="analysis-area-card__head">
-              <h3>Communication</h3>
+              <h3 id="report-area-title-communication">Communication</h3>
               <p class="analysis-area-card__score" id="report-area-communication-score">—</p>
             </div>
             <p class="analysis-area-card__label" id="report-area-communication-label">—</p>
+            <p class="analysis-area-card__insight" id="report-area-communication-insight"></p>
             <p class="analysis-area-card__text" id="report-area-communication-text"></p>
           </article>
           <article class="analysis-area-card">
             <div class="analysis-area-card__head">
-              <h3>Emotional connection</h3>
-              <p class="analysis-area-card__score" id="report-area-emotional-score">—</p>
+              <h3 id="report-area-title-stability">Stability</h3>
+              <p class="analysis-area-card__score" id="report-area-stability-score">—</p>
             </div>
-            <p class="analysis-area-card__label" id="report-area-emotional-label">—</p>
-            <p class="analysis-area-card__text" id="report-area-emotional-text"></p>
+            <p class="analysis-area-card__label" id="report-area-stability-label">—</p>
+            <p class="analysis-area-card__insight" id="report-area-stability-insight"></p>
+            <p class="analysis-area-card__text" id="report-area-stability-text"></p>
           </article>
           <article class="analysis-area-card">
             <div class="analysis-area-card__head">
-              <h3>Behavioral changes</h3>
-              <p class="analysis-area-card__score" id="report-area-behavior-score">—</p>
+              <h3 id="report-area-title-transparency">Transparency</h3>
+              <p class="analysis-area-card__score" id="report-area-transparency-score">—</p>
             </div>
-            <p class="analysis-area-card__label" id="report-area-behavior-label">—</p>
-            <p class="analysis-area-card__text" id="report-area-behavior-text"></p>
+            <p class="analysis-area-card__label" id="report-area-transparency-label">—</p>
+            <p class="analysis-area-card__insight" id="report-area-transparency-insight"></p>
+            <p class="analysis-area-card__text" id="report-area-transparency-text"></p>
           </article>
           <article class="analysis-area-card">
             <div class="analysis-area-card__head">
-              <h3>Trust signals</h3>
-              <p class="analysis-area-card__score" id="report-area-trust-score">—</p>
+              <h3 id="report-area-title-safety">Emotional safety</h3>
+              <p class="analysis-area-card__score" id="report-area-safety-score">—</p>
             </div>
-            <p class="analysis-area-card__label" id="report-area-trust-label">—</p>
-            <p class="analysis-area-card__text" id="report-area-trust-text"></p>
+            <p class="analysis-area-card__label" id="report-area-safety-label">—</p>
+            <p class="analysis-area-card__insight" id="report-area-safety-insight"></p>
+            <p class="analysis-area-card__text" id="report-area-safety-text"></p>
           </article>
         </div>
       </section>
 
-      <section class="report-card reveal" aria-labelledby="report-charts-heading">
-        <h2 id="report-charts-heading">Visual analysis</h2>
-        <div class="report-bars">
+      <section class="report-card report-card--lead report-score-overview reveal">
+        <h2 id="report-score-overview-title">Main charts</h2>
+        <div class="report-score-visual">
+          <div class="result-donut result-donut--report" id="report-donut" aria-hidden="true">
+            <div class="result-donut__inner">
+              <p class="result-donut__value" id="report-donut-value">0</p>
+              <p class="result-donut__label">Trust Index</p>
+            </div>
+          </div>
+        </div>
+        <div class="report-score-scale" aria-hidden="true">
+          <div class="report-score-scale__range report-score-scale__range--low" id="report-scale-low">Low uncertainty</div>
+          <div class="report-score-scale__range report-score-scale__range--mid" id="report-scale-mid">Medium</div>
+          <div class="report-score-scale__range report-score-scale__range--high" id="report-scale-high">High uncertainty</div>
+          <span class="report-score-scale__marker" id="report-score-position"></span>
+        </div>
+        <div class="report-bars" id="report-bars-main">
           <div class="report-bars__item">
-            <div class="report-bars__head"><span>Communication</span><span id="report-bar-label-communication">—</span></div>
+            <div class="report-bars__head"><span id="report-bar-title-communication">Communication</span><span id="report-bar-label-communication">—</span></div>
             <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-communication"></span></div>
           </div>
           <div class="report-bars__item">
-            <div class="report-bars__head"><span>Emotional connection</span><span id="report-bar-label-emotional">—</span></div>
-            <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-emotional"></span></div>
+            <div class="report-bars__head"><span id="report-bar-title-stability">Stability</span><span id="report-bar-label-stability">—</span></div>
+            <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-stability"></span></div>
           </div>
           <div class="report-bars__item">
-            <div class="report-bars__head"><span>Behavioral changes</span><span id="report-bar-label-behavior">—</span></div>
-            <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-behavior"></span></div>
+            <div class="report-bars__head"><span id="report-bar-title-transparency">Transparency</span><span id="report-bar-label-transparency">—</span></div>
+            <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-transparency"></span></div>
           </div>
           <div class="report-bars__item">
-            <div class="report-bars__head"><span>Trust signals</span><span id="report-bar-label-trust">—</span></div>
-            <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-trust"></span></div>
+            <div class="report-bars__head"><span id="report-bar-title-safety">Emotional safety</span><span id="report-bar-label-safety">—</span></div>
+            <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-safety"></span></div>
           </div>
         </div>
       </section>
 
       <section class="report-card reveal" aria-labelledby="report-summary-heading">
         <h2 id="report-summary-heading">1. Summary</h2>
-        <div class="prose prose--report" id="report-summary-body">
-          <p>Complete the scan first to generate a personalized summary based on your Trust Index.</p>
-        </div>
+        <div class="prose prose--report" id="report-summary-body"></div>
       </section>
 
       <section class="report-card reveal" aria-labelledby="report-profile-heading">
         <h2 id="report-profile-heading">2. Your Relationship Profile</h2>
         <div class="prose prose--report" id="report-profile-body"></div>
-        <ul class="report-profile-pillars">
-          <li><strong>Communication level</strong> — how clear and consistent conversations feel in daily life.</li>
-          <li><strong>Emotional level</strong> — how connected, calm, and supported you feel across recent weeks.</li>
-          <li><strong>Trust level</strong> — how stable and predictable the relationship feels from your perspective.</li>
-        </ul>
       </section>
 
       <section class="report-card reveal">
-        <h2>3. Communication Patterns</h2>
+        <h2 id="report-comm-heading">3. Communication Patterns</h2>
         <div class="prose prose--report" id="report-communication-body"></div>
       </section>
 
       <section class="report-card reveal">
-        <h2>4. Emotional Distance</h2>
+        <h2 id="report-emotion-heading">4. Emotional Distance</h2>
         <div class="prose prose--report" id="report-emotional-body"></div>
       </section>
 
       <section class="report-card reveal">
-        <h2>5. Behavioral Changes</h2>
+        <h2 id="report-behavior-heading">5. Behavioral Changes</h2>
         <div class="prose prose--report" id="report-behavior-body"></div>
       </section>
 
       <section class="report-card report-card--accent reveal">
-        <h2>6. Trust Signals</h2>
+        <h2 id="report-trust-heading">6. Trust Signals</h2>
         <div class="prose prose--report" id="report-trust-body"></div>
       </section>
 
       <section class="report-card reveal">
-        <h2>7. Possible Scenarios</h2>
+        <h2 id="report-scenarios-heading">7. Possible Scenarios</h2>
         <ul class="report-list" id="report-scenarios-body"></ul>
       </section>
 
       <section class="report-card reveal">
-        <h2>8. What You Can Do Next</h2>
+        <h2 id="report-next-heading">8. What You Can Do Next</h2>
         <ul class="report-list" id="report-next-steps-body"></ul>
+      </section>
+
+      <section class="report-card reveal" aria-labelledby="report-signals-heading">
+        <h2 id="report-signals-heading">Signal intensity</h2>
+        <div class="report-analysis-grid">
+          <article class="analysis-area-card"><p class="analysis-area-card__label" id="report-signal-label-1">High attention</p><p class="analysis-area-card__text" id="report-signal-text-1"></p></article>
+          <article class="analysis-area-card"><p class="analysis-area-card__label" id="report-signal-label-2">Monitor</p><p class="analysis-area-card__text" id="report-signal-text-2"></p></article>
+        </div>
       </section>
 
       <section class="disclaimer-box disclaimer-box--compact reveal">
         <p>
-          This report is an informational and educational tool. It is not psychological, legal, or medical advice, not a diagnosis, and not a definitive judgment about any relationship.
+          <span id="report-disclaimer-text">This tool provides interpretative insights and is not psychological, medical or legal advice.</span>
         </p>
       </section>
 
       <p class="result-footer-links">
         <a href="index.html">Home</a>
         ·
-        <a href="result.html">Back to result</a>
+        <a href="result.html" id="report-back-link">Back to result</a>
       </p>
     </div>
   </main>
@@ -176,6 +206,7 @@
   <footer class="site-footer">
     <div class="container site-footer__inner">
       <p class="site-footer__note">© <span data-year></span> RelationshipScan</p>
+      <p class="site-footer__note">This tool provides interpretative insights and is not psychological, medical or legal advice.</p>
       <p class="site-footer__links">
         <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a> · <a href="contact.html">Contact</a>
       </p>

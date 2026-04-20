@@ -26,99 +26,131 @@
   <main class="result-main">
     <div class="container narrow">
       <section class="result-hero reveal" id="result-hero">
-        <p class="eyebrow">Free result</p>
-        <h1 class="result-headline">Your Trust Index</h1>
+        <p class="eyebrow" id="result-eyebrow">Your result</p>
+        <h1 class="result-headline" id="result-title">Your Trust Index</h1>
         <p class="result-score" id="result-score-display">—/100</p>
         <h2 class="result-dynamic-headline" id="result-headline">Your relationship looks stable</h2>
-        <p class="result-band" id="result-band" hidden></p>
         <p class="result-lead" id="result-lead"></p>
-      </section>
-
-      <section class="result-block reveal">
-        <h2>Short interpretation</h2>
         <div class="prose" id="result-interpretation"></div>
-        <p class="result-signal" id="result-signal-line" hidden></p>
       </section>
 
-      <section class="result-block reveal">
-        <h2>What this might mean</h2>
+      <section class="result-block result-block--visual reveal" id="result-visual">
+        <h2 id="result-visual-title">Visual score</h2>
+        <div class="result-visual-grid">
+          <div class="result-donut" id="result-donut" aria-hidden="true">
+            <div class="result-donut__inner">
+              <p class="result-donut__value" id="result-donut-value">0</p>
+              <p class="result-donut__label">Trust Index</p>
+            </div>
+          </div>
+          <div class="result-visual-range">
+            <div class="result-scale" aria-hidden="true">
+              <span class="result-scale__band result-scale__band--low" id="result-scale-low">Low</span>
+              <span class="result-scale__band result-scale__band--mid" id="result-scale-mid">Medium</span>
+              <span class="result-scale__band result-scale__band--high" id="result-scale-high">High</span>
+              <span class="result-scale__marker" id="result-range-marker"></span>
+            </div>
+            <p class="result-visual-sub" id="result-visual-sub">Structured view of your responses</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="result-block reveal" id="result-free">
+        <h2 id="result-free-heading">What this may suggest</h2>
+        <ul class="tips-list" id="result-free-insights"></ul>
+        <h3 class="result-subheading" id="result-tips-heading">Practical tips</h3>
         <ul class="tips-list" id="result-tips"></ul>
       </section>
 
-      <section class="result-block result-block--premium reveal">
-        <p class="eyebrow">Premium section</p>
-        <h2>Your full result is ready</h2>
-        <p class="premium-subhead">You can already see the first signals. The full picture starts below.</p>
-        <div class="prose">
-          <p>
-            Your answers already point in a certain direction - but without the full analysis, it is easy to
-            misread what they actually mean.
-          </p>
-          <p>The full report helps you see:</p>
-          <ul class="checklist checklist--compact premium-list">
-            <li>what may really be behind these changes</li>
-            <li>which signals matter, and which may be misleading</li>
-            <li>how your situation looks as a whole, not in fragments</li>
-          </ul>
+      <section class="result-block result-block--premium reveal" id="premium-block">
+        <p class="eyebrow" id="premium-eyebrow">Premium section</p>
+        <h2 id="premium-title">Your full result is ready</h2>
+        <p class="premium-subhead" id="premium-subhead">You can already see the first signals. The full picture starts below.</p>
+        <p class="locked-intro" id="premium-intro-a">Your answers already point in a certain direction - but without the full analysis, it is easy to misread what they actually mean.</p>
+
+        <div class="locked-preview-grid">
+          <article class="locked-preview-card">
+            <h4 id="locked-title-1">Communication patterns</h4>
+            <p id="locked-teaser-1">We found a recurring pattern worth looking at more closely.</p>
+            <div class="locked-preview-mask" id="locked-label-1">Locked</div>
+          </article>
+          <article class="locked-preview-card">
+            <h4 id="locked-title-2">Emotional distance</h4>
+            <p id="locked-teaser-2">We found a recurring pattern worth looking at more closely.</p>
+            <div class="locked-preview-mask" id="locked-label-2">Locked</div>
+          </article>
+          <article class="locked-preview-card">
+            <h4 id="locked-title-3">Behavioral changes</h4>
+            <p id="locked-teaser-3">We found a recurring pattern worth looking at more closely.</p>
+            <div class="locked-preview-mask" id="locked-label-3">Locked</div>
+          </article>
+          <article class="locked-preview-card">
+            <h4 id="locked-title-4">Trust signals</h4>
+            <p id="locked-teaser-4">We found a recurring pattern worth looking at more closely.</p>
+            <div class="locked-preview-mask" id="locked-label-4">Locked</div>
+          </article>
+          <article class="locked-preview-card">
+            <h4 id="locked-title-5">Possible scenarios</h4>
+            <p id="locked-teaser-5">We found a recurring pattern worth looking at more closely.</p>
+            <div class="locked-preview-mask" id="locked-label-5">Locked</div>
+          </article>
+          <article class="locked-preview-card">
+            <h4 id="locked-title-6">What you can do next</h4>
+            <p id="locked-teaser-6">We found a recurring pattern worth looking at more closely.</p>
+            <div class="locked-preview-mask" id="locked-label-6">Locked</div>
+          </article>
         </div>
 
-        <h3 class="premium-includes-title">In the full report you'll see:</h3>
-        <ul class="premium-includes">
-          <li>detailed Trust Index breakdown</li>
-          <li>visual score dashboard and area-by-area chart</li>
-          <li>analysis of behavior and changes over time</li>
-          <li>possible scenarios and what they may mean</li>
-          <li>common points where people misread the situation</li>
-          <li>practical guidance on what you can do next</li>
-        </ul>
-
-        <div class="locked-preview-grid" aria-hidden="true">
-          <article class="locked-preview-card">
-            <h4>🔒 Communication patterns</h4>
-            <p>How conversation rhythm, response quality, and emotional repair are shifting.</p>
-            <div class="locked-preview-mask">Locked preview</div>
-          </article>
-          <article class="locked-preview-card">
-            <h4>🔒 Behavioral changes</h4>
-            <p>How everyday behavior trends build either clarity or confusion over time.</p>
-            <div class="locked-preview-mask">Locked preview</div>
-          </article>
-          <article class="locked-preview-card">
-            <h4>🔒 Warning signals</h4>
-            <p>Which signals deserve more attention, and which may be temporary noise.</p>
-            <div class="locked-preview-mask">Locked preview</div>
-          </article>
-          <article class="locked-preview-card">
-            <h4>🔒 What this may mean</h4>
-            <p>Scenarios mapped from your score and answer patterns.</p>
-            <div class="locked-preview-mask">Locked preview</div>
-          </article>
-          <article class="locked-preview-card">
-            <h4>🔒 What you can do next</h4>
-            <p>Practical next steps to reduce uncertainty and improve decision quality.</p>
-            <div class="locked-preview-mask">Locked preview</div>
-          </article>
+        <div class="locked-mini-chart">
+          <div class="result-bars result-bars--preview" aria-hidden="true">
+            <div class="result-bars__item">
+              <div class="result-bars__head"><span id="preview-bar-label-1">Communication</span><span>74</span></div>
+              <div class="result-bars__track"><span class="result-bars__fill" style="width:74%"></span></div>
+            </div>
+            <div class="result-bars__item">
+              <div class="result-bars__head"><span id="preview-bar-label-2">Stability</span><span>61</span></div>
+              <div class="result-bars__track"><span class="result-bars__fill" style="width:61%"></span></div>
+            </div>
+            <div class="result-bars__item result-bars__item--blur">
+              <div class="result-bars__head"><span id="preview-bar-label-3">Transparency</span><span>--</span></div>
+              <div class="result-bars__track"><span class="result-bars__fill" style="width:55%"></span></div>
+            </div>
+            <div class="result-bars__item result-bars__item--blur">
+              <div class="result-bars__head"><span id="preview-bar-label-4">Emotional safety</span><span>--</span></div>
+              <div class="result-bars__track"><span class="result-bars__fill" style="width:48%"></span></div>
+            </div>
+          </div>
+          <div class="locked-mini-chart__overlay" id="locked-preview-label">Locked preview</div>
         </div>
       </section>
 
       <section class="upsell-inline reveal" id="upsell-block">
         <div class="upsell-inline__inner upsell-inline__inner--freemium">
-          <h2>Unlock full report</h2>
-          <p class="upsell-inline__hook">
-            At this stage, most people still rely on intuition.
-            The full report helps you step back and see the situation more clearly.
-          </p>
-          <p class="upsell-inline__product"><strong>One-time access - 39 zł</strong></p>
+          <h2 id="premium-cta-heading">Unlock full report</h2>
+          <p class="upsell-inline__hook" id="premium-cta-body">At this stage, most people still rely on intuition. The full report helps you step back and see the situation more clearly.</p>
+          <p class="upsell-inline__product"><strong id="premium-price-line">One-time access - 39 zł</strong></p>
           <a
             href="https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00"
             class="cta-button"
             onclick="localStorage.setItem('paid','true'); this.innerText='Redirecting...'; this.style.opacity='0.7';"
+            id="premium-cta"
           >
             Unlock full report
           </a>
-          <p class="payment-note payment-note--trust">One-time payment. Secure checkout via Stripe. Instant access after payment.</p>
-          <p class="payment-note payment-note--soft">Most people in your situation choose to see the full report.</p>
+          <p class="payment-note payment-note--trust" id="premium-note-1">Secure payment via Stripe</p>
+          <p class="payment-note payment-note--soft" id="premium-note-2">Instant access after payment</p>
+          <p class="payment-note payment-note--soft" id="premium-note-3">Most people in your situation choose to see the full report</p>
         </div>
+      </section>
+
+      <section class="result-block result-block--premium-unlocked reveal" id="premium-unlocked" hidden>
+        <h2>Full insights unlocked</h2>
+        <p>You now have access to the complete analysis. Continue to your premium report.</p>
+        <a class="cta-button" href="report.html" id="go-report-link">Go to full report</a>
+      </section>
+
+      <section class="disclaimer-box disclaimer-box--compact reveal">
+        <p><span id="result-signal-line">This tool provides interpretative insights and is not psychological, medical or legal advice.</span></p>
       </section>
 
       <p class="result-footer-links">
@@ -132,6 +164,7 @@
   <footer class="site-footer site-footer--minimal">
     <div class="container site-footer__inner">
       <p class="site-footer__note">Informational materials only.</p>
+      <p class="site-footer__note">This tool provides interpretative insights and is not psychological, medical or legal advice.</p>
       <p class="site-footer__links">
         <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a> · <a href="contact.html">Contact</a>
       </p>
