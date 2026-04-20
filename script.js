@@ -1330,6 +1330,9 @@
         "At this stage, most people still rely on intuition. The full report helps you step back and see the situation more clearly.",
       priceLine: "One-time access - 39 zł",
       ctaButton: "Unlock full report",
+      unlockedTitle: "Full insights unlocked",
+      unlockedBody: "You now have access to the complete analysis. Continue to your premium report.",
+      unlockedButton: "Go to full report",
       notes: [
         "Secure payment via Stripe",
         "Instant access after payment",
@@ -1374,6 +1377,9 @@
         "Na tym etapie większość osób nadal działa intuicyjnie. Pełny raport pomaga spojrzeć na sytuację z większym dystansem i większą jasnością.",
       priceLine: "Jednorazowy dostęp - 39 zł",
       ctaButton: "Odblokuj pełny raport",
+      unlockedTitle: "Pelny wglad odblokowany",
+      unlockedBody: "Masz teraz dostep do pelnej analizy. Przejdz do swojego raportu premium.",
+      unlockedButton: "Przejdz do pelnego raportu",
       notes: [
         "Bezpieczna płatność przez Stripe",
         "Natychmiastowy dostęp po płatności",
@@ -1419,6 +1425,9 @@
         "In dieser Phase handeln viele Menschen noch intuitiv. Der vollständige Bericht hilft dir, klarer und mit mehr Abstand zu sehen.",
       priceLine: "Einmaliger Zugang - 39 zł",
       ctaButton: "Vollständigen Bericht freischalten",
+      unlockedTitle: "Voller Einblick freigeschaltet",
+      unlockedBody: "Du hast jetzt Zugriff auf die vollständige Analyse. Weiter zu deinem Premium-Bericht.",
+      unlockedButton: "Zum vollständigen Bericht",
       notes: [
         "Sichere Zahlung über Stripe",
         "Sofortiger Zugriff nach Zahlung",
@@ -1463,6 +1472,9 @@
         "En esta etapa, la mayoría de personas aún decide por intuición. El informe completo te ayuda a ver la situación con más claridad.",
       priceLine: "Acceso único - 39 zł",
       ctaButton: "Desbloquear informe completo",
+      unlockedTitle: "Análisis completo desbloqueado",
+      unlockedBody: "Ahora tienes acceso al análisis completo. Continúa a tu informe premium.",
+      unlockedButton: "Ir al informe completo",
       notes: [
         "Pago seguro por Stripe",
         "Acceso inmediato después del pago",
@@ -1507,6 +1519,9 @@
         "Nesta fase, a maioria das pessoas ainda age pela intuição. O relatório completo ajuda você a enxergar a situação com mais clareza.",
       priceLine: "Acesso único - 39 zł",
       ctaButton: "Desbloquear relatório completo",
+      unlockedTitle: "Análise completa desbloqueada",
+      unlockedBody: "Agora você tem acesso à análise completa. Continue para o seu relatório premium.",
+      unlockedButton: "Ir para o relatório completo",
       notes: [
         "Pagamento seguro via Stripe",
         "Acesso imediato após o pagamento",
@@ -1551,6 +1566,9 @@
         "At this stage, most people still rely on intuition. The full report helps you step back and see the situation more clearly.",
       priceLine: "One-time access - 39 zł",
       ctaButton: "Unlock full report",
+      unlockedTitle: "Full insights unlocked",
+      unlockedBody: "You now have access to the complete analysis. Continue to your premium report.",
+      unlockedButton: "Go to full report",
       notes: [
         "Secure payment via Stripe",
         "Instant access after payment",
@@ -1889,6 +1907,13 @@
     const locale = getFlowLocale();
     const ui = LEGAL_FOOTER_COPY[locale] || LEGAL_FOOTER_COPY.en;
     const links = LEGAL_PATHS[locale] || LEGAL_PATHS.en;
+    const body = document.body;
+    const path = String(window.location.pathname || "").toLowerCase();
+    const showFullCompanyDetails = Boolean(
+      (body && body.classList.contains("page--landing")) ||
+      path.endsWith("/contact.html") ||
+      path.endsWith("/contact")
+    );
     const footers = document.querySelectorAll(".site-footer");
     footers.forEach((footer) => {
       const inner = footer.querySelector(".site-footer__inner");
@@ -1904,20 +1929,28 @@
         `<a href="${links.terms}">${ui.terms}</a> · <a href="${links.privacy}">${ui.privacy}</a> · <a href="${links.contact}">${ui.contactLink}</a>`;
 
       let companyEl = inner.querySelector(".site-footer__company");
-      if (!companyEl) {
-        companyEl = document.createElement("p");
-        companyEl.className = "site-footer__company";
-        inner.appendChild(companyEl);
+      if (showFullCompanyDetails) {
+        if (!companyEl) {
+          companyEl = document.createElement("p");
+          companyEl.className = "site-footer__company";
+          inner.appendChild(companyEl);
+        }
+        companyEl.innerHTML = `${ui.lines.map((line) => escapeHtml(line)).join("<br />")}<br />${escapeHtml(ui.contact)}`;
+      } else if (companyEl) {
+        companyEl.remove();
       }
-      companyEl.innerHTML = `${ui.lines.map((line) => escapeHtml(line)).join("<br />")}<br />${escapeHtml(ui.contact)}`;
 
       let trustEl = inner.querySelector(".site-footer__trust");
-      if (!trustEl) {
-        trustEl = document.createElement("p");
-        trustEl.className = "site-footer__trust";
-        inner.appendChild(trustEl);
+      if (showFullCompanyDetails) {
+        if (!trustEl) {
+          trustEl = document.createElement("p");
+          trustEl.className = "site-footer__trust";
+          inner.appendChild(trustEl);
+        }
+        trustEl.textContent = ui.trust;
+      } else if (trustEl) {
+        trustEl.remove();
       }
-      trustEl.textContent = ui.trust;
     });
   }
 
@@ -2118,16 +2151,17 @@
               (val) => `
             <div class="scale-option">
               <input type="radio" name="scale" id="s${val}" value="${val}" ${selected === val ? "checked" : ""} />
-              <label for="s${val}">
-                <span class="scale-option__value">${val}</span>
-                <span class="scale-option__text">${escapeHtml(uiCopy.scaleLabels[val])}</span>
-              </label>
+              <label for="s${val}">${val}</label>
             </div>
           `
             )
             .join("")}
         </div>
-        <p class="scale-legend"><span>1 = ${escapeHtml(uiCopy.scaleLabels[1])}</span><span>5 = ${escapeHtml(uiCopy.scaleLabels[5])}</span></p>
+        <ul class="scale-label-list" aria-hidden="true">
+          ${[1, 2, 3, 4, 5]
+            .map((val) => `<li><strong>${val}</strong> — ${escapeHtml(uiCopy.scaleLabels[val])}</li>`)
+            .join("")}
+        </ul>
         <p class="scale-micro">${escapeHtml(uiCopy.micro)}</p>
       `;
 
@@ -2280,6 +2314,9 @@
     setText("premium-note-1", ui.notes[0]);
     setText("premium-note-2", ui.notes[1]);
     setText("premium-note-3", ui.notes[2]);
+    setText("premium-unlocked-title", ui.unlockedTitle);
+    setText("premium-unlocked-body", ui.unlockedBody);
+    setText("go-report-link", ui.unlockedButton);
     setText("result-signal-line", ui.disclaimer);
   }
 
