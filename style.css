@@ -1153,21 +1153,12 @@ a.lang-switch__item {
 }
 
 .scale-options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-@media (min-width: 520px) {
-  .scale-options {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.55rem;
 }
 
 .scale-option {
-  flex: 1;
   min-width: 0;
 }
 
@@ -1181,9 +1172,9 @@ a.lang-switch__item {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
+  min-height: 58px;
   padding: 0.55rem 0.75rem;
-  border-radius: var(--radius-md);
+  border-radius: 999px;
   border: 2px solid var(--color-border);
   background: var(--color-bg);
   cursor: pointer;
@@ -1243,6 +1234,21 @@ a.lang-switch__item {
   gap: 0.75rem;
   justify-content: flex-end;
   flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+  .test-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    background: linear-gradient(180deg, rgba(245, 247, 250, 0), rgba(245, 247, 250, 0.95) 35%);
+    padding-top: 0.7rem;
+  }
+
+  .test-actions #btn-next {
+    min-height: 52px;
+    min-width: 136px;
+  }
 }
 
 .test-actions .btn--ghost {
@@ -1898,6 +1904,46 @@ a.lang-switch__item {
 
 .report-main--premium {
   background: linear-gradient(180deg, var(--color-bg-alt) 0%, var(--color-bg) 35%);
+}
+
+.report-lock-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(12, 16, 27, 0.42);
+  backdrop-filter: blur(3px);
+}
+
+.report-lock-overlay__card {
+  width: min(540px, 100%);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  padding: 1.4rem;
+  text-align: center;
+}
+
+.report-lock-overlay__card h2 {
+  margin: 0 0 0.55rem;
+}
+
+.report-lock-overlay__card p {
+  margin: 0 0 1rem;
+  color: var(--color-text-muted);
+}
+
+.report-is-locked {
+  overflow: hidden;
+}
+
+.report-is-locked .report-layout {
+  filter: blur(5px);
+  pointer-events: none;
+  user-select: none;
 }
 
 .report-layout {

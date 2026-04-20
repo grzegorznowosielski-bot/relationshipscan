@@ -430,8 +430,6 @@
       backHome: "Back to home",
       loading: "Calculating your result…",
       disclaimer: "This takes about 2 minutes. Answer instinctively — don’t overthink.",
-      progress1: "Quick check — you're almost done",
-      progress2: "30 seconds left",
       micro: "There are no right or wrong answers.",
     },
     pl: {
@@ -450,8 +448,6 @@
       backHome: "Powrót na stronę główną",
       loading: "Liczymy Twój wynik…",
       disclaimer: "To zajmie około 2 minut. Odpowiadaj intuicyjnie — bez analizowania.",
-      progress1: "Jeszcze chwila — już prawie koniec",
-      progress2: "Zostało około 30 sekund",
       micro: "Nie ma tu dobrych ani złych odpowiedzi.",
     },
     de: {
@@ -470,8 +466,6 @@
       backHome: "Zur Startseite",
       loading: "Dein Ergebnis wird berechnet…",
       disclaimer: "Das dauert etwa 2 Minuten. Antworte intuitiv — nicht zu viel nachdenken.",
-      progress1: "Kurzer Check — du bist fast fertig",
-      progress2: "Noch etwa 30 Sekunden",
       micro: "Es gibt hier keine richtigen oder falschen Antworten.",
     },
     es: {
@@ -490,8 +484,6 @@
       backHome: "Volver al inicio",
       loading: "Calculando tu resultado…",
       disclaimer: "Esto toma unos 2 minutos. Responde de forma intuitiva — sin pensarlo demasiado.",
-      progress1: "Un momento — ya casi terminas",
-      progress2: "Quedan unos 30 segundos",
       micro: "No hay respuestas correctas o incorrectas.",
     },
     pt: {
@@ -510,8 +502,6 @@
       backHome: "Voltar ao inicio",
       loading: "Calculando seu resultado…",
       disclaimer: "Isso leva cerca de 2 minutos. Responda de forma intuitiva — sem pensar demais.",
-      progress1: "Só mais um pouco — já está quase",
-      progress2: "Faltam cerca de 30 segundos",
       micro: "Não há respostas certas ou erradas.",
     },
     in: {
@@ -530,8 +520,6 @@
       backHome: "Back to home",
       loading: "Calculating your result…",
       disclaimer: "This takes about 2 minutes. Answer instinctively — don’t overthink.",
-      progress1: "Quick check — you're almost done",
-      progress2: "30 seconds left",
       micro: "There are no right or wrong answers.",
     },
   };
@@ -2132,14 +2120,7 @@
 
       progressBar.style.width = `${(step / total) * 100}%`;
       stepLabel.textContent = uiCopy.stepLabel(step, total);
-      if (disclaimerEl) {
-        disclaimerEl.textContent =
-          step === 7
-            ? uiCopy.progress1
-            : step >= 8 && step <= 9
-              ? uiCopy.progress2
-              : uiCopy.disclaimer;
-      }
+      if (disclaimerEl) disclaimerEl.textContent = uiCopy.disclaimer;
 
       const selected = answers[index];
       root.innerHTML = `
@@ -2546,10 +2527,7 @@
       document.body.classList.add("has-paid");
       if (ctaBlock) ctaBlock.hidden = true;
       if (unlockedBlock) unlockedBlock.hidden = false;
-      if (goReportLink) {
-        const reportPath = getFlowPageUrl("report", locale);
-        goReportLink.setAttribute("href", `${reportPath}&paid=true`);
-      }
+      if (goReportLink) goReportLink.setAttribute("href", getFlowPageUrl("report", locale));
     } else {
       document.body.classList.remove("has-paid");
       if (ctaBlock) ctaBlock.hidden = false;
@@ -2560,23 +2538,15 @@
   // --- Raport: wynik z testu + podsumowanie i profil dopasowane do pasma ---
   function initReport() {
     const locale = getFlowLocale();
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("paid") === "true") {
-      try {
-        localStorage.setItem(PAID_KEY, "true");
-      } catch (e) {
-        // Ignore storage issues.
-      }
-    }
     let hasPaid = false;
     try {
-      hasPaid = Boolean(localStorage.getItem(PAID_KEY));
+      hasPaid = localStorage.getItem(PAID_KEY) === "true";
+      if (!hasPaid && /stripe\.com/i.test(String(document.referrer || ""))) {
+        localStorage.setItem(PAID_KEY, "true");
+        hasPaid = true;
+      }
     } catch (e) {
       hasPaid = false;
-    }
-    if (!hasPaid) {
-      window.location.href = getFlowPageUrl("result", locale);
-      return;
     }
 
     const scoreStrong = document.getElementById("report-score");
@@ -2590,9 +2560,60 @@
     const nextStepsEl = document.getElementById("report-next-steps-body");
     const donutEl = document.getElementById("report-donut");
     const donutValueEl = document.getElementById("report-donut-value");
+    const lockOverlay = document.getElementById("report-lock-overlay");
+    const lockTitle = document.getElementById("report-lock-title");
+    const lockBody = document.getElementById("report-lock-body");
+    const lockCta = document.getElementById("report-lock-cta");
     
     document.documentElement.lang = locale;
     localizeReportPageUi(locale);
+    document.body.classList.toggle("report-is-locked", !hasPaid);
+    if (lockOverlay) lockOverlay.hidden = hasPaid;
+    const lockCopy = {
+      en: {
+        title: "Unlock full report",
+        body: "Full analysis is available after Stripe payment.",
+        cta: "Continue to Stripe payment",
+      },
+      pl: {
+        title: "Odblokuj pelny raport",
+        body: "Pelna analiza jest dostepna po platnosci Stripe.",
+        cta: "Przejdz do platnosci Stripe",
+      },
+      de: {
+        title: "Vollbericht freischalten",
+        body: "Die vollständige Analyse ist nach der Stripe-Zahlung verfügbar.",
+        cta: "Weiter zur Stripe-Zahlung",
+      },
+      es: {
+        title: "Desbloquear informe completo",
+        body: "El análisis completo está disponible después del pago con Stripe.",
+        cta: "Continuar al pago con Stripe",
+      },
+      pt: {
+        title: "Desbloquear relatório completo",
+        body: "A análise completa fica disponível após o pagamento via Stripe.",
+        cta: "Continuar para pagamento com Stripe",
+      },
+      in: {
+        title: "Unlock full report",
+        body: "Full analysis is available after Stripe payment.",
+        cta: "Continue to Stripe payment",
+      },
+    };
+    const lockUi = lockCopy[locale] || lockCopy.en;
+    if (lockTitle) {
+      lockTitle.textContent = lockUi.title;
+    }
+    if (lockBody) {
+      lockBody.textContent = lockUi.body;
+    }
+    if (lockCta) {
+      lockCta.textContent = lockUi.cta;
+      const stripeUrl = new URL(STRIPE_LINK);
+      stripeUrl.searchParams.set("lang", locale);
+      lockCta.setAttribute("href", stripeUrl.toString());
+    }
 
     if (
       !scoreStrong ||
