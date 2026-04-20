@@ -195,6 +195,24 @@
     });
   }
 
+  // --- Wspólne: przełącznik języka na landingach ---
+  function initLangSwitcher() {
+    const links = document.querySelectorAll(".lang-switch a[data-lang][href]");
+    if (!links.length) return;
+
+    links.forEach((a) => {
+      a.addEventListener("click", () => {
+        const lang = a.getAttribute("data-lang");
+        if (!lang) return;
+        try {
+          localStorage.setItem("relationshipscan_locale", lang);
+        } catch (e) {
+          // Ignore storage issues (private mode, blocked storage).
+        }
+      });
+    });
+  }
+
   // --- Wspólne: menu mobilne ---
   function initMobileNav() {
     const toggle = document.querySelector(".nav-toggle");
@@ -484,6 +502,7 @@
   function boot() {
     document.documentElement.classList.add("js");
     setYear();
+    initLangSwitcher();
     initMobileNav();
     initReveal();
 
