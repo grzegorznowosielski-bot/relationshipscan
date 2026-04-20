@@ -146,7 +146,7 @@
 
   /** Stałe zdanie pod wynikiem (nie zastępuje interpretacji) */
   const RESULT_SIGNAL_LINE =
-    "This is not a diagnosis — just a structured view of your responses.";
+    "This is not a diagnosis - just a structured view of your responses.";
 
   /** Raport pogłębiony: podsumowanie i profil (wg pasma wyniku) */
   const REPORT_SUMMARY = {
@@ -463,11 +463,11 @@
     }
 
     const score = raw != null && raw !== "" ? Math.max(0, Math.min(100, parseInt(raw, 10))) : null;
-    scoreStrong.textContent = score != null ? `${score}/100` : "wykonaj najpierw test";
+    scoreStrong.textContent = score != null ? `${score}/100` : "complete the scan first";
 
     if (score == null) {
       summaryEl.innerHTML =
-        "<p>Wykonaj test na stronie głównej — wtedy w tym miejscu pojawi się podsumowanie dopasowane do Twojego wyniku.</p>";
+        "<p>Complete the scan first to generate a personalized summary in this section.</p>";
       profileEl.innerHTML = "";
       return;
     }

@@ -440,6 +440,11 @@ a.lang-switch__item {
   margin-bottom: 10px;
 }
 
+.payment-note--trust {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
 .btn--ghost {
   background: transparent;
   color: var(--color-text);
