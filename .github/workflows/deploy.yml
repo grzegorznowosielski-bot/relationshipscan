@@ -24,7 +24,7 @@ jobs:
           protocol: ftp
           timeout: 120000
           log-level: verbose
-          server-dir: /relationshipscan.app/public_html/
+          server-dir: /domains/relationshipscan.app/public_html/
           dangerous-clean-slate: true
           exclude: |
             **/.well-known/**
