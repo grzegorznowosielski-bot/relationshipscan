@@ -2094,6 +2094,7 @@
     const form = document.getElementById("test-form");
     const progressBar = document.getElementById("progress-bar");
     const stepLabel = document.getElementById("test-step-label");
+    const progressPercent = document.getElementById("test-progress-percent");
     const btnNext = document.getElementById("btn-next");
     const btnPrev = document.getElementById("btn-prev");
     const disclaimerEl = document.getElementById("test-disclaimer");
@@ -2120,6 +2121,7 @@
 
       progressBar.style.width = `${(step / total) * 100}%`;
       stepLabel.textContent = uiCopy.stepLabel(step, total);
+      if (progressPercent) progressPercent.textContent = `${Math.round((step / total) * 100)}%`;
       if (disclaimerEl) disclaimerEl.textContent = uiCopy.disclaimer;
 
       const selected = answers[index];
@@ -2138,9 +2140,9 @@
             )
             .join("")}
         </div>
-        <ul class="scale-label-list" aria-hidden="true">
+        <ul class="scale-label-grid" aria-hidden="true">
           ${[1, 2, 3, 4, 5]
-            .map((val) => `<li><strong>${val}</strong> — ${escapeHtml(uiCopy.scaleLabels[val])}</li>`)
+            .map((val) => `<li>${escapeHtml(uiCopy.scaleLabels[val])}</li>`)
             .join("")}
         </ul>
         <p class="scale-micro">${escapeHtml(uiCopy.micro)}</p>

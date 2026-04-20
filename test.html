@@ -17,20 +17,20 @@
       <a class="logo" href="index.html">RelationshipScan</a>
       <div class="test-header-tools">
         <a class="btn btn--ghost btn--sm" href="index.html">Back to home</a>
-        <span class="test-badge">Scan</span>
       </div>
     </div>
   </header>
 
   <main class="test-main">
     <div class="container test-layout">
-      <!-- Pasek postępu -->
-      <div class="test-progress" aria-hidden="true">
-        <div class="test-progress__bar" id="progress-bar" style="width: 0%"></div>
+      <div class="test-progress-meta">
+        <p class="test-meta" id="test-step-label">Question 1 of 10</p>
+        <p class="test-progress-percent" id="test-progress-percent">10%</p>
       </div>
-      <p class="test-meta" id="test-step-label">Question 1 of 10</p>
+      <div class="test-progress" aria-hidden="true">
+        <div class="test-progress__bar" id="progress-bar" style="width: 10%"></div>
+      </div>
 
-      <!-- Kontener na treść pytania (wypełniany przez JS) -->
       <form id="test-form" class="test-form" novalidate>
         <div id="question-root" class="question-card reveal"></div>
         <div class="test-actions">
