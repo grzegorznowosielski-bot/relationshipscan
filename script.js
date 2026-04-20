@@ -9,8 +9,10 @@
 
   // --- Local storage keys used in funnel ---
   const STORAGE_KEY = "wynik";
+  const STORAGE_DETAILS_KEY = "wynik_details";
   const PAID_KEY = "paid";
   const LOCALE_KEY = "relationshipscan_locale";
+  const TEST_SESSION_KEY = "relationshipscan_test_session_v1";
   const LOCALE_PATHS = {
     en: "/en/",
     de: "/de/",
@@ -160,20 +162,102 @@
   function buildQuestionList(sections) {
     const list = [];
     sections.forEach((section) => {
-      section.questions.forEach((text) => {
-        list.push({ sectionId: section.id, sectionTitle: section.title, text });
+      section.questions.forEach((text, idx) => {
+        list.push({
+          id: `${section.id}-${idx + 1}`,
+          sectionId: section.id,
+          sectionTitle: section.title,
+          text,
+        });
       });
     });
     return list;
   }
 
+  function shuffleInPlace(arr) {
+    for (let i = arr.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function pickRandomUnique(items, count) {
+    const copy = items.slice();
+    shuffleInPlace(copy);
+    return copy.slice(0, Math.max(0, Math.min(count, copy.length)));
+  }
+
+  function buildSessionQuestionSet(allQuestions, locale) {
+    const byId = {};
+    const bySection = {};
+
+    allQuestions.forEach((q) => {
+      byId[q.id] = q;
+      if (!bySection[q.sectionId]) bySection[q.sectionId] = [];
+      bySection[q.sectionId].push(q);
+    });
+
+    const sections = Object.keys(bySection);
+    const selected = [];
+    const selectedIdSet = new Set();
+
+    sections.forEach((sectionId) => {
+      const picks = pickRandomUnique(bySection[sectionId], 2);
+      picks.forEach((q) => {
+        if (!selectedIdSet.has(q.id)) {
+          selected.push(q);
+          selectedIdSet.add(q.id);
+        }
+      });
+    });
+
+    const remaining = allQuestions.filter((q) => !selectedIdSet.has(q.id));
+    pickRandomUnique(remaining, 10 - selected.length).forEach((q) => {
+      selected.push(q);
+      selectedIdSet.add(q.id);
+    });
+
+    shuffleInPlace(selected);
+    const questionIds = selected.map((q) => q.id);
+    const payload = { locale, questionIds };
+    try {
+      sessionStorage.setItem(TEST_SESSION_KEY, JSON.stringify(payload));
+    } catch (e) {
+      // Ignore storage issues.
+    }
+    return selected;
+  }
+
+  function getSessionQuestions(allQuestions, locale) {
+    const byId = {};
+    allQuestions.forEach((q) => {
+      byId[q.id] = q;
+    });
+    try {
+      const raw = sessionStorage.getItem(TEST_SESSION_KEY);
+      if (!raw) return buildSessionQuestionSet(allQuestions, locale);
+      const parsed = JSON.parse(raw);
+      if (!parsed || parsed.locale !== locale || !Array.isArray(parsed.questionIds)) {
+        return buildSessionQuestionSet(allQuestions, locale);
+      }
+      const restored = parsed.questionIds.map((id) => byId[id]).filter(Boolean);
+      if (restored.length !== 10) return buildSessionQuestionSet(allQuestions, locale);
+      return restored;
+    } catch (e) {
+      return buildSessionQuestionSet(allQuestions, locale);
+    }
+  }
+
   /**
-   * Normalizacja sumy punktów (20–100) do skali 0–100.
-   * @param {number} sum — suma odpowiedzi 1–5 dla 20 pytań
+   * Normalizes summed answers to 0-100.
+   * @param {number} sum
+   * @param {number} questionCount
    */
-  function normalizeScore(sum) {
-    const min = 20;
-    const max = 100;
+  function normalizeScore(sum, questionCount) {
+    const count = Math.max(1, questionCount || 20);
+    const min = count;
+    const max = count * 5;
     const raw = (sum - min) / (max - min);
     return Math.max(0, Math.min(100, Math.round(raw * 100)));
   }
@@ -279,6 +363,94 @@
       "Trust level: fragile, with repeated uncertainty in key relational signals.",
     ],
   };
+
+  const AREA_CONFIG = {
+    communication: { title: "Communication" },
+    emotions: { title: "Emotional connection" },
+    behavior: { title: "Behavioral changes" },
+    trust: { title: "Trust signals" },
+  };
+
+  function toAreaScore(sum, count) {
+    if (!count) return 50;
+    const avg = sum / count;
+    const normalized = ((avg - 1) / 4) * 100;
+    return Math.max(0, Math.min(100, Math.round(normalized)));
+  }
+
+  function getSeverity(score) {
+    if (score <= 40) return "Low";
+    if (score <= 70) return "Medium";
+    return "High";
+  }
+
+  function getAreaInterpretation(areaKey, score) {
+    const severity = getSeverity(score);
+    const byArea = {
+      communication: {
+        Low: "Conversations likely stay clearer and easier to repair after tension.",
+        Medium: "Communication may be mixed: some clarity, with repeated unresolved loops.",
+        High: "Communication strain is elevated and may require more structure and boundaries.",
+      },
+      emotions: {
+        Low: "Emotional connection appears more regulated and predictable across recent weeks.",
+        Medium: "Connection may fluctuate between closeness and distance.",
+        High: "Emotional distance may be higher, with increased fatigue or uncertainty.",
+      },
+      behavior: {
+        Low: "Daily behavior likely feels more consistent with expectations and agreements.",
+        Medium: "Some shifts in routines or availability may be creating uncertainty.",
+        High: "Behavioral inconsistency may be a major source of stress right now.",
+      },
+      trust: {
+        Low: "Trust signals look relatively stable in everyday interactions.",
+        Medium: "Trust appears mixed, with both reassuring and uncertain signals.",
+        High: "Trust currently needs active repair and more observable follow-through.",
+      },
+    };
+    return byArea[areaKey][severity];
+  }
+
+  function buildReportDetails(score, band, questions, answers) {
+    const sums = { communication: 0, emotions: 0, behavior: 0, trust: 0 };
+    const counts = { communication: 0, emotions: 0, behavior: 0, trust: 0 };
+
+    questions.forEach((q, idx) => {
+      const value = answers[idx];
+      if (value == null || typeof sums[q.sectionId] !== "number") return;
+      sums[q.sectionId] += value;
+      counts[q.sectionId] += 1;
+    });
+
+    const areas = {};
+    Object.keys(AREA_CONFIG).forEach((key) => {
+      areas[key] = toAreaScore(sums[key], counts[key]);
+    });
+
+    return {
+      version: 1,
+      score,
+      band,
+      questionCount: answers.length,
+      areas,
+      createdAt: new Date().toISOString(),
+    };
+  }
+
+  function getFallbackReportDetails(score) {
+    return {
+      version: 1,
+      score,
+      band: getBand(score),
+      questionCount: 10,
+      areas: {
+        communication: score,
+        emotions: Math.max(0, Math.min(100, score - 3)),
+        behavior: Math.max(0, Math.min(100, score + 2)),
+        trust: Math.max(0, Math.min(100, score + 1)),
+      },
+    };
+  }
 
   // --- Wspólne: rok w stopce ---
   function setYear() {
@@ -502,6 +674,7 @@
     const locale = getTestLocale();
     const testSections = locale === "pl" ? TEST_SECTIONS_PL : TEST_SECTIONS_EN;
     const allQuestions = buildQuestionList(testSections);
+    const sessionQuestions = getSessionQuestions(allQuestions, locale);
     const uiCopy = TEST_UI_COPY[locale];
 
     document.documentElement.lang = locale === "pl" ? "pl" : "en";
@@ -509,12 +682,12 @@
     if (disclaimerEl) disclaimerEl.textContent = uiCopy.disclaimer;
 
     /** @type {number[]} odpowiedzi 1–5 na indeks pytania */
-    const answers = new Array(allQuestions.length).fill(null);
+    const answers = new Array(sessionQuestions.length).fill(null);
     let index = 0;
 
     function render() {
-      const q = allQuestions[index];
-      const total = allQuestions.length;
+      const q = sessionQuestions[index];
+      const total = sessionQuestions.length;
       const step = index + 1;
 
       progressBar.style.width = `${(step / total) * 100}%`;
@@ -559,7 +732,7 @@
         flashInvalid();
         return;
       }
-      if (index < allQuestions.length - 1) {
+      if (index < sessionQuestions.length - 1) {
         index += 1;
         render();
       } else {
@@ -586,11 +759,19 @@
 
     function submitTest() {
       const sum = answers.reduce((a, b) => a + b, 0);
-      const score = normalizeScore(sum);
+      const score = normalizeScore(sum, answers.length);
+      const band = getBand(score);
+      const details = buildReportDetails(score, band, sessionQuestions, answers);
       try {
         localStorage.setItem(STORAGE_KEY, String(score));
+        localStorage.setItem(STORAGE_DETAILS_KEY, JSON.stringify(details));
       } catch (e) {
         console.warn("localStorage unavailable", e);
+      }
+      try {
+        sessionStorage.removeItem(TEST_SESSION_KEY);
+      } catch (e) {
+        // Ignore storage issues.
       }
       const overlay = document.createElement("div");
       overlay.className = "test-loading-overlay is-active";
@@ -625,6 +806,11 @@
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
   }
 
   // --- Wynik: odczyt localStorage i wypełnienie DOM ---
@@ -696,7 +882,25 @@
     const scoreStrong = document.getElementById("report-score");
     const summaryEl = document.getElementById("report-summary-body");
     const profileEl = document.getElementById("report-profile-body");
-    if (!scoreStrong || !summaryEl || !profileEl) return;
+    const communicationEl = document.getElementById("report-communication-body");
+    const emotionalEl = document.getElementById("report-emotional-body");
+    const behaviorEl = document.getElementById("report-behavior-body");
+    const trustEl = document.getElementById("report-trust-body");
+    const scenariosEl = document.getElementById("report-scenarios-body");
+    const nextStepsEl = document.getElementById("report-next-steps-body");
+    if (
+      !scoreStrong ||
+      !summaryEl ||
+      !profileEl ||
+      !communicationEl ||
+      !emotionalEl ||
+      !behaviorEl ||
+      !trustEl ||
+      !scenariosEl ||
+      !nextStepsEl
+    ) {
+      return;
+    }
 
     let raw = null;
     try {
@@ -712,12 +916,87 @@
       summaryEl.innerHTML =
         "<p>Complete the scan first to generate a personalized summary in this section.</p>";
       profileEl.innerHTML = "";
+      communicationEl.innerHTML = "";
+      emotionalEl.innerHTML = "";
+      behaviorEl.innerHTML = "";
+      trustEl.innerHTML = "";
+      scenariosEl.innerHTML = "";
+      nextStepsEl.innerHTML = "";
       return;
     }
 
     const band = getBand(score);
+    let details = null;
+    try {
+      const detailsRaw = localStorage.getItem(STORAGE_DETAILS_KEY);
+      details = detailsRaw ? JSON.parse(detailsRaw) : null;
+    } catch (e) {
+      details = null;
+    }
+    if (!details || !details.areas) {
+      details = getFallbackReportDetails(score);
+    }
+
     summaryEl.innerHTML = REPORT_SUMMARY[band].map((p) => `<p>${escapeHtml(p)}</p>`).join("");
     profileEl.innerHTML = REPORT_PROFILE[band].map((p) => `<p>${escapeHtml(p)}</p>`).join("");
+
+    setText("report-score-band", RESULT_COPY[band].label);
+    setText(
+      "report-overview-summary",
+      `Your current score suggests ${RESULT_COPY[band].label.toLowerCase()}. This reflects how relationship signals felt to you in this session.`
+    );
+    setText(
+      "report-overview-note",
+      `Based on ${details.questionCount || 10} randomized questions from the full RelationshipScan pool.`
+    );
+
+    const scorePosition = document.getElementById("report-score-position");
+    if (scorePosition) scorePosition.style.left = `${score}%`;
+
+    const areaToDomPrefix = {
+      communication: "communication",
+      emotions: "emotional",
+      behavior: "behavior",
+      trust: "trust",
+    };
+
+    Object.keys(areaToDomPrefix).forEach((areaKey) => {
+      const scoreValue = Math.max(0, Math.min(100, Number(details.areas[areaKey] || 0)));
+      const severity = getSeverity(scoreValue);
+      const prefix = areaToDomPrefix[areaKey];
+
+      setText(`report-area-${prefix}-score`, `${scoreValue}/100`);
+      setText(`report-area-${prefix}-label`, severity);
+      setText(`report-bar-label-${prefix}`, severity);
+      setText(`report-area-${prefix}-text`, getAreaInterpretation(areaKey, scoreValue));
+
+      const bar = document.getElementById(`report-bar-${prefix}`);
+      if (bar) bar.style.width = `${scoreValue}%`;
+    });
+
+    communicationEl.innerHTML = `<p>${escapeHtml(
+      getAreaInterpretation("communication", details.areas.communication)
+    )}</p><p>Use one-topic conversations, clear time windows, and one concrete follow-up to reduce ambiguity.</p>`;
+    emotionalEl.innerHTML = `<p>${escapeHtml(
+      getAreaInterpretation("emotions", details.areas.emotions)
+    )}</p><p>Emotional steadiness usually improves when difficult topics happen at calmer moments and with shorter loops.</p>`;
+    behaviorEl.innerHTML = `<p>${escapeHtml(
+      getAreaInterpretation("behavior", details.areas.behavior)
+    )}</p><p>Track visible patterns over 7-14 days to separate temporary stress from stable trends.</p>`;
+    trustEl.innerHTML = `<p>${escapeHtml(
+      getAreaInterpretation("trust", details.areas.trust)
+    )}</p><p>Trust rebuilds through small repeated behaviors: reliability, transparency, and repair after tension.</p>`;
+
+    scenariosEl.innerHTML = `
+      <li><strong>Stabilization:</strong> clearer agreements and repeated follow-through lower uncertainty over time.</li>
+      <li><strong>Mixed pattern:</strong> partial progress with recurring unresolved topics keeps stress in the middle range.</li>
+      <li><strong>Escalation risk:</strong> unresolved loops and inconsistent signals increase emotional load and confusion.</li>
+    `;
+    nextStepsEl.innerHTML = `
+      <li><strong>Pick one priority topic</strong> and define one measurable next step for this week.</li>
+      <li><strong>Separate facts from assumptions</strong> in writing before making major decisions.</li>
+      <li><strong>Review the pattern after 7 days</strong> and adjust boundaries or requests based on observable behavior.</li>
+    `;
   }
 
   // --- Bootstrap wg adresu strony ---

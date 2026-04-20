@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20260420d" />
+  <link rel="stylesheet" href="style.css?v=20260420g" />
 </head>
 <body class="page page--test">
   <header class="site-header site-header--minimal">
@@ -28,7 +28,7 @@
       <div class="test-progress" aria-hidden="true">
         <div class="test-progress__bar" id="progress-bar" style="width: 0%"></div>
       </div>
-      <p class="test-meta" id="test-step-label">Question 1 of 20</p>
+      <p class="test-meta" id="test-step-label">Question 1 of 10</p>
 
       <!-- Kontener na treść pytania (wypełniany przez JS) -->
       <form id="test-form" class="test-form" novalidate>
@@ -42,12 +42,15 @@
   </main>
 
   <footer class="site-footer site-footer--minimal">
-    <div class="container">
+    <div class="container site-footer__inner">
       <p class="disclaimer-inline" id="test-disclaimer">Answer based on recent weeks. There are no right or wrong answers.</p>
+      <p class="site-footer__links">
+        <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a> · <a href="contact.html">Contact</a>
+      </p>
     </div>
   </footer>
 
   <!-- Konfiguracja pytań w osobnym pliku JS -->
-  <script src="script.js?v=20260420f" defer></script>
+  <script src="script.js?v=20260420g" defer></script>
 </body>
 </html>

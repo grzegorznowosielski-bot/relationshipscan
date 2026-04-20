@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20260420d" />
+  <link rel="stylesheet" href="style.css?v=20260420g" />
   <script>
     if (!localStorage.getItem("paid")) {
       window.location.href = "result.html";
@@ -34,12 +34,85 @@
         <p class="eyebrow">Full Relationship Analysis</p>
         <h1>Your premium report</h1>
         <p class="report-header__sub">
-          This report is calm, practical, and structured. It helps you understand patterns and signals in your relationship without overreacting or jumping to conclusions.
+          A structured, data-driven view of your current relationship dynamics. The goal is clarity: what looks stable, what needs attention, and what to do next.
         </p>
         <p class="report-ref" id="report-index-ref">Your Trust Index: <strong id="report-score">—</strong></p>
       </header>
 
-      <section class="report-card report-card--lead reveal" aria-labelledby="report-summary-heading">
+      <section class="report-card report-card--lead report-score-overview reveal">
+        <h2>Score overview</h2>
+        <p class="report-score-bandline" id="report-score-band">Mixed trust signals</p>
+        <div class="report-score-scale" aria-hidden="true">
+          <div class="report-score-scale__range report-score-scale__range--low">Low uncertainty</div>
+          <div class="report-score-scale__range report-score-scale__range--mid">Medium</div>
+          <div class="report-score-scale__range report-score-scale__range--high">High uncertainty</div>
+          <span class="report-score-scale__marker" id="report-score-position"></span>
+        </div>
+        <p class="report-overview-summary" id="report-overview-summary"></p>
+        <p class="report-overview-note" id="report-overview-note"></p>
+      </section>
+
+      <section class="report-card reveal" aria-labelledby="report-analysis-heading">
+        <h2 id="report-analysis-heading">4-area analysis</h2>
+        <div class="report-analysis-grid">
+          <article class="analysis-area-card">
+            <div class="analysis-area-card__head">
+              <h3>Communication</h3>
+              <p class="analysis-area-card__score" id="report-area-communication-score">—</p>
+            </div>
+            <p class="analysis-area-card__label" id="report-area-communication-label">—</p>
+            <p class="analysis-area-card__text" id="report-area-communication-text"></p>
+          </article>
+          <article class="analysis-area-card">
+            <div class="analysis-area-card__head">
+              <h3>Emotional connection</h3>
+              <p class="analysis-area-card__score" id="report-area-emotional-score">—</p>
+            </div>
+            <p class="analysis-area-card__label" id="report-area-emotional-label">—</p>
+            <p class="analysis-area-card__text" id="report-area-emotional-text"></p>
+          </article>
+          <article class="analysis-area-card">
+            <div class="analysis-area-card__head">
+              <h3>Behavioral changes</h3>
+              <p class="analysis-area-card__score" id="report-area-behavior-score">—</p>
+            </div>
+            <p class="analysis-area-card__label" id="report-area-behavior-label">—</p>
+            <p class="analysis-area-card__text" id="report-area-behavior-text"></p>
+          </article>
+          <article class="analysis-area-card">
+            <div class="analysis-area-card__head">
+              <h3>Trust signals</h3>
+              <p class="analysis-area-card__score" id="report-area-trust-score">—</p>
+            </div>
+            <p class="analysis-area-card__label" id="report-area-trust-label">—</p>
+            <p class="analysis-area-card__text" id="report-area-trust-text"></p>
+          </article>
+        </div>
+      </section>
+
+      <section class="report-card reveal" aria-labelledby="report-charts-heading">
+        <h2 id="report-charts-heading">Visual analysis</h2>
+        <div class="report-bars">
+          <div class="report-bars__item">
+            <div class="report-bars__head"><span>Communication</span><span id="report-bar-label-communication">—</span></div>
+            <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-communication"></span></div>
+          </div>
+          <div class="report-bars__item">
+            <div class="report-bars__head"><span>Emotional connection</span><span id="report-bar-label-emotional">—</span></div>
+            <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-emotional"></span></div>
+          </div>
+          <div class="report-bars__item">
+            <div class="report-bars__head"><span>Behavioral changes</span><span id="report-bar-label-behavior">—</span></div>
+            <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-behavior"></span></div>
+          </div>
+          <div class="report-bars__item">
+            <div class="report-bars__head"><span>Trust signals</span><span id="report-bar-label-trust">—</span></div>
+            <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-trust"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="report-card reveal" aria-labelledby="report-summary-heading">
         <h2 id="report-summary-heading">1. Summary</h2>
         <div class="prose prose--report" id="report-summary-body">
           <p>Complete the scan first to generate a personalized summary based on your Trust Index.</p>
@@ -56,114 +129,39 @@
         </ul>
       </section>
 
-      <article class="report-card reveal">
-        <h2>3. Communication</h2>
-        <div class="prose prose--report">
-          <p>
-            Communication quality is not only about how often you talk. It is also about whether difficult topics can return safely after tension and whether both people feel heard.
-            When important topics stay unresolved, uncertainty grows even if intentions are good.
-          </p>
-          <p>
-            In many relationships, progress comes from simple communication structure: one topic, one time frame, and one clear next step.
-            This lowers emotional noise and helps both sides focus on what can actually improve.
-          </p>
-          <p>
-            If conversations repeatedly stop in the same place, that is often a pattern issue rather than a single conflict.
-            Naming this pattern early can prevent long cycles of confusion.
-          </p>
-        </div>
-      </article>
-
-      <article class="report-card reveal">
-        <h2>4. Emotional Connection</h2>
-        <div class="prose prose--report">
-          <p>
-            Emotional connection reflects whether the relationship feels safe enough for honesty, closeness, and calm regulation during stress.
-            Lower connection usually feels like distance, mixed signals, or emotional fatigue.
-          </p>
-          <p>
-            This does not automatically indicate a major breakdown. It often indicates that emotional needs are not being translated into clear requests and repeatable habits.
-            Small relational rituals can reduce uncertainty faster than long, high-pressure talks.
-          </p>
-        </div>
-      </article>
-
-      <article class="report-card reveal">
-        <h2>5. Behavioral Changes</h2>
-        <div class="prose prose--report">
-          <p>
-            Behavioral shifts matter because they are visible and trackable over time. Changes in availability, responsiveness, and shared routines can alter your sense of stability.
-          </p>
-          <p>
-            Not every shift is negative, but unexplained shifts often increase stress. The key is consistency between words and daily behavior.
-            When consistency is low, people naturally rely more on assumptions than facts.
-          </p>
-        </div>
-      </article>
-
-      <article class="report-card report-card--accent reveal">
-        <h2>6. Trust Signals</h2>
-        <p class="prose prose--report">
-          Trust tends to grow through repeated small signals, not one big promise. Signals worth tracking include reliability, follow-through, and openness in difficult moments.
-        </p>
-        <ul class="report-list">
-          <li><strong>Reliability</strong> — agreements are remembered and completed with reasonable consistency.</li>
-          <li><strong>Transparency</strong> — sensitive topics can be discussed without immediate shutdown.</li>
-          <li><strong>Repair ability</strong> — after tension, both people can return to the topic and rebuild alignment.</li>
-        </ul>
-      </article>
-
-      <section class="report-card reveal" aria-labelledby="report-scen-heading">
-        <h2 id="report-scen-heading">7. Possible Scenarios</h2>
-        <div class="report-scenarios">
-          <div class="report-scenario">
-            <h3 class="report-subhead">Improvement</h3>
-            <p class="prose prose--report">
-              With clearer communication rules and stable follow-through, uncertainty usually decreases and emotional steadiness improves step by step.
-            </p>
-          </div>
-          <div class="report-scenario">
-            <h3 class="report-subhead">Stagnation</h3>
-            <p class="prose prose--report">
-              If key topics remain postponed, the relationship may stay functional on the surface while unresolved tension continues underneath.
-            </p>
-          </div>
-          <div class="report-scenario">
-            <h3 class="report-subhead">Escalation</h3>
-            <p class="prose prose--report">
-              If communication narrows and repair attempts stop, stress can increase faster and decision quality may decline under emotional pressure.
-            </p>
-          </div>
-        </div>
+      <section class="report-card reveal">
+        <h2>3. Communication Patterns</h2>
+        <div class="prose prose--report" id="report-communication-body"></div>
       </section>
 
-      <section class="report-card reveal" aria-labelledby="report-next-heading">
-        <h2 id="report-next-heading">8. What You Can Do Next</h2>
-        <div class="report-next-grid">
-          <div class="report-next-item">
-            <h3 class="report-subhead">Create structure</h3>
-            <p class="prose prose--report">
-              Pick one recurring topic, set one short conversation window, and end with one concrete next step. Keep it simple and repeat weekly.
-            </p>
-          </div>
-          <div class="report-next-item">
-            <h3 class="report-subhead">Track facts and signals</h3>
-            <p class="prose prose--report">
-              Write down observable behaviors and separate them from interpretations. This helps you make decisions based on patterns, not momentary stress.
-            </p>
-          </div>
-          <div class="report-next-item">
-            <h3 class="report-subhead">Protect emotional balance</h3>
-            <p class="prose prose--report">
-              Prioritize sleep, routine, and calmer timing for difficult talks. A regulated state improves clarity and reduces reactive communication.
-            </p>
-          </div>
-        </div>
+      <section class="report-card reveal">
+        <h2>4. Emotional Distance</h2>
+        <div class="prose prose--report" id="report-emotional-body"></div>
+      </section>
+
+      <section class="report-card reveal">
+        <h2>5. Behavioral Changes</h2>
+        <div class="prose prose--report" id="report-behavior-body"></div>
+      </section>
+
+      <section class="report-card report-card--accent reveal">
+        <h2>6. Trust Signals</h2>
+        <div class="prose prose--report" id="report-trust-body"></div>
+      </section>
+
+      <section class="report-card reveal">
+        <h2>7. Possible Scenarios</h2>
+        <ul class="report-list" id="report-scenarios-body"></ul>
+      </section>
+
+      <section class="report-card reveal">
+        <h2>8. What You Can Do Next</h2>
+        <ul class="report-list" id="report-next-steps-body"></ul>
       </section>
 
       <section class="disclaimer-box disclaimer-box--compact reveal">
         <p>
-          This report is educational and reflective. It supports understanding, but it does not replace therapy or professional counseling.
+          This report is an informational and educational tool. It is not psychological, legal, or medical advice, not a diagnosis, and not a definitive judgment about any relationship.
         </p>
       </section>
 
@@ -178,9 +176,12 @@
   <footer class="site-footer">
     <div class="container site-footer__inner">
       <p class="site-footer__note">© <span data-year></span> RelationshipScan</p>
+      <p class="site-footer__links">
+        <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a> · <a href="contact.html">Contact</a>
+      </p>
     </div>
   </footer>
 
-  <script src="script.js?v=20260420f" defer></script>
+  <script src="script.js?v=20260420g" defer></script>
 </body>
 </html>
