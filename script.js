@@ -4386,7 +4386,13 @@
 
   // --- Wynik: odczyt localStorage i wypełnienie DOM ---
   function initResult() {
+    syncPaidFromStripeReturnUrl();
     const locale = getFlowLocale();
+    if (readPaidFlag()) {
+      window.location.replace(getFlowPageUrl("report", locale));
+      return;
+    }
+
     const logoLink = document.querySelector(".site-header .logo");
     const ui = RESULT_LAYOUT_UI[locale] || RESULT_LAYOUT_UI.en;
     const headlineEl = document.getElementById("result-headline");
@@ -4480,13 +4486,6 @@
     setText("locked-teaser-1", teaserLines[0]);
     setText("locked-teaser-2", teaserLines[1]);
     setText("locked-teaser-3", teaserLines[2]);
-
-    const isPaid = readPaidFlag();
-
-    if (isPaid) {
-      window.location.href = getFlowPageUrl("report", locale);
-      return;
-    }
 
     if (ctaBlock) ctaBlock.hidden = false;
   }
