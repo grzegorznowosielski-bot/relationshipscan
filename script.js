@@ -3687,6 +3687,12 @@
     }
 
     if (isMainEntryPath(path)) {
+      const storedOnMain = getStoredLang();
+      if (storedOnMain && LOCALE_PATHS[storedOnMain]) {
+        setLang(storedOnMain);
+        redirectToLocale(storedOnMain);
+        return;
+      }
       const browserLocale = detectBrowserLocale();
       setLang(browserLocale);
       if (browserLocale !== "en") {
