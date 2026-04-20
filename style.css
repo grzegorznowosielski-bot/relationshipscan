@@ -2127,6 +2127,13 @@ a.lang-switch__item {
   backdrop-filter: blur(3px);
 }
 
+/* [hidden] must win over display:grid — otherwise the paywall stays visible after payment. */
+.report-lock-overlay[hidden] {
+  display: none !important;
+  pointer-events: none;
+  visibility: hidden;
+}
+
 .report-lock-overlay__card {
   width: min(540px, 100%);
   background: #fff;

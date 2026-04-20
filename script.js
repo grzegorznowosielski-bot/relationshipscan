@@ -4738,8 +4738,6 @@
   function initReport() {
     const locale = getFlowLocale();
     const logoLink = document.querySelector(".site-header .logo");
-    const lang = getModalLang();
-    renderPaywallModalText(lang);
     const isPaid = (() => {
       try {
         return localStorage.getItem(PAID_KEY) === "true";
@@ -4752,12 +4750,16 @@
       return;
     }
 
+    document.body.classList.remove("report-is-locked");
+    const lockOverlay = document.getElementById("report-lock-overlay");
+    if (lockOverlay) {
+      lockOverlay.hidden = true;
+      lockOverlay.setAttribute("hidden", "");
+    }
+
     document.documentElement.lang = locale;
     localizeReportPageUi(locale);
     if (logoLink) logoLink.setAttribute("href", LOCALE_PATHS[locale] || LOCALE_PATHS.en);
-    document.body.classList.remove("report-is-locked");
-    const lockOverlay = document.getElementById("report-lock-overlay");
-    if (lockOverlay) lockOverlay.hidden = true;
 
     const required = {
       scoreStrong: document.getElementById("report-score"),
