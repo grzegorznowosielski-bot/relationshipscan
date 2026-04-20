@@ -56,7 +56,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import sys, urllib.request, time
-          required = "Start your scan"
+          required = "RelationshipScan"
           ok = False
           for i in range(12):
               url = f"https://relationshipscan.app/index.html?ci=deploy-check-{i}"
