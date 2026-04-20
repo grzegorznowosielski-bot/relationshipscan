@@ -17,47 +17,47 @@
    */
   const TEST_SECTIONS = [
     {
-      id: "komunikacja",
-      title: "Komunikacja",
+      id: "communication",
+      title: "Communication",
       questions: [
-        "Jak często masz wrażenie, że ważne dla Ciebie tematy są odkładane lub omijane?",
-        "Jak bardzo trudno jest Wam wrócić do niedokończonej rozmowy po napięciu?",
-        "Jak często czujesz, że Twoje potrzeby w rozmowie są pomijane lub niedosłyszane?",
-        "Jak często kończysz rozmowę z poczuciem niedopowiedzenia?",
-        "Jak bardzo martwisz się o to, czy możecie spokojnie mówić o granicach i oczekiwaniach?",
+        "How often do you feel that topics important to you are postponed or avoided?",
+        "How difficult is it for you to return to an unfinished conversation after tension?",
+        "How often do you feel your needs are ignored or not fully heard in conversations?",
+        "How often do you end a conversation feeling there is unfinished business?",
+        "How much do you worry about whether you can calmly discuss boundaries and expectations?",
       ],
     },
     {
-      id: "zachowanie",
-      title: "Zachowanie",
+      id: "behavior",
+      title: "Behavior",
       questions: [
-        "Jak bardzo zmienił się dla Ciebie rytm wspólnego czasu (w porównaniu do tego, co bywało wygodne)?",
-        "Jak często odczuwasz brak przewidywalności w codziennych sprawach partnerskich?",
-        "Jak często odczuwasz dystans w codziennych aktywnościach, które wcześniej budowały bliskość?",
-        "Jak bardzo często masz poczucie, że gesty bliskości są mniej naturalne niż wcześniej?",
-        "Jak bardzo czujesz niespójność między słowami partnera/k a codziennymi zachowaniami?",
+        "How much has the rhythm of your shared time changed compared with what used to feel natural?",
+        "How often do you feel there is less predictability in everyday relationship matters?",
+        "How often do you feel distance in daily activities that used to build closeness?",
+        "How often do you feel that gestures of closeness are less natural than before?",
+        "How much inconsistency do you feel between your partner's words and daily behavior?",
       ],
     },
     {
-      id: "emocje",
-      title: "Emocje",
+      id: "emotions",
+      title: "Emotions",
       questions: [
-        "Jak często budzisz się lub kładziesz spać z napięciem związanym z relacją?",
-        "Jak bardzo czujesz lęk przed „nieodpowiednim” momentem na trudną rozmowę?",
-        "Jak bardzo często odczuwasz jednocześnie tęsknotę i niepewność?",
-        "Jak często Twoje emocje wobec relacji wydają Ci się chaotyczne lub trudne do nazwania?",
-        "Jak bardzo często odczuwasz zmęczenie emocjonalne związane z dynamiką związku?",
+        "How often do you wake up or go to sleep with tension related to the relationship?",
+        "How much anxiety do you feel about choosing the wrong moment for a difficult conversation?",
+        "How often do you feel longing and uncertainty at the same time?",
+        "How often do your emotions about the relationship feel chaotic or hard to name?",
+        "How often do you feel emotionally exhausted by the relationship dynamic?",
       ],
     },
     {
-      id: "zaufanie",
-      title: "Zaufanie",
+      id: "trust",
+      title: "Trust",
       questions: [
-        "Jak często zastanawiasz się, czy jesteście naprawdę w zgodzie co do tego, co dla Was ważne?",
-        "Jak często brakuje Ci poczucia psychologicznego bezpieczeństwa w tej relacji?",
-        "Jak często odczuwasz, że ustalenia między Wami są zapomniane lub nierealne w praktyce?",
-        "Jak często obawiasz się, że w trudnym momencie trudno wam stanąć po jednej stronie problemu?",
-        "Jak bardzo często czujesz, że zaufanie wymaga od Ciebie stałej uwagi — zamiast być spokojną podstawą?",
+        "How often do you wonder whether you are truly aligned on what matters most?",
+        "How often do you feel a lack of psychological safety in this relationship?",
+        "How often does it feel like agreements between you are forgotten or unrealistic in practice?",
+        "How often do you worry that in difficult moments you cannot stand on the same side of the problem?",
+        "How often do you feel trust requires constant effort instead of being a calm foundation?",
       ],
     },
   ];
@@ -295,7 +295,7 @@
       root.innerHTML = `
         <p class="question-card__section">${escapeHtml(q.sectionTitle)}</p>
         <p class="question-card__text">${escapeHtml(q.text)}</p>
-        <div class="scale-options" role="radiogroup" aria-label="Skala odpowiedzi">
+        <div class="scale-options" role="radiogroup" aria-label="Answer scale">
           ${[1, 2, 3, 4, 5]
             .map(
               (val) => `
@@ -358,7 +358,7 @@
       try {
         localStorage.setItem(STORAGE_KEY, String(score));
       } catch (e) {
-        console.warn("localStorage niedostępny", e);
+        console.warn("localStorage unavailable", e);
       }
       const overlay = document.createElement("div");
       overlay.className = "test-loading-overlay is-active";

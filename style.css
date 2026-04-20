@@ -7,9 +7,9 @@
   --color-primary: #1d4ed8;
   --color-primary-dark: #1e40af;
   --color-primary-glow: rgba(29, 78, 216, 0.42);
-  --color-cta: #ff4f9a;
-  --color-cta-dark: #e53d85;
-  --color-cta-glow: rgba(255, 79, 154, 0.42);
+  --color-cta: #1d4ed8;
+  --color-cta-dark: #1e40af;
+  --color-cta-glow: rgba(29, 78, 216, 0.42);
   --color-accent: #0f766e;
   --color-accent-soft: rgba(15, 118, 110, 0.18);
   --color-bg: #f0f1f4;
@@ -1293,7 +1293,7 @@ a.lang-switch__item {
 }
 
 .upsell-inline__inner--freemium {
-  background: linear-gradient(135deg, rgba(255, 79, 154, 0.14) 0%, rgba(29, 78, 216, 0.08) 100%);
+  background: linear-gradient(135deg, rgba(29, 78, 216, 0.1) 0%, rgba(15, 118, 110, 0.18) 100%);
 }
 
 .result-block--locked {
