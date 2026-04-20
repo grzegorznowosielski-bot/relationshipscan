@@ -13,8 +13,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: FTP Deploy (clean slate)
-        id: ftp
+      - name: FTP Deploy (public_html)
+        id: ftp_public
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ostudios.ftp.dhosting.pl
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftp
+          timeout: 120000
+          log-level: verbose
+          server-dir: /public_html/
+
+      - name: FTP Deploy (relationshipscan public_html)
+        id: ftp_rel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ostudios.ftp.dhosting.pl
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftp
+          timeout: 120000
+          log-level: verbose
+          server-dir: /relationshipscan.app/public_html/
+
+      - name: FTP Deploy (domains relationshipscan public_html)
+        id: ftp_domains
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ostudios.ftp.dhosting.pl
@@ -25,9 +51,6 @@ jobs:
           timeout: 120000
           log-level: verbose
           server-dir: /domains/relationshipscan.app/public_html/
-          dangerous-clean-slate: true
-          exclude: |
-            **/.well-known/**
 
       - name: Verify live content marker
         run: |
