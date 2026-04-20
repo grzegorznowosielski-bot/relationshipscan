@@ -14,7 +14,7 @@
   const TEST_SESSION_KEY = "relationshipscan_test_session_v1";
   const STRIPE_LINK = "https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00";
   const LOCALE_PATHS = {
-    en: "/index.html",
+    en: "/en/",
     de: "/de/",
     es: "/es/",
     pl: "/pl/",
@@ -1706,15 +1706,90 @@
     },
   };
 
+  const PAGE_CHROME_UI = {
+    en: {
+      resultPageTitle: "Your Trust Index — RelationshipScan",
+      reportPageTitle: "Full Relationship Analysis — RelationshipScan",
+      successPageTitle: "Payment success — RelationshipScan",
+      donutLabel: "Trust Index",
+      homeLink: "Home",
+      retakeLink: "Retake scan",
+      noResultTitle: "No result yet",
+      noResultBody: "Return to the test to generate your Trust Index.",
+      footerInfo: "Informational materials only.",
+      footerDisclaimer: RESULT_SIGNAL_LINE_BY_LOCALE.en,
+    },
+    pl: {
+      resultPageTitle: "Twój Trust Index — RelationshipScan",
+      reportPageTitle: "Pelna analiza relacji — RelationshipScan",
+      successPageTitle: "Płatność potwierdzona — RelationshipScan",
+      donutLabel: "Trust Index",
+      homeLink: "Start",
+      retakeLink: "Powtórz skan",
+      noResultTitle: "Brak wyniku",
+      noResultBody: "Wroc do testu, aby zobaczyc swoj wynik.",
+      footerInfo: "Materiały mają charakter informacyjny.",
+      footerDisclaimer: RESULT_SIGNAL_LINE_BY_LOCALE.pl,
+    },
+    de: {
+      resultPageTitle: "Dein Trust Index — RelationshipScan",
+      reportPageTitle: "Vollständige Beziehungsanalyse — RelationshipScan",
+      successPageTitle: "Zahlung bestätigt — RelationshipScan",
+      donutLabel: "Trust Index",
+      homeLink: "Startseite",
+      retakeLink: "Scan wiederholen",
+      noResultTitle: "Noch kein Ergebnis",
+      noResultBody: "Gehe zum Scan zurueck, um deinen Trust Index zu erstellen.",
+      footerInfo: "Nur Informationsmaterial.",
+      footerDisclaimer: RESULT_SIGNAL_LINE_BY_LOCALE.de,
+    },
+    es: {
+      resultPageTitle: "Tu Trust Index — RelationshipScan",
+      reportPageTitle: "Analisis completo de la relacion — RelationshipScan",
+      successPageTitle: "Pago confirmado — RelationshipScan",
+      donutLabel: "Trust Index",
+      homeLink: "Inicio",
+      retakeLink: "Repetir scan",
+      noResultTitle: "Aun no hay resultado",
+      noResultBody: "Vuelve al test para generar tu Trust Index.",
+      footerInfo: "Materiales solo informativos.",
+      footerDisclaimer: RESULT_SIGNAL_LINE_BY_LOCALE.es,
+    },
+    pt: {
+      resultPageTitle: "Seu Trust Index — RelationshipScan",
+      reportPageTitle: "Analise completa do relacionamento — RelationshipScan",
+      successPageTitle: "Pagamento confirmado — RelationshipScan",
+      donutLabel: "Trust Index",
+      homeLink: "Inicio",
+      retakeLink: "Refazer scan",
+      noResultTitle: "Ainda sem resultado",
+      noResultBody: "Volte ao teste para gerar seu Trust Index.",
+      footerInfo: "Materiais apenas informativos.",
+      footerDisclaimer: RESULT_SIGNAL_LINE_BY_LOCALE.pt,
+    },
+    in: {
+      resultPageTitle: "Your Trust Index — RelationshipScan",
+      reportPageTitle: "Full Relationship Analysis — RelationshipScan",
+      successPageTitle: "Payment success — RelationshipScan",
+      donutLabel: "Trust Index",
+      homeLink: "Home",
+      retakeLink: "Retake scan",
+      noResultTitle: "No result yet",
+      noResultBody: "Return to the test to generate your Trust Index.",
+      footerInfo: "Informational materials only.",
+      footerDisclaimer: RESULT_SIGNAL_LINE_BY_LOCALE.in,
+    },
+  };
+
   function getModalLang() {
+    const byPath = getLocaleFromPath(window.location.pathname || "/");
+    if (byPath && paywallModalText[byPath]) return byPath;
     try {
       const lang = localStorage.getItem("lang");
       if (lang && paywallModalText[lang]) return lang;
     } catch (e) {
       // Ignore storage issues.
     }
-    const byPath = getLocaleFromPath(window.location.pathname || "/");
-    if (byPath && paywallModalText[byPath]) return byPath;
     return "en";
   }
 
@@ -3737,6 +3812,7 @@
     if (!root || !form || !progressBar || !stepLabel || !btnNext || !btnPrev) return;
 
     const locale = getTestLocale();
+    const logoLink = document.querySelector(".site-header .logo");
     const allQuestions = buildQuestionList(locale);
     const sessionQuestions = getSessionQuestions(allQuestions, locale);
     const uiCopy = TEST_UI_COPY[locale] || TEST_UI_COPY.en;
@@ -3747,6 +3823,9 @@
     if (headerBackLink) {
       headerBackLink.textContent = uiCopy.backHome;
       headerBackLink.setAttribute("href", LOCALE_PATHS[locale] || LOCALE_PATHS.en);
+    }
+    if (logoLink) {
+      logoLink.setAttribute("href", LOCALE_PATHS[locale] || LOCALE_PATHS.en);
     }
 
     /** @type {number[]} odpowiedzi 1–5 na indeks pytania */
@@ -3782,20 +3861,32 @@
       root.innerHTML = `
         <p class="question-card__section">${escapeHtml(q.sectionTitle)}</p>
         <p class="question-card__text">${escapeHtml(q.text)}</p>
-        <div class="scale-matrix" role="radiogroup" aria-label="${escapeHtml(uiCopy.scaleAria)}">
-          ${[1, 2, 3, 4, 5]
-            .map(
-              (val) => `
-            <div class="scale-column">
-              <div class="scale-option">
-                <input type="radio" name="scale" id="s${val}" value="${val}" ${selected === val ? "checked" : ""} />
-                <label for="s${val}">${val}</label>
+        <div class="scale-horizontal" role="radiogroup" aria-label="${escapeHtml(uiCopy.scaleAria)}">
+          <div class="scale-row scale-row--buttons">
+            ${[1, 2, 3, 4, 5]
+              .map(
+                (val) => `
+              <div class="scale-cell">
+                <div class="scale-option">
+                  <input type="radio" name="scale" id="s${val}" value="${val}" ${selected === val ? "checked" : ""} />
+                  <label for="s${val}">${val}</label>
+                </div>
               </div>
-              <span class="scale-column__label" aria-hidden="true">${escapeHtml(uiCopy.scaleLabels[val])}</span>
-            </div>
-          `
-            )
-            .join("")}
+            `
+              )
+              .join("")}
+          </div>
+          <div class="scale-row scale-row--labels" aria-hidden="true">
+            ${[1, 2, 3, 4, 5]
+              .map(
+                (val) => `
+              <div class="scale-cell">
+                <span class="scale-label">${escapeHtml(uiCopy.scaleLabels[val])}</span>
+              </div>
+            `
+              )
+              .join("")}
+          </div>
         </div>
         <p class="scale-micro">${escapeHtml(uiCopy.micro)}</p>
       `;
@@ -4002,6 +4093,8 @@
   function localizeResultPageUi(locale) {
     const lang = RESULT_LAYOUT_UI[locale] ? locale : "en";
     const ui = RESULT_LAYOUT_UI[lang];
+    const chrome = PAGE_CHROME_UI[lang] || PAGE_CHROME_UI.en;
+    document.title = chrome.resultPageTitle;
     setText("result-eyebrow", ui.eyebrow);
     setText("result-title", ui.title);
     setText("result-visual-title", ui.visualTitle);
@@ -4040,6 +4133,15 @@
     setText("premium-note-2", ui.notes[1]);
     setText("premium-note-3", ui.notes[2]);
     setText("result-signal-line", ui.disclaimer);
+    setText("result-donut-label", chrome.donutLabel);
+    setText("result-footer-home-link", chrome.homeLink);
+    setText("result-footer-retake-link", chrome.retakeLink);
+    setText("result-footer-note-primary", chrome.footerInfo);
+    setText("result-footer-note-disclaimer", chrome.footerDisclaimer);
+    const homeLink = document.getElementById("result-footer-home-link");
+    const retakeLink = document.getElementById("result-footer-retake-link");
+    if (homeLink) homeLink.setAttribute("href", LOCALE_PATHS[lang] || LOCALE_PATHS.en);
+    if (retakeLink) retakeLink.setAttribute("href", getFlowPageUrl("test", lang));
   }
 
   function localizeReportPageUi(locale) {
@@ -4162,6 +4264,8 @@
       in: null,
     };
     const ui = uiMap[locale] || uiMap.en;
+    const chrome = PAGE_CHROME_UI[locale] || PAGE_CHROME_UI.en;
+    document.title = chrome.reportPageTitle;
     setText("report-eyebrow", ui.eyebrow);
     setText("report-title", ui.title);
     setText("report-index-label", ui.indexLabel);
@@ -4201,11 +4305,19 @@
     setText("report-outcome-heading", outcomeUi.heading);
     setText("report-disclaimer-text", RESULT_SIGNAL_LINE_BY_LOCALE[locale] || RESULT_SIGNAL_LINE_BY_LOCALE.en);
     setText("report-back-link", ui.back);
+    setText("report-donut-label", chrome.donutLabel);
+    setText("report-footer-home-link", chrome.homeLink);
+    setText("report-footer-note-disclaimer", chrome.footerDisclaimer);
+    const reportBackLink = document.getElementById("report-back-link");
+    const reportHomeLink = document.getElementById("report-footer-home-link");
+    if (reportBackLink) reportBackLink.setAttribute("href", getFlowPageUrl("result", locale));
+    if (reportHomeLink) reportHomeLink.setAttribute("href", LOCALE_PATHS[locale] || LOCALE_PATHS.en);
   }
 
   // --- Wynik: odczyt localStorage i wypełnienie DOM ---
   function initResult() {
     const locale = getFlowLocale();
+    const logoLink = document.querySelector(".site-header .logo");
     const ui = RESULT_LAYOUT_UI[locale] || RESULT_LAYOUT_UI.en;
     const headlineEl = document.getElementById("result-headline");
     const scoreEl = document.getElementById("result-score-display");
@@ -4223,6 +4335,7 @@
 
     document.documentElement.lang = locale;
     localizeResultPageUi(locale);
+    if (logoLink) logoLink.setAttribute("href", LOCALE_PATHS[locale] || LOCALE_PATHS.en);
 
     let raw = null;
     try {
@@ -4232,11 +4345,9 @@
     }
     if (raw === null || raw === "") {
       scoreEl.textContent = "—";
-      headlineEl.textContent = locale === "pl" ? "Brak wyniku" : "No result yet";
-      leadEl.textContent =
-        locale === "pl"
-          ? "Wroc do testu, aby zobaczyc swoj wynik."
-          : "Return to the test to generate your Trust Index.";
+      const chrome = PAGE_CHROME_UI[locale] || PAGE_CHROME_UI.en;
+      headlineEl.textContent = chrome.noResultTitle;
+      leadEl.textContent = chrome.noResultBody;
       interpEl.innerHTML = "";
       insightsEl.innerHTML = "";
       tipsEl.innerHTML = "";
@@ -4349,6 +4460,8 @@
       },
     };
     const ui = copyByLocale[locale] || copyByLocale.en;
+    const chrome = PAGE_CHROME_UI[locale] || PAGE_CHROME_UI.en;
+    document.title = chrome.successPageTitle;
     setText("success-title", ui.title);
     setText("success-body", ui.body);
 
@@ -4624,6 +4737,7 @@
   // --- Raport: wynik z testu + podsumowanie i profil dopasowane do pasma ---
   function initReport() {
     const locale = getFlowLocale();
+    const logoLink = document.querySelector(".site-header .logo");
     const lang = getModalLang();
     renderPaywallModalText(lang);
     const isPaid = (() => {
@@ -4640,6 +4754,7 @@
 
     document.documentElement.lang = locale;
     localizeReportPageUi(locale);
+    if (logoLink) logoLink.setAttribute("href", LOCALE_PATHS[locale] || LOCALE_PATHS.en);
     document.body.classList.remove("report-is-locked");
     const lockOverlay = document.getElementById("report-lock-overlay");
     if (lockOverlay) lockOverlay.hidden = true;
