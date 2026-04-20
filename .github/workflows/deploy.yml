@@ -41,7 +41,7 @@ jobs:
         run: |
           D="${{ vars.FTP_SERVER_DIR }}"
           if [ -z "$D" ]; then
-            D="/public_html/"
+            D="/relationshipscan.app/public_html/"
           fi
           case "$D" in
             */) ;;
