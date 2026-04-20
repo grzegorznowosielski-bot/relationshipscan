@@ -417,6 +417,29 @@ a.lang-switch__item {
   box-shadow: 0 12px 36px var(--color-cta-glow);
 }
 
+.cta-button {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.cta-button:hover {
+  opacity: 0.85;
+  color: #fff;
+}
+
+.payment-note {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
 .btn--ghost {
   background: transparent;
   color: var(--color-text);

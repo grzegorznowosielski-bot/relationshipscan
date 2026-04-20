@@ -1,7 +1,7 @@
 /**
  * RelationshipScan — wspólny skrypt dla wszystkich stron
  * Odpowiada za: nawigację mobilną, animacje, test (pytania + wynik),
- * zapis/odczyt localStorage, checkout/upsell.
+ * oraz zapis/odczyt localStorage.
  */
 
 (function () {
@@ -9,9 +9,6 @@
 
   // --- Stałe: klucz localStorage dla wyniku testu ---
   const STORAGE_KEY = "wynik";
-
-  /** Po udanej płatności P24 (sessionStorage — zakładka) */
-  const P24_PAID_KEY = "relationshipscan_p24_paid";
 
   /**
    * Struktura testu: 20 pytań w 4 sekcjach (5+5+5+5).
@@ -271,92 +268,6 @@
     els.forEach((el) => io.observe(el));
   }
 
-  // --- Checkout: Przelewy24 (meta p24-api-base) lub przejście do testu bez opłaty ---
-  function initCheckout() {
-    const btn = document.getElementById("btn-pay");
-    const emailEl = document.getElementById("checkout-email");
-    if (!btn) return;
-    btn.addEventListener("click", async () => {
-      const api = document.querySelector('meta[name="p24-api-base"]')?.getAttribute("content")?.trim();
-      const next = btn.getAttribute("data-next") || "test.html";
-      if (!api) {
-        window.location.href = next;
-        return;
-      }
-      btn.disabled = true;
-      try {
-        const r = await fetch(`${api.replace(/\/$/, "")}/api/p24/init`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: (emailEl && emailEl.value) ? emailEl.value.trim() : "" }),
-        });
-        const j = await r.json().catch(() => ({}));
-        if (!r.ok) throw new Error(j.error || j.details || String(r.status));
-        if (!j.redirectUrl) throw new Error("brak redirectUrl");
-        window.location.href = j.redirectUrl;
-      } catch (e) {
-        alert(
-          "Could not initialize Przelewy24. Check gateway URL (meta p24-api-base), CORS, and server logs.\n\n" +
-            (e && e.message ? e.message : e)
-        );
-        btn.disabled = false;
-      }
-    });
-  }
-
-  /**
-   * Gdy ustawiono p24-api-base: wymaga potwierdzenia płatności (polling ?sid= lub flaga sesji).
-   */
-  async function ensureP24AccessBeforeTest(stepLabel, btnNext, btnPrev) {
-    const api = document.querySelector('meta[name="p24-api-base"]')?.getAttribute("content")?.trim();
-    if (!api) return true;
-
-    try {
-      if (sessionStorage.getItem(P24_PAID_KEY) === "1") return true;
-    } catch (e) {
-      /* ignore */
-    }
-
-    const params = new URLSearchParams(window.location.search || "");
-    const sid = params.get("sid");
-    if (sid) {
-      if (stepLabel) stepLabel.textContent = "Verifying payment…";
-      if (btnNext) btnNext.disabled = true;
-      if (btnPrev) btnPrev.disabled = true;
-      for (let i = 0; i < 45; i++) {
-        try {
-          const r = await fetch(
-            `${api.replace(/\/$/, "")}/api/p24/status?sessionId=${encodeURIComponent(sid)}`,
-            { credentials: "omit" }
-          );
-          const j = await r.json().catch(() => ({}));
-          if (j.paid) {
-            try {
-              sessionStorage.setItem(P24_PAID_KEY, "1");
-            } catch (e2) {
-              /* ignore */
-            }
-            history.replaceState({}, "", window.location.pathname);
-            if (btnNext) btnNext.disabled = false;
-            if (btnPrev) btnPrev.disabled = false;
-            return true;
-          }
-        } catch (e) {
-          /* kolejna próba */
-        }
-        await new Promise((res) => setTimeout(res, 1000));
-      }
-    }
-
-    try {
-      if (sessionStorage.getItem(P24_PAID_KEY) === "1") return true;
-    } catch (e) {
-      /* ignore */
-    }
-
-    return false;
-  }
-
   // --- Test: stan i renderowanie ---
   function initTest() {
     const root = document.getElementById("question-root");
@@ -473,23 +384,7 @@
       document.head.appendChild(s);
     }
 
-    (async () => {
-      const ok = await ensureP24AccessBeforeTest(stepLabel, btnNext, btnPrev);
-      if (!ok) {
-        progressBar.style.width = "0%";
-        stepLabel.textContent = "Access";
-        root.innerHTML = `
-          <div class="question-card paywall-card">
-            <p class="question-card__section">Payment</p>
-            <p class="question-card__text">To continue, complete payment in checkout. If you already paid, refresh in a moment or return using the payment redirect link.</p>
-            <p class="checkout-card__fake" style="margin-top:1rem"><a class="btn btn--primary btn--accent" href="checkout.html">Go to checkout</a></p>
-          </div>`;
-        btnNext.hidden = true;
-        btnPrev.hidden = true;
-        return;
-      }
-      render();
-    })();
+    render();
   }
 
   function escapeHtml(str) {
@@ -553,16 +448,6 @@
     tipsEl.innerHTML = copy.tips.map((t) => `<li>${escapeHtml(t)}</li>`).join("");
   }
 
-  // --- Upsell: przycisk kupna → raport ---
-  function initUpsellButton() {
-    const btn = document.getElementById("btn-buy-report");
-    if (!btn) return;
-    btn.addEventListener("click", () => {
-      const next = btn.getAttribute("data-next") || "report.html";
-      window.location.href = next;
-    });
-  }
-
   // --- Raport: wynik z testu + podsumowanie i profil dopasowane do pasma ---
   function initReport() {
     const scoreStrong = document.getElementById("report-score");
@@ -598,8 +483,6 @@
     setYear();
     initMobileNav();
     initReveal();
-    initCheckout();
-    initUpsellButton();
 
     const path = (window.location.pathname || "").toLowerCase();
     /** Obsługa zarówno plików *.html, jak i katalogów /test/ na hostingu statycznym */

@@ -1,156 +1,25 @@
-# Jedyne źródło plików na serwerze = ten repo (nie wgrywaj ręcznie FTP obok CI).
-#
-# Secrets (Settings → Secrets and variables → Actions):
-#   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
-#
-# Opcjonalnie — zmienna repozytorium (Settings → Variables → Actions):
-#   FTP_SERVER_DIR  np. /public_html/  lub  /relationshipscan.app/public_html/
-#   Jeśli pusta — używany jest domyślny katalog poniżej (dopasuj do panelu dhosting).
-#
-# ECONNRESET: biblioteka używa trybu pasywnego domyślnie; są 3 próby deployu,
-# długi timeout i log-level verbose. Przy problemach z FTPS użyj protocol: ftps-legacy w kopiach kroków.
-
-name: Deploy
+name: Deploy FTP
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
-
-concurrency:
-  group: deploy-${{ github.ref }}
-  cancel-in-progress: true
+    branches:
+      - main
 
 jobs:
   deploy:
-    name: FTP → dhosting
     runs-on: ubuntu-latest
-    timeout-minutes: 25
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Node 18 (środowisko joba)
-        uses: actions/setup-node@v4
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          node-version: "18"
-
-      - name: Ustal server-dir na FTP
-        id: ftpdir
-        run: |
-          D="${{ vars.FTP_SERVER_DIR }}"
-          if [ -z "$D" ]; then
-            D="/relationshipscan.app/public_html/"
-          fi
-          case "$D" in
-            */) ;;
-            *) D="${D}/" ;;
-          esac
-          echo "dir=$D" >> "$GITHUB_OUTPUT"
-          echo ">>> server-dir będzie: $D"
-
-      - name: Deploy FTP (próba 1/3)
-        id: ftp1
-        continue-on-error: true
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: ${{ secrets.FTP_SERVER }}
+          server: ostudios.ftp.dhosting.pl
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
-          server-dir: ${{ steps.ftpdir.outputs.dir }}
-          protocol: ftp
           port: 21
-          timeout: 300000
-          log-level: verbose
-          dry-run: false
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-
-      - name: Deploy FTP (próba 2/3)
-        id: ftp2
-        if: steps.ftp1.outcome == 'failure'
-        continue-on-error: true
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
-          server-dir: ${{ steps.ftpdir.outputs.dir }}
           protocol: ftp
-          port: 21
-          timeout: 300000
-          log-level: verbose
-          dry-run: false
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-
-      - name: Deploy FTP (próba 3/3)
-        id: ftp3
-        if: steps.ftp1.outcome == 'failure' && steps.ftp2.outcome == 'failure'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
-          server-dir: ${{ steps.ftpdir.outputs.dir }}
-          protocol: ftp
-          port: 21
-          timeout: 300000
-          log-level: verbose
-          dry-run: false
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-
-      - name: Wymagaj sukcesu którejkolwiek próby FTP
-        if: always()
-        run: |
-          o1="${{ steps.ftp1.outcome }}"
-          o2="${{ steps.ftp2.outcome }}"
-          o3="${{ steps.ftp3.outcome }}"
-          echo "FTP outcomes: 1=$o1  2=$o2  3=$o3"
-          if [ "$o1" = "success" ] || [ "$o2" = "success" ] || [ "$o3" = "success" ]; then
-            echo "OK: przynajmniej jedna próba FTP zakończona sukcesem."
-            exit 0
-          fi
-          echo "::error::Wszystkie 3 próby FTP zakończyły się niepowodzeniem (np. ECONNRESET / złe hasło / zły server-dir)."
-          exit 1
-
-      - name: Weryfikacja na żywo (style.css + index.html)
-        run: |
-          set -e
-          URL="https://relationshipscan.app/style.css?ci=${{ github.run_id }}"
-          HTTP=$(curl -sS -L -o /tmp/rs-style.css -w "%{http_code}" "$URL")
-          echo "HTTP $HTTP ← $URL"
-          sed -n '1,20p' /tmp/rs-style.css || true
-          if [ "$HTTP" != "200" ]; then
-            echo "::error::style.css nie zwraca 200 — sprawdź docroot domeny vs FTP_SERVER_DIR."
-            exit 1
-          fi
-          if ! rg -q --fixed-strings '1d4ed8' /tmp/rs-style.css; then
-            echo "::error::Brak oczekiwanej palety w style.css — możliwy zły katalog deployu."
-            exit 1
-          fi
-          INDEX_URL="https://relationshipscan.app/index.html?ci=${{ github.run_id }}"
-          INDEX_HTTP=$(curl -sS -L -o /tmp/rs-index.html -w "%{http_code}" "$INDEX_URL")
-          echo "HTTP $INDEX_HTTP ← $INDEX_URL"
-          sed -n '1,40p' /tmp/rs-index.html || true
-          if [ "$INDEX_HTTP" != "200" ]; then
-            echo "::error::index.html nie zwraca 200 — sprawdź docroot domeny vs FTP_SERVER_DIR."
-            exit 1
-          fi
-          if ! rg -q --fixed-strings 'Start your scan' /tmp/rs-index.html; then
-            echo "::error::Live index.html nie zawiera aktualnej treści freemium (Start your scan)."
-            echo "::error::Najpewniej deploy trafia do złego katalogu FTP. Ustaw repo variable FTP_SERVER_DIR poprawnie."
-            exit 1
-          fi
-          echo "OK: style.css i index.html z serwera wyglądają na aktualne z repo."
+          server-dir: /relationshipscan.app/public_html/
+          passive: true
