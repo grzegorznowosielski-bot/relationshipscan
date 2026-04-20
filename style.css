@@ -2227,6 +2227,8 @@ html:has(body.report-is-locked) {
   font-size: 0.97rem;
   font-weight: 600;
   color: var(--color-primary);
+  white-space: pre-line;
+  line-height: 1.55;
 }
 
 .report-ref {
@@ -2395,6 +2397,7 @@ html:has(body.report-is-locked) {
   color: var(--color-text-muted);
   font-size: 0.96rem;
   line-height: 1.55;
+  white-space: pre-line;
 }
 
 .report-bars {

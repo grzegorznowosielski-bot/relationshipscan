@@ -1282,148 +1282,219 @@
     },
   };
 
+  const AREA_BODY_LABELS = {
+    en: { happening: "What's happening", practice: "What it does in practice", watch: "What to watch" },
+    pl: { happening: "Co się dzieje", practice: "Co to robi w praktyce", watch: "Na co zwrócić uwagę" },
+    de: { happening: "Was passiert", practice: "Praktische Folge", watch: "Worauf achten" },
+    es: { happening: "Que pasa", practice: "Efecto en el dia a dia", watch: "Que vigilar" },
+    pt: { happening: "O que esta acontecendo", practice: "Efeito no dia a dia", watch: "O que observar" },
+    in: { happening: "What's happening", practice: "What it does in practice", watch: "What to watch" },
+  };
+
   const AREA_CONTENT = {
     en: {
       communication: {
         low: {
-          title: "Communication appears strained",
-          body:
-            "Your responses suggest that difficult topics may not be addressed openly or clearly enough. This can increase misunderstanding and make small tensions grow over time.",
+          title: "Hard topics get avoided, softened, or dropped",
+          happening:
+            "You still talk, but the conversations that actually cost you energy get postponed, rushed, or closed with vague comfort instead of a decision.",
+          practice:
+            "Small misunderstandings stack. You rehash the same point, or one person goes quiet while the other keeps pushing—so nothing actually moves.",
+          watch: "Track whether 'we'll talk later' includes a time and one concrete next step. If not, it is avoidance wearing a polite face.",
         },
         mid: {
-          title: "Communication shows mixed signals",
-          body:
-            "Some parts of your communication may still be working well, but there are also moments where clarity or openness seems weaker. This often creates uncertainty rather than open conflict.",
+          title: "You talk, but the same fights come back unchanged",
+          happening:
+            "You have talks that calm things for a moment, but they rarely end with a clear who-does-what-by-when. The topic is not missing—closure is.",
+          practice:
+            "You both feel like you 'talked it through', yet nothing feels settled. That is why the same argument returns under new excuses.",
+          watch: "After the next hard talk, write one sentence: what exactly was decided. If you cannot write it, that is the leak.",
         },
         high: {
-          title: "Communication appears relatively stable",
-          body:
-            "Your answers suggest that communication is one of the stronger parts of the relationship. Even if tension appears, there seems to be a foundation for direct and constructive dialogue.",
+          title: "Hard topics get addressed without losing the thread",
+          happening:
+            "When tension shows up, you tend to stay in the room mentally—you name the issue and keep it to one topic instead of dumping the whole backlog.",
+          practice: "Repair is faster because facts beat guesses; you spend less energy defending against motives nobody actually stated.",
+          watch: "Pressure-test follow-through, not tone—quietly slipping agreements is the main risk when communication is already strong.",
         },
       },
       emotional: {
         low: {
-          title: "Emotional distance may be increasing",
-          body:
-            "Your responses suggest that emotional closeness may feel weaker or less consistent right now. This can make the relationship feel less secure, even without a clear external reason.",
+          title: "Support drops off right when stress hits",
+          happening:
+            "When pressure rises, one or both of you pulls back—less warmth, less patience, less 'we're on the same team' energy at the exact moment it is needed.",
+          practice: "Hard days feel lonelier than neutral days. You start bracing instead of leaning in, so repair starts late or not at all.",
+          watch: "Notice the first three hours after a disappointment: is contact easier or harder than usual? That window is your real baseline.",
         },
         mid: {
-          title: "Emotional connection feels uneven",
-          body:
-            "There may still be moments of closeness, but they do not always feel steady or predictable. This often creates mixed feelings - part reassurance, part uncertainty.",
+          title: "Closeness comes in waves—hard to rely on",
+          happening:
+            "Warmth shows up, then it suddenly thins out without a clear reason you can point to. The swing is the problem, not the average mood.",
+          practice:
+            "You cannot bank closeness for the next fight. When it is uneven, even reasonable requests sound like pressure and defensiveness spikes.",
+          watch: "Pick one recurring stress day (work deadline, family event) and watch what happens to tone and availability—patterns hide there.",
         },
         high: {
-          title: "Emotional connection looks strong",
-          body:
-            "Your answers suggest that emotional support and closeness are still present in a meaningful way. This does not remove every difficulty, but it creates an important sense of stability.",
+          title: "Emotional backup is usually there when it counts",
+          happening:
+            "Under normal pressure, you still get responses that feel human—curiosity, repair bids, patience—not just silence or cold efficiency.",
+          practice: "Conflict still costs energy, but it is less likely to turn into days of distance because someone re-opens contact.",
+          watch: "Do not confuse strength with unlimited capacity—burnout still shows up as irritability first, not a big speech.",
         },
       },
       behavior: {
         low: {
-          title: "Behavior feels difficult to read",
-          body:
-            "Your responses suggest that changes in behavior may be creating confusion or tension. When actions feel inconsistent, it becomes harder to interpret the relationship with confidence.",
+          title: "Words and actions often point in different directions",
+          happening:
+            "Promises, plans, or apologies happen in conversation, but the week that follows does not match—cancellations, forgetfulness, or a totally different tone.",
+          practice: "You stop trusting the calendar and the chat log. You double-check, nag, or withdraw because reliability feels shaky.",
+          watch: "Pick one promise from the last 10 days and score it: done as agreed, partly, or not. Repeat weekly—numbers beat vibes.",
         },
         mid: {
-          title: "Behavior shows some inconsistency",
-          body:
-            "There may be some stable patterns, but also moments where behavior feels less predictable. This can create doubt even if not every signal is negative.",
+          title: "Follow-through is real sometimes—and missing other times",
+          happening:
+            "You get stretches where things work, then the same issue resurfaces because a habit slipped—lateness, phone habits, chores, intimacy, money talk.",
+          practice: "The relationship feels unpredictable: you never know which version of your partner shows up, so you pre-argue in your head.",
+          watch: "Track two weeks, not one good weekend. Consistency is the whole game when behavior sits in the middle band.",
         },
         high: {
-          title: "Behavior appears consistent",
-          body:
-            "Your answers suggest that actions and patterns feel relatively steady. This usually supports a stronger sense of predictability and emotional clarity.",
+          title: "Behavior mostly matches what you agree out loud",
+          happening:
+            "When you decide something together, everyday life reflects it often enough that you are not living in constant verification mode.",
+          practice: "Fights shorten because the baseline is not 'I cannot trust anything you say.'",
+          watch: "Watch for slow drift: small broken commitments are how reliability erodes without drama.",
         },
       },
       trust: {
         low: {
-          title: "Trust feels fragile",
-          body:
-            "Your responses suggest that trust may currently be under pressure. This does not automatically mean a major problem, but it does suggest that uncertainty may be shaping how you read the relationship.",
+          title: "You are reading everything through a doubt filter",
+          happening:
+            "Neutral actions get interpreted fast—late text, tired tone, a change of plans—and the story you tell yourself is often worst-case.",
+          practice: "You spend hours decoding instead of asking one direct question. Decisions stall because evidence never feels 'clean enough.'",
+          watch: "Write down three recent fears and the fact each one rested on. If facts are thin, you are running on guesses.",
         },
         mid: {
-          title: "Trust feels mixed",
-          body:
-            "There may still be a basis for trust, but it does not feel fully settled. This often happens when reassurance exists, but doubt has not fully disappeared.",
+          title: "You half-know where you stand—and that is exhausting",
+          happening:
+            "You are not fully sure what you are building together, what is off-limits, or what 'commitment' means in weekly life—not just on holidays.",
+          practice: "You negotiate daily life through hints and tests instead of clear rules, so small issues carry extra weight.",
+          watch: "Name one decision you have delayed purely because the answer would force clarity you do not want yet.",
         },
         high: {
-          title: "Trust appears relatively stable",
-          body:
-            "Your answers suggest that trust remains one of the more stable foundations of the relationship. That creates resilience, even if other areas still need attention.",
+          title: "Intent and boundaries are mostly readable",
+          happening:
+            "You can say what you need without inventing a courtroom case. Disagreements still happen, but they are less fogged by mind-reading.",
+          practice: "Lower guesswork means faster repair—you spend less time proving you are not the villain.",
+          watch: "Clarity is not immunity—watch for new life stressors that make old agreements outdated without anyone naming it.",
         },
       },
     },
     pl: {
       communication: {
         low: {
-          title: "Komunikacja wydaje się osłabiona",
-          body:
-            "Twoje odpowiedzi sugerują, że trudne tematy nie zawsze są omawiane wystarczająco otwarcie i jasno. To może zwiększać ryzyko nieporozumień i sprawiać, że drobne napięcia narastają.",
+          title: "Trudne tematy są odkładane, złagodzone albo ucinane",
+          happening:
+            "Nadal piszecie i rozmawiacie, ale rozmowy, które realnie kosztują Was energię, lądują „potem”, są skrócone albo kończą się ogólnym „już dobrze” zamiast decyzji.",
+          practice:
+            "Narastają drobne nieporozumienia. Wracacie do tego samego w kółko albo jedna osoba milknie, a druga naciska — i w praktyce nic nie idzie do przodu.",
+          watch: "Sprawdź, czy „porozmawiamy później” ma godzinę i jeden konkretny następny krok. Jeśli nie, to ucieczka w grzecznej formie.",
         },
         mid: {
-          title: "Komunikacja jest niejednoznaczna",
-          body:
-            "Niektóre elementy komunikacji nadal mogą działać dobrze, ale są też momenty, w których brakuje jasności albo otwartości. Taki układ częściej buduje niepewność niż otwarty konflikt.",
+          title: "Rozmowy są, ale te same konflikty wracają bez zmiany",
+          happening:
+            "Macie rozmowy, które chwilowo uspokajają sytuację, ale nie kończą się konkretnymi ustaleniami. Problem nie jest w tym, że nie rozmawiacie, tylko że rozmowy niczego nie zamykają.",
+          practice:
+            "Oboje macie poczucie, że „wszystko wyjaśniliście”, a potem wraca ten sam spór, tylko pod innym pretekstem. To jest mechanizm, nie pech.",
+          watch: "Po następnej ciężkiej rozmowie zapiszcie jedno zdanie: co dokładnie zostało ustalone. Jeśli nie da się tego zapisać, macie wyciek.",
         },
         high: {
-          title: "Komunikacja wygląda względnie stabilnie",
-          body:
-            "Twoje odpowiedzi sugerują, że komunikacja należy do mocniejszych stron tej relacji. Nawet jeśli pojawia się napięcie, istnieje podstawa do bezpośredniej i konstruktywnej rozmowy.",
+          title: "Ciężkie tematy da się poruszyć bez rozwalania wątku",
+          happening:
+            "Gdy rośnie napięcie, zwykle zostajecie przy temacie: nazywacie problem i trzymacie jeden wątek zamiast wysypywać całą historię naraz.",
+          practice: "Naprawa jest szybsza, bo liczą się fakty, a nie domysły — mniej energii idzie na obronę przed intencjami, których nikt nie powiedział.",
+          watch: "Testujcie follow-through, nie ton — przy mocnej komunikacji największe ryzyko to ciche rozjeżdżanie się ustaleń.",
         },
       },
       emotional: {
         low: {
-          title: "Emocjonalny dystans może się pogłębiać",
-          body:
-            "Twoje odpowiedzi sugerują, że poczucie bliskości emocjonalnej może być teraz słabsze albo mniej stabilne. To może osłabiać poczucie bezpieczeństwa, nawet jeśli nie ma jednej wyraźnej przyczyny.",
+          title: "Wsparcie spada dokładnie wtedy, gdy jest najbardziej potrzebne",
+          happening:
+            "Gdy rośnie presja, jedna albo obie osoby się cofają: mniej ciepła, mniej cierpliwości, mniej poczucia „jesteśmy w tym razem” w momencie, kiedy to ma znaczenie.",
+          practice: "Trudne dni są bardziej samotne niż zwykłe dni. Zaczynasz się nastawiać zamiast się oprzeć, więc naprawa startuje późno albo wcale.",
+          watch: "Zobacz pierwsze trzy godziny po rozczarowaniu: kontakt jest łatwiejszy czy trudniejszy niż zwykle? To okno pokazuje realny standard.",
         },
         mid: {
-          title: "Bliskość emocjonalna jest nierówna",
-          body:
-            "Bliskość może się pojawiać, ale nie zawsze w sposób stały i przewidywalny. Taki układ często daje mieszane odczucia - częściowe uspokojenie, ale też niepewność.",
+          title: "Bliskość pojawia się falami — trudno się na niej oprzeć",
+          happening:
+            "Bywa ciepło, a potem nagle robi się chłodniej bez sensu, który da się wskazać palcem. Problemem jest huśtawka, nie „średni nastrój”.",
+          practice:
+            "Nie da się „zapisać” bliskości na następną kłótnię. Jak jest nierówno, nawet rozsądne prośby brzmią jak nacisk i rośnie defensywa.",
+          watch: "Wybierz jeden powtarzający się stres (deadline, rodzina) i zobacz, co dzieje się z tonem i dostępnością — tam widać schemat.",
         },
         high: {
-          title: "Bliskość emocjonalna wygląda na mocną",
-          body:
-            "Twoje odpowiedzi sugerują, że wsparcie emocjonalne i poczucie bliskości są nadal wyraźnie obecne. To nie usuwa wszystkich trudności, ale daje ważny fundament stabilności.",
+          title: "Emocjonalne wsparcie zwykle jest, kiedy trzeba",
+          happening:
+            "Przy zwykłej presji nadal dostajesz odpowiedzi „ludzkie”: ciekawość, próby naprawy, cierpliwość — nie tylko ciszę albo chłód.",
+          practice: "Konflikt nadal kosztuje, ale mniej często zamienia się w kilka dni dystansu, bo ktoś wraca do kontaktu.",
+          watch: "Mocny obszar to nie niewyczerpany zapas — wypalenie najpierw wygląda jak drażliwość, nie jak wielka rozmowa.",
         },
       },
       behavior: {
         low: {
-          title: "Zachowanie jest trudne do odczytania",
-          body:
-            "Twoje odpowiedzi sugerują, że zmiany w zachowaniu mogą budzić napięcie albo dezorientację. Gdy działania wydają się niespójne, trudniej interpretować relację z poczuciem pewności.",
+          title: "Słowa i działania często mówią co innego",
+          happening:
+            "Obietnice, plany albo przeprosiny padają w rozmowie, ale kolejny tydzień tego nie potwierdza: odwołania, zapomnienie albo zupełnie inny ton.",
+          practice: "Przestajesz ufać kalendarzowi i czatowi. Wracasz, przypominasz albo się wycofujesz, bo wiarygodność jest chwiejna.",
+          watch: "Weź jedną obietnicę z ostatnich 10 dni i oceń: zrobione zgodnie z ustaleniem, częściowo, czy nie. Powtarzaj co tydzień — liczby biją „klimat”.",
         },
         mid: {
-          title: "Zachowanie bywa niespójne",
-          body:
-            "W relacji mogą występować zarówno stabilne schematy, jak i momenty mniej przewidywalne. To może budzić wątpliwości, nawet jeśli nie każdy sygnał ma negatywny charakter.",
+          title: "Bywa dobrze z realizacją — i bywa, że znika bez ostrzeżenia",
+          happening:
+            "Są okresy, kiedy jest OK, a potem wraca ten sam problem, bo nawyk się obsunął: spóźnienia, telefon, dom, bliskość, pieniądze.",
+          practice: "Relacja jest trudna do przewidzenia: nie wiesz, która „wersja” partnera wróci, więc często wyprzedzasz kłótnię w głowie.",
+          watch: "Patrz na dwa tygodnie, nie na jeden dobry weekend. Przy średnim wyniku liczy się powtarzalność, nie jednorazowy skok.",
         },
         high: {
-          title: "Zachowanie wygląda na spójne",
-          body:
-            "Twoje odpowiedzi sugerują, że działania i codzienne wzorce są względnie stabilne. To zwykle wzmacnia poczucie przewidywalności i emocjonalnej jasności.",
+          title: "Zachowanie na co dzień zwykle trzyma ustalenia",
+          happening:
+            "Jak coś ustalicie, życie codzienne dość często to odzwierciedla — nie żyjesz w trybie ciągłej weryfikacji.",
+          practice: "Kłótnie są krótsze, bo baza to nie „nie wierzę niczemu, co mówisz”.",
+          watch: "Uważaj na powolne ześlizgiwanie: małe niedotrzymania tak niszczą wiarygodność, że bez dramatu.",
         },
       },
       trust: {
         low: {
-          title: "Zaufanie wydaje się kruche",
-          body:
-            "Twoje odpowiedzi sugerują, że zaufanie może być obecnie pod presją. Nie oznacza to automatycznie poważnego problemu, ale pokazuje, że niepewność może wpływać na sposób, w jaki odczytujesz relację.",
+          title: "Interpretujesz wszystko przez filtr wątpliwości",
+          happening:
+            "Neutralne zachowania szybko dostają najgorszą interpretację: spóźniony SMS, zmęczony ton, zmiana planu — i od razu buduje się czarna narracja.",
+          practice: "Tracisz godziny na dekodowanie zamiast zadać jedno proste pytanie. Decyzje stoją, bo „dowody” nigdy nie są wystarczająco czyste.",
+          watch: "Zapisz trzy ostatnie lęki i fakt pod każdym. Jeśli faktów mało, jedziesz na domysłach.",
         },
         mid: {
-          title: "Zaufanie jest niejednoznaczne",
-          body:
-            "Podstawa zaufania może nadal istnieć, ale nie wydaje się w pełni stabilna. Taki stan często pojawia się wtedy, gdy obok uspokojenia nadal obecne są wątpliwości.",
+          title: "Nie do końca wiecie, na czym stoicie — i to męczy",
+          happening:
+            "Nie jesteście pewni, co budujecie, co jest nie do zaakceptowania i co znaczy zaangażowanie w codziennym życiu — nie tylko „w święta”.",
+          practice: "Codzienność idzie przez aluzje i testy zamiast jasnych zasad, więc drobne sprawy niosą za dużą wagę.",
+          watch: "Wskaż jedną decyzję, którą odkładasz, bo odpowiedź wymusiłaby klarowność, której jeszcze nie chcesz.",
         },
         high: {
-          title: "Zaufanie wygląda na względnie stabilne",
-          body:
-            "Twoje odpowiedzi sugerują, że zaufanie pozostaje jednym z mocniejszych fundamentów tej relacji. To daje większą odporność, nawet jeśli inne obszary nadal wymagają uwagi.",
+          title: "Intencje i granice da się zwykle odczytać",
+          happening:
+            "Da się powiedzieć, czego potrzebujesz, bez budowania aktu oskarżenia. Spory są, ale mniej zamglone mind-readingiem.",
+          practice: "Mniej zgadywania to szybsza naprawa — mniej czasu na udowadnianie, że nie jesteś złym.",
+          watch: "Klarowność nie chroni przed życiem: nowy stres potrafi zdezaktualizować stare ustalenia bez słowa.",
         },
       },
     },
   };
+
+  function formatAreaDimensionBody(locale, content) {
+    const labels = AREA_BODY_LABELS[locale] || AREA_BODY_LABELS.en;
+    if (content && content.happening && content.practice && content.watch) {
+      return `${labels.happening}: ${content.happening}\n\n${labels.practice}: ${content.practice}\n\n${labels.watch}: ${content.watch}`;
+    }
+    return (content && content.body) || "";
+  }
 
   function getAreaContent(locale, areaKey, segment) {
     if (AREA_CONTENT[locale] && AREA_CONTENT[locale][areaKey] && AREA_CONTENT[locale][areaKey][segment]) {
@@ -1439,10 +1510,20 @@
           trust: "Klarheit und Vertrauen",
         },
         titles: { low: "unter Druck", mid: "gemischt", high: "stabiler" },
-        body: {
-          low: "In diesem Bereich ist die Unsicherheit derzeit hoch und beeinflusst Entscheidungen direkt.",
-          mid: "Dieser Bereich zeigt gemischte Signale und braucht klarere Absprachen.",
-          high: "Dieser Bereich wirkt derzeit stabiler und stutzt die Gesamtstruktur der Beziehung.",
+        happening: {
+          low: "In diesem Bereich ist die Unsicherheit hoch und sie steuert euren Alltag direkt.",
+          mid: "Hier fehlen oft klare Abschlusse: es wird viel gesprochen, aber wenig zuverlassig entschieden.",
+          high: "Dieser Bereich wirkt stabil und stutzt die Beziehung im Alltag spürbar.",
+        },
+        practice: {
+          low: "Konflikte dauern langer, weil ihr Energie in Deutung statt in eine konkrete Vereinbarung steckt.",
+          mid: "Alte Reibung kommt zuruck, weil die gleichen Themen ohne messbaren Abschluss bleiben.",
+          high: "Weniger Raten, weniger Nachfassen: Zusagen und Verhalten passen haufiger zusammen.",
+        },
+        watch: {
+          low: "Testet 7 Tage lang ein Thema mit einem schriftlichen nachsten Schritt und einem Datum.",
+          mid: "Nach einem schweren Gesprach einen Satz schreiben: was ist entschieden? Wenn leer, war es kein Abschluss.",
+          high: "Achtet auf kleines nachlassendes Follow-through, nicht auf den Gesamteindruck.",
         },
       },
       es: {
@@ -1453,10 +1534,20 @@
           trust: "Claridad y confianza",
         },
         titles: { low: "bajo presion", mid: "mixto", high: "mas estable" },
-        body: {
-          low: "En esta area la incertidumbre es alta y ya afecta decisiones clave.",
-          mid: "Esta area muestra señales mixtas y requiere acuerdos mas concretos.",
-          high: "Esta area aparece mas estable y sostiene mejor la estructura general.",
+        happening: {
+          low: "En esta area la incertidumbre es alta y ya condiciona decisiones importantes.",
+          mid: "Hay conversacion, pero faltan cierres claros: el mismo tema vuelve con otro disfraz.",
+          high: "Esta area se ve mas estable y sostiene el resto del sistema.",
+        },
+        practice: {
+          low: "Pagas mas costo emocional en cada friccion porque no hay reglas claras que reduzcan interpretacion.",
+          mid: "Mezclas alivio momentaneo con el mismo conflicto sin raiz resuelta.",
+          high: "Menos adivinanzas: lo acordado se nota en la semana, no solo en la charla.",
+        },
+        watch: {
+          low: "Elegid un tema recurrente y cerradlo con responsable, accion y fecha.",
+          mid: "Tras la proxima charla dificil, escribid una linea: que quedo decidido.",
+          high: "Vigilad acuerdos pequenos que se deslizan sin drama.",
         },
       },
       pt: {
@@ -1467,10 +1558,20 @@
           trust: "Clareza e confianca",
         },
         titles: { low: "sob pressao", mid: "misto", high: "mais estavel" },
-        body: {
-          low: "Nesta area a incerteza esta alta e ja afeta decisoes importantes.",
-          mid: "Esta area mostra sinais mistos e pede acordos mais claros.",
-          high: "Esta area esta mais estavel e sustenta melhor a estrutura geral.",
+        happening: {
+          low: "Nesta area a incerteza esta alta e ja puxa decisoes do dia a dia.",
+          mid: "Ha dialogo, mas falta fechamento: o mesmo assunto volta com outro pretexto.",
+          high: "Esta area esta mais estavel e sustenta o restante da relacao.",
+        },
+        practice: {
+          low: "Cada atrito custa mais porque falta padrao claro que corte interpretacao infinita.",
+          mid: "Alivio rapido nao substitui acordo concreto, entao o ciclo reabre.",
+          high: "Menos adivinhacao: combinado vira rotina visivel na semana.",
+        },
+        watch: {
+          low: "Escolham um tema recorrente e fechem com dono, acao e data.",
+          mid: "Apos a proxima conversa dificil, escrevam uma linha: o que ficou decidido.",
+          high: "Observem combinados pequenos que vao escorregando.",
         },
       },
       in: {
@@ -1481,10 +1582,20 @@
           trust: "Clarity and trust",
         },
         titles: { low: "under pressure", mid: "mixed", high: "more stable" },
-        body: {
-          low: "Uncertainty in this area is high and already affects key decisions.",
-          mid: "This area shows mixed signals and needs clearer agreements.",
+        happening: {
+          low: "Uncertainty here is high and it is already steering day-to-day decisions.",
+          mid: "You talk, but the same issue returns because nothing concrete gets closed.",
           high: "This area looks more stable and supports the wider relationship structure.",
+        },
+        practice: {
+          low: "Friction costs more because you spend energy decoding instead of agreeing a next step.",
+          mid: "Short relief replaces a real fix, so the same fight comes back under a new headline.",
+          high: "Less guesswork: what you agree shows up in behavior across the week.",
+        },
+        watch: {
+          low: "Pick one recurring topic and close it with owner, action, and a date.",
+          mid: "After the next hard talk, write one line: what was actually decided.",
+          high: "Watch small agreements quietly slipping—that is how trust erodes.",
         },
       },
     };
@@ -1492,7 +1603,9 @@
     const localized = fallbackByLocale[locale] || fallbackByLocale.in;
     return {
       title: `${localized.names[areaKey]}: ${localized.titles[segment]}`,
-      body: localized.body[segment],
+      happening: localized.happening[segment],
+      practice: localized.practice[segment],
+      watch: localized.watch[segment],
     };
   }
 
@@ -2148,38 +2261,38 @@
         heading: "Risk alerts",
         none: "No critical alert triggered based on current thresholds.",
         clarity: {
-          title: "Clarity risk: unclear intent layer",
+          title: "Clarity alert: you do not fully know what the other person wants",
           body:
-            "Your clarity score is below the critical threshold. This usually means you are forced to interpret too much between the lines, which increases decision friction. In this state, even neutral signals can be read as threat signals.",
+            "Your clarity score is below the threshold. That shows up as guessing, testing, and late-night scrolling through old messages. Neutral events feel loaded because the story you tell fills gaps the relationship never closed with plain words.",
         },
         emotional: {
-          title: "Emotional risk: unstable emotional base",
+          title: "Emotional alert: backup disappears when stress lands",
           body:
-            "Your emotional score is below the critical threshold. Connection may still be present, but it is not stable enough to regulate stress consistently. This increases reactivity and lowers confidence in difficult moments.",
+            "Your emotional score is below the threshold. Warm moments can exist, but support thins right when one of you is already down. Repair starts late, so small hurts stack into big distance.",
         },
         inconsistency: {
-          title: "Inconsistency risk: dimensions are out of sync",
+          title: "Spread alert: one strong area is hiding another weak one",
           body:
-            "The spread between your strongest and weakest dimensions exceeds 15 points. This indicates structural imbalance: one area may look stable while another keeps injecting uncertainty into the system. Without targeted correction, progress can feel temporary.",
+            "The gap between your highest and lowest dimension is over 15 points. One lane looks fine while another keeps leaking stress into fights and guesses. Until the weak lane is fixed with dated agreements, good weeks will keep feeling fragile.",
         },
       },
       pl: {
         heading: "Alerty ryzyka",
         none: "Brak krytycznych alertow przy aktualnych progach.",
         clarity: {
-          title: "Ryzyko klarownosci: niejasna warstwa intencji",
+          title: "Klarownosc: nie wiecie do konca, czego druga osoba chce — i to generuje domysly",
           body:
-            "Wynik klarownosci jest ponizej progu krytycznego. To zwykle oznacza nadmiar domyslow i zbyt malo jawnych ustalen, co zwieksza ryzyko blednej oceny sytuacji. W tym stanie nawet neutralne sygnaly sa latwo odczytywane jako zagrozenie.",
+            "Wynik klarownosci jest ponizej progu. W praktyce widzisz testowanie, milczenie zamiast pytania wprost i czytanie tonu jak dowodu w sprawie. Neutralne zdarzenia robia sie ciezkie, bo brakuje jawnych ustalen, ktore by zamknely interpretacje.",
         },
         emotional: {
-          title: "Ryzyko emocjonalne: niestabilna baza emocjonalna",
+          title: "Bliskosc: wsparcie znika dokladnie wtedy, gdy jest potrzebne",
           body:
-            "Wynik bliskosci emocjonalnej jest ponizej progu krytycznego. Kontakt moze byc obecny, ale nie daje stabilnej regulacji stresu. To podnosi reaktywnosc i utrudnia spokojne domykanie trudnych tematow.",
+            "Wynik bliskosci jest ponizej progu. Cieple momenty moga byc, ale przy stresie robi sie chlodniej szybciej niz myslisz. Naprawa startuje pozno, wiec male obrazenia ukladaja sie w dystans.",
         },
         inconsistency: {
-          title: "Ryzyko niespojnosci: obszary dzialaja nierowno",
+          title: "Rozrzut: jeden obszar maskuje drugi, slabszy",
           body:
-            "Roznica miedzy najsilniejszym i najslabszym obszarem przekracza 15 punktow. To sygnal nierownowagi strukturalnej: poprawa w jednym obszarze nie kompensuje kosztu w drugim. Bez precyzyjnej korekty efekt poprawy moze byc nietrwaly.",
+            "Roznica miedzy najwyzszym a najnizszym wynikiem przekracza 15 punktow. Jeden wymiar wyglada OK, a drugi ciagle dosyla napiecie do klotni i domyslow. Dopoki slabszy wymiar nie dostanie datowanych ustalen, dobre tygodnie beda sie czuly kruche.",
         },
       },
       de: {
@@ -2281,7 +2394,7 @@
         unstable: {
           label: "Unstable",
           text:
-            "Your relationship trajectory is unstable at this stage. The average is not strong enough to offset the internal spread, and the profile suggests uneven regulation across key areas. You may experience moments of closeness followed by periods of confusion or defensiveness. This pattern drains trust because outcomes become hard to predict. The issue is not one bad day but repeated inconsistency in the relationship system. Priority now is to reduce variance first: tighten expectations, define response rules for conflict, and track whether behavior becomes more coherent week by week.",
+            "What repeats: you get closeness or calm, then the same unfinished topic returns after stress. What does not close: decisions that never get an owner, date, or follow-through check. What gets worse: you brace for swings, so small problems trigger big reactions. Fix the pattern by shrinking variance—write one agreement after the next hard talk and score follow-through weekly.",
         },
         declining: {
           label: "Declining",
@@ -2306,7 +2419,7 @@
         unstable: {
           label: "Niestabilna",
           text:
-            "Trajektoria relacji jest na tym etapie niestabilna. Sredni poziom nie jest wystarczajaco mocny, by zrownowazyc wewnetrzny rozrzut sygnalow, a profil pokazuje nierowna regulacje kluczowych obszarow. Mozesz odczuwac okresy bliskosci, po ktorych wraca chaos interpretacyjny albo defensywnosc. Taki uklad oslabia zaufanie, bo efekty staja sie trudne do przewidzenia. Problemem nie jest pojedynczy incydent, tylko powtarzalna niespojnosc systemu relacji. Priorytet na teraz: najpierw zmniejszyc rozrzut, doprecyzowac oczekiwania i sprawdzac, czy zachowania staja sie bardziej spojne z tygodnia na tydzien.",
+            "Co się powtarza: jest dobrze albo blisko, a potem wraca ten sam niedomknięty temat po kolejnym stresie. Co się nie domyka: ustalenia bez właściciela, daty i sprawdzenia czy zrobione. Co się pogarsza: zaczynasz się nastawiać na huśtawkę, więc małe sprawy odpalają dużą reakcję. Priorytet: zmniejszyć rozrzut — po następnej twardej rozmowie jedno pisemne „kto-co-do kiedy” i cotygodniowa ocena realizacji.",
         },
         declining: {
           label: "Spadkowa",
@@ -2331,7 +2444,7 @@
         unstable: {
           label: "Instabil",
           text:
-            "Der Beziehungsverlauf ist derzeit instabil. Der Durchschnitt reicht nicht aus, um die interne Streuung zu kompensieren, und das Profil zeigt eine ungleichmäßige Regulation der wichtigsten Bereiche. Dadurch wechseln sich Nähe und Verunsicherung häufig ab. Diese Dynamik schwächt Vertrauen, weil Ergebnisse schwer planbar werden. Es geht nicht um einzelne Ereignisse, sondern um wiederkehrende Inkonsistenz im System. Der wirksamste Hebel ist zunächst die Streuung zu senken: Erwartungen klären, Konfliktregeln festlegen und beobachtbares Verhalten wöchentlich prüfen.",
+            "Was sich wiederholt: Nähe oder Ruhe, dann kehrt dasselbe offene Thema nach Stress zurück. Was nicht schließt: Vereinbarungen ohne Owner, Datum und Check. Was schlechter wird: Du bist dauernd in Alarmbereitschaft, deshalb wirken kleine Reize groß. Hebel: Streuung senken—nach dem nächsten harten Gespräch eine schriftliche Wer-Was-Bis-Wann-Zeile und wöchentlich Follow-through bewerten.",
         },
         declining: {
           label: "Abnehmend",
@@ -2406,7 +2519,7 @@
         unstable: {
           label: "Unstable",
           text:
-            "Your relationship trajectory is unstable at this stage. The average is not strong enough to offset the internal spread, and the profile suggests uneven regulation across key areas. You may experience moments of closeness followed by periods of confusion or defensiveness. This pattern drains trust because outcomes become hard to predict. The issue is not one bad day but repeated inconsistency in the relationship system. Priority now is to reduce variance first: tighten expectations, define response rules for conflict, and track whether behavior becomes more coherent week by week.",
+            "What repeats: you get closeness or calm, then the same unfinished topic returns after stress. What does not close: decisions that never get an owner, date, or follow-through check. What gets worse: you brace for swings, so small problems trigger big reactions. Fix the pattern by shrinking variance—write one agreement after the next hard talk and score follow-through weekly.",
         },
         declining: {
           label: "Declining",
@@ -2501,7 +2614,7 @@
         },
         mid: {
           short:
-            "In the next weeks, results will likely look mixed: some good days, then returns of old friction. You may notice uneven effort between areas.",
+            "There will be good days, but the same conflicts will return because nothing at the root got fixed. Calm without a dated agreement only moves the next blow-up.",
           mid:
             "Over 2-3 months, unresolved weak spots can start dictating the tone of the relationship. Improvements remain possible, but they will feel reversible.",
           long:
@@ -2538,7 +2651,7 @@
         },
         mid: {
           short:
-            "W najblizszych tygodniach przebieg bedzie raczej mieszany: dobre dni beda przeplatac sie powrotem starych tarc. Wysilek miedzy obszarami moze pozostac nierowny.",
+            "W najblizszych tygodniach beda dobre dni, ale te same konflikty beda wracac, bo nie sa rozwiazane u zrodla. Czesciowe uspokojenie bez konkretnego domkniecia tylko przesuwa wybuch w czasie.",
           mid:
             "W ciagu 2-3 miesiecy niedomkniete slabosci zaczna mocniej narzucac ton relacji. Poprawa jest mozliwa, ale bedzie odczuwana jako nietrwale zwyciestwo.",
           long:
@@ -2760,7 +2873,178 @@
     return sorted[0] ? sorted[0][0] : "communication";
   }
 
-  function getPersonalizedInsightSentence(locale, score, areaScores) {
+  const EXEC_SUMMARY_LINES = {
+    en: {
+      low: {
+        communication: [
+          "The lowest signal is communication: hard talks either stop early or spin without a repair plan you can execute.",
+          "You get longer cold spells, more guarded texts, and the same topic re-enters through side doors instead of being finished.",
+          "This week: one 25-minute talk, one agenda item, end with one sentence you both sign off on—who does what by when.",
+        ],
+        emotional: [
+          "The lowest signal is emotional closeness: support thins right when one of you is already down.",
+          "That shows up as short answers, changing the subject to logistics, or 'I need space' with no return time.",
+          "Next friction: first sentence names you are still a team, second names the hurt fact, third proposes one small repair today.",
+        ],
+        stability: [
+          "The lowest signal is follow-through: calm-hour promises do not survive the messy week.",
+          "You double-check silently, send poke messages, or stop asking because repeated disappointment hurts.",
+          "Pull two promises from the last 14 days. Either redo them with a date and owner, or retire them openly so they stop poisoning trust.",
+        ],
+        clarity: [
+          "The lowest signal is clarity: you still cannot name what you are building together and what is off-limits in plain language.",
+          "You run tests and read tea leaves instead of asking direct questions, so small events carry huge weight.",
+          "Swap written lists: three hard boundaries and three needs each—no debate night one, decision on night four.",
+        ],
+      },
+      mid: {
+        communication: [
+          "The sharpest drag on your score is communication: you talk, but recurring topics rarely end with a clear decision.",
+          "Same fights return after a calm stretch because nothing at the root changed—only the tone did.",
+          "Pick one recurring issue, write one agreement with a date, and do not open a second fight until that line is closed.",
+        ],
+        emotional: [
+          "The sharpest drag is emotional closeness: warmth comes in waves, so you cannot lean on it when stress lands.",
+          "Reasonable requests start sounding like pressure because the baseline feels unreliable day to day.",
+          "Pick your heaviest recurring stress day and watch tone plus availability for two weeks—fix the pattern there first.",
+        ],
+        stability: [
+          "The sharpest drag is behavior consistency: good stretches snap back when habits slip—lateness, phones, money talk, chores.",
+          "You pre-argue in your head because you never know which version of the relationship will show up.",
+          "Run a 14-day scoreboard on two concrete habits tied to trust—not vibes—and review numbers together Sunday.",
+        ],
+        clarity: [
+          "The sharpest drag is clarity: you half-know what the other person wants, so you fill gaps with guesses.",
+          "Decisions stall because every plan feels provisional; reassurance does not replace explicit rules where it hurts.",
+          "Name one decision you are avoiding because it forces clarity you do not want yet—and schedule that conversation.",
+        ],
+      },
+      high: {
+        communication: [
+          "Headline score is strong, but communication is still your leak: busy weeks turn into hinted complaints instead of clean closes.",
+          "Backlog conversations quietly raise defensiveness even when the relationship still looks 'fine' on the surface.",
+          "After each important talk, paste the agreed next step into one shared note while you are still in the room.",
+        ],
+        emotional: [
+          "Headline score is strong, but emotional bandwidth is the leak: irritability shows up before anyone says 'I am burnt out'.",
+          "Small misses get read harshly because the reserve tank is low even if love is real.",
+          "Block two protected check-ins monthly that cannot be bumped by work—quality over quantity.",
+        ],
+        stability: [
+          "Headline score is strong, but micro-commitments are the leak: small slips train you to expect slippage.",
+          "Trust is high until one dropped ball reopens old doubt faster than it should.",
+          "Pick three tiny weekly commitments and track done/not done—protect the baseline.",
+        ],
+        clarity: [
+          "Headline score is strong, but clarity still needs maintenance: new stress changes old agreements without anyone naming it.",
+          "Silent renegotiation creates surprise fights that feel 'out of nowhere'.",
+          "Quarterly reset: one page—priorities, boundaries, money rules—updated together, not assumed.",
+        ],
+      },
+    },
+    pl: {
+      low: {
+        communication: [
+          "Najniższy sygnał to komunikacja: ciężkie rozmowy albo się urywają, albo kręcą w kółko bez planu naprawy, który da się wykonać.",
+          "W praktyce są dłuższe zimne fazy, krótsze odpowiedzi i ten sam temat wraca „drzwiami bocznymi”, zamiast być domknięty.",
+          "Ten tydzień: 25 minut, jeden temat, koniec z jednym zdaniem podpisanym przez Was oboje — kto, co, do kiedy.",
+        ],
+        emotional: [
+          "Najniższy sygnał to bliskość: wsparcie cienieje dokładnie wtedy, kiedy druga osoba i tak jest na dnie.",
+          "W praktyce: ucieczka w logistykę, „potrzebuję przestrzeni” bez godziny powrotu albo ton, który zamyka kontakt.",
+          "Przy następnej stłuczce: pierwsze zdanie — nadal jesteśmy w jednym zespole; drugie — fakt bólu; trzecie — jedna mała naprawa dziś.",
+        ],
+        stability: [
+          "Najniższy sygnał to realizacja ustaleń: w spokojnej godzinie jest obietnica, a w chaotycznym tygodniu znika.",
+          "Wraca sprawdzanie w głowie, przypominajki albo milczenie, bo kolejne rozczarowanie boli.",
+          "Weźcie dwie obietnice z ostatnich 14 dni: albo odtwórzcie je z datą i właścicielem, albo wycofajcie je wprost, żeby nie truły zaufania.",
+        ],
+        clarity: [
+          "Najniższy sygnał to klarowność: nadal nie da się wprost powiedzieć, co budujecie i co jest nie do przekroczenia.",
+          "Zamiast pytań są testy i domysły, więc małe zdarzenia rosną do rozmiaru sprawy zasadniczej.",
+          "Wymieńcie się listami: po trzy twarde granice i trzy potrzeby — pierwsza noc bez walki, decyzja czwartego dnia.",
+        ],
+      },
+      mid: {
+        communication: [
+          "Największy problem w tym profilu to komunikacja: macie rozmowy, które chwilowo uspokajają sytuację, ale nie kończą się konkretnymi ustaleniami.",
+          "W praktyce ten sam spór wraca po spokojniejszym okresie, bo u źródła nic się nie zmieniło — tylko ton.",
+          "Jedna rzecz na start: jeden powracający temat, jedno pisemne ustalenie z datą — bez otwierania drugiej wojny, dopóki ta linia nie jest zamknięta.",
+        ],
+        emotional: [
+          "Największy problem to bliskość emocjonalna: pojawia się falami, więc trudno się na niej oprzeć w ciężkim momencie.",
+          "W praktyce rozsądne prośby brzmią jak nacisk, bo dzień do dnia czujesz niestabilny grunt.",
+          "Wybierz jeden powtarzający się stres (np. deadline) i przez dwa tygodnie obserwuj ton i dostępność — tam najpierw napraw wzorzec.",
+        ],
+        stability: [
+          "Największy problem to spójność zachowań: są dobre serie, a potem wraca ten sam temat, bo nawyk się obsunął.",
+          "W praktyce wyprzedzasz kłótnię w głowie, bo nie wiesz, która „wersja” relacji wróci.",
+          "Przez 14 dni liczcie dwie konkretne nawyki związane zaufaniem — nie „klimat” — i w niedzielę porównajcie liczby.",
+        ],
+        clarity: [
+          "Największy problem to klarowność: nie wiecie do końca, czego druga osoba chce — i to generuje domysły.",
+          "W praktyce decyzje stoją, bo każdy plan jest na pół gwizdka; uspokojenie nie zastępuje jawnych zasad tam, gdzie boli.",
+          "Wskaż jedną decyzję, którą odkładasz, bo wymusiłaby jasność, której jeszcze nie chcesz — i umów termin tej rozmowy.",
+        ],
+      },
+      high: {
+        communication: [
+          "Wynik z góry jest mocny, ale przeciek nadal jest w komunikacji: w natłoku tygodnia wraca aluzja zamiast czystego domknięcia.",
+          "Zaległe tematy podnoszą defensywę, nawet gdy relacja z zewnątrz wygląda „OK”.",
+          "Po ważnej rozmowie wklejcie ustalony następny krok do jednej wspólnej notatki, zanim roziejecie się po pokoju.",
+        ],
+        emotional: [
+          "Wynik z góry jest mocny, ale przeciek to zapas emocjonalny: drażliwość przychodzi wcześniej niż słowo „jestem na wyczerpaniu”.",
+          "Małe potknięcia czytacie ostrzej, bo zbiornik jest niski, mimo że uczucie jest prawdziwe.",
+          "Zablokujcie dwa krótkie check-iny w miesiącu, których nie skasuje praca — jakość, nie ilość.",
+        ],
+        stability: [
+          "Wynik z góry jest mocny, ale przeciek to mikro-obietnice: małe poślizgi uczą Was spodziewać się poślizgu.",
+          "Zaufanie jest wysokie, aż jedno urwane zdanie za szybko otwiera stary lęk.",
+          "Wybierzcie trzy małe cotygodniowe zobowiązania i róbcie tylko „zrobione / nie” — chrońcie bazę.",
+        ],
+        clarity: [
+          "Wynik z góry jest mocny, ale klarowność wymaga serwisu: nowy stres zmienia stare ustalenia bez słowa.",
+          "Cicha renegocjacja robi „niespodziewane” kłótnie.",
+          "Co kwartał jedna strona A4: priorytety, granice, zasady pieniędzy — update razem, nie z założenia.",
+        ],
+      },
+    },
+  };
+
+  function executiveRiskLineForReport(locale, alertCount) {
+    const isPl = locale === "pl";
+    if (isPl) {
+      if (alertCount >= 2) {
+        return "Największe ryzyko: kilka słabych punktów naraz — przy kolejnym stresie nie macie zapasu i wraca stary schemat.";
+      }
+      if (alertCount === 1) {
+        return "Największe ryzyko: jeden niedomknięty obszar zacznie ciągnąć resztę (więcej obrony, mniej domykania).";
+      }
+      return "Największe ryzyko: ten sam schemat wróci przy kolejnym zmęczeniu, dopóki przyczyna u źródła zostaje.";
+    }
+    if (alertCount >= 2) {
+      return "Biggest risk: multiple weak spots at once—the next stressful week clears your buffer and old loops restart.";
+    }
+    if (alertCount === 1) {
+      return "Biggest risk: one unresolved lane starts dragging the rest (more defence, less closure).";
+    }
+    return "Biggest risk: the same loop returns on the next tired week until the root cause actually changes.";
+  }
+
+  function getReportExecutiveSummary(locale, score, areaScores, alertCount) {
+    const range = getScoreRange(score);
+    const w = getWeakestAreaKey(areaScores);
+    const lang = locale === "pl" ? "pl" : "en";
+    const triple =
+      (EXEC_SUMMARY_LINES[lang] && EXEC_SUMMARY_LINES[lang][range] && EXEC_SUMMARY_LINES[lang][range][w]) ||
+      (EXEC_SUMMARY_LINES.en[range] && EXEC_SUMMARY_LINES.en[range][w]) ||
+      EXEC_SUMMARY_LINES.en.mid.communication;
+    const risk = executiveRiskLineForReport(locale, alertCount);
+    return `${triple[0]}\n\n${triple[1]}\n\n${risk}\n\n${triple[2]}`;
+  }
+
+  function getPersonalizedInsightSentence(locale, score, areaScores, alertCount = 0) {
     const range = getScoreRange(score);
     const weakestArea = getWeakestAreaKey(areaScores);
     const pool = {
@@ -2874,6 +3158,7 @@
       pool.en.mid.communication;
     return {
       sentence: selected,
+      reportSummary: getReportExecutiveSummary(locale, score, areaScores, alertCount),
       logic: {
         scoreRange: range,
         weakestArea,
@@ -2925,10 +3210,11 @@
         mid: {
           highImpact: [
             {
-              title: "Define red-line behaviors with immediate consequence",
-              explanation: "Agree on 2-3 behaviors that are not acceptable and what happens if they repeat.",
-              why: "Ambiguous limits keep unstable dynamics alive.",
-              change: "Creates predictability and reduces defensive cycling.",
+              title: "Name two unacceptable behaviors—and what happens if they repeat",
+              explanation:
+                "Examples: ignoring messages for a full day, cancelling meetups last minute. Write the consequence for the second repeat, not a vague 'we should be better.'",
+              why: "Fuzzy limits mean every fight starts from zero because nobody knows what actually crossed the line.",
+              change: "You stop re-negotiating basics weekly; reactions become predictable instead of explosive surprises.",
             },
             {
               title: "Install a 14-day repair sprint",
@@ -3047,10 +3333,11 @@
         mid: {
           highImpact: [
             {
-              title: "Ustal czerwone linie z natychmiastowa konsekwencja",
-              explanation: "Uzgodnijcie 2-3 zachowania nieakceptowalne i co dzieje sie po ich powtorzeniu.",
-              why: "Niejasne granice podtrzymuja niestabilna dynamike.",
-              change: "Buduje przewidywalnosc i zmniejsza defensywne petle.",
+              title: "Ustalcie 2 konkretne rzeczy, ktore sa nie do zaakceptowania — i co sie dzieje, jesli to sie powtorzy",
+              explanation:
+                "Np. ignorowanie wiadomosci przez caly dzien, odwolywanie spotkan w ostatniej chwili. Zapiszcie konsekwencje przy drugim powtorzeniu, a nie ogolne 'mamy sie poprawic'.",
+              why: "Mgliste granice sprawiaja, ze kazda klotnia zaczyna sie od zera, bo nikt nie wie, co realnie przekroczylo linie.",
+              change: "Koniec tygodniowego re-negocjowania podstaw — reakcje staja sie przewidywalne zamiast niespodziewanych wybuchow.",
             },
             {
               title: "Uruchom 14-dniowy sprint naprawczy",
@@ -4151,6 +4438,19 @@
     if (el) el.textContent = value;
   }
 
+  function renderPremiumDimensionSection(narrative, key) {
+    const dim = narrative.dimensions[key];
+    if (!dim) return "";
+    const labels = narrative.dimensionSectionLabels;
+    if (labels && dim.happening && dim.practice && dim.watch) {
+      return `<p><strong>${escapeHtml(labels.happening)}</strong> ${escapeHtml(dim.happening)}</p><p><strong>${escapeHtml(
+        labels.practice
+      )}</strong> ${escapeHtml(dim.practice)}</p><p><strong>${escapeHtml(labels.watch)}</strong> ${escapeHtml(dim.watch)}</p>`;
+    }
+    if (dim.body) return `<p>${escapeHtml(dim.body)}</p>`;
+    return "";
+  }
+
   function getPaywallTeasers(locale, score, areaScores) {
     const weakestArea = getWeakestAreaKey(areaScores);
     const weakestScore = Math.round(
@@ -4625,103 +4925,145 @@
     const map = {
       en: {
         opening:
-          "You are looking at the full structure behind your result. This is not a mood snapshot. It is a pressure map showing where the relationship absorbs tension and where it leaks stability. The goal is practical clarity before decisions.",
+          "This report maps where your relationship actually leaks energy—not a one-day mood read. Use it to name one repeating loop, then change mechanics (decisions, dates, follow-through), not vibes.",
         benchmarkNote:
           "Above average means this area currently supports stability. Below average means this area is pulling your overall direction down.",
+        dimensionSectionLabels: {
+          happening: "What's happening",
+          practice: "What it does in practice",
+          watch: "What to watch",
+        },
         dimensions: {
           communication: {
-            body:
-              "Communication in this profile is not defined by how often you talk, but by what happens after difficult moments. Stable communication closes loops. Unstable communication keeps loops open and pushes unresolved meaning into the next conversation. When closure is missing, every new topic starts with hidden backlog. That creates defensive tone, fragmented focus, and rising decision fatigue. The practical cost is high: both partners start reacting to assumptions rather than facts. In this report, communication should be read as operational reliability. If conversations produce concrete decisions, clear responsibilities, and visible follow-through, uncertainty falls quickly. If they produce temporary relief without structural closure, uncertainty compounds even when tone sounds calm.",
+            happening:
+              "You still exchange messages and talk, but the expensive part is what happens after tension: either the topic ends with a clear next step, or it dissolves into 'we are okay now' with no decision.",
+            practice:
+              "When closure is missing, the next argument inherits old fuel. You spend hours on tone and guesses instead of one fact-based fix, so the same fight returns with a new headline.",
+            watch:
+              "After the next hard conversation, write one line: what was decided, who owns it, and the date. If you cannot write that line, you bought calm—not change.",
             checks: [
-              "Check whether one difficult topic gets closed with one concrete decision.",
-              "Check whether both sides can repeat the same agreement 24 hours later.",
-              "Check whether conflict reopens old themes or stays within one scope.",
+              "Does one difficult topic end with one concrete decision?",
+              "Can both of you repeat the same agreement 24 hours later?",
+              "Does conflict stay on one issue, or does it pull in older unfinished topics?",
             ],
           },
           emotional: {
-            body:
-              "Emotional closeness here is not about intensity. It is about consistency of emotional availability under ordinary pressure. A relationship can look warm in isolated moments and still feel unsafe in repeated stress windows. When emotional availability drops unpredictably, interpretation load rises and small events feel threatening. That shift changes behavior: less directness, more withdrawal, and slower repair after friction. In practical terms, emotional closeness determines how expensive each conflict becomes. Higher closeness keeps conflict costs contained. Lower closeness turns even moderate tension into prolonged uncertainty. This section should be read as your regulation base: if emotional contact remains accessible during pressure, recovery cycles shorten. If access collapses during pressure, recovery becomes unstable and trust erosion accelerates.",
+            happening:
+              "This measures whether you stay reachable under normal pressure—not how intense a good weekend felt.",
+            practice:
+              "If warmth drops sharply when stress lands, small problems read huge. People protect first, repair second, so distance lasts longer than the original issue.",
+            watch:
+              "Look at the first six hours after a disappointment: faster, softer re-entry to contact beats a perfect apology delivered two days late.",
             checks: [
-              "Check whether support is available during stress, not only after stress.",
-              "Check whether disagreement leads to distance or to re-engagement.",
-              "Check whether repair happens within hours or drifts across days.",
+              "Is support reachable during stress—not only after it passes?",
+              "Does disagreement lead to distance, or to a clear repair bid?",
+              "Does repair start within hours, or does it drift for days?",
             ],
           },
           stability: {
-            body:
-              "Stability in this report tracks behavioral consistency across time. Words matter, but repeated behavior defines trust capacity. When behavior patterns remain predictable, the relationship can plan, coordinate, and absorb uncertainty from outside pressures. When behavior shifts without explanation, internal uncertainty rises even if intentions sound positive. The central issue is not perfection. The issue is reliability under repetition. One-off effort does not stabilize the system if weekly behavior keeps diverging from stated agreements. Stability also controls escalation speed: inconsistent routines increase surprise, and surprise increases reactivity. A stable pattern lowers surprise and protects decision quality. Read this area as execution quality: do commitments survive normal friction, calendar pressure, and emotional noise, or do they collapse when pressure appears.",
+            happening:
+              "This tracks whether everyday behavior matches what you promise in calmer moments—time, money, chores, showing up, phone habits.",
+            practice:
+              "When follow-through swings, people stop risking direct asks. Plans get tentative, reminders pile up, and resentment stacks in the background.",
+            watch:
+              "Score two commitments from last week: done / partly / not. Repeat for two weeks—numbers show drift before drama does.",
             checks: [
-              "Check whether promised actions happen without repeated reminders.",
-              "Check whether daily routines align with declared priorities.",
-              "Check whether follow-through remains stable across two full weeks.",
+              "Do promised actions happen without endless reminders?",
+              "Do daily routines match the priorities you state out loud?",
+              "Does follow-through hold steady across two full weeks?",
             ],
           },
           clarity: {
-            body:
-              "Clarity measures how much of the relationship must be guessed versus directly verified. Low clarity forces interpretation. High clarity allows direct decisions. When intent, boundaries, and expectations stay ambiguous, both partners spend energy decoding signals instead of solving issues. That decoding cost accumulates into mistrust, because neutral events get read through uncertainty filters. Clarity does not require overexplaining every emotion. It requires explicit agreements in high-impact zones: commitment, boundaries, priorities, and repair rules. In this profile, clarity is a leverage dimension. Improving it often reduces pressure in multiple areas at once. Weak clarity amplifies every other weakness. Strong clarity limits error, reduces emotional overreaction, and improves coordination speed. This is where decision confidence is either built or undermined.",
+            happening:
+              "Low clarity means you run the relationship partly on interpretation—reading texts, testing loyalty—instead of stated rules and priorities.",
+            practice:
+              "Neutral events become trials because the story you tell yourself fills gaps the conversation never closed. Decisions stall because 'proof' never feels enough.",
+            watch:
+              "Pick one thing you keep guessing—money rules, contact expectations, exclusivity, time together—and put it in one plain paragraph you both sign off on.",
             checks: [
-              "Check whether boundaries are explicit and referenced in real decisions.",
-              "Check whether intent is stated directly before sensitive conversations.",
-              "Check whether both sides know what counts as real repair.",
+              "Are boundaries written or spoken clearly—and used in real decisions?",
+              "Do you state intent directly before sensitive topics?",
+              "Do you both share the same definition of what counts as repair?",
             ],
           },
         },
         pattern:
-          "The data shows a repeating cycle, not isolated noise. Pressure rises in one weak area, then spreads into communication and interpretation. Conversations create temporary relief, but unresolved structure returns in the next stress window. This produces a stop-start dynamic: short improvements followed by familiar friction. Confidence drops because outcomes feel inconsistent. Decision quality drops because attention shifts to immediate relief. The key pattern is imbalance between signal strength and execution quality. Strong moments exist, but weak areas still dictate overall direction. Without targeted correction, the same cycle repeats with higher emotional cost.",
+          "The same sequence repeats: a weak spot loads stress, you talk it down, nothing structural changes, and the same friction returns with a new wrapper. Good days do not erase an open loop—what does not close comes back.",
         meaning:
-          "The full picture is clear: this relationship is not defined by one dramatic event, but by repeated structure under pressure. Your strongest areas can still support recovery. Your weakest areas are currently setting the risk ceiling. If you improve only tone, the system remains unstable. If you improve structure, tone follows. The practical meaning is leverage. You do not need to fix everything at once. You need to fix the few mechanisms that keep rebuilding uncertainty.",
+          "Your weakest dimension still sets the ceiling until you change mechanics, not mood. Strong areas help, but they do not cancel a leak that keeps reopening under pressure. Close one dated loop, then re-check whether the gap between your highest and lowest scores tightens.",
         recheck:
-          "Run the scan again in 2-3 weeks after applying concrete changes. Compare movement in the weakest area first, then check if variance between dimensions narrows. Progress is real when score improves and structure becomes more even.",
+          "Re-run in 2–3 weeks after one concrete structural change. Look first at the weakest dimension, then whether the spread between dimensions shrinks—not just the headline score.",
       },
       pl: {
         opening:
-          "Patrzysz na pelna strukture stojaca za wynikiem. To nie jest opis nastroju z jednego dnia. To mapa nacisku pokazujaca, gdzie relacja utrzymuje stabilnosc, a gdzie ja traci. Celem jest jasnosc przed decyzja.",
+          "Ten raport pokazuje, gdzie relacja realnie traci energię — nie chodzi o nastrój z jednego dnia. Masz wskazać jeden powtarzający się mechanizm i zmienić ustalenia oraz realizację, a nie tylko „klimat”.",
         benchmarkNote:
           "Powyzej sredniej oznacza, ze ten obszar wspiera stabilnosc. Ponizej sredniej oznacza, ze ten obszar obniza caly kierunek relacji.",
+        dimensionSectionLabels: {
+          happening: "Co się dzieje",
+          practice: "Co to robi w praktyce",
+          watch: "Na co zwrócić uwagę",
+        },
         dimensions: {
           communication: {
-            body:
-              "Komunikacja w tym profilu nie jest mierzona tym, jak czesto rozmawiacie, tylko tym, co dzieje sie po trudnej rozmowie. Stabilna komunikacja domyka petle. Niestabilna komunikacja zostawia petle otwarte i przenosi niedomkniete znaczenia do kolejnych tematow. Gdy domkniecia brakuje, kazda nowa rozmowa startuje z ukrytym zaleglym napieciem. To buduje defensywny ton, rozproszenie i zmeczenie decyzyjne. Koszt jest praktyczny: rosnie liczba domyslow, spada liczba faktow. W tym raporcie komunikacja to jakosc wykonania ustalen. Jezeli rozmowy prowadza do konkretnych decyzji, odpowiedzialnosci i widocznego follow-through, niepewnosc spada. Jezeli daja tylko chwilowe uspokojenie, niepewnosc wraca szybciej i mocniej.",
+            happening:
+              "Nadal piszecie i rozmawiacie, ale liczy się koniec trudnej rozmowy: albo wychodzicie z jednym ustaleniem (kto, co, do kiedy), albo temat gaśnie w „już jest OK” bez decyzji.",
+            practice:
+              "Bez domknięcia kolejna kłótnia dostaje stare paliwo. Tracicie czas na ton i domysły zamiast jednej poprawki opartej na faktach — i ten sam spór wraca pod innym pretekstem.",
+            watch:
+              "Po następnej ciężkiej rozmowie zapiszcie jedno zdanie: co zostało ustalone, kto za to odpowiada i jaki jest termin. Jeśli nie da się tego zapisać, kupiliście spokój, a nie zmianę.",
             checks: [
-              "Sprawdz, czy trudny temat konczy sie jedna konkretna decyzja.",
-              "Sprawdz, czy obie strony powtarzaja to samo ustalenie po 24 godzinach.",
-              "Sprawdz, czy konflikt trzyma jeden temat, czy wraca do starych petli.",
+              "Czy trudny temat kończy się jedną konkretną decyzją?",
+              "Czy oboje po 24 godzinach powtarzacie to samo ustalenie?",
+              "Czy konflikt trzyma jeden wątek, czy wraca do starych, niedomkniętych spraw?",
             ],
           },
           emotional: {
-            body:
-              "Bliskosc emocjonalna nie oznacza stalej intensywnosci. Oznacza stabilna dostepnosc emocjonalna pod normalna presja. Relacja moze miec cieple momenty i jednoczesnie byc niestabilna przy powtarzalnym stresie. Gdy dostepnosc spada nierowno, rosnie koszt interpretacji i nawet male sygnaly zaczynaja byc czytane jako zagrozenie. To zmienia zachowanie: mniej bezposredniosci, wiecej wycofania i wolniejsza naprawa po tarciu. W praktyce bliskosc emocjonalna decyduje, jak drogi staje sie konflikt. Wyzsza bliskosc skraca czas naprawy. Nizsza bliskosc wydluza niepewnosc i obciaza zaufanie. Traktuj ten obszar jako baze regulacji: jesli kontakt jest dostepny pod presja, relacja szybciej wraca do rownowagi.",
+            happening:
+              "Chodzi o to, czy przy zwykłej presji nadal da się do Was dotrzeć — nie o to, jak romantyczny był weekend.",
+            practice:
+              "Jak ciepło gwałtownie spada przy stresie, małe problemy rosną. Najpierw jest obrona, potem naprawa — więc dystans trwa dłużej niż pierwotna sprawa.",
+            watch:
+              "Zobacz pierwsze sześć godzin po rozczarowaniu: szybszy, łagodniejszy powrót do kontaktu bije przeprosiny wysłane po dwóch dniach.",
             checks: [
-              "Sprawdz, czy wsparcie jest dostepne w trakcie stresu, nie tylko po nim.",
-              "Sprawdz, czy niezgoda prowadzi do dialogu, czy do dystansu.",
-              "Sprawdz, czy naprawa dzieje sie w godzinach, czy w dniach.",
+              "Czy wsparcie jest dostępne w trakcie stresu, nie tylko po nim?",
+              "Czy niezgoda prowadzi do dystansu, czy do jasnej próby naprawy?",
+              "Czy naprawa startuje w godzinach, czy rozlewa się na dni?",
             ],
           },
           stability: {
-            body:
-              "Stabilnosc opisuje spojnosc zachowan w czasie. Slowa sa wazne, ale to powtarzalne zachowanie buduje zdolnosc do zaufania. Gdy wzorce zachowan sa przewidywalne, relacja moze planowac i utrzymywac spokoj mimo presji zewnętrznej. Gdy zachowanie zmienia sie bez jasnego wyjasnienia, rosnie wewnetrzna niepewnosc nawet przy dobrych deklaracjach. Kluczowy problem to nie idealnosc, tylko powtarzalna wiarygodnosc. Jednorazowy wysilek nie stabilizuje systemu, jesli cotygodniowe zachowanie pozostaje niespojne z ustaleniami. Stabilnosc kontroluje tez tempo eskalacji: niespodzianka podnosi reaktywnosc. Spojnosc obniza niespodzianke i chroni jakosc decyzji. Czytaj ten obszar jako jakosc wykonania: czy zobowiazania przechodza przez normalne tarcie.",
+            happening:
+              "To jest zgodność codziennych działań z tym, co obiecujecie w spokojniejszej chwili — czas, pieniądze, dom, obecność, telefon.",
+            practice:
+              "Gdy realizacja skacze, ludzie przestają ryzykować proste prośby. Plany są ostrożne, przypomnienia się kumulują, a pretensje rosną w tle.",
+            watch:
+              "Oceń dwie obietnice z ostatniego tygodnia: zrobione / częściowo / nie. Powtórz przez dwa tygodnie — liczby pokazują ześlizg zanim wybuchnie drama.",
             checks: [
-              "Sprawdz, czy obietnice sa realizowane bez wielokrotnego przypominania.",
-              "Sprawdz, czy codzienne nawyki zgadzaja sie z deklarowanymi priorytetami.",
-              "Sprawdz, czy follow-through utrzymuje sie przez dwa pelne tygodnie.",
+              "Czy obietnice są realizowane bez końca przypominania?",
+              "Czy codzienne nawyki zgadzają się z wypowiedzianymi priorytetami?",
+              "Czy follow-through trzyma się przez dwa pełne tygodnie?",
             ],
           },
           clarity: {
-            body:
-              "Klarownosc mierzy, ile w relacji trzeba zgadywac, a ile mozna weryfikowac bezposrednio. Niska klarownosc wymusza domysly. Wysoka klarownosc pozwala podejmowac decyzje bez nadmiaru interpretacji. Gdy intencje, granice i oczekiwania sa niejasne, energia idzie w odszyfrowywanie sygnalow zamiast rozwiazywanie problemu. Ten koszt kumuluje sie i oslabia zaufanie, bo neutralne sytuacje zaczynaja wygladac jak zagrozenie. Klarownosc nie wymaga dlugich wyjasnien do kazdego tematu. Wymaga jawnych ustalen tam, gdzie koszt bledu jest najwyzszy: granice, priorytety i zasady naprawy. To obszar dzwigni. Poprawa klarownosci czesto obniza nacisk w kilku wymiarach naraz i porzadkuje decyzje.",
+            happening:
+              "Niska klarowność to częściowe prowadzenie relacji na domysłach — czytanie tonu, testy lojalności — zamiast jasnych zasad i priorytetów.",
+            practice:
+              "Neutralne zdarzenia robią się „egzaminem”, bo rozmowa nie domknęła luk. Decyzje stoją, bo dowód nigdy nie jest „wystarczająco czysty”.",
+            watch:
+              "Wybierz jedną rzecz, którą ciągle zgadujesz — granice finansowe, kontakt, czas razem — i zapisz ją w jednym prostym akapicie, na który oboje mówicie „tak”.",
             checks: [
-              "Sprawdz, czy granice sa zapisane i realnie uzywane w decyzjach.",
-              "Sprawdz, czy intencja jest mowiona wprost przed trudnym tematem.",
-              "Sprawdz, czy obie strony wiedza, co oznacza realna naprawa.",
+              "Czy granice są jasno powiedziane i realnie używane w decyzjach?",
+              "Czy przed trudnym tematem mówicie wprost, o co chodzi?",
+              "Czy oboje macie tę samą definicję naprawy?",
             ],
           },
         },
         pattern:
-          "Dane pokazuja powtarzalny cykl, a nie przypadkowe zdarzenia. Nacisk rośnie w jednym slabszym obszarze, potem przechodzi do komunikacji i interpretacji. Rozmowa daje chwilowe uspokojenie, ale brak domkniecia wraca przy kolejnym stresie. Powstaje uklad stop-start: poprawa, potem nawrot tego samego tarcia. Spada pewnosc, bo rezultat staje sie nierowny. Spada tez jakosc decyzji, bo priorytetem staje sie gaszenie napiecia. Glowny wzorzec to nierownowaga miedzy sila sygnalow a jakoscia wykonania. Bez celowanej korekty cykl bedzie sie powtarzal z wiekszym kosztem emocjonalnym.",
+          "Powtarza się ten sam schemat: słabszy punkt ładuje stres, rozmowa gasi napięcie, a u źródła nic się nie zmienia — więc tarcie wraca w nowej opakowce. Dobre dni nie zamykają otwartej pętli: co nie jest domknięte, wraca.",
         meaning:
-          "Caly obraz jest jednoznaczny: relacja nie rozstrzyga sie jednym wydarzeniem, tylko powtarzalna struktura pod presja. Najmocniejsze obszary nadal moga wspierac odbudowe. Najslabsze obszary wyznaczaja obecny limit bezpieczenstwa decyzji. Sama poprawa tonu nie wystarczy. Potrzebna jest poprawa mechaniki relacji. Gdy mechanika sie stabilizuje, ton poprawia sie naturalnie. To raport o dzwigniach, nie o etykietach.",
+          "Najsłabszy wymiar wciąż ustawia sufit, dopóki nie zmienicie mechaniki, a nie tylko tonu. Mocne obszary pomagają, ale nie kasują przecieku, który przy kolejnym stresie znów się otwiera. Domknij jedną pętlę z datą, potem sprawdź, czy rozrzut między najwyższym a najniższym wynikiem maleje.",
         recheck:
-          "Powtorz skan za 2-3 tygodnie po wdrozeniu konkretnych zmian. Najpierw sprawdz ruch w najslabszym obszarze, potem porownaj, czy roznica miedzy wymiarami maleje. Postep jest realny, gdy rosnacy wynik idzie razem ze spadkiem rozrzutu.",
+          "Powtórz skan za 2–3 tygodnie po jednej konkretnej zmianie strukturalnej. Najpierw najsłabszy wymiar, potem czy rozrzut między wymiarami się kurczy — nie tylko wynik „z góry”.",
       },
       de: {
         opening:
@@ -4973,8 +5315,8 @@
 
     const personalizedInsightEl = document.getElementById("report-personalized-insight");
     if (personalizedInsightEl) {
-      const personalInsight = getPersonalizedInsightSentence(locale, score, areaScores);
-      personalizedInsightEl.textContent = personalInsight.sentence;
+      const personalInsight = getPersonalizedInsightSentence(locale, score, areaScores, alertCount);
+      personalizedInsightEl.textContent = personalInsight.reportSummary || personalInsight.sentence;
     }
 
     const renderMap = [
@@ -4991,7 +5333,7 @@
       setText(`report-area-${entry.domPrefix}-score`, `${scoreValue}/100`);
       setText(`report-area-${entry.domPrefix}-label`, segmentLabel);
       setText(`report-area-${entry.domPrefix}-insight`, content.title);
-      setText(`report-area-${entry.domPrefix}-text`, content.body);
+      setText(`report-area-${entry.domPrefix}-text`, formatAreaDimensionBody(locale, content));
       setText(`report-bar-label-${entry.domPrefix}`, segmentLabel);
       setText(entry.scoreId, `${scoreValue}/100`);
       setText(entry.labelId, segmentLabel);
@@ -5062,9 +5404,9 @@
         items
           .map(
             (item) =>
-              `<article class="report-outcome-action"><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.explanation)}</p><p><strong>${escapeHtml(
-                outcomeUi.whyLabel
-              )}:</strong> ${escapeHtml(item.why)}</p><p><strong>${escapeHtml(outcomeUi.changeLabel)}:</strong> ${escapeHtml(item.change)}</p></article>`
+              `<article class="report-outcome-action"><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.explanation)}</p><p>${escapeHtml(
+                item.change
+              )} — ${escapeHtml(item.why)}</p></article>`
           )
           .join("");
       outcomeEl.innerHTML = `<section class="report-outcome-group"><h3>${escapeHtml(
@@ -5080,10 +5422,10 @@
       }`;
     }
 
-    required.communicationEl.innerHTML = `<p>${escapeHtml(narrative.dimensions.communication.body)}</p>`;
-    required.emotionalEl.innerHTML = `<p>${escapeHtml(narrative.dimensions.emotional.body)}</p>`;
-    required.stabilityEl.innerHTML = `<p>${escapeHtml(narrative.dimensions.stability.body)}</p>`;
-    required.clarityEl.innerHTML = `<p>${escapeHtml(narrative.dimensions.clarity.body)}</p>`;
+    required.communicationEl.innerHTML = renderPremiumDimensionSection(narrative, "communication");
+    required.emotionalEl.innerHTML = renderPremiumDimensionSection(narrative, "emotional");
+    required.stabilityEl.innerHTML = renderPremiumDimensionSection(narrative, "stability");
+    required.clarityEl.innerHTML = renderPremiumDimensionSection(narrative, "clarity");
     const checksMap = [
       ["report-communication-checks", narrative.dimensions.communication.checks],
       ["report-emotional-checks", narrative.dimensions.emotional.checks],
