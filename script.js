@@ -7,8 +7,9 @@
 (function () {
   "use strict";
 
-  // --- Stałe: klucz localStorage dla wyniku testu ---
+  // --- Local storage keys used in funnel ---
   const STORAGE_KEY = "wynik";
+  const PAID_KEY = "paid";
 
   /**
    * Struktura testu: 20 pytań w 4 sekcjach (5+5+5+5).
@@ -471,6 +472,17 @@
 
   // --- Raport: wynik z testu + podsumowanie i profil dopasowane do pasma ---
   function initReport() {
+    let hasPaid = false;
+    try {
+      hasPaid = Boolean(localStorage.getItem(PAID_KEY));
+    } catch (e) {
+      hasPaid = false;
+    }
+    if (!hasPaid) {
+      window.location.href = "result.html";
+      return;
+    }
+
     const scoreStrong = document.getElementById("report-score");
     const summaryEl = document.getElementById("report-summary-body");
     const profileEl = document.getElementById("report-profile-body");
