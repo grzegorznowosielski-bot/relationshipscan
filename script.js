@@ -21,11 +21,11 @@
   };
 
   /**
-   * Struktura testu: 20 pytań w 4 sekcjach (5+5+5+5).
-   * Skala 1–5: wyższa wartość = większe subiektywne napięcie / niepewność (wyższy wynik).
-   * Suma min 20, max 100 → normalizacja do 0–100.
+   * Test structure: 20 questions in 4 sections (5+5+5+5).
+   * Scale 1-5: higher value = higher perceived tension/uncertainty.
+   * Sum min 20, max 100 -> normalized to 0-100.
    */
-  const TEST_SECTIONS = [
+  const TEST_SECTIONS_EN = [
     {
       id: "communication",
       title: "Communication",
@@ -72,18 +72,100 @@
     },
   ];
 
-  /** Spłaszczenie pytań do listy z metadanymi (indeks globalny, sekcja) */
-  function buildQuestionList() {
+  const TEST_SECTIONS_PL = [
+    {
+      id: "communication",
+      title: "Komunikacja",
+      questions: [
+        "Jak często masz wrażenie, że ważne dla Ciebie tematy są odkładane lub omijane?",
+        "Jak bardzo trudno jest Wam wrócić do niedokończonej rozmowy po napięciu?",
+        "Jak często czujesz, że Twoje potrzeby w rozmowie są pomijane lub niedosłyszane?",
+        "Jak często kończysz rozmowę z poczuciem niedopowiedzenia?",
+        "Jak bardzo martwisz się o to, czy możecie spokojnie mówić o granicach i oczekiwaniach?",
+      ],
+    },
+    {
+      id: "behavior",
+      title: "Zachowanie",
+      questions: [
+        "Jak bardzo zmienił się dla Ciebie rytm wspólnego czasu (w porównaniu do tego, co bywało wygodne)?",
+        "Jak często odczuwasz brak przewidywalności w codziennych sprawach partnerskich?",
+        "Jak często odczuwasz dystans w codziennych aktywnościach, które wcześniej budowały bliskość?",
+        "Jak bardzo często masz poczucie, że gesty bliskości są mniej naturalne niż wcześniej?",
+        "Jak bardzo czujesz niespójność między słowami partnera a codziennymi zachowaniami?",
+      ],
+    },
+    {
+      id: "emotions",
+      title: "Emocje",
+      questions: [
+        "Jak często budzisz się lub kładziesz spać z napięciem związanym z relacją?",
+        "Jak bardzo czujesz lęk przed wybraniem nieodpowiedniego momentu na trudną rozmowę?",
+        "Jak bardzo często odczuwasz jednocześnie tęsknotę i niepewność?",
+        "Jak często Twoje emocje wobec relacji wydają Ci się chaotyczne lub trudne do nazwania?",
+        "Jak bardzo często odczuwasz zmęczenie emocjonalne związane z dynamiką związku?",
+      ],
+    },
+    {
+      id: "trust",
+      title: "Zaufanie",
+      questions: [
+        "Jak często zastanawiasz się, czy jesteście naprawdę w zgodzie co do tego, co jest dla Was ważne?",
+        "Jak często brakuje Ci poczucia psychologicznego bezpieczeństwa w tej relacji?",
+        "Jak często odczuwasz, że ustalenia między Wami są zapominane lub nierealne w praktyce?",
+        "Jak często obawiasz się, że w trudnym momencie trudno wam stanąć po jednej stronie problemu?",
+        "Jak bardzo często czujesz, że zaufanie wymaga od Ciebie stałej uwagi zamiast być spokojną podstawą?",
+      ],
+    },
+  ];
+
+  const TEST_UI_COPY = {
+    en: {
+      title: "Scan — RelationshipScan",
+      stepLabel: (step, total) => `Question ${step} of ${total}`,
+      scaleMin: "less true",
+      scaleMax: "more true",
+      next: "Next",
+      seeResult: "See result",
+      back: "Back",
+      backHome: "Back to home",
+      loading: "Calculating your result…",
+      disclaimer: "Answer based on recent weeks. There are no right or wrong answers.",
+    },
+    pl: {
+      title: "Skan — RelationshipScan",
+      stepLabel: (step, total) => `Pytanie ${step} z ${total}`,
+      scaleMin: "mniej pasuje",
+      scaleMax: "bardziej pasuje",
+      next: "Dalej",
+      seeResult: "Zobacz wynik",
+      back: "Wstecz",
+      backHome: "Powrót na stronę główną",
+      loading: "Liczymy Twój wynik…",
+      disclaimer: "Odpowiadaj na podstawie ostatnich tygodni. Nie ma dobrych ani złych odpowiedzi.",
+    },
+  };
+
+  function getTestLocale() {
+    const paramLang = new URLSearchParams(window.location.search).get("lang");
+    if (paramLang && String(paramLang).toLowerCase() === "pl") return "pl";
+    try {
+      return localStorage.getItem(LOCALE_KEY) === "pl" ? "pl" : "en";
+    } catch (e) {
+      return "en";
+    }
+  }
+
+  /** Flattens questions into one list with section metadata */
+  function buildQuestionList(sections) {
     const list = [];
-    TEST_SECTIONS.forEach((section) => {
+    sections.forEach((section) => {
       section.questions.forEach((text) => {
         list.push({ sectionId: section.id, sectionTitle: section.title, text });
       });
     });
     return list;
   }
-
-  const ALL_QUESTIONS = buildQuestionList();
 
   /**
    * Normalizacja sumy punktów (20–100) do skali 0–100.
@@ -221,6 +303,16 @@
         }
       });
     });
+  }
+
+  function persistPageLocale() {
+    const pageLocale = document.body && document.body.getAttribute("data-locale");
+    if (!pageLocale || !LOCALE_PATHS[pageLocale]) return;
+    try {
+      localStorage.setItem(LOCALE_KEY, pageLocale);
+    } catch (e) {
+      // Ignore storage issues.
+    }
   }
 
   function mapCountryToLocale(countryCode) {
@@ -403,20 +495,30 @@
     const stepLabel = document.getElementById("test-step-label");
     const btnNext = document.getElementById("btn-next");
     const btnPrev = document.getElementById("btn-prev");
+    const disclaimerEl = document.getElementById("test-disclaimer");
 
     if (!root || !form || !progressBar || !stepLabel || !btnNext || !btnPrev) return;
 
+    const locale = getTestLocale();
+    const testSections = locale === "pl" ? TEST_SECTIONS_PL : TEST_SECTIONS_EN;
+    const allQuestions = buildQuestionList(testSections);
+    const uiCopy = TEST_UI_COPY[locale];
+
+    document.documentElement.lang = locale === "pl" ? "pl" : "en";
+    document.title = uiCopy.title;
+    if (disclaimerEl) disclaimerEl.textContent = uiCopy.disclaimer;
+
     /** @type {number[]} odpowiedzi 1–5 na indeks pytania */
-    const answers = new Array(ALL_QUESTIONS.length).fill(null);
+    const answers = new Array(allQuestions.length).fill(null);
     let index = 0;
 
     function render() {
-      const q = ALL_QUESTIONS[index];
-      const total = ALL_QUESTIONS.length;
+      const q = allQuestions[index];
+      const total = allQuestions.length;
       const step = index + 1;
 
       progressBar.style.width = `${(step / total) * 100}%`;
-      stepLabel.textContent = `Question ${step} of ${total}`;
+      stepLabel.textContent = uiCopy.stepLabel(step, total);
 
       const selected = answers[index];
       root.innerHTML = `
@@ -434,12 +536,12 @@
             )
             .join("")}
         </div>
-        <p class="scale-legend"><span>less true</span><span>more true</span></p>
+        <p class="scale-legend"><span>${uiCopy.scaleMin}</span><span>${uiCopy.scaleMax}</span></p>
       `;
 
       btnPrev.hidden = false;
-      btnPrev.textContent = index === 0 ? "Back to home" : "Back";
-      btnNext.textContent = index === total - 1 ? "See result" : "Next";
+      btnPrev.textContent = index === 0 ? uiCopy.backHome : uiCopy.back;
+      btnNext.textContent = index === total - 1 ? uiCopy.seeResult : uiCopy.next;
 
       root.classList.remove("reveal", "is-visible");
       void root.offsetWidth;
@@ -457,7 +559,7 @@
         flashInvalid();
         return;
       }
-      if (index < ALL_QUESTIONS.length - 1) {
+      if (index < allQuestions.length - 1) {
         index += 1;
         render();
       } else {
@@ -496,7 +598,7 @@
       overlay.setAttribute("aria-live", "polite");
       overlay.setAttribute("aria-busy", "true");
       overlay.innerHTML =
-        '<div class="test-loading-overlay__spinner" aria-hidden="true"></div><p class="test-loading-overlay__text">Calculating your result…</p>';
+        `<div class="test-loading-overlay__spinner" aria-hidden="true"></div><p class="test-loading-overlay__text">${uiCopy.loading}</p>`;
       document.body.appendChild(overlay);
       window.setTimeout(() => {
         window.location.href = "result.html";
@@ -622,6 +724,7 @@
   function boot() {
     document.documentElement.classList.add("js");
     initLocaleByLocation();
+    persistPageLocale();
     setYear();
     initLangSwitcher();
     initMobileNav();
