@@ -13,7 +13,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: FTP Deploy (path 1)
+      - name: FTP Deploy (try 1/3)
+        id: ftp1
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         continue-on-error: true
         with:
@@ -24,9 +25,11 @@ jobs:
           protocol: ftp
           timeout: 120000
           log-level: verbose
-          server-dir: /relationshipscan.app/public_html/
+          server-dir: /
 
-      - name: FTP Deploy (path 2)
+      - name: FTP Deploy (try 2/3)
+        id: ftp2
+        if: steps.ftp1.outcome == 'failure'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         continue-on-error: true
         with:
@@ -37,11 +40,12 @@ jobs:
           protocol: ftp
           timeout: 120000
           log-level: verbose
-          server-dir: /public_html/
+          server-dir: /
 
-      - name: FTP Deploy (path 3)
+      - name: FTP Deploy (try 3/3)
+        id: ftp3
+        if: steps.ftp1.outcome == 'failure' && steps.ftp2.outcome == 'failure'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        continue-on-error: true
         with:
           server: ostudios.ftp.dhosting.pl
           username: ${{ secrets.FTP_USERNAME }}
@@ -50,7 +54,19 @@ jobs:
           protocol: ftp
           timeout: 120000
           log-level: verbose
-          server-dir: /domains/relationshipscan.app/public_html/
+          server-dir: /
+
+      - name: Require at least one FTP success
+        if: always()
+        run: |
+          o1="${{ steps.ftp1.outcome }}"
+          o2="${{ steps.ftp2.outcome }}"
+          o3="${{ steps.ftp3.outcome }}"
+          echo "outcomes: $o1 / $o2 / $o3"
+          if [ "$o1" = "success" ] || [ "$o2" = "success" ] || [ "$o3" = "success" ]; then
+            exit 0
+          fi
+          exit 1
 
       - name: Verify live content marker
         run: |
