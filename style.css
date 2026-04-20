@@ -1183,10 +1183,17 @@ a.lang-switch__item {
   max-width: 28ch;
 }
 
-.scale-options {
+.scale-matrix {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0.68rem;
+}
+
+.scale-column {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
 }
 
 .scale-option {
@@ -1203,6 +1210,7 @@ a.lang-switch__item {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   min-height: 66px;
   padding: 0.65rem 0.75rem;
   border-radius: 999px;
@@ -1233,24 +1241,19 @@ a.lang-switch__item {
   box-shadow: 0 8px 18px rgba(35, 43, 78, 0.12);
 }
 
-.scale-label-row {
-  margin: 1rem 0 0;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.45rem 0.6rem;
-  font-size: 0.78rem;
-  color: var(--color-text-muted);
-}
-
-.scale-label-row span {
+.scale-column__label {
   margin: 0;
+  display: block;
   text-align: center;
   line-height: 1.3;
-  text-wrap: balance;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
 }
 
 .scale-micro {
-  margin: 1rem 0 0;
+  margin: 1.15rem 0 0;
   font-size: 0.84rem;
   line-height: 1.45;
   color: var(--color-text-muted);
@@ -1310,10 +1313,16 @@ a.lang-switch__item {
     font-size: 1.08rem;
   }
 
-  .scale-label-row {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    font-size: 0.72rem;
-    gap: 0.35rem;
+  .scale-matrix {
+    gap: 0.5rem;
+  }
+
+  .scale-column {
+    gap: 0.45rem;
+  }
+
+  .scale-column__label {
+    font-size: 0.7rem;
   }
 }
 
@@ -1347,14 +1356,9 @@ a.lang-switch__item {
     font-size: 1rem;
   }
 
-  .scale-label-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.35rem 0.75rem;
-    font-size: 0.76rem;
-  }
-
-  .scale-label-row span {
-    text-align: left;
+  .scale-column__label {
+    text-align: center;
+    line-height: 1.25;
   }
 }
 

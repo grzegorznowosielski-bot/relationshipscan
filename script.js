@@ -441,11 +441,11 @@
       title: "Skan — RelationshipScan",
       stepLabel: (step, total) => `Pytanie ${step} z ${total}`,
       scaleLabels: {
-        1: "Nie",
+        1: "Zdecydowanie nie",
         2: "Raczej nie",
         3: "Nie wiem",
         4: "Raczej tak",
-        5: "Tak",
+        5: "Zdecydowanie tak",
       },
       progressHints: {
         early: "Zajmie to mniej niż minutę",
@@ -619,11 +619,6 @@
 
   function getFlowPageUrl(pageName, locale) {
     const normalizedLocale = normalizeLocale(locale);
-    const path = String(window.location.pathname || "").toLowerCase();
-    const localizedPrefix = `/${normalizedLocale}/`;
-    if (path.startsWith(localizedPrefix)) {
-      return `${localizedPrefix}${pageName}`;
-    }
     return `${pageName}.html?lang=${encodeURIComponent(normalizedLocale)}`;
   }
 
@@ -1677,6 +1672,58 @@
       ],
     },
   };
+
+  const paywallModalText = {
+    pl: {
+      title: "Odblokuj pełny raport",
+      subtitle: "Pełna analiza jest dostępna po płatności Stripe.",
+      button: "Przejdź do płatności Stripe",
+    },
+    en: {
+      title: "Unlock full report",
+      subtitle: "Full analysis is available after Stripe payment.",
+      button: "Continue to Stripe payment",
+    },
+    de: {
+      title: "Vollständigen Bericht freischalten",
+      subtitle: "Die vollständige Analyse ist nach der Stripe-Zahlung verfügbar.",
+      button: "Weiter zur Stripe-Zahlung",
+    },
+    es: {
+      title: "Desbloquea el informe completo",
+      subtitle: "El análisis completo está disponible después del pago con Stripe.",
+      button: "Continuar al pago con Stripe",
+    },
+    pt: {
+      title: "Desbloquear relatório completo",
+      subtitle: "A análise completa fica disponível após o pagamento via Stripe.",
+      button: "Continuar para o pagamento com Stripe",
+    },
+    in: {
+      title: "Unlock full report",
+      subtitle: "Full analysis is available after Stripe payment.",
+      button: "Continue to Stripe payment",
+    },
+  };
+
+  function getModalLang() {
+    try {
+      const lang = localStorage.getItem("lang");
+      if (lang && paywallModalText[lang]) return lang;
+    } catch (e) {
+      // Ignore storage issues.
+    }
+    const byPath = getLocaleFromPath(window.location.pathname || "/");
+    if (byPath && paywallModalText[byPath]) return byPath;
+    return "en";
+  }
+
+  function renderPaywallModalText(lang) {
+    const text = paywallModalText[lang] || paywallModalText.en;
+    setText("report-lock-title", text.title);
+    setText("report-lock-body", text.subtitle);
+    setText("report-lock-cta", text.button);
+  }
 
   function getResultLocale(locale) {
     return RESULT_PAGE_UI[locale] ? locale : "en";
@@ -3735,21 +3782,19 @@
       root.innerHTML = `
         <p class="question-card__section">${escapeHtml(q.sectionTitle)}</p>
         <p class="question-card__text">${escapeHtml(q.text)}</p>
-        <div class="scale-options" role="radiogroup" aria-label="${escapeHtml(uiCopy.scaleAria)}">
+        <div class="scale-matrix" role="radiogroup" aria-label="${escapeHtml(uiCopy.scaleAria)}">
           ${[1, 2, 3, 4, 5]
             .map(
               (val) => `
-            <div class="scale-option">
-              <input type="radio" name="scale" id="s${val}" value="${val}" ${selected === val ? "checked" : ""} />
-              <label for="s${val}">${val}</label>
+            <div class="scale-column">
+              <div class="scale-option">
+                <input type="radio" name="scale" id="s${val}" value="${val}" ${selected === val ? "checked" : ""} />
+                <label for="s${val}">${val}</label>
+              </div>
+              <span class="scale-column__label" aria-hidden="true">${escapeHtml(uiCopy.scaleLabels[val])}</span>
             </div>
           `
             )
-            .join("")}
-        </div>
-        <div class="scale-label-row" aria-hidden="true">
-          ${[1, 2, 3, 4, 5]
-            .map((val) => `<span>${escapeHtml(uiCopy.scaleLabels[val])}</span>`)
             .join("")}
         </div>
         <p class="scale-micro">${escapeHtml(uiCopy.micro)}</p>
@@ -4579,6 +4624,8 @@
   // --- Raport: wynik z testu + podsumowanie i profil dopasowane do pasma ---
   function initReport() {
     const locale = getFlowLocale();
+    const lang = getModalLang();
+    renderPaywallModalText(lang);
     const isPaid = (() => {
       try {
         return localStorage.getItem(PAID_KEY) === "true";
