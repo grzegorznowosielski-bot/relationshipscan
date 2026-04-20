@@ -1029,6 +1029,12 @@ a.lang-switch__item {
   padding-block: 1.5rem 3rem;
 }
 
+.test-header-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .test-layout {
   max-width: 640px;
 }

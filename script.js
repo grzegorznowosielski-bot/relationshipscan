@@ -310,7 +310,8 @@
         <p class="scale-legend"><span>less true</span><span>more true</span></p>
       `;
 
-      btnPrev.hidden = index === 0;
+      btnPrev.hidden = false;
+      btnPrev.textContent = index === 0 ? "Back to home" : "Back";
       btnNext.textContent = index === total - 1 ? "See result" : "Next";
 
       root.classList.remove("reveal", "is-visible");
@@ -338,10 +339,12 @@
     }
 
     function goPrev() {
-      if (index > 0) {
-        index -= 1;
-        render();
+      if (index === 0) {
+        window.location.href = "index.html";
+        return;
       }
+      index -= 1;
+      render();
     }
 
     function flashInvalid() {
