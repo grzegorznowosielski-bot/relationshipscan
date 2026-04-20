@@ -31,7 +31,7 @@ function crc() {
 }
 
 function amountGrosze() {
-  return parseInt(process.env.P24_AMOUNT_GROSZE || "2900", 10);
+  return parseInt(process.env.P24_AMOUNT_GROSZE || "3900", 10);
 }
 
 function publicBase() {
@@ -217,9 +217,9 @@ app.get("/api/p24/return", (req, res) => {
   const sessionId = String(req.query.p24_session_id || req.query.sessionId || "").trim();
   const fe = frontendUrl();
   if (sessionId) {
-    return res.redirect(302, `${fe}/test.html?sid=${encodeURIComponent(sessionId)}`);
+    return res.redirect(302, `${fe}/report.html?sid=${encodeURIComponent(sessionId)}`);
   }
-  return res.redirect(302, `${fe}/checkout.html`);
+  return res.redirect(302, `${fe}/report.html`);
 });
 
 const port = parseInt(process.env.PORT || "3000", 10);

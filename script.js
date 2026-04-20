@@ -101,93 +101,93 @@
 
   const RESULT_COPY = {
     stabilna: {
-      headline: "Twoja relacja wygląda stabilnie",
-      label: "Stabilniejsza perspektywa relacji",
+      headline: "Your relationship looks stable",
+      label: "Stable trust signals",
       lead:
-        "Z Twojej perspektywy sygnały są spokojniejsze — przynajmniej w skali, którą mierzymy. To nie jest gwarancja „idealnie”, tylko obraz z ostatnich tygodni.",
+        "Your answers suggest more stability in the relationship right now. This is a snapshot of your recent experience, not a final verdict.",
       interpretation: [
-        "Często tak jest, gdy macie miejsce na rozmowę albo gdy napięcia są krótkie i da się je domknąć. To też może być moment, kdy po prostu masz mniej „alarmów” w głowie — i to jest informacja, nie nagroda.",
-        "Pamiętaj: wynik opiera się na ostatnich tygodniach — zmęczenie, stres czy choroba potrafią chwilowo zmienić odczucia bez „problemu w związku”.",
+        "There may be enough consistency and communication to keep uncertainty lower. Small misunderstandings can still happen, but they may feel more manageable.",
+        "This score can also shift with stress, workload, or life pressure. Treat it as a structured check-in rather than a fixed identity of your relationship.",
       ],
       tips: [
-        "Utrzymujcie małe rytuały kontaktu — nawet krótkie sprawdzenie „jak minął dzień”.",
-        "Gdy pojawi się drobna niezgoda, wróćcie do tematu w zaplanowanym terminie zamiast go odkładać w nieskończoność.",
-        "Co jakiś czas nazwijcie wspólnie jedną rzecz, która Wam dobrze działa — wzmacnia to poczucie wspólnej sprawy.",
+        "Keep short, regular moments of connection, even on busy days.",
+        "When tension appears, schedule a return to the topic instead of avoiding it.",
+        "Name one thing that is working well and keep repeating it.",
       ],
     },
     napiecia: {
-      headline: "Coś zacznie się zmieniać",
-      label: "Napięcia do uporządkowania",
+      headline: "Something may be shifting",
+      label: "Mixed trust signals",
       lead:
-        "Widać wyraźniejsze tarcie albo zmęczenie — i częstsze kręcenie się w domysłach. To nie musi być „koniec”; to sygnał, że przyda się więcej klarowności.",
+        "Your result shows more friction or uncertainty than a fully stable range. This often means the relationship needs clearer structure and calmer communication.",
       interpretation: [
-        "Napięcie często rośnie przy zmianie rytmu życia, rodzicielstwie, pracy, zdrowiu albo po serii niezamkniętych rozmów. Warto nie zamieniać go w pośpiechu w „koniec”, tylko potraktować jak informację: gdzie bolą granice i komunikacja.",
-        "W praktyce pomaga jeden temat na raz — np. przewidywalność kontaktu albo sposób wracania po sporze.",
+        "Shifts in communication rhythm, emotional availability, or daily behavior can increase uncertainty. It does not automatically mean a major crisis.",
+        "What helps most is reducing noise: one topic at a time, one clear request, and one agreed follow-up.",
       ],
       tips: [
-        "Umówcie się na krótką rozmowę (z limitem czasu), z zasadą: obserwacja i potrzeba zamiast oceny charakteru.",
-        "Zadbaj o sen i ruch — regulacja układu nerwowego ułatwia spokojniejsze rozmowy.",
-        "Rozważ wsparcie mediacyjne lub terapeutyczne, jeśli kręcicie się w kółko przy tych samych tematach.",
+        "Use short structured conversations instead of long emotional debates.",
+        "Track patterns in behavior and communication for one week before big conclusions.",
+        "Focus on practical agreements that are observable in daily life.",
       ],
     },
     niepewnosc: {
-      headline: "Twoje poczucie niepewności jest wysokie",
-      label: "Wysoka niepewność w relacji",
+      headline: "Your level of uncertainty is high",
+      label: "High uncertainty signals",
       lead:
-        "To zwykle duży koszt emocjonalny: wątpliwości, zmęczenie albo niestabilność. To nie jest dowód na konkretne zachowanie drugiej osoby — to informacja z Twojej strony, że potrzebujesz większego bezpieczeństwa i jasności.",
+        "Your responses indicate elevated uncertainty and emotional load. This suggests a stronger need for clarity, boundaries, and emotional safety.",
       interpretation: [
-        "Taki wynik często idzie w parze ze stresem, nieporozumieniami albo długim odkładaniem trudnych tematów. Twoje ciało i głowa mogą mówić wprost: „potrzebuję przestrzeni, w której da się spokojnie porozmawiać”.",
-        "Jeśli masz lęk, bezsenność lub poczucie zagrożenia — rozważ rozmowę ze specjalistą także przed dużymi decyzjami o związku.",
+        "High uncertainty can emerge when difficult topics stay unresolved and trust signals feel inconsistent over time.",
+        "Before major decisions, it helps to stabilize your routine, gather facts, and seek grounded support if stress remains high.",
       ],
       tips: [
-        "Ogranicz „testowanie” partnera/k — zamiast tego formułuj konkretne prośby o to, czego potrzebujesz w najbliższych dniach.",
-        "Oddziel fakty od interpretacji: zapisz dwie obserwacje i dwie interpretacje — sprawdź, które są weryfikowalne.",
-        "Jeśli czujesz się nieswojo lub zagrożenie — skorzystaj z lokalnych linii wsparcia lub konsultacji kryzysowej.",
+        "Separate facts from assumptions in writing to reduce mental overload.",
+        "Ask for one concrete change you can observe in the next 7 days.",
+        "If stress stays intense, consider professional support for clarity and regulation.",
       ],
     },
   };
 
   /** Stałe zdanie pod wynikiem (nie zastępuje interpretacji) */
   const RESULT_SIGNAL_LINE =
-    "To nie jest diagnoza — ale sygnał, że warto przyjrzeć się sytuacji bliżej.";
+    "This is not a diagnosis — just a structured view of your responses.";
 
   /** Raport pogłębiony: podsumowanie i profil (wg pasma wyniku) */
   const REPORT_SUMMARY = {
     stabilna: [
-      "Twój wynik jest w niższym zakresie — w skali subiektywnego napięcia, którą mierzymy, wygląda to na spokojniejszą perspektywę.",
-      "To zwykle oznacza, że łatwiej jest wracać do rozmów albo że napięcia są krótsze i da się je domykać — albo że masz mniej „alarmów” w głowie w ostatnich tygodniach.",
-      "To nie jest potwierdzenie „wszystko idealnie” — raczej informacja, że z Twojej strony dynamika wygląda na mniej chaotyczną.",
-      "Jeśli czujesz inaczej niż wynik sugeruje, zaufaj swojemu doświadczeniu: test opiera się na ostatnich tygodniach i Twojej skali odpowiedzi.",
+      "Your Trust Index is in a lower uncertainty range, which usually reflects more predictable communication and clearer emotional signals.",
+      "This often means daily interactions contain fewer unresolved loops and more moments of practical alignment.",
+      "It does not mean everything is perfect. It means current patterns may be easier to understand and regulate.",
+      "If your lived experience feels different than the score, trust your experience and use the score as one data point.",
     ],
     napiecia: [
-      "Twój wynik jest w średnim zakresie — czyli widać realne napięcie albo zmęczenie, które warto nazwać, zanim urośnie domysłów.",
-      "Często tak jest przy zmianach rytmu życia, rodzicielstwie, pracy albo po serii niezamkniętych rozmów. To nie musi oznaczać kryzysu — ale oznacza, że temat wymaga uwagi, nie odkładania w nieskończoność.",
-      "Największe ryzyko w tym paśmie to spirala: krótkie domysły zamiast jednego konkretu i jednego małego kroku.",
-      "Sens ma uporządkowanie: jeden temat, jeden termin rozmowy, jedna prośba — zamiast próby „naprawy wszystkiego naraz”.",
+      "Your Trust Index is in a middle range, suggesting mixed patterns: some stability with repeated moments of uncertainty.",
+      "This range often appears when communication is partially effective but difficult topics still cycle without full closure.",
+      "The main risk here is relying on intuition alone and delaying concrete agreements.",
+      "Progress usually comes from structure: one topic, one decision, one measurable next step.",
     ],
     niepewnosc: [
-      "Twój wynik jest w wyższym zakresie — to zwykle silne obciążenie emocjonalne, częste wątpliwości albo poczucie niestabilności.",
-      "Taki wynik często pojawia się przy długotrwałym stresie w relacji, skumulowanych nieporozumieniach albo braku poczucia bezpieczeństwa w codzienności.",
-      "Nie jest to automatycznie informacja o konkretnym zachowaniu drugiej osoby — to mapa Twojego subiektywnego doświadczenia: gdzie bolą granice i jak bardzo kosztuje Cię ta dynamika.",
-      "Jeśli pojawia się lęk, bezsenność albo poczucie zagrożenia — rozważ wsparcie specjalisty równolegle do decyzji o związku.",
+      "Your Trust Index is in a higher uncertainty range, which often reflects sustained emotional strain and reduced clarity in relationship signals.",
+      "This can happen when communication repair is inconsistent and daily trust cues feel unstable.",
+      "The score does not define the entire relationship. It highlights where uncertainty is currently concentrated for you.",
+      "In this range, clearer boundaries and support systems can significantly improve decision quality.",
     ],
   };
 
   const REPORT_PROFILE = {
     stabilna: [
-      "Poziom napięcia: zwykle niższy lub krótkotrwały — masz więcej przestrzeni na codzienność bez ciągłego monitorowania relacji.",
-      "Komunikacja: łatwiej utrzymać kontakt albo wracać do tematów bez poczucia, że każda rozmowa jest „albo teraz, albo nigdy”.",
-      "Emocjonalna dostępność: częściej jest miejsce na bliskość albo na spokojne ustalenia — nawet jeśli macie trudniejsze okresy.",
+      "Communication level: generally consistent, with more room to return to topics calmly.",
+      "Emotional level: relatively regulated, with fewer sharp spikes of tension.",
+      "Trust level: mostly steady, supported by repeated everyday reliability.",
     ],
     napiecia: [
-      "Poziom napięcia: wyraźniejszy — czujesz tarcie, zmęczenie albo powtarzalne nieporozumienia, które nie znikają same z siebie.",
-      "Komunikacja: tematy potrafią wracać w kółko albo ginąć w pośpiechu; rośnie poczucie niedopowiedzenia.",
-      "Emocjonalna dostępność: bywa mniej miejsca na spokój — częściej jesteś „na baczności”, nawet w zwykłych sprawach.",
+      "Communication level: partly effective, but some key topics remain unresolved.",
+      "Emotional level: mixed, with periods of connection and periods of strain.",
+      "Trust level: moderate, with both supportive and uncertain signals present.",
     ],
     niepewnosc: [
-      "Poziom napięcia: wysoki — relacja może zajmować dużo uwagi emocjonalnej i być źródłem stałego niepokoju.",
-      "Komunikacja: trudniej o poczucie bezpieczeństwa w rozmowie; łatwiej o eskalację albo ucieczkę w ciszę.",
-      "Emocjonalna dostępność: często rośnie dystans, chaos emocji albo poczucie, że trudno o przewidywalność i domknięcia.",
+      "Communication level: low predictability, with reduced confidence in difficult conversations.",
+      "Emotional level: elevated strain and lower emotional steadiness.",
+      "Trust level: fragile, with repeated uncertainty in key relational signals.",
     ],
   };
 
@@ -296,7 +296,7 @@
         window.location.href = j.redirectUrl;
       } catch (e) {
         alert(
-          "Nie udało się uruchomić Przelewy24. Sprawdź adres bramki (meta p24-api-base), CORS i logi serwera.\n\n" +
+          "Could not initialize Przelewy24. Check gateway URL (meta p24-api-base), CORS, and server logs.\n\n" +
             (e && e.message ? e.message : e)
         );
         btn.disabled = false;
@@ -320,7 +320,7 @@
     const params = new URLSearchParams(window.location.search || "");
     const sid = params.get("sid");
     if (sid) {
-      if (stepLabel) stepLabel.textContent = "Weryfikacja płatności…";
+      if (stepLabel) stepLabel.textContent = "Verifying payment…";
       if (btnNext) btnNext.disabled = true;
       if (btnPrev) btnPrev.disabled = true;
       for (let i = 0; i < 45; i++) {
@@ -378,7 +378,7 @@
       const step = index + 1;
 
       progressBar.style.width = `${(step / total) * 100}%`;
-      stepLabel.textContent = `Pytanie ${step} z ${total}`;
+      stepLabel.textContent = `Question ${step} of ${total}`;
 
       const selected = answers[index];
       root.innerHTML = `
@@ -396,11 +396,11 @@
             )
             .join("")}
         </div>
-        <p class="scale-legend"><span>mniej pasuje</span><span>bardziej pasuje</span></p>
+        <p class="scale-legend"><span>less true</span><span>more true</span></p>
       `;
 
       btnPrev.hidden = index === 0;
-      btnNext.textContent = index === total - 1 ? "Zobacz wynik" : "Dalej";
+      btnNext.textContent = index === total - 1 ? "See result" : "Next";
 
       root.classList.remove("reveal", "is-visible");
       void root.offsetWidth;
@@ -455,7 +455,7 @@
       overlay.setAttribute("aria-live", "polite");
       overlay.setAttribute("aria-busy", "true");
       overlay.innerHTML =
-        '<div class="test-loading-overlay__spinner" aria-hidden="true"></div><p class="test-loading-overlay__text">Liczenie wyniku…</p>';
+        '<div class="test-loading-overlay__spinner" aria-hidden="true"></div><p class="test-loading-overlay__text">Calculating your result…</p>';
       document.body.appendChild(overlay);
       window.setTimeout(() => {
         window.location.href = "result.html";
@@ -477,12 +477,12 @@
       const ok = await ensureP24AccessBeforeTest(stepLabel, btnNext, btnPrev);
       if (!ok) {
         progressBar.style.width = "0%";
-        stepLabel.textContent = "Dostęp";
+        stepLabel.textContent = "Access";
         root.innerHTML = `
           <div class="question-card paywall-card">
-            <p class="question-card__section">Płatność</p>
-            <p class="question-card__text">Żeby rozpocząć test, wykup dostęp (Przelewy24). Jeśli już opłaciłeś/aś, odśwież stronę za chwilę lub wróć z linku po płatności.</p>
-            <p class="checkout-card__fake" style="margin-top:1rem"><a class="btn btn--primary" href="checkout.html">Przejdź do płatności</a></p>
+            <p class="question-card__section">Payment</p>
+            <p class="question-card__text">To continue, complete payment in checkout. If you already paid, refresh in a moment or return using the payment redirect link.</p>
+            <p class="checkout-card__fake" style="margin-top:1rem"><a class="btn btn--primary btn--accent" href="checkout.html">Go to checkout</a></p>
           </div>`;
         btnNext.hidden = true;
         btnPrev.hidden = true;
@@ -519,19 +519,19 @@
     }
 
     if (raw === null || raw === "") {
-      if (headlineEl) headlineEl.textContent = "Nie mamy jeszcze Twojego wyniku";
+      if (headlineEl) headlineEl.textContent = "We do not have your result yet";
       if (signalEl) {
         signalEl.textContent = "";
         signalEl.hidden = true;
       }
       scoreEl.textContent = "—";
-      bandEl.textContent = "Brak wyniku";
-      leadEl.textContent = "Wróć do testu — wtedy zobaczysz jasną interpretację i wskazówki.";
+      bandEl.textContent = "No result";
+      leadEl.textContent = "Return to the scan to see your Trust Index and interpretation.";
       interpEl.innerHTML = "";
       tipsEl.innerHTML = "";
       const empty = document.createElement("p");
       empty.className = "empty-state";
-      empty.innerHTML = '<a class="btn btn--primary" href="test.html">Przejdź do testu</a>';
+      empty.innerHTML = '<a class="btn btn--primary btn--accent" href="test.html">Go to scan</a>';
       interpEl.appendChild(empty);
       return;
     }

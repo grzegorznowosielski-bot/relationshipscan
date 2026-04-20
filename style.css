@@ -7,6 +7,9 @@
   --color-primary: #1d4ed8;
   --color-primary-dark: #1e40af;
   --color-primary-glow: rgba(29, 78, 216, 0.42);
+  --color-cta: #ff4f9a;
+  --color-cta-dark: #e53d85;
+  --color-cta-glow: rgba(255, 79, 154, 0.42);
   --color-accent: #0f766e;
   --color-accent-soft: rgba(15, 118, 110, 0.18);
   --color-bg: #f0f1f4;
@@ -402,6 +405,18 @@ a.lang-switch__item {
   transform: translateY(0);
 }
 
+.btn--accent {
+  background: var(--color-cta);
+  color: #fff;
+  box-shadow: 0 8px 28px var(--color-cta-glow);
+}
+
+.btn--accent:hover {
+  background: var(--color-cta-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px var(--color-cta-glow);
+}
+
 .btn--ghost {
   background: transparent;
   color: var(--color-text);
@@ -570,6 +585,12 @@ a.lang-switch__item {
 
 .hero__cta {
   margin-top: 2.25rem;
+}
+
+.hero__meta {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
 }
 
 .hero-card {
@@ -1135,6 +1156,13 @@ a.lang-switch__item {
   margin-inline: auto;
 }
 
+.result-dynamic-headline {
+  margin: 0.25rem 0 0.75rem;
+  font-size: clamp(1.3rem, 3.3vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
 .result-score {
   font-size: clamp(2.75rem, 9vw, 4rem);
   font-family: var(--font-display);
@@ -1234,6 +1262,57 @@ a.lang-switch__item {
 .upsell-inline__product {
   font-size: 1.1rem;
   margin-bottom: 1rem;
+}
+
+.upsell-inline__inner--freemium {
+  background: linear-gradient(135deg, rgba(255, 79, 154, 0.14) 0%, rgba(29, 78, 216, 0.08) 100%);
+}
+
+.result-block--locked {
+  position: relative;
+}
+
+.locked-intro {
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.locked-panel {
+  position: relative;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.locked-panel__content {
+  padding: 1.5rem 1.25rem;
+  filter: blur(4px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.locked-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--color-text-muted);
+}
+
+.locked-list li {
+  margin-bottom: 0.55rem;
+}
+
+.locked-panel__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(18, 19, 26, 0.38);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 1.05rem;
 }
 
 /* --- Upsell page --- */
@@ -1530,5 +1609,11 @@ html.js .reveal.is-visible {
 
   html {
     scroll-behavior: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .btn {
+    min-height: 50px;
   }
 }

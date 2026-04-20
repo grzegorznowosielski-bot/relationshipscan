@@ -1,4 +1,4 @@
-PRZELEWY24 — krok po kroku (RelationshipScan)
+PRZELEWY24 — krok po kroku (Relationship Scan)
 ============================================
 
 WAŻNE: Klucza CRC i danych API NIE wklejasz do GitHuba ani do FTP strony statycznej.
@@ -21,8 +21,8 @@ Trzymasz je tylko w zmiennych środowiskowych hostingu bramki (np. Railway).
    - Ustaw „Root Directory” / „Working directory” na: server/p24
    - Build: npm install   Start: npm start
    - W Variables dodaj (jak w .env.example): P24_MERCHANT_ID, P24_POS_ID, P24_CRC_KEY,
-     P24_SANDBOX, PUBLIC_BASE_URL (URL z Railway po deployu), FRONTEND_URL (https://relationshipscan.app),
-     P24_AMOUNT_GROSZE=2900
+    P24_SANDBOX, PUBLIC_BASE_URL (URL z Railway po deployu), FRONTEND_URL (https://relationshipscan.app),
+    P24_AMOUNT_GROSZE=3900
 
 4) Adresy w Przelewy24 (jeśli panel wymaga zgłoszenia URL-i)
    - Powiadomienia (urlStatus):  PUBLIC_BASE_URL + /api/p24/notify
@@ -30,15 +30,15 @@ Trzymasz je tylko w zmiennych środowiskowych hostingu bramki (np. Railway).
    (Są ustawiane automatycznie przez kod — muszą być dostępne po HTTPS.)
 
 5) Strona statyczna (FTP z GitHuba)
-   - W checkout.html i test.html ustaw ten sam adres w:
-     <meta name="p24-api-base" content="https://TWOJ-PUBLIC_BASE_URL" />
+  - W checkout.html ustaw adres bramki w:
+    <meta name="p24-api-base" content="https://TWOJ-PUBLIC_BASE_URL" />
      (bez końcowego /)
    - Wgraj zmiany przez zwykły push na main (deploy FTP).
 
 6) Test sandbox
    - P24_SANDBOX=true, kwoty testowe w panelu sandbox.
    - Po kliknięciu „Zapłać” powinno przekierować na stronę Przelewy24.
-   - Po płatności wracasz na test.html?sid=… — strona odpytuje /api/p24/status aż płatność się zaksięguje.
+  - Po płatności wracasz na report.html (powrót z P24).
 
 7) Produkcja
    - P24_SANDBOX=false, dane produkcyjne z panelu.

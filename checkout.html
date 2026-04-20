@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Dostęp do testu RelationshipScan — symulacja płatności, start testu online." />
+  <meta name="description" content="Unlock Full Relationship Scan Report with one-time payment and instant access." />
   <meta name="robots" content="noindex, follow" />
   <!-- Publiczny URL bramki P24 (Railway itd.), np. https://xxx.up.railway.app — bez końcowego / -->
   <meta name="p24-api-base" content="" />
-  <title>Płatność — RelationshipScan | Dostęp do testu</title>
+  <title>Checkout — Relationship Scan | Full Report</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
@@ -16,36 +16,37 @@
 <body class="page page--checkout">
   <header class="site-header site-header--minimal">
     <div class="container site-header__inner">
-      <a class="logo" href="index.html">RelationshipScan</a>
+      <a class="logo" href="index.html">Relationship Scan</a>
     </div>
   </header>
 
   <main class="checkout-main">
     <div class="container checkout-wrap reveal">
       <div class="checkout-card">
-        <p class="eyebrow">Podsumowanie</p>
-        <h1 class="checkout-card__title">RelationshipScan</h1>
-        <p class="checkout-card__desc">Dostęp do testu online i interpretacji wyniku w przeglądarce.</p>
+        <p class="eyebrow">Checkout</p>
+        <h1 class="checkout-card__title">Full Relationship Scan Report</h1>
+        <p class="checkout-card__desc">Detailed analysis based on your responses, including insights and guidance.</p>
         <div class="checkout-card__row">
-          <span>Kwota</span>
-          <strong class="checkout-card__price">29 zł</strong>
+          <span>Price</span>
+          <strong class="checkout-card__price">39 zł</strong>
         </div>
         <p class="checkout-card__fake" id="checkout-mode-hint">
-          Uzupełnij w HTML adres bramki Przelewy24 (<code>meta name=&quot;p24-api-base&quot;</code>) — wtedy płatność idzie przez P24. Bez adresu: przejście do testu bez opłaty (tryb dev).
+          Fill <code>meta name=&quot;p24-api-base&quot;</code> with your P24 gateway URL to use live payment.
+          If this value is empty, the button below will go directly to the report (dev mode).
         </p>
-        <label class="checkout-email-label" for="checkout-email">E-mail (do płatności P24)</label>
+        <label class="checkout-email-label" for="checkout-email">Email (for P24 payment)</label>
         <input type="email" id="checkout-email" class="checkout-email-input" name="email" autocomplete="email" placeholder="twoj@email.pl" />
-        <button type="button" class="btn btn--primary btn--lg btn--block" id="btn-pay" data-next="test.html">
-          Zapłać i rozpocznij
+        <button type="button" class="btn btn--primary btn--accent btn--lg btn--block" id="btn-pay" data-next="report.html">
+          Pay and unlock report
         </button>
-        <a class="checkout-card__back" href="index.html">← Wróć na stronę główną</a>
+        <a class="checkout-card__back" href="index.html">← Back to home</a>
       </div>
     </div>
   </main>
 
   <footer class="site-footer site-footer--minimal">
     <div class="container site-footer__inner">
-      <p class="site-footer__note">Płatności obsługuje Przelewy24 — po zaksięgowaniu wracasz do testu w przeglądarce.</p>
+      <p class="site-footer__note">Payments are processed by Przelewy24.</p>
     </div>
   </footer>
 
