@@ -1,0 +1,28 @@
+STRIPE Payment Link — powrot po platnosci (relationshipscan.app)
+================================================================
+
+Problem: po platnosci klient wraca na np. result.html?lang=en BEZ parametru session_id,
+         wtedy strona statyczna nie wie, ze platnosc sie udala (success_url z linku
+         buy.stripe.com czesto jest IGNOROWANY na rzecz adresu z panelu Stripe).
+
+Rozwiazanie — w Stripe Dashboard (Payment Link → After payment / Confirmation):
+
+  Typ: Redirect to your website
+
+  Adres (przyklad PL):
+    https://relationshipscan.app/success.html?lang=pl&session_id={CHECKOUT_SESSION_ID}
+
+  Adres (przyklad EN):
+    https://relationshipscan.app/success.html?lang=en&session_id={CHECKOUT_SESSION_ID}
+
+  Dokladnie TEN placeholder w klamrach:
+    {CHECKOUT_SESSION_ID}
+  Stripe zamienia go na prawdziwe id sesji (cs_...).
+
+Jesli wolisz powrot od razu na wynik:
+    https://relationshipscan.app/result.html?lang=en&session_id={CHECKOUT_SESSION_ID}
+
+Bez session_id={CHECKOUT_SESSION_ID} odblokowanie raportu w przegladarce nie zadziala.
+
+Dokumentacja Stripe (redirect + placeholder):
+  https://docs.stripe.com/payment-links/post-payment

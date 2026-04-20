@@ -61,6 +61,7 @@
       const params = new URLSearchParams(window.location.search);
       const sessionId = params.get("session_id") || "";
       const paymentIntent = params.get("payment_intent") || "";
+      if (sessionId.includes("CHECKOUT_SESSION") || sessionId.includes("{")) return;
       const okStripe =
         (sessionId.startsWith("cs_") && sessionId.length >= 14) ||
         (paymentIntent.startsWith("pi_") && paymentIntent.length >= 14);
@@ -3775,9 +3776,9 @@
   function appendLangToStripeLinks() {
     const locale = getFlowLocale();
     const links = document.querySelectorAll(`a[href^="${STRIPE_LINK}"]`);
-    const successPath = `success.html?lang=${encodeURIComponent(locale)}`;
+    const origin = window.location.origin;
+    const successUrl = `${origin}/success.html?lang=${encodeURIComponent(locale)}&session_id={CHECKOUT_SESSION_ID}`;
     const cancelPath = getFlowPageUrl("result", locale);
-    const successUrl = new URL(successPath, window.location.origin).toString();
     const cancelUrl = new URL(cancelPath, window.location.origin).toString();
     links.forEach((a) => {
       try {
