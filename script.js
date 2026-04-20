@@ -10,6 +10,15 @@
   // --- Local storage keys used in funnel ---
   const STORAGE_KEY = "wynik";
   const PAID_KEY = "paid";
+  const LOCALE_KEY = "relationshipscan_locale";
+  const LOCALE_PATHS = {
+    en: "/en/",
+    de: "/de/",
+    es: "/es/",
+    pl: "/index.html",
+    pt: "/pt/",
+    in: "/in/",
+  };
 
   /**
    * Struktura testu: 20 pytań w 4 sekcjach (5+5+5+5).
@@ -206,12 +215,111 @@
         const lang = a.getAttribute("data-lang");
         if (!lang) return;
         try {
-          localStorage.setItem("relationshipscan_locale", lang);
+          localStorage.setItem(LOCALE_KEY, lang);
         } catch (e) {
           // Ignore storage issues (private mode, blocked storage).
         }
       });
     });
+  }
+
+  function mapCountryToLocale(countryCode) {
+    const cc = String(countryCode || "").toUpperCase();
+    if (["DE", "AT", "CH", "LI", "LU"].includes(cc)) return "de";
+    if (
+      [
+        "ES",
+        "MX",
+        "AR",
+        "CO",
+        "CL",
+        "PE",
+        "VE",
+        "EC",
+        "GT",
+        "CU",
+        "BO",
+        "DO",
+        "HN",
+        "PY",
+        "SV",
+        "NI",
+        "CR",
+        "PA",
+        "UY",
+        "PR",
+        "GQ",
+      ].includes(cc)
+    ) {
+      return "es";
+    }
+    if (["PT", "BR", "AO", "MZ", "CV", "GW", "ST", "TL"].includes(cc)) return "pt";
+    if (cc === "IN") return "in";
+    if (cc === "PL") return "pl";
+    return "en";
+  }
+
+  function mapNavigatorToLocale() {
+    const langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+    for (let i = 0; i < langs.length; i += 1) {
+      const tag = String(langs[i] || "").toLowerCase();
+      const parts = tag.split("-");
+      const base = parts[0] || "";
+      const region = (parts[1] || "").toUpperCase();
+      if (base === "de") return "de";
+      if (base === "es") return "es";
+      if (base === "pl") return "pl";
+      if (base === "pt") return "pt";
+      if (region === "IN" && base === "en") return "in";
+      if (base === "en") return "en";
+    }
+    return "en";
+  }
+
+  async function fetchCountryCode() {
+    const resp = await fetch("https://ipwho.is/?fields=success,country_code", { cache: "no-store" });
+    if (!resp.ok) throw new Error("geo lookup failed");
+    const data = await resp.json();
+    if (!data || !data.success || !data.country_code) throw new Error("geo country unavailable");
+    return String(data.country_code).toUpperCase();
+  }
+
+  function redirectToLocale(locale) {
+    const targetPath = LOCALE_PATHS[locale] || LOCALE_PATHS.en;
+    const currentPath = window.location.pathname || "/";
+    if (currentPath === targetPath) return;
+    window.location.replace(`${targetPath}${window.location.search}${window.location.hash}`);
+  }
+
+  function isMainEntryPath(pathname) {
+    return pathname === "/" || pathname === "/index.html";
+  }
+
+  async function initLocaleByLocation() {
+    const path = (window.location.pathname || "").toLowerCase();
+    if (!isMainEntryPath(path)) return;
+
+    let savedLocale = null;
+    try {
+      savedLocale = localStorage.getItem(LOCALE_KEY);
+    } catch (e) {
+      savedLocale = null;
+    }
+
+    if (savedLocale && LOCALE_PATHS[savedLocale]) {
+      if (savedLocale !== "pl") redirectToLocale(savedLocale);
+      return;
+    }
+
+    let locale = "en";
+    try {
+      const countryCode = await fetchCountryCode();
+      locale = mapCountryToLocale(countryCode);
+    } catch (e) {
+      locale = mapNavigatorToLocale();
+    }
+
+    if (locale !== "pl") redirectToLocale(locale);
   }
 
   // --- Wspólne: menu mobilne ---
@@ -513,6 +621,7 @@
   // --- Bootstrap wg adresu strony ---
   function boot() {
     document.documentElement.classList.add("js");
+    initLocaleByLocation();
     setYear();
     initLangSwitcher();
     initMobileNav();
