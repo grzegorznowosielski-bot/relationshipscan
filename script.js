@@ -3955,6 +3955,12 @@
       const band = getBand(score);
       const details = buildReportDetails(score, band, sessionQuestions, answers);
       try {
+        localStorage.removeItem(PAID_KEY);
+        localStorage.removeItem("paidAt");
+      } catch (e) {
+        // Ignore storage issues.
+      }
+      try {
         localStorage.setItem(STORAGE_KEY, String(score));
         localStorage.setItem(STORAGE_DETAILS_KEY, JSON.stringify(details));
       } catch (e) {
@@ -4992,7 +4998,10 @@
     initMobileNav();
     initReveal();
 
-    const path = (window.location.pathname || "").toLowerCase();
+    let path = (window.location.pathname || "").toLowerCase();
+    if (path.length > 1 && path.endsWith("/")) {
+      path = path.slice(0, -1);
+    }
     /** Obsługa zarówno plików *.html, jak i katalogów /test/ na hostingu statycznym */
     const isTestPage =
       path.endsWith("/test.html") || path.endsWith("/test") || path.endsWith("/test/index.html");
