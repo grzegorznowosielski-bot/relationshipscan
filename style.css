@@ -1248,6 +1248,7 @@ a.lang-switch__item {
   border-radius: 999px;
   border: 2px solid rgba(35, 43, 78, 0.18);
   background: linear-gradient(180deg, #fff 0%, #f7f9ff 100%);
+  color: var(--color-text);
   box-shadow: 0 4px 10px rgba(35, 43, 78, 0.06);
   cursor: pointer;
   font-size: 1.22rem;
@@ -1277,14 +1278,17 @@ a.lang-switch__item {
   transform: scale(0.96);
 }
 
-.scale-row--buttons .scale-cell:nth-child(1) .scale-option label,
-.scale-row--buttons .scale-cell:nth-child(2) .scale-option label {
+/* Left / right tint only when NOT selected — nth-child rules were overriding :checked and broke contrast (white on white). */
+.scale-row--buttons .scale-cell:nth-child(1) .scale-option input:not(:checked) + label,
+.scale-row--buttons .scale-cell:nth-child(2) .scale-option input:not(:checked) + label {
   background: linear-gradient(180deg, #ffffff 0%, #f2f4f9 100%);
+  color: var(--color-text);
 }
 
-.scale-row--buttons .scale-cell:nth-child(4) .scale-option label,
-.scale-row--buttons .scale-cell:nth-child(5) .scale-option label {
+.scale-row--buttons .scale-cell:nth-child(4) .scale-option input:not(:checked) + label,
+.scale-row--buttons .scale-cell:nth-child(5) .scale-option input:not(:checked) + label {
   background: linear-gradient(180deg, #fbfdff 0%, #edf4ff 100%);
+  color: var(--color-text);
 }
 
 .scale-label {
