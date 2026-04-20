@@ -13,8 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: FTP Deploy
+      - name: FTP Deploy (path 1)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        continue-on-error: true
         with:
           server: ostudios.ftp.dhosting.pl
           username: ${{ secrets.FTP_USERNAME }}
@@ -23,3 +24,40 @@ jobs:
           protocol: ftp
           server-dir: /relationshipscan.app/public_html/
           passive: true
+
+      - name: FTP Deploy (path 2)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        continue-on-error: true
+        with:
+          server: ostudios.ftp.dhosting.pl
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftp
+          server-dir: /public_html/
+          passive: true
+
+      - name: FTP Deploy (path 3)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        continue-on-error: true
+        with:
+          server: ostudios.ftp.dhosting.pl
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftp
+          server-dir: /domains/relationshipscan.app/public_html/
+          passive: true
+
+      - name: Verify live content marker
+        run: |
+          python3 - <<'PY'
+          import sys, urllib.request
+          url = "https://relationshipscan.app/index.html?ci=deploy-check"
+          body = urllib.request.urlopen(url, timeout=20).read().decode("utf-8", "ignore")
+          required = "Start your scan"
+          if required not in body:
+              print("Live check failed: expected marker not found.")
+              sys.exit(1)
+          print("Live check OK: updated marker detected.")
+          PY
