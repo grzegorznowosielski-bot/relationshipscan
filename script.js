@@ -864,7 +864,7 @@
   function getFlowPageUrl(pageName, locale) {
     const normalizedLocale = normalizeLocale(locale);
     const runtime = getRuntimeLocaleConfig();
-    const localizedPages = new Set(["index", "checkout", "success", "report"]);
+    const localizedPages = new Set(["index", "checkout", "success", "report", "result"]);
     if (runtime && runtime[normalizedLocale] && runtime[normalizedLocale].basePath && localizedPages.has(String(pageName || ""))) {
       return `${getLocaleBasePath(normalizedLocale)}${pageName}.html`;
     }
@@ -2032,6 +2032,87 @@
         "Separate facts from assumptions",
         "Avoid making a major decision in peak emotion",
       ],
+    },
+  };
+
+  const CHECKOUT_UI = {
+    en: {
+      htmlLang: "en",
+      pageTitle: "Checkout — RelationshipScan | Full Report",
+      metaDescription: "Unlock the full RelationshipScan report with a one-time payment and instant access.",
+      eyebrow: "Checkout",
+      productTitle: "Full RelationshipScan Report",
+      productDesc: "Secure one-time payment for instant access to your full report.",
+      priceLabel: "Price",
+      paymentNoteShort: "One-time payment • Instant access",
+      stripeCta: "Pay securely with Stripe",
+      backToHome: "← Back to home",
+      stripeFooterNote: "Payments are processed by Stripe.",
+    },
+    pl: {
+      htmlLang: "pl",
+      pageTitle: "Płatność — RelationshipScan | Pełny raport",
+      metaDescription: "Pełny raport RelationshipScan: jednorazowa płatność i natychmiastowy dostęp.",
+      eyebrow: "Płatność",
+      productTitle: "Pełny raport RelationshipScan",
+      productDesc: "Bezpieczna jednorazowa płatność z natychmiastowym dostępem do pełnego raportu.",
+      priceLabel: "Cena",
+      paymentNoteShort: "Jednorazowa płatność • Natychmiastowy dostęp",
+      stripeCta: "Zapłać bezpiecznie przez Stripe",
+      backToHome: "← Wróć na stronę główną",
+      stripeFooterNote: "Płatności obsługuje Stripe.",
+    },
+    de: {
+      htmlLang: "de",
+      pageTitle: "Zahlung — RelationshipScan | Vollständiger Bericht",
+      metaDescription: "Vollständiger RelationshipScan-Bericht: einmalige Zahlung und sofortiger Zugriff.",
+      eyebrow: "Zahlung",
+      productTitle: "Vollständiger RelationshipScan-Bericht",
+      productDesc: "Sichere Einmalzahlung für sofortigen Zugriff auf deinen vollständigen Bericht.",
+      priceLabel: "Preis",
+      paymentNoteShort: "Einmalige Zahlung • Sofortiger Zugriff",
+      stripeCta: "Sicher mit Stripe bezahlen",
+      backToHome: "← Zurück zur Startseite",
+      stripeFooterNote: "Zahlungen werden über Stripe abgewickelt.",
+    },
+    es: {
+      htmlLang: "es",
+      pageTitle: "Pago — RelationshipScan | Informe completo",
+      metaDescription: "Informe completo RelationshipScan: pago único y acceso instantáneo.",
+      eyebrow: "Pago",
+      productTitle: "Informe completo RelationshipScan",
+      productDesc: "Pago único seguro con acceso instantáneo a tu informe completo.",
+      priceLabel: "Precio",
+      paymentNoteShort: "Pago único • Acceso instantáneo",
+      stripeCta: "Pagar de forma segura con Stripe",
+      backToHome: "← Volver al inicio",
+      stripeFooterNote: "Los pagos se procesan con Stripe.",
+    },
+    pt: {
+      htmlLang: "pt",
+      pageTitle: "Pagamento — RelationshipScan | Relatório completo",
+      metaDescription: "Relatório completo RelationshipScan: pagamento único e acesso imediato.",
+      eyebrow: "Pagamento",
+      productTitle: "Relatório completo RelationshipScan",
+      productDesc: "Pagamento único seguro com acesso imediato ao relatório completo.",
+      priceLabel: "Preço",
+      paymentNoteShort: "Pagamento único • Acesso imediato",
+      stripeCta: "Pagar com segurança no Stripe",
+      backToHome: "← Voltar ao início",
+      stripeFooterNote: "Os pagamentos são processados pela Stripe.",
+    },
+    in: {
+      htmlLang: "en-IN",
+      pageTitle: "Checkout — RelationshipScan | Full Report",
+      metaDescription: "Unlock the full RelationshipScan report with a one-time payment and instant access.",
+      eyebrow: "Checkout",
+      productTitle: "Full RelationshipScan Report",
+      productDesc: "Secure one-time payment for instant access to your full report.",
+      priceLabel: "Price",
+      paymentNoteShort: "One-time payment • Instant access",
+      stripeCta: "Pay securely with Stripe",
+      backToHome: "← Back to home",
+      stripeFooterNote: "Payments are processed by Stripe.",
     },
   };
 
@@ -4135,6 +4216,9 @@
     const links = LEGAL_PATHS[locale] || LEGAL_PATHS.en;
     const body = document.body;
     const path = String(window.location.pathname || "").toLowerCase();
+    if (path.endsWith("/checkout.html") || path.endsWith("/checkout") || path.endsWith("/checkout/index.html")) {
+      return;
+    }
     const showFullCompanyDetails = Boolean(
       (body && body.classList.contains("page--landing")) ||
       path.endsWith("/contact.html") ||
@@ -4281,13 +4365,7 @@
     }
     const locale = getFlowLocale();
     const compact = getPriceDisplayCompact(locale);
-    const isCheckout = path.endsWith("/checkout.html") || path.endsWith("/checkout") || path.endsWith("/checkout/index.html");
     const isUpsell = path.endsWith("/upsell.html") || path.endsWith("/upsell") || path.endsWith("/upsell/index.html");
-    if (isCheckout) {
-      const priceEl = document.querySelector(".checkout-card__price");
-      if (priceEl) priceEl.textContent = compact;
-      setText("checkout-price-hint", getPriceCheckoutHint(locale));
-    }
     if (isUpsell) {
       const amt = document.querySelector(".price-tag__amount");
       const note = document.querySelector(".price-tag__note");
@@ -5931,6 +6009,41 @@
     return p.endsWith("/contact.html") || p.endsWith("/contact") || p.endsWith("/contact/index.html");
   }
 
+  function isCheckoutPagePath() {
+    const p = String(window.location.pathname || "").toLowerCase();
+    return p.endsWith("/checkout.html") || p.endsWith("/checkout") || p.endsWith("/checkout/index.html");
+  }
+
+  function localizeCheckoutPageUi(locale) {
+    const L = CHECKOUT_UI[locale] ? locale : "en";
+    const ui = CHECKOUT_UI[L];
+    const legalUi = LEGAL_FOOTER_COPY[L] || LEGAL_FOOTER_COPY.en;
+    const links = LEGAL_PATHS[L] || LEGAL_PATHS.en;
+    document.documentElement.lang = ui.htmlLang;
+    document.title = ui.pageTitle;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute("content", ui.metaDescription);
+    setText("checkout-eyebrow", ui.eyebrow);
+    setText("checkout-title", ui.productTitle);
+    setText("checkout-desc", ui.productDesc);
+    setText("checkout-price-label", ui.priceLabel);
+    setText("checkout-inline-note", ui.paymentNoteShort);
+    const priceEl = document.querySelector(".checkout-card__price");
+    if (priceEl) priceEl.textContent = getPriceDisplayCompact(L);
+    setText("checkout-price-hint", getPriceCheckoutHint(L));
+    const cta = document.getElementById("checkout-stripe-cta");
+    if (cta) cta.textContent = ui.stripeCta;
+    setText("checkout-back", ui.backToHome);
+    const note = document.getElementById("checkout-footer-note");
+    if (note) note.textContent = ui.stripeFooterNote;
+    const linksEl = document.getElementById("checkout-footer-links");
+    if (linksEl) {
+      linksEl.innerHTML = `<a href="${links.terms}">${escapeHtml(legalUi.terms)}</a> · <a href="${links.privacy}">${escapeHtml(
+        legalUi.privacy
+      )}</a> · <a href="${links.contact}">${escapeHtml(legalUi.contactLink)}</a>`;
+    }
+  }
+
   // --- Bootstrap wg adresu strony ---
   function boot() {
     document.documentElement.classList.add("js");
@@ -5942,6 +6055,7 @@
     initMarketPages();
     setYear();
     initLegalFooter();
+    if (isCheckoutPagePath()) localizeCheckoutPageUi(lang);
     initLangSwitcher();
     initMobileNav();
     initReveal();

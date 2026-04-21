@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="stripe-verify-api-base" content="https://payments.relationshipscan.app" />
+  <meta name="description" content="Seu Trust Index gratuito com interpretação curta e opção de análise completa do relacionamento." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Seu Trust Index — RelationshipScan" />
+  <meta property="og:description" content="Veja seu resultado básico de graça e desbloqueie a análise completa quando quiser ir mais fundo." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary" />
+  <title>Seu Trust Index — RelationshipScan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css?v=20260420j" />
+</head>
+<body class="page page--result">
+  <header class="site-header site-header--minimal">
+    <div class="container site-header__inner">
+      <a class="logo" href="index.html">RelationshipScan</a>
+    </div>
+  </header>
+
+  <main class="result-main">
+    <div class="container narrow">
+      <section class="result-hero reveal" id="result-hero">
+        <p class="eyebrow" id="result-eyebrow">Seu resultado</p>
+        <h1 class="result-headline" id="result-title">Seu Trust Index</h1>
+        <p class="result-score" id="result-score-display">—/100</p>
+        <h2 class="result-dynamic-headline" id="result-headline">Seu relacionamento parece estável</h2>
+        <p class="result-lead" id="result-lead"></p>
+        <div class="prose" id="result-interpretation"></div>
+      </section>
+
+      <section class="result-block result-block--visual reveal" id="result-visual">
+        <h2 id="result-visual-title">Pontuação visual</h2>
+        <div class="result-visual-grid">
+          <div class="result-donut" id="result-donut" aria-hidden="true">
+            <div class="result-donut__inner">
+              <p class="result-donut__value" id="result-donut-value">0</p>
+              <p class="result-donut__label" id="result-donut-label">Trust Index</p>
+            </div>
+          </div>
+          <div class="result-visual-range">
+            <div class="result-scale" aria-hidden="true">
+              <span class="result-scale__band result-scale__band--low" id="result-scale-low">Baixo</span>
+              <span class="result-scale__band result-scale__band--mid" id="result-scale-mid">Médio</span>
+              <span class="result-scale__band result-scale__band--high" id="result-scale-high">Alto</span>
+              <span class="result-scale__marker" id="result-range-marker"></span>
+            </div>
+            <p class="result-visual-sub" id="result-visual-sub">Visão estruturada das suas respostas</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="result-block reveal" id="result-free">
+        <h2 id="result-free-heading">O que isso pode sugerir</h2>
+        <ul class="tips-list" id="result-free-insights"></ul>
+        <h3 class="result-subheading" id="result-tips-heading">Dicas práticas</h3>
+        <ul class="tips-list" id="result-tips"></ul>
+      </section>
+
+      <section class="result-block result-block--premium reveal" id="premium-block">
+        <div class="paywall-card">
+          <p class="eyebrow" id="premium-eyebrow">Seção premium</p>
+          <p class="paywall-card__personalized" id="paywall-personalized-sentence">Identificamos um padrão recorrente que merece uma análise mais próxima.</p>
+          <h2 id="premium-title">Seu resultado completo está pronto</h2>
+          <p class="premium-subhead" id="premium-subhead">Você já vê os primeiros sinais. O panorama completo começa abaixo.</p>
+          <p class="locked-intro" id="premium-intro-a">Suas respostas já apontam uma direção, mas sem análise completa é fácil interpretar mal o que realmente significam.</p>
+          <p class="paywall-card__hook" id="paywall-emotional-hook">Um resultado parcial nao mostra a decisao real em jogo.</p>
+
+          <div class="paywall-score-row">
+            <p class="paywall-score-row__label" id="paywall-score-label">Trust Index atual</p>
+            <p class="paywall-score-row__value" id="paywall-score-value">--/100</p>
+          </div>
+
+          <div class="locked-mini-chart">
+            <div class="result-bars result-bars--preview" aria-hidden="true">
+              <div class="result-bars__item">
+                <div class="result-bars__head"><span id="preview-bar-label-1">Comunicação</span> <span class="result-bars__value" id="preview-bar-value-1">--</span></div>
+                <div class="result-bars__track"><span class="result-bars__fill" id="preview-bar-fill-1" style="width:0%"></span></div>
+              </div>
+              <div class="result-bars__item">
+                <div class="result-bars__head"><span id="preview-bar-label-2">Estabilidade</span> <span class="result-bars__value" id="preview-bar-value-2">--</span></div>
+                <div class="result-bars__track"><span class="result-bars__fill" id="preview-bar-fill-2" style="width:0%"></span></div>
+              </div>
+              <div class="result-bars__item result-bars__item--blur">
+                <div class="result-bars__head"><span id="preview-bar-label-3">Transparência</span> <span class="result-bars__value">--</span></div>
+                <div class="result-bars__track"><span class="result-bars__fill" id="preview-bar-fill-3" style="width:0%"></span></div>
+              </div>
+              <div class="result-bars__item result-bars__item--blur">
+                <div class="result-bars__head"><span id="preview-bar-label-4">Segurança emocional</span> <span class="result-bars__value">--</span></div>
+                <div class="result-bars__track"><span class="result-bars__fill" id="preview-bar-fill-4" style="width:0%"></span></div>
+              </div>
+            </div>
+            <div class="locked-mini-chart__overlay" id="locked-preview-label">Prévia bloqueada</div>
+          </div>
+
+          <div class="locked-preview-grid locked-preview-grid--compact">
+            <article class="locked-preview-card">
+              <h4 id="locked-title-1">Padrões de comunicação</h4>
+              <p id="locked-teaser-1">Identificamos um padrão recorrente que merece uma análise mais próxima.</p>
+              <div class="locked-preview-mask" id="locked-label-1">Bloqueado</div>
+            </article>
+            <article class="locked-preview-card">
+              <h4 id="locked-title-2">Distância emocional</h4>
+              <p id="locked-teaser-2">Identificamos um padrão recorrente que merece uma análise mais próxima.</p>
+              <div class="locked-preview-mask" id="locked-label-2">Bloqueado</div>
+            </article>
+            <article class="locked-preview-card">
+              <h4 id="locked-title-3">Mudanças de comportamento</h4>
+              <p id="locked-teaser-3">Identificamos um padrão recorrente que merece uma análise mais próxima.</p>
+              <div class="locked-preview-mask" id="locked-label-3">Bloqueado</div>
+            </article>
+          </div>
+
+          <div class="paywall-value-list">
+            <h3 id="premium-value-heading">O que voce desbloqueia</h3>
+            <ul class="premium-includes">
+              <li id="premium-value-item-1">Analise completa</li>
+              <li id="premium-value-item-2">Alertas de risco</li>
+              <li id="premium-value-item-3">Trajetoria do relacionamento</li>
+              <li id="premium-value-item-4">Timeline (3-6 meses)</li>
+              <li id="premium-value-item-5">Plano de acao</li>
+            </ul>
+          </div>
+
+          <p class="upsell-inline__product"><strong id="premium-price-line">€9.99 · pagamento único</strong></p>
+          <p class="payment-note payment-note--soft" id="premium-price-hint"></p>
+
+          <div class="paywall-cta-stack">
+            <a
+              href="https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01"
+              class="cta-button"
+              id="premium-cta"
+            >
+              Desbloquear relatório completo
+            </a>
+          </div>
+
+          <p class="payment-note payment-note--trust" id="premium-note-1">Pagamento seguro via Stripe</p>
+          <p class="payment-note payment-note--soft" id="premium-note-2">Acesso imediato após o pagamento</p>
+          <p class="payment-note payment-note--soft" id="premium-note-3">A maioria das pessoas na sua situação escolhe ver o relatório completo</p>
+        </div>
+      </section>
+
+      <section class="disclaimer-box disclaimer-box--compact reveal">
+        <p><span id="result-signal-line">Esta ferramenta fornece insights interpretativos e não constitui aconselhamento psicológico, médico ou jurídico.</span></p>
+      </section>
+
+      <p class="result-footer-links">
+        <a href="index.html" id="result-footer-home-link">Inicio</a>
+        ·
+        <a href="test.html" id="result-footer-retake-link">Refazer scan</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer site-footer--minimal">
+    <div class="container site-footer__inner">
+      <p class="site-footer__note" id="result-footer-note-primary">Materiais apenas informativos.</p>
+      <p class="site-footer__note" id="result-footer-note-disclaimer">Esta ferramenta fornece insights interpretativos e não constitui aconselhamento psicológico, médico ou jurídico.</p>
+      <p class="site-footer__links">
+        <a href="/pt/privacidade.html">Privacidade</a> · <a href="/pt/termos.html">Termos</a> · <a href="/contact.html?lang=pt">Contato</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="/locale.config.js"></script>
+  <script src="../script.js?v=20260421checkoutresult" defer></script>
+</body>
+</html>

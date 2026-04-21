@@ -21,33 +21,33 @@
   <main class="checkout-main">
     <div class="container checkout-wrap reveal">
       <div class="checkout-card">
-        <p class="eyebrow">Checkout</p>
-        <h1 class="checkout-card__title">Full RelationshipScan Report</h1>
-        <p class="checkout-card__desc">Secure one-time payment for instant access to your full report.</p>
+        <p class="eyebrow" id="checkout-eyebrow">Checkout</p>
+        <h1 class="checkout-card__title" id="checkout-title">Full RelationshipScan Report</h1>
+        <p class="checkout-card__desc" id="checkout-desc">Secure one-time payment for instant access to your full report.</p>
         <div class="checkout-card__row">
-          <span>Price</span>
+          <span id="checkout-price-label">Price</span>
           <strong class="checkout-card__price">$9.99</strong>
         </div>
-        <p class="payment-note">One-time payment • Instant access</p>
+        <p class="payment-note" id="checkout-inline-note">One-time payment • Instant access</p>
         <p class="payment-note payment-note--soft" id="checkout-price-hint"></p>
-        <a href="https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01" class="cta-button">
+        <a href="https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01" class="cta-button" id="checkout-stripe-cta">
           Pay securely with Stripe
         </a>
-        <a class="checkout-card__back" href="index.html">← Back to home</a>
+        <a class="checkout-card__back" href="index.html" id="checkout-back">← Back to home</a>
       </div>
     </div>
   </main>
 
   <footer class="site-footer site-footer--minimal">
     <div class="container site-footer__inner">
-      <p class="site-footer__note">Payments are processed by Stripe.</p>
-      <p class="site-footer__links">
+      <p class="site-footer__note" id="checkout-footer-note">Payments are processed by Stripe.</p>
+      <p class="site-footer__links" id="checkout-footer-links">
         <a href="/in/privacy.html">Privacy Policy</a> · <a href="/in/terms.html">Terms &amp; Conditions</a> · <a href="/contact.html?lang=in">Contact</a>
       </p>
     </div>
   </footer>
 
   <script src="/locale.config.js"></script>
-  <script src="../script.js?v=20260423launchfix" defer></script>
+  <script src="../script.js?v=20260421checkoutresult" defer></script>
 </body>
 </html>

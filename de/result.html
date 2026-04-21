@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="stripe-verify-api-base" content="https://payments.relationshipscan.app" />
+  <meta name="description" content="Dein kostenloser Trust Index mit kurzer Einordnung und optionaler Vollanalyse der Beziehung." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Dein Trust Index — RelationshipScan" />
+  <meta property="og:description" content="Sieh dein Basisergebnis kostenlos und schalte die Vollanalyse frei, wenn du tiefer einsteigen willst." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="de_DE" />
+  <meta name="twitter:card" content="summary" />
+  <title>Dein Trust Index — RelationshipScan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css?v=20260420j" />
+</head>
+<body class="page page--result">
+  <header class="site-header site-header--minimal">
+    <div class="container site-header__inner">
+      <a class="logo" href="index.html">RelationshipScan</a>
+    </div>
+  </header>
+
+  <main class="result-main">
+    <div class="container narrow">
+      <section class="result-hero reveal" id="result-hero">
+        <p class="eyebrow" id="result-eyebrow">Dein Ergebnis</p>
+        <h1 class="result-headline" id="result-title">Dein Trust Index</h1>
+        <p class="result-score" id="result-score-display">—/100</p>
+        <h2 class="result-dynamic-headline" id="result-headline">Deine Beziehung wirkt stabil</h2>
+        <p class="result-lead" id="result-lead"></p>
+        <div class="prose" id="result-interpretation"></div>
+      </section>
+
+      <section class="result-block result-block--visual reveal" id="result-visual">
+        <h2 id="result-visual-title">Visuelle Bewertung</h2>
+        <div class="result-visual-grid">
+          <div class="result-donut" id="result-donut" aria-hidden="true">
+            <div class="result-donut__inner">
+              <p class="result-donut__value" id="result-donut-value">0</p>
+              <p class="result-donut__label" id="result-donut-label">Trust Index</p>
+            </div>
+          </div>
+          <div class="result-visual-range">
+            <div class="result-scale" aria-hidden="true">
+              <span class="result-scale__band result-scale__band--low" id="result-scale-low">Niedrig</span>
+              <span class="result-scale__band result-scale__band--mid" id="result-scale-mid">Mittel</span>
+              <span class="result-scale__band result-scale__band--high" id="result-scale-high">Hoch</span>
+              <span class="result-scale__marker" id="result-range-marker"></span>
+            </div>
+            <p class="result-visual-sub" id="result-visual-sub">Strukturierte Sicht auf deine Antworten</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="result-block reveal" id="result-free">
+        <h2 id="result-free-heading">Was das nahelegen kann</h2>
+        <ul class="tips-list" id="result-free-insights"></ul>
+        <h3 class="result-subheading" id="result-tips-heading">Praktische Hinweise</h3>
+        <ul class="tips-list" id="result-tips"></ul>
+      </section>
+
+      <section class="result-block result-block--premium reveal" id="premium-block">
+        <div class="paywall-card">
+          <p class="eyebrow" id="premium-eyebrow">Premium-Bereich</p>
+          <p class="paywall-card__personalized" id="paywall-personalized-sentence">Wir haben ein wiederkehrendes Muster erkannt, das genauer betrachtet werden sollte.</p>
+          <h2 id="premium-title">Dein vollständiges Ergebnis ist bereit</h2>
+          <p class="premium-subhead" id="premium-subhead">Du siehst bereits erste Signale. Das volle Bild beginnt erst unten.</p>
+          <p class="locked-intro" id="premium-intro-a">Deine Antworten zeigen bereits eine Richtung - aber ohne vollständige Analyse ist eine Fehlinterpretation sehr leicht.</p>
+          <p class="paywall-card__hook" id="paywall-emotional-hook">Ein Teilwert zeigt nicht, welche Entscheidung wirklich ansteht.</p>
+
+          <div class="paywall-score-row">
+            <p class="paywall-score-row__label" id="paywall-score-label">Aktueller Trust Index</p>
+            <p class="paywall-score-row__value" id="paywall-score-value">--/100</p>
+          </div>
+
+          <div class="locked-mini-chart">
+            <div class="result-bars result-bars--preview" aria-hidden="true">
+              <div class="result-bars__item">
+                <div class="result-bars__head"><span id="preview-bar-label-1">Kommunikation</span> <span class="result-bars__value" id="preview-bar-value-1">--</span></div>
+                <div class="result-bars__track"><span class="result-bars__fill" id="preview-bar-fill-1" style="width:0%"></span></div>
+              </div>
+              <div class="result-bars__item">
+                <div class="result-bars__head"><span id="preview-bar-label-2">Stabilität</span> <span class="result-bars__value" id="preview-bar-value-2">--</span></div>
+                <div class="result-bars__track"><span class="result-bars__fill" id="preview-bar-fill-2" style="width:0%"></span></div>
+              </div>
+              <div class="result-bars__item result-bars__item--blur">
+                <div class="result-bars__head"><span id="preview-bar-label-3">Transparenz</span> <span class="result-bars__value">--</span></div>
+                <div class="result-bars__track"><span class="result-bars__fill" id="preview-bar-fill-3" style="width:0%"></span></div>
+              </div>
+              <div class="result-bars__item result-bars__item--blur">
+                <div class="result-bars__head"><span id="preview-bar-label-4">Emotionale Sicherheit</span> <span class="result-bars__value">--</span></div>
+                <div class="result-bars__track"><span class="result-bars__fill" id="preview-bar-fill-4" style="width:0%"></span></div>
+              </div>
+            </div>
+            <div class="locked-mini-chart__overlay" id="locked-preview-label">Gesperrte Vorschau</div>
+          </div>
+
+          <div class="locked-preview-grid locked-preview-grid--compact">
+            <article class="locked-preview-card">
+              <h4 id="locked-title-1">Kommunikationsmuster</h4>
+              <p id="locked-teaser-1">Wir haben ein wiederkehrendes Muster erkannt, das genauer betrachtet werden sollte.</p>
+              <div class="locked-preview-mask" id="locked-label-1">Gesperrt</div>
+            </article>
+            <article class="locked-preview-card">
+              <h4 id="locked-title-2">Emotionale Distanz</h4>
+              <p id="locked-teaser-2">Wir haben ein wiederkehrendes Muster erkannt, das genauer betrachtet werden sollte.</p>
+              <div class="locked-preview-mask" id="locked-label-2">Gesperrt</div>
+            </article>
+            <article class="locked-preview-card">
+              <h4 id="locked-title-3">Verhaltensänderungen</h4>
+              <p id="locked-teaser-3">Wir haben ein wiederkehrendes Muster erkannt, das genauer betrachtet werden sollte.</p>
+              <div class="locked-preview-mask" id="locked-label-3">Gesperrt</div>
+            </article>
+          </div>
+
+          <div class="paywall-value-list">
+            <h3 id="premium-value-heading">Was du freischaltest</h3>
+            <ul class="premium-includes">
+              <li id="premium-value-item-1">Vollständige Analyse</li>
+              <li id="premium-value-item-2">Risikohinweise</li>
+              <li id="premium-value-item-3">Beziehungsverlauf</li>
+              <li id="premium-value-item-4">Timeline (3-6 Monate)</li>
+              <li id="premium-value-item-5">Aktionsplan</li>
+            </ul>
+          </div>
+
+          <p class="upsell-inline__product"><strong id="premium-price-line">€9.99 · einmalige Zahlung</strong></p>
+          <p class="payment-note payment-note--soft" id="premium-price-hint"></p>
+
+          <div class="paywall-cta-stack">
+            <a
+              href="https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01"
+              class="cta-button"
+              id="premium-cta"
+            >
+              Vollständigen Bericht freischalten
+            </a>
+          </div>
+
+          <p class="payment-note payment-note--trust" id="premium-note-1">Sichere Zahlung über Stripe</p>
+          <p class="payment-note payment-note--soft" id="premium-note-2">Sofortiger Zugriff nach Zahlung</p>
+          <p class="payment-note payment-note--soft" id="premium-note-3">Die meisten Menschen in deiner Situation wählen den vollständigen Bericht</p>
+        </div>
+      </section>
+
+      <section class="disclaimer-box disclaimer-box--compact reveal">
+        <p><span id="result-signal-line">Dieses Tool liefert interpretative Hinweise und ist keine psychologische, medizinische oder rechtliche Beratung.</span></p>
+      </section>
+
+      <p class="result-footer-links">
+        <a href="index.html" id="result-footer-home-link">Startseite</a>
+        ·
+        <a href="test.html" id="result-footer-retake-link">Scan wiederholen</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer site-footer--minimal">
+    <div class="container site-footer__inner">
+      <p class="site-footer__note" id="result-footer-note-primary">Nur Informationsmaterial.</p>
+      <p class="site-footer__note" id="result-footer-note-disclaimer">Dieses Tool liefert interpretative Hinweise und ist keine psychologische, medizinische oder rechtliche Beratung.</p>
+      <p class="site-footer__links">
+        <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a> · <a href="/contact.html?lang=de">Contact</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="/locale.config.js"></script>
+  <script src="../script.js?v=20260421checkoutresult" defer></script>
+</body>
+</html>
