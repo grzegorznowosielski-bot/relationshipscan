@@ -67,7 +67,12 @@ export function verifyGrant(token) {
   const [encoded, signature] = String(token || "").split(".");
   if (!encoded || !signature) return { ok: false, reason: "malformed" };
   const expected = hmac(encoded);
-  if (!crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature))) {
+  const expectedBuffer = Buffer.from(expected, "utf8");
+  const signatureBuffer = Buffer.from(signature, "utf8");
+  if (expectedBuffer.length !== signatureBuffer.length) {
+    return { ok: false, reason: "bad_signature" };
+  }
+  if (!crypto.timingSafeEqual(expectedBuffer, signatureBuffer)) {
     return { ok: false, reason: "bad_signature" };
   }
   let payload;
