@@ -203,12 +203,12 @@
   }
   const LANG_KEY = "lang";
   const LEGAL_PATHS = {
-    en: { terms: "/en/terms.html", privacy: "/en/privacy.html", contact: "/contact.html" },
-    pl: { terms: "/pl/regulamin.html", privacy: "/pl/polityka-prywatnosci.html", contact: "/contact.html" },
-    de: { terms: "/de/agb.html", privacy: "/de/datenschutz.html", contact: "/contact.html" },
-    es: { terms: "/es/terminos.html", privacy: "/es/privacidad.html", contact: "/contact.html" },
-    pt: { terms: "/pt/termos.html", privacy: "/pt/privacidade.html", contact: "/contact.html" },
-    in: { terms: "/in/terms.html", privacy: "/in/privacy.html", contact: "/contact.html" },
+    en: { terms: "/en/terms.html", privacy: "/en/privacy.html", contact: "/contact.html?lang=en" },
+    pl: { terms: "/pl/regulamin.html", privacy: "/pl/polityka-prywatnosci.html", contact: "/contact.html?lang=pl" },
+    de: { terms: "/de/agb.html", privacy: "/de/datenschutz.html", contact: "/contact.html?lang=de" },
+    es: { terms: "/es/terminos.html", privacy: "/es/privacidad.html", contact: "/contact.html?lang=es" },
+    pt: { terms: "/pt/termos.html", privacy: "/pt/privacidade.html", contact: "/contact.html?lang=pt" },
+    in: { terms: "/in/terms.html", privacy: "/in/privacy.html", contact: "/contact.html?lang=in" },
   };
   const LEGAL_FOOTER_COPY = {
     en: {
@@ -850,6 +850,8 @@
   function getFlowLocale() {
     const byPath = getLocaleFromPath(window.location.pathname || "/");
     if (byPath) return setLang(byPath);
+    const langParam = String(new URLSearchParams(window.location.search || "").get("lang") || "").toLowerCase();
+    if (langParam && LOCALE_PATHS[langParam]) return setLang(langParam);
     const stored = getStoredLang();
     if (stored) return stored;
     return setLang("en");
@@ -4218,6 +4220,11 @@
     const urlLocale = getLocaleFromPath(path);
     if (urlLocale) {
       setLang(urlLocale);
+      return;
+    }
+    const langParam = String(new URLSearchParams(window.location.search || "").get("lang") || "").toLowerCase();
+    if (langParam && LOCALE_PATHS[langParam]) {
+      setLang(langParam);
       return;
     }
 
