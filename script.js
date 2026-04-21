@@ -176,6 +176,31 @@
     pt: "/pt/",
     in: "/in/",
   };
+  function getRuntimeLocaleConfig() {
+    try {
+      const cfg = window.RELATIONSHIPSCAN_CONFIG;
+      if (cfg && cfg.locales && typeof cfg.locales === "object") return cfg.locales;
+    } catch (e) {
+      // Ignore config access issues.
+    }
+    return null;
+  }
+
+  function getLocaleBasePath(locale) {
+    const normalized = normalizeLocale(locale);
+    const runtime = getRuntimeLocaleConfig();
+    const configured = runtime && runtime[normalized] && runtime[normalized].basePath;
+    if (configured) return String(configured);
+    return LOCALE_PATHS[normalized] || LOCALE_PATHS.en;
+  }
+
+  function getLocaleSuccessPath(locale) {
+    const normalized = normalizeLocale(locale);
+    const runtime = getRuntimeLocaleConfig();
+    const configured = runtime && runtime[normalized] && runtime[normalized].successUrl;
+    if (configured) return String(configured);
+    return `/success.html?lang=${encodeURIComponent(normalized)}`;
+  }
   const LANG_KEY = "lang";
   const LEGAL_PATHS = {
     en: { terms: "/en/terms.html", privacy: "/en/privacy.html", contact: "/contact.html" },
@@ -753,6 +778,10 @@
   }
 
   function getStripeLinkForLocale(locale) {
+    const normalized = normalizeLocale(locale);
+    const runtime = getRuntimeLocaleConfig();
+    const configured = runtime && runtime[normalized] && runtime[normalized].paymentLink;
+    if (configured) return String(configured);
     const c = getBillingCurrency(locale);
     if (c === "pln") return STRIPE_LINK_PLN;
     if (c === "usd") return STRIPE_LINK_USD;
@@ -832,6 +861,10 @@
 
   function getFlowPageUrl(pageName, locale) {
     const normalizedLocale = normalizeLocale(locale);
+    const runtime = getRuntimeLocaleConfig();
+    if (runtime && runtime[normalizedLocale] && runtime[normalizedLocale].basePath) {
+      return `${getLocaleBasePath(normalizedLocale)}${pageName}.html`;
+    }
     return `${pageName}.html?lang=${encodeURIComponent(normalizedLocale)}`;
   }
 
@@ -4214,7 +4247,10 @@
     const locale = getFlowLocale();
     const base = getStripeLinkForLocale(locale);
     const origin = window.location.origin;
-    const successUrl = `${origin}/success.html?lang=${encodeURIComponent(locale)}&session_id={CHECKOUT_SESSION_ID}`;
+    const successPath = getLocaleSuccessPath(locale);
+    const successObj = new URL(successPath, origin);
+    successObj.searchParams.set("session_id", "{CHECKOUT_SESSION_ID}");
+    const successUrl = successObj.toString();
     const cancelPath = getFlowPageUrl("result", locale);
     const cancelUrl = new URL(cancelPath, window.location.origin).toString();
     document.querySelectorAll('a[href*="buy.stripe.com"]').forEach((a) => {
@@ -5064,6 +5100,15 @@
       window.location.replace(getFlowPageUrl("report", locale));
       return;
     }
+    const returnEvidence = getStripeReturnEvidence();
+    if (returnEvidence.sessionId || returnEvidence.paymentIntent) {
+      const verify = await confirmStripeReturnWithBackend(returnEvidence.sessionId, returnEvidence.paymentIntent);
+      scrubStripeReturnParams();
+      if (verify.paid) {
+        window.location.replace(getFlowPageUrl("report", locale));
+        return;
+      }
+    }
 
     const logoLink = document.querySelector(".site-header .logo");
     const ui = RESULT_LAYOUT_UI[locale] || RESULT_LAYOUT_UI.en;
@@ -5526,7 +5571,15 @@
   async function initReport() {
     const locale = getFlowLocale();
     const logoLink = document.querySelector(".site-header .logo");
-    const isPaid = await hasVerifiedPremiumAccess();
+    let isPaid = await hasVerifiedPremiumAccess();
+    if (!isPaid) {
+      const returnEvidence = getStripeReturnEvidence();
+      if (returnEvidence.sessionId || returnEvidence.paymentIntent) {
+        const verify = await confirmStripeReturnWithBackend(returnEvidence.sessionId, returnEvidence.paymentIntent);
+        scrubStripeReturnParams();
+        isPaid = !!verify.paid;
+      }
+    }
     if (!isPaid) {
       window.location.href = getFlowPageUrl("result", locale);
       return;
