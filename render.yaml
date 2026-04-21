@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: relationshipscan-stripe-verify
+    runtime: node
+    plan: starter
+    rootDir: server/stripe
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: FRONTEND_URL
+        value: https://relationshipscan.app
+      - key: ACCESS_GRANT_TTL_HOURS
+        value: 24
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false

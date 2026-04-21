@@ -1,32 +1,55 @@
-STRIPE VERIFY BACKEND — SETUP
-=============================
+STRIPE VERIFY BACKEND — FINAL SETUP (RENDER + DHOSTING FRONTEND)
+=================================================================
 
-CEL
----
-Ten serwis ma odblokowywac premium tylko po backendowym potwierdzeniu Stripe.
-Frontend NIE ufa redirectowi i parametrom URL.
+DOCZELOWA ARCHITEKTURA
+----------------------
+- Frontend (statyczny): dhosting
+- Backend weryfikacji Stripe: Render (Node)
+- Docelowy URL backendu: https://payments.relationshipscan.app
 
-1) WYMAGANE ZMIENNE
+To jest URL, który ma być ustawiony w:
+- success.html
+- result.html
+- report.html
+meta: stripe-verify-api-base
+
+1) CO JUZ JEST PRZYGOTOWANE W REPO
+----------------------------------
+- Backend: server/stripe/index.mjs
+- Konfiguracja env: server/stripe/.env.example
+- Render blueprint: render.yaml (root repo)
+- Frontend meta ustawione na:
+  https://payments.relationshipscan.app
+
+2) DEPLOY NA RENDER
 -------------------
-- STRIPE_SECRET_KEY=sk_live_...
-- STRIPE_WEBHOOK_SECRET=whsec_...
-- FRONTEND_URL=https://relationshipscan.app
-- PORT=3001
-- ACCESS_GRANT_TTL_HOURS=24
+1. W Render wybierz "New > Blueprint" i wskaż to repo.
+2. Render odczyta render.yaml i postawi usługę:
+   relationshipscan-stripe-verify
+3. Ustaw sekrety:
+   - STRIPE_SECRET_KEY
+   - STRIPE_WEBHOOK_SECRET (tymczasowo puste, ustawisz po utworzeniu webhooka)
+4. Po pierwszym deployu dodaj custom domain:
+   https://payments.relationshipscan.app
 
-2) URUCHOMIENIE
----------------
-cd server/stripe
-npm install
-npm start
-
-Healthcheck:
-GET /health
-
-3) WEBHOOK STRIPE
+3) DNS W DHOSTING
 -----------------
-W dashboard Stripe dodaj endpoint:
-https://TWOJ_BACKEND/api/stripe/webhook
+W panelu DNS domeny relationshipscan.app dodaj rekord:
+- Type: CNAME
+- Host: payments
+- Value: target podany przez Render dla custom domain
+
+Po propagacji:
+https://payments.relationshipscan.app/health
+ma zwracać JSON z ok:true.
+
+4) WEBHOOK STRIPE (PRODUKCJA)
+-----------------------------
+W Stripe Dashboard:
+Developers > Webhooks > Add endpoint
+
+Endpoint URL:
+https://payments.relationshipscan.app/api/stripe/webhook
 
 Zdarzenia:
 - checkout.session.completed
@@ -34,35 +57,26 @@ Zdarzenia:
 - payment_intent.succeeded
 - payment_intent.payment_failed
 
-Skopiuj secret webhooka do STRIPE_WEBHOOK_SECRET.
-
-4) FRONTEND CONFIG
-------------------
-Na stronach:
-- success.html
-- result.html
-- report.html
-
-ustaw meta:
-<meta name="stripe-verify-api-base" content="https://TWOJ_BACKEND" />
-
-Bez tego backendu raport NIE powinien sie odblokowac.
+Po zapisaniu Stripe pokaże Signing secret (whsec_...).
+Wklej go do env:
+STRIPE_WEBHOOK_SECRET
+i zrób redeploy.
 
 5) CO WERYFIKUJE BACKEND
 ------------------------
 POST /api/stripe/confirm-return
 body: { "session_id": "...", "payment_intent": "..." }
 
-Serwer pyta Stripe API i wymaga:
-- checkout.session.payment_status == "paid"
-ORAZ / LUB
-- payment_intent.status == "succeeded"
+Weryfikacja po Stripe API:
+- checkout.session.payment_status == paid
+  oraz/lub
+- payment_intent.status == succeeded
 
-Dopiero wtedy zwraca grantToken.
+Dopiero wtedy backend zwraca grantToken.
 
-6) KONTROLA DOSTEPU
--------------------
-- Front zapisuje grantToken.
-- Przy wejsciu na report/result pyta:
+6) KONTROLA DOSTEPU W FRONTEND
+------------------------------
+- Front zapisuje wyłącznie grantToken z backendu.
+- Każde wejście na report/result sprawdza:
   GET /api/stripe/grant-status?grant=...
-- Bez aktywnego grantu premium pozostaje zablokowane.
+- Bez aktywnego grantu nie ma odblokowania premium.
