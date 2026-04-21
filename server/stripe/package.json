@@ -1,0 +1,13 @@
+{
+  "name": "relationshipscan-stripe-gateway",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "stripe": "^18.0.0"
+  }
+}

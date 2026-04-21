@@ -11,23 +11,43 @@
   const STORAGE_KEY = "wynik";
   const STORAGE_DETAILS_KEY = "wynik_details";
   const PAID_KEY = "paid";
+  const PREMIUM_GRANT_KEY = "premium_access_grant_v1";
+  const PREMIUM_GRANT_EXP_KEY = "premium_access_grant_exp_v1";
   const TEST_SESSION_KEY = "relationshipscan_test_session_v1";
+  const STRIPE_API_BASE_META = "stripe-verify-api-base";
 
-  function readPaidFlag() {
+  function getStripeVerifyApiBase() {
     try {
-      if (localStorage.getItem(PAID_KEY) === "true") return true;
+      const meta = document.querySelector(`meta[name="${STRIPE_API_BASE_META}"]`);
+      const fromMeta = meta ? String(meta.getAttribute("content") || "").trim() : "";
+      if (fromMeta) return fromMeta.replace(/\/$/, "");
+    } catch (e) {
+      // Ignore DOM issues.
+    }
+    return "";
+  }
+
+  function clearPaidFlag() {
+    try {
+      localStorage.removeItem(PAID_KEY);
+      localStorage.removeItem("paidAt");
+      localStorage.removeItem(PREMIUM_GRANT_KEY);
+      localStorage.removeItem(PREMIUM_GRANT_EXP_KEY);
     } catch (e) {
       // Ignore storage issues.
     }
     try {
-      return sessionStorage.getItem(PAID_KEY) === "true";
+      sessionStorage.removeItem(PAID_KEY);
     } catch (e) {
-      return false;
+      // Ignore storage issues.
     }
   }
 
-  function writePaidFlag() {
+  function writeAccessGrant(grantToken, expiresAt) {
+    if (!grantToken) return;
     try {
+      localStorage.setItem(PREMIUM_GRANT_KEY, String(grantToken));
+      localStorage.setItem(PREMIUM_GRANT_EXP_KEY, String(expiresAt || ""));
       localStorage.setItem(PAID_KEY, "true");
       localStorage.setItem("paidAt", Date.now().toString());
     } catch (e) {
@@ -40,32 +60,38 @@
     }
   }
 
-  function clearPaidFlag() {
+  function readAccessGrant() {
+    let token = "";
+    let exp = "";
     try {
-      localStorage.removeItem(PAID_KEY);
-      localStorage.removeItem("paidAt");
+      token = String(localStorage.getItem(PREMIUM_GRANT_KEY) || "").trim();
+      exp = String(localStorage.getItem(PREMIUM_GRANT_EXP_KEY) || "").trim();
     } catch (e) {
-      // Ignore storage issues.
+      token = "";
+      exp = "";
     }
-    try {
-      sessionStorage.removeItem(PAID_KEY);
-    } catch (e) {
-      // Ignore storage issues.
+    if (!token) return { token: "", expiresAt: 0 };
+    const expiresAt = parseInt(exp || "0", 10) || 0;
+    if (expiresAt > 0 && Date.now() > expiresAt) {
+      clearPaidFlag();
+      return { token: "", expiresAt: 0 };
     }
+    return { token, expiresAt };
   }
 
-  /** Stripe po platnosci czesto wraca na report z session_id / payment_intent zamiast przez success.html. */
-  function syncPaidFromStripeReturnUrl() {
+  function getStripeReturnEvidence() {
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = String(params.get("session_id") || "").trim();
+    const paymentIntent = String(params.get("payment_intent") || "").trim();
+    if (sessionId.includes("CHECKOUT_SESSION") || sessionId.includes("{")) {
+      return { sessionId: "", paymentIntent: "" };
+    }
+    return { sessionId, paymentIntent };
+  }
+
+  function scrubStripeReturnParams() {
     try {
       const params = new URLSearchParams(window.location.search);
-      const sessionId = params.get("session_id") || "";
-      const paymentIntent = params.get("payment_intent") || "";
-      if (sessionId.includes("CHECKOUT_SESSION") || sessionId.includes("{")) return;
-      const okStripe =
-        (sessionId.startsWith("cs_") && sessionId.length >= 14) ||
-        (paymentIntent.startsWith("pi_") && paymentIntent.length >= 14);
-      if (!okStripe) return;
-      writePaidFlag();
       params.delete("session_id");
       params.delete("payment_intent");
       params.delete("payment_intent_client_secret");
@@ -75,6 +101,72 @@
     } catch (e) {
       // Ignore malformed URLs / history API issues.
     }
+  }
+
+  async function validateAccessGrantWithBackend(grantToken) {
+    const apiBase = getStripeVerifyApiBase();
+    if (!apiBase || !grantToken) return false;
+    try {
+      const url = new URL("/api/stripe/grant-status", apiBase);
+      url.searchParams.set("grant", grantToken);
+      const res = await fetch(url.toString(), { method: "GET" });
+      if (!res.ok) return false;
+      const payload = await res.json();
+      if (!payload.active) return false;
+      if (payload.expiresAt) {
+        try {
+          localStorage.setItem(PREMIUM_GRANT_EXP_KEY, String(payload.expiresAt));
+        } catch (e) {
+          // Ignore storage issues.
+        }
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function confirmStripeReturnWithBackend(sessionId, paymentIntent) {
+    const apiBase = getStripeVerifyApiBase();
+    if (!apiBase) {
+      console.warn("[stripe-access] Missing stripe-verify-api-base meta. Refusing to unlock premium.");
+      return { paid: false, reason: "missing_api_base" };
+    }
+    if (!sessionId && !paymentIntent) {
+      return { paid: false, reason: "missing_return_evidence" };
+    }
+    try {
+      const url = new URL("/api/stripe/confirm-return", apiBase);
+      const res = await fetch(url.toString(), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          session_id: sessionId || null,
+          payment_intent: paymentIntent || null,
+        }),
+      });
+      const payload = await res.json().catch(() => ({}));
+      if (!res.ok || !payload.paid || !payload.grantToken) {
+        console.warn("[stripe-access] Backend did not confirm payment", {
+          status: res.status,
+          payload,
+        });
+        return { paid: false, reason: "not_paid", payload };
+      }
+      writeAccessGrant(payload.grantToken, payload.expiresAt || 0);
+      return { paid: true, payload };
+    } catch (e) {
+      console.error("[stripe-access] Backend verification error", e);
+      return { paid: false, reason: "verify_error" };
+    }
+  }
+
+  async function hasVerifiedPremiumAccess() {
+    const { token } = readAccessGrant();
+    if (!token) return false;
+    const active = await validateAccessGrantWithBackend(token);
+    if (!active) clearPaidFlag();
+    return active;
   }
   const LOCALE_PATHS = {
     en: "/en/",
@@ -4770,10 +4862,9 @@
   }
 
   // --- Wynik: odczyt localStorage i wypełnienie DOM ---
-  function initResult() {
-    syncPaidFromStripeReturnUrl();
+  async function initResult() {
     const locale = getFlowLocale();
-    if (readPaidFlag()) {
+    if (await hasVerifiedPremiumAccess()) {
       window.location.replace(getFlowPageUrl("report", locale));
       return;
     }
@@ -4875,8 +4966,7 @@
     if (ctaBlock) ctaBlock.hidden = false;
   }
 
-  function initSuccess() {
-    syncPaidFromStripeReturnUrl();
+  async function initSuccess() {
     const queryLang = getQueryLang();
     if (queryLang) setLang(queryLang);
     const locale = getFlowLocale();
@@ -4885,27 +4975,36 @@
     const copyByLocale = {
       en: {
         title: "Payment confirmed",
-        body: "Finalizing access to your full report...",
+        body: "Verifying payment with Stripe...",
+        failed: "We did not receive a confirmed paid status yet. Complete payment in your bank app, then return here.",
       },
       pl: {
         title: "Platnosc potwierdzona",
-        body: "Finalizujemy dostep do pelnego raportu...",
+        body: "Weryfikujemy platnosc po stronie Stripe...",
+        failed:
+          "Nie mamy jeszcze potwierdzonej, oplaconej transakcji. Dokoncz autoryzacje w aplikacji banku i wroc do tego ekranu.",
       },
       de: {
         title: "Zahlung bestätigt",
-        body: "Der Zugriff auf den Vollbericht wird vorbereitet...",
+        body: "Die Zahlung wird serverseitig bei Stripe verifiziert...",
+        failed:
+          "Es liegt noch keine bestätigte bezahlte Transaktion vor. Bitte Zahlung in der Banking-App abschließen und dann zurückkehren.",
       },
       es: {
         title: "Pago confirmado",
-        body: "Estamos finalizando tu acceso al informe completo...",
+        body: "Estamos verificando el pago en Stripe...",
+        failed:
+          "Aun no hay confirmacion de pago completado. Termina la autorizacion en tu app bancaria y vuelve a esta pagina.",
       },
       pt: {
         title: "Pagamento confirmado",
-        body: "Finalizando seu acesso ao relatorio completo...",
+        body: "Estamos verificando o pagamento no Stripe...",
+        failed: "Ainda nao temos confirmacao de pagamento concluido. Finalize no app do banco e volte para esta pagina.",
       },
       in: {
         title: "Payment confirmed",
-        body: "Finalizing access to your full report...",
+        body: "Verifying payment with Stripe...",
+        failed: "We did not receive a confirmed paid status yet. Complete payment in your bank app, then return here.",
       },
     };
     const ui = copyByLocale[locale] || copyByLocale.en;
@@ -4914,11 +5013,18 @@
     setText("success-title", ui.title);
     setText("success-body", ui.body);
 
-    writePaidFlag();
+    const evidence = getStripeReturnEvidence();
+    const verify = await confirmStripeReturnWithBackend(evidence.sessionId, evidence.paymentIntent);
+    scrubStripeReturnParams();
+    if (!verify.paid) {
+      clearPaidFlag();
+      setText("success-body", ui.failed || copyByLocale.en.failed);
+      return;
+    }
 
     window.setTimeout(() => {
       window.location.href = getFlowPageUrl("report", locale);
-    }, 700);
+    }, 500);
   }
 
   function getPremiumReportNarrative(locale) {
@@ -5221,11 +5327,10 @@
   }
 
   // --- Raport: wynik z testu + podsumowanie i profil dopasowane do pasma ---
-  function initReport() {
-    syncPaidFromStripeReturnUrl();
+  async function initReport() {
     const locale = getFlowLocale();
     const logoLink = document.querySelector(".site-header .logo");
-    const isPaid = readPaidFlag();
+    const isPaid = await hasVerifiedPremiumAccess();
     if (!isPaid) {
       window.location.href = getFlowPageUrl("result", locale);
       return;

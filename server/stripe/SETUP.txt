@@ -1,0 +1,68 @@
+STRIPE VERIFY BACKEND — SETUP
+=============================
+
+CEL
+---
+Ten serwis ma odblokowywac premium tylko po backendowym potwierdzeniu Stripe.
+Frontend NIE ufa redirectowi i parametrom URL.
+
+1) WYMAGANE ZMIENNE
+-------------------
+- STRIPE_SECRET_KEY=sk_live_...
+- STRIPE_WEBHOOK_SECRET=whsec_...
+- FRONTEND_URL=https://relationshipscan.app
+- PORT=3001
+- ACCESS_GRANT_TTL_HOURS=24
+
+2) URUCHOMIENIE
+---------------
+cd server/stripe
+npm install
+npm start
+
+Healthcheck:
+GET /health
+
+3) WEBHOOK STRIPE
+-----------------
+W dashboard Stripe dodaj endpoint:
+https://TWOJ_BACKEND/api/stripe/webhook
+
+Zdarzenia:
+- checkout.session.completed
+- checkout.session.async_payment_succeeded
+- payment_intent.succeeded
+- payment_intent.payment_failed
+
+Skopiuj secret webhooka do STRIPE_WEBHOOK_SECRET.
+
+4) FRONTEND CONFIG
+------------------
+Na stronach:
+- success.html
+- result.html
+- report.html
+
+ustaw meta:
+<meta name="stripe-verify-api-base" content="https://TWOJ_BACKEND" />
+
+Bez tego backendu raport NIE powinien sie odblokowac.
+
+5) CO WERYFIKUJE BACKEND
+------------------------
+POST /api/stripe/confirm-return
+body: { "session_id": "...", "payment_intent": "..." }
+
+Serwer pyta Stripe API i wymaga:
+- checkout.session.payment_status == "paid"
+ORAZ / LUB
+- payment_intent.status == "succeeded"
+
+Dopiero wtedy zwraca grantToken.
+
+6) KONTROLA DOSTEPU
+-------------------
+- Front zapisuje grantToken.
+- Przy wejsciu na report/result pyta:
+  GET /api/stripe/grant-status?grant=...
+- Bez aktywnego grantu premium pozostaje zablokowane.
