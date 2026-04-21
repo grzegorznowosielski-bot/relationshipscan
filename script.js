@@ -4543,6 +4543,198 @@
     return "";
   }
 
+  function getOperationalLocalePack(locale) {
+    const map = {
+      pl: {
+        names: {
+          communication: "komunikacja",
+          emotional: "bliskość emocjonalna",
+          stability: "stabilność zachowań",
+          clarity: "klarowność",
+        },
+        sectionNoChange: "Co się stanie, jeśli nic nie zmienicie (3–6 tygodni)",
+        evidenceLead: "Dowód z Twoich danych",
+        testLabel: "Test na 7 dni",
+      },
+      en: {
+        names: {
+          communication: "communication",
+          emotional: "emotional closeness",
+          stability: "behavior consistency",
+          clarity: "clarity",
+        },
+        sectionNoChange: "What happens if nothing changes (3–6 weeks)",
+        evidenceLead: "Evidence from your data",
+        testLabel: "7-day test",
+      },
+      de: {
+        names: {
+          communication: "Kommunikation",
+          emotional: "emotionale Nähe",
+          stability: "Verhaltensstabilität",
+          clarity: "Klarheit",
+        },
+        sectionNoChange: "Was passiert, wenn ihr nichts ändert (3–6 Wochen)",
+        evidenceLead: "Hinweis aus deinen Daten",
+        testLabel: "7-Tage-Test",
+      },
+      es: {
+        names: {
+          communication: "comunicación",
+          emotional: "cercanía emocional",
+          stability: "estabilidad conductual",
+          clarity: "claridad",
+        },
+        sectionNoChange: "Qué pasará si no cambiáis nada (3–6 semanas)",
+        evidenceLead: "Evidencia en tus datos",
+        testLabel: "Prueba de 7 días",
+      },
+      pt: {
+        names: {
+          communication: "comunicação",
+          emotional: "proximidade emocional",
+          stability: "estabilidade comportamental",
+          clarity: "clareza",
+        },
+        sectionNoChange: "O que acontece se nada mudar (3–6 semanas)",
+        evidenceLead: "Evidência dos seus dados",
+        testLabel: "Teste de 7 dias",
+      },
+      in: null,
+    };
+    return map[locale] || map.en;
+  }
+
+  function getAreaValueByKey(areaScores, key) {
+    if (key === "communication") return Math.round(areaScores.communication || 0);
+    if (key === "emotional") return Math.round(areaScores.emotional || 0);
+    if (key === "stability") return Math.round(areaScores.behavior || 0);
+    return Math.round(areaScores.trust || 0);
+  }
+
+  function getSecondWeakestAreaKey(areaScores) {
+    const list = [
+      ["communication", getAreaValueByKey(areaScores, "communication")],
+      ["emotional", getAreaValueByKey(areaScores, "emotional")],
+      ["stability", getAreaValueByKey(areaScores, "stability")],
+      ["clarity", getAreaValueByKey(areaScores, "clarity")],
+    ].sort((a, b) => a[1] - b[1]);
+    return list[1] ? list[1][0] : list[0][0];
+  }
+
+  function buildOverviewCardText(locale, areaKey, scoreValue, areaScores, trajectory) {
+    const pack = getOperationalLocalePack(locale);
+    const weakest = getWeakestAreaKey(areaScores);
+    const secondWeakest = getSecondWeakestAreaKey(areaScores);
+    const linked = areaKey === weakest ? secondWeakest : weakest;
+    const linkedScore = getAreaValueByKey(areaScores, linked);
+    const score = Math.round(scoreValue);
+    const spread = Math.round(trajectory.variance || 0);
+
+    if (locale === "pl") {
+      if (areaKey === "communication") {
+        return `${pack.evidenceLead}: komunikacja ma ${score}/100, a ${pack.names[linked]} ${linkedScore}/100. W odpowiedziach widać, że rozmowy nie kończą się decyzją „kto, co, do kiedy”, więc temat wraca i podnosi napięcie. Działanie: przez 14 dni zamykajcie każdą trudną rozmowę jednym zapisem z terminem. ${pack.testLabel}: sprawdźcie po tygodniu, ile ustaleń zostało zrobionych bez przypominania.`;
+      }
+      if (areaKey === "emotional") {
+        return `${pack.evidenceLead}: bliskość ma ${score}/100 przy rozrzucie ${spread} pkt między wymiarami. To zwykle oznacza, że wsparcie działa niestabilnie pod presją i po konflikcie szybciej pojawia się dystans niż naprawa. Działanie: ustalcie stały schemat powrotu do kontaktu (np. 20 minut przerwy, potem 10 minut rozmowy tylko o faktach). ${pack.testLabel}: liczcie przez 7 dni, ile konfliktów kończy się kontaktem tego samego dnia.`;
+      }
+      if (areaKey === "behavior") {
+        return `${pack.evidenceLead}: stabilność zachowań to ${score}/100, a komunikacja ${Math.round(areaScores.communication)}/100. Widać rozjazd „mówimy o zmianie” vs „brak realizacji”, co podcina zaufanie szybciej niż sam konflikt. Działanie: wybierzcie 2 mikro-zobowiązania na tydzień i oznaczajcie codziennie wykonane/niewykonane. ${pack.testLabel}: po 7 dniach decyzja — kontynuujecie tylko jeśli wykonanie przekracza 80%.`;
+      }
+      return `${pack.evidenceLead}: klarowność ma ${score}/100, a słabszy obszar obok to ${pack.names[linked]} (${linkedScore}/100). To oznacza nadmiar domysłów: jedna osoba zakłada intencję, druga broni się przed zarzutem, którego nie usłyszała wprost. Działanie: spiszcie trzy zasady nie do negocjacji i jedną konsekwencję za ich złamanie. ${pack.testLabel}: po tygodniu sprawdźcie, czy była choć jedna sytuacja „zgadywania”, której dało się uniknąć tymi zasadami.`;
+    }
+
+    if (areaKey === "communication") {
+      return `${pack.evidenceLead}: ${pack.names.communication} is ${score}/100 and ${pack.names[linked]} is ${linkedScore}/100. Your answers suggest hard talks calm things short-term but do not end with a dated owner/action, so the same issue reappears. Action: for 14 days, close each difficult talk with one line: who does what by when. ${pack.testLabel}: after 7 days, count how many agreements were completed without reminders.`;
+    }
+    if (areaKey === "emotional") {
+      return `${pack.evidenceLead}: ${pack.names.emotional} is ${score}/100 with a ${spread}-point gap between dimensions. That pattern usually means support drops exactly during stress, so distance lasts longer than the original issue. Action: set a fixed re-entry protocol after conflict (for example: 20-minute pause, then 10 minutes on facts only). ${pack.testLabel}: for 7 days, track how many conflicts return to contact on the same day.`;
+    }
+    if (areaKey === "behavior") {
+      return `${pack.evidenceLead}: ${pack.names.stability} is ${score}/100 while communication is ${Math.round(areaScores.communication)}/100. This points to a declaration-vs-execution gap: promises are verbal, follow-through is inconsistent. Action: set two weekly micro-commitments and score done/not done daily. ${pack.testLabel}: at day 7 make a decision—continue only if execution stays above 80%.`;
+    }
+    return `${pack.evidenceLead}: ${pack.names.clarity} is ${score}/100, and ${pack.names[linked]} is ${linkedScore}/100. This combination creates guessing loops: one side infers intent, the other defends against assumptions. Action: write three non-negotiable rules and one consequence for each repeated break. ${pack.testLabel}: after 7 days, count how many conflicts came from assumptions instead of explicit agreements.`;
+  }
+
+  function buildOperationalDimension(locale, key, areaScores, trajectory) {
+    const score = getAreaValueByKey(areaScores, key);
+    const weakest = getWeakestAreaKey(areaScores);
+    const weakScore = getAreaValueByKey(areaScores, weakest);
+    const spread = Math.round(trajectory.variance || 0);
+    const pack = getOperationalLocalePack(locale);
+
+    if (locale === "pl") {
+      const byKey = {
+        communication: {
+          body: `Twarda obserwacja: komunikacja ma ${score}/100, a najsłabszy wymiar ${weakScore}/100. Mechanizm: rozmowa obniża napięcie, ale bez domknięcia wraca ten sam temat (widać to w wyniku komunikacji i stabilności). Konsekwencja: decyzje się przesuwają, a koszt konfliktu rośnie tydzień po tygodniu. Działanie: przez 2 tygodnie kończcie trudny temat jednym zadaniem i terminem 72h.`,
+          check: "Test: po 7 dniach policz, ile tematów wróciło mimo ustalenia. Jeśli więcej niż 1 — zmieńcie format rozmowy.",
+        },
+        emotional: {
+          body: `Twarda obserwacja: bliskość ma ${score}/100 przy rozrzucie ${spread} pkt. Mechanizm: gdy rośnie presja, kontakt spada szybciej niż gotowość do naprawy. Konsekwencja: po konflikcie pojawia się chłód i sprawa ciągnie się dłużej niż sama przyczyna. Działanie: umówcie stały „powrót do kontaktu” tego samego dnia.`,
+          check: "Decyzja: jeśli przez 7 dni nie uda się wracać do rozmowy w tym samym dniu, wprowadzacie zewnętrzną strukturę (np. mediację).",
+        },
+        stability: {
+          body: `Twarda obserwacja: stabilność zachowań to ${score}/100, niżej niż deklaracje z innych obszarów. Mechanizm: intencja jest, ale wykonanie nie przechodzi przez codzienny chaos. Konsekwencja: spada wiarygodność i każda kolejna obietnica ma mniejszą wartość. Działanie: ustawcie 2 mierzalne standardy na 14 dni i codzienny status wykonania.`,
+          check: "Test: po tygodniu sprawdź wykonanie procentowo. Poniżej 80% = korekta planu albo decyzja o ograniczeniu oczekiwań.",
+        },
+        clarity: {
+          body: `Twarda obserwacja: klarowność ma ${score}/100, a najsłabszy wymiar to ${pack.names[weakest]} (${weakScore}/100). Mechanizm: tam, gdzie brak jasnych reguł, pojawiają się domysły i obrona. Konsekwencja: konflikty startują od intencji, nie od faktów. Działanie: spiszcie 3 zasady graniczne i konsekwencje ich złamania.`,
+          check: "Decyzja: jeśli w 7 dni pojawi się kolejne naruszenie bez konsekwencji, uznajecie, że obecny model relacji nie działa.",
+        },
+      };
+      return byKey[key];
+    }
+
+    const byKey = {
+      communication: {
+        body: `Hard observation: ${pack.names.communication} is ${score}/100 while the weakest dimension is ${weakScore}/100. Mechanism: conversation lowers tension but without closure the same issue returns (visible across communication and stability). Consequence: decisions get delayed and conflict cost increases week by week. Action: for 14 days, end each difficult topic with one dated owner/action line.`,
+        check: "Test: after 7 days count how many topics returned despite an agreement. If more than 1, change your conversation format.",
+      },
+      emotional: {
+        body: `Hard observation: ${pack.names.emotional} is ${score}/100 with a ${spread}-point spread across dimensions. Mechanism: when pressure rises, contact drops faster than repair readiness. Consequence: conflicts turn into distance and drag longer than the trigger itself. Action: set a fixed same-day re-entry protocol after conflict.`,
+        check: "Decision: if same-day re-entry fails for 7 days, introduce external structure (for example mediation).",
+      },
+      stability: {
+        body: `Hard observation: ${pack.names.stability} is ${score}/100, lower than your declared intent in other lanes. Mechanism: intent exists, execution breaks in daily pressure. Consequence: reliability drops and each next promise carries less weight. Action: set 2 measurable standards for 14 days and track daily completion.`,
+        check: "Test: review completion after 7 days. Below 80% means either plan correction or reduced expectations.",
+      },
+      clarity: {
+        body: `Hard observation: ${pack.names.clarity} is ${score}/100, with ${pack.names[weakest]} at ${weakScore}/100. Mechanism: unclear rules create guessing and defensive reactions. Consequence: conflict starts from assumed intent, not observable facts. Action: write 3 boundary rules and explicit consequences for repeat breaks.`,
+        check: "Decision: if another boundary break happens in 7 days without consequence, your current model is not working.",
+      },
+    };
+    return byKey[key];
+  }
+
+  function buildNoChangeScenario(locale, areaScores, trajectory, alertCount) {
+    const weak = getWeakestAreaKey(areaScores);
+    const weakScore = getAreaValueByKey(areaScores, weak);
+    const spread = Math.round(trajectory.variance || 0);
+    const pack = getOperationalLocalePack(locale);
+    if (locale === "pl") {
+      return `Jeśli nic nie zmienicie, w ciągu 3–6 tygodni wróci ten sam konflikt z najsłabszego obszaru (${pack.names[weak]}: ${weakScore}/100). Przy rozrzucie ${spread} pkt poprawa z dobrych dni nie utrzyma się pod presją i zaczniecie odkładać decyzje „na później”. Najbardziej prawdopodobny scenariusz: więcej domysłów, mniej realizacji ustaleń, oraz 1–2 powtarzalne spięcia tygodniowo. Decyzja na dziś: wybieracie jeden obszar i robicie 14-dniowy test wykonania albo uznajecie, że bez zmiany zasad relacja będzie dalej tracić jakość.`;
+    }
+    return `If nothing changes, in 3–6 weeks the same conflict will reappear from your weakest lane (${pack.names[weak]}: ${weakScore}/100). With a ${spread}-point spread, good days will not hold under pressure and key decisions will keep getting delayed. Most likely path: more assumptions, less follow-through, and 1–2 recurring clashes per week. Decision now: run a 14-day execution test on one lane, or accept that quality will continue to decline under the current rules.`;
+  }
+
+  function buildPatternAndMeaning(locale, areaScores, trajectory, alertCount) {
+    const pack = getOperationalLocalePack(locale);
+    const weak = getWeakestAreaKey(areaScores);
+    const weakScore = getAreaValueByKey(areaScores, weak);
+    const spread = Math.round(trajectory.variance || 0);
+    const avg = Math.round(trajectory.avgScore || 0);
+    if (locale === "pl") {
+      return {
+        pattern: `Wzorzec z danych: średnia ${avg}/100 i rozrzut ${spread} pkt oznaczają, że jeden słabszy obszar (${pack.names[weak]}: ${weakScore}/100) co tydzień niweluje postęp z mocniejszych obszarów. W praktyce temat wraca po chwilowym uspokojeniu, bo mechanizm wykonania nie został zmieniony.`,
+        meaning: `To nie jest „ogólny kryzys”, tylko konkretny problem operacyjny: decyzje bez terminu i odpowiedzialności. Największe ryzyko na teraz: odkładanie decyzji i powtarzalne spięcia ${alertCount >= 2 ? "2 razy w tygodniu" : "1 raz w tygodniu"}. Decyzja: przez 14 dni testujecie jeden obszar wykonawczo albo akceptujecie dalszy spadek jakości.`,
+      };
+    }
+    return {
+      pattern: `Data pattern: average ${avg}/100 with a ${spread}-point spread means one weak lane (${pack.names[weak]}: ${weakScore}/100) keeps canceling gains from stronger lanes. In practice, the same issue returns after short-term calm because execution mechanics did not change.`,
+      meaning: `This is not a generic crisis; it is an operational gap: decisions without owner and deadline. Main risk now: delayed decisions and recurring clashes ${alertCount >= 2 ? "twice per week" : "weekly"}. Decision: run a 14-day execution test on one lane or accept continued quality decline.`,
+    };
+  }
+
   function getPaywallTeasers(locale, score, areaScores) {
     const weakestArea = getWeakestAreaKey(areaScores);
     const weakestScore = Math.round(
@@ -4709,32 +4901,32 @@
         pattern: "Recurring pattern",
         meaning: "Overall meaning",
         next: "Practical next steps",
+        noChange: "What happens if nothing changes (3–6 weeks)",
         recheck: "Track change in 2-3 weeks",
         recheckCta: "Run scan again",
         back: "Back to result",
       },
       pl: {
         eyebrow: "Raport premium relacji",
-        title: "Pelna analiza relacji",
+        title: "Pełna analiza relacji",
         indexLabel: "Trust Index:",
-        subhead:
-          "Ten raport zamienia odpowiedzi w uporzadkowana diagnoze punktow nacisku, stabilnosci i kolejnych decyzji.",
+        subhead: "Ten raport pokazuje konkrety: co się dzieje, co to kosztuje i jaką decyzję podjąć teraz.",
         overview: "Kluczowe wymiary",
-        charts: "Przeglad wyniku i wykres",
-        chartNote:
-          "Wykres pokazuje, gdzie kumuluje sie nacisk i gdzie relacja ma jeszcze stabilne fundamenty.",
-        scale: ["Niska niepewnosc", "Srednia niepewnosc", "Wysoka niepewnosc"],
-        areas: ["Komunikacja", "Stabilnosc", "Klarownosc", "Bliskosc emocjonalna"],
+        charts: "Przegląd wyniku i wykres",
+        chartNote: "Wykres pokazuje, który obszar realnie psuje wykonanie ustaleń.",
+        scale: ["Niska niepewność", "Średnia niepewność", "Wysoka niepewność"],
+        areas: ["Komunikacja", "Stabilność", "Klarowność", "Bliskość emocjonalna"],
         comm: "Komunikacja",
-        emotional: "Bliskosc emocjonalna",
-        stability: "Stabilnosc",
-        clarity: "Klarownosc",
-        pattern: "Powtarzajacy sie wzorzec",
-        meaning: "Znaczenie calego obrazu",
+        emotional: "Bliskość emocjonalna",
+        stability: "Stabilność",
+        clarity: "Klarowność",
+        pattern: "Powtarzający się wzorzec",
+        meaning: "Znaczenie całego obrazu",
         next: "Praktyczne kolejne kroki",
-        recheck: "Sprawdz zmiane za 2-3 tygodnie",
-        recheckCta: "Powtorz skan",
-        back: "Wroc do wyniku",
+        noChange: "Co się stanie, jeśli nic nie zmienicie (3–6 tygodni)",
+        recheck: "Sprawdź zmianę za 2–3 tygodnie",
+        recheckCta: "Powtórz skan",
+        back: "Wróć do wyniku",
       },
       de: {
         eyebrow: "Premium-Beziehungsbericht",
@@ -4755,6 +4947,7 @@
         pattern: "Wiederkehrendes Muster",
         meaning: "Gesamtbedeutung",
         next: "Praktische nächste Schritte",
+        noChange: "Was passiert, wenn ihr nichts ändert (3–6 Wochen)",
         recheck: "Veränderung in 2-3 Wochen messen",
         recheckCta: "Scan erneut starten",
         back: "Zurück zum Ergebnis",
@@ -4778,6 +4971,7 @@
         pattern: "Patron recurrente",
         meaning: "Significado global",
         next: "Siguientes pasos practicos",
+        noChange: "Qué pasa si no cambiáis nada (3–6 semanas)",
         recheck: "Mide el cambio en 2-3 semanas",
         recheckCta: "Repetir scan",
         back: "Volver al resultado",
@@ -4801,6 +4995,7 @@
         pattern: "Padrao recorrente",
         meaning: "Significado geral",
         next: "Proximos passos praticos",
+        noChange: "O que acontece se nada mudar (3–6 semanas)",
         recheck: "Acompanhe mudanca em 2-3 semanas",
         recheckCta: "Refazer scan",
         back: "Voltar ao resultado",
@@ -4835,6 +5030,7 @@
     setText("report-pattern-heading", ui.pattern);
     setText("report-meaning-heading", ui.meaning);
     setText("report-next-heading", ui.next);
+    setText("report-nochange-heading", ui.noChange || (uiMap.en && uiMap.en.noChange));
     setText("report-recheck-heading", ui.recheck);
     setText("report-recheck-cta", ui.recheckCta);
     const benchmarkUi = getBenchmarkLabels(locale);
@@ -5356,6 +5552,7 @@
       patternEl: document.getElementById("report-pattern-body"),
       meaningEl: document.getElementById("report-meaning-body"),
       nextStepsEl: document.getElementById("report-next-steps-body"),
+      noChangeEl: document.getElementById("report-nochange-body"),
       recheckEl: document.getElementById("report-recheck-body"),
     };
     if (!required.scoreStrong || !required.communicationEl || !required.emotionalEl || !required.stabilityEl || !required.clarityEl) return;
@@ -5375,6 +5572,7 @@
       required.patternEl.innerHTML = "";
       required.meaningEl.innerHTML = "";
       required.nextStepsEl.innerHTML = "";
+      required.noChangeEl.innerHTML = "";
       required.recheckEl.innerHTML = "";
       return;
     }
@@ -5438,7 +5636,7 @@
       setText(`report-area-${entry.domPrefix}-score`, `${scoreValue}/100`);
       setText(`report-area-${entry.domPrefix}-label`, segmentLabel);
       setText(`report-area-${entry.domPrefix}-insight`, content.title);
-      setText(`report-area-${entry.domPrefix}-text`, formatAreaDimensionBody(locale, content));
+      setText(`report-area-${entry.domPrefix}-text`, buildOverviewCardText(locale, entry.areaKey, scoreValue, areaScores, trajectory));
       setText(`report-bar-label-${entry.domPrefix}`, segmentLabel);
       setText(entry.scoreId, `${scoreValue}/100`);
       setText(entry.labelId, segmentLabel);
@@ -5527,27 +5725,35 @@
       }`;
     }
 
-    required.communicationEl.innerHTML = renderPremiumDimensionSection(narrative, "communication");
-    required.emotionalEl.innerHTML = renderPremiumDimensionSection(narrative, "emotional");
-    required.stabilityEl.innerHTML = renderPremiumDimensionSection(narrative, "stability");
-    required.clarityEl.innerHTML = renderPremiumDimensionSection(narrative, "clarity");
+    const operationalCommunication = buildOperationalDimension(locale, "communication", areaScores, trajectory);
+    const operationalEmotional = buildOperationalDimension(locale, "emotional", areaScores, trajectory);
+    const operationalStability = buildOperationalDimension(locale, "stability", areaScores, trajectory);
+    const operationalClarity = buildOperationalDimension(locale, "clarity", areaScores, trajectory);
+    required.communicationEl.innerHTML = `<p>${escapeHtml(operationalCommunication.body)}</p>`;
+    required.emotionalEl.innerHTML = `<p>${escapeHtml(operationalEmotional.body)}</p>`;
+    required.stabilityEl.innerHTML = `<p>${escapeHtml(operationalStability.body)}</p>`;
+    required.clarityEl.innerHTML = `<p>${escapeHtml(operationalClarity.body)}</p>`;
     const checksMap = [
-      ["report-communication-checks", narrative.dimensions.communication.checks],
-      ["report-emotional-checks", narrative.dimensions.emotional.checks],
-      ["report-stability-checks", narrative.dimensions.stability.checks],
-      ["report-clarity-checks", narrative.dimensions.clarity.checks],
+      ["report-communication-checks", [operationalCommunication.check]],
+      ["report-emotional-checks", [operationalEmotional.check]],
+      ["report-stability-checks", [operationalStability.check]],
+      ["report-clarity-checks", [operationalClarity.check]],
     ];
     checksMap.forEach(([id, items]) => {
       const el = document.getElementById(id);
       if (el) el.innerHTML = items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
     });
 
-    required.patternEl.innerHTML = `<p>${escapeHtml(narrative.pattern)}</p>`;
-    required.meaningEl.innerHTML = `<p>${escapeHtml(narrative.meaning)}</p>`;
+    const patternMeaning = buildPatternAndMeaning(locale, areaScores, trajectory, alertCount);
+    required.patternEl.innerHTML = `<p>${escapeHtml(patternMeaning.pattern)}</p>`;
+    required.meaningEl.innerHTML = `<p>${escapeHtml(patternMeaning.meaning)}</p>`;
     required.nextStepsEl.innerHTML = (outcomeVariant.highImpact || [])
       .slice(0, 4)
       .map((item) => `<li><strong>${escapeHtml(item.title)}:</strong> ${escapeHtml(item.change)}</li>`)
       .join("");
+    if (required.noChangeEl) {
+      required.noChangeEl.innerHTML = `<p>${escapeHtml(buildNoChangeScenario(locale, areaScores, trajectory, alertCount))}</p>`;
+    }
     required.recheckEl.innerHTML = `<p>${escapeHtml(narrative.recheck)}</p>`;
 
     const chartNoteEl = document.getElementById("report-chart-note");
