@@ -5048,6 +5048,44 @@
     return [lang.line1, lang.line2, lang.line3.replace(weakestArea, weakestLabel)];
   }
 
+  /** Static / no-result copy aligned with getPaywallTeasers (score below 70, clarity near benchmark, weakest = communication). */
+  function getPaywallTeaserPlaceholderLines(locale) {
+    const L = normalizeLocale(locale);
+    const m = {
+      en: [
+        "Detected pattern: recurring uncertainty loop.",
+        "Clarity score near average. One signal still stays unresolved.",
+        "Weakest area: communication. Current level: 52/100.",
+      ],
+      pl: [
+        "Wykryty wzorzec: powtarzajaca sie petla niepewnosci.",
+        "Wynik klarownosci blisko sredniej. Jeden sygnal nadal nie jest domkniety.",
+        "Najsłabszy obszar: komunikacja. Biezacy poziom: 52/100.",
+      ],
+      de: [
+        "Erkanntes Muster: wiederkehrende Unsicherheitsschleife.",
+        "Klarheitswert nahe Durchschnitt. Ein Signal bleibt offen.",
+        "Schwächster Bereich: Kommunikation. Aktuelles Niveau: 52/100.",
+      ],
+      es: [
+        "Patron detectado: ciclo recurrente de incertidumbre.",
+        "Claridad cerca del promedio. Una señal sigue sin cierre.",
+        "Area mas debil: comunicacion. Nivel actual: 52/100.",
+      ],
+      pt: [
+        "Padrao detectado: ciclo recorrente de incerteza.",
+        "Clareza perto da media. Um sinal permanece sem fechamento.",
+        "Area mais fraca: comunicacao. Nivel atual: 52/100.",
+      ],
+      in: [
+        "Detected pattern: recurring uncertainty loop.",
+        "Clarity score near average. One signal still stays unresolved.",
+        "Weakest area: communication. Current level: 52/100.",
+      ],
+    };
+    return m[L] || m.en;
+  }
+
   function localizeResultPageUi(locale) {
     const lang = RESULT_LAYOUT_UI[locale] ? locale : "en";
     const ui = RESULT_LAYOUT_UI[lang];
@@ -5331,6 +5369,10 @@
       interpEl.innerHTML = "";
       insightsEl.innerHTML = "";
       tipsEl.innerHTML = "";
+      const teaserPh = getPaywallTeaserPlaceholderLines(locale);
+      setText("locked-teaser-1", teaserPh[0]);
+      setText("locked-teaser-2", teaserPh[1]);
+      setText("locked-teaser-3", teaserPh[2]);
       return;
     }
 
