@@ -4567,6 +4567,81 @@
     if (el) el.textContent = value;
   }
 
+  function localizeContactPageUi(locale) {
+    const uiMap = {
+      en: {
+        pageTitle: "Contact — RelationshipScan",
+        eyebrow: "Contact",
+        title: "Contact & company details",
+        intro: "For support, billing, or legal requests, use the details below.",
+        companyLabel: "Legal company name:",
+        addressLabel: "Registered address:",
+        vatLabel: "VAT ID:",
+        emailLabel: "Contact email:",
+        phoneLabel: "Phone:",
+        responseTarget: "Response time target: within 3 business days.",
+        disclaimer:
+          "RelationshipScan is an informational and educational tool. It is not psychological, legal, or medical advice and does not provide a diagnosis.",
+      },
+      pl: {
+        pageTitle: "Kontakt — RelationshipScan",
+        eyebrow: "Kontakt",
+        title: "Kontakt i dane firmy",
+        intro: "W sprawach wsparcia, rozliczeń lub kwestii prawnych skorzystaj z danych poniżej.",
+        companyLabel: "Nazwa firmy:",
+        addressLabel: "Adres rejestrowy:",
+        vatLabel: "NIP:",
+        emailLabel: "E-mail kontaktowy:",
+        phoneLabel: "Telefon:",
+        responseTarget: "Docelowy czas odpowiedzi: do 3 dni roboczych.",
+        disclaimer:
+          "RelationshipScan to narzędzie informacyjne i edukacyjne. Nie stanowi porady psychologicznej, prawnej ani medycznej oraz nie stawia diagnozy.",
+      },
+      de: {
+        pageTitle: "Kontakt — RelationshipScan",
+        eyebrow: "Kontakt",
+        title: "Kontakt- und Firmendaten",
+        intro: "Für Support, Abrechnung oder rechtliche Anfragen nutze bitte die folgenden Daten.",
+        companyLabel: "Rechtlicher Firmenname:",
+        addressLabel: "Eingetragene Adresse:",
+        vatLabel: "USt-IdNr.:",
+        emailLabel: "Kontakt-E-Mail:",
+        phoneLabel: "Telefon:",
+        responseTarget: "Ziel für die Antwortzeit: innerhalb von 3 Werktagen.",
+        disclaimer:
+          "RelationshipScan ist ein Informations- und Bildungswerkzeug. Es ist keine psychologische, rechtliche oder medizinische Beratung und stellt keine Diagnose.",
+      },
+      es: {
+        pageTitle: "Contacto — RelationshipScan",
+        eyebrow: "Contacto",
+        title: "Contacto y datos de la empresa",
+        intro: "Para soporte, facturación o solicitudes legales, utiliza los datos a continuación.",
+        companyLabel: "Nombre legal de la empresa:",
+        addressLabel: "Dirección registrada:",
+        vatLabel: "NIF-IVA:",
+        emailLabel: "Correo de contacto:",
+        phoneLabel: "Teléfono:",
+        responseTarget: "Tiempo objetivo de respuesta: dentro de 3 días hábiles.",
+        disclaimer:
+          "RelationshipScan es una herramienta informativa y educativa. No es asesoramiento psicológico, legal ni médico y no proporciona un diagnóstico.",
+      },
+      pt: null,
+      in: null,
+    };
+    const ui = uiMap[locale] || uiMap.en;
+    document.title = ui.pageTitle;
+    setText("contact-eyebrow", ui.eyebrow);
+    setText("contact-title", ui.title);
+    setText("contact-intro", ui.intro);
+    setText("contact-company-label", ui.companyLabel);
+    setText("contact-address-label", ui.addressLabel);
+    setText("contact-vat-label", ui.vatLabel);
+    setText("contact-email-label", ui.emailLabel);
+    setText("contact-phone-label", ui.phoneLabel);
+    setText("contact-response-target", ui.responseTarget);
+    setText("contact-disclaimer", ui.disclaimer);
+  }
+
   function renderPremiumDimensionSection(narrative, key) {
     const dim = narrative.dimensions[key];
     if (!dim) return "";
@@ -5825,6 +5900,7 @@
     persistPageLocale();
     const lang = getFlowLocale();
     console.log("LANG ACTIVE:", lang);
+    localizeContactPageUi(lang);
     appendLangToStripeLinks();
     initMarketPages();
     setYear();
