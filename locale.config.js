@@ -24,5 +24,17 @@ window.RELATIONSHIPSCAN_CONFIG = {
       paymentLink: "https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01",
       successUrl: "/es/success.html",
     },
+    pt: {
+      label: "Português",
+      basePath: "/pt/",
+      paymentLink: "https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01",
+      successUrl: "/pt/success.html",
+    },
+    in: {
+      label: "English (India)",
+      basePath: "/in/",
+      paymentLink: "https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01",
+      successUrl: "/in/success.html",
+    },
   },
 };

@@ -765,10 +765,10 @@
     return LOCALE_PATHS[value] ? value : "en";
   }
 
-  /** Payment Link (Stripe Dashboard) — wklej osobno dla PLN / USD / EUR. */
-  const STRIPE_LINK_PLN = "https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00";
-  const STRIPE_LINK_USD = "https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00";
-  const STRIPE_LINK_EUR = "https://buy.stripe.com/test_14AdRbbpqeFJbJIffH1ck00";
+  /** Payment Link (Stripe Dashboard) — fallback gdy brak wpisu w locale.config.js */
+  const STRIPE_LINK_PLN = "https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01";
+  const STRIPE_LINK_USD = "https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01";
+  const STRIPE_LINK_EUR = "https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01";
 
   function getBillingCurrency(locale) {
     const L = normalizeLocale(locale);
@@ -4632,8 +4632,34 @@
         disclaimer:
           "RelationshipScan es una herramienta informativa y educativa. No es asesoramiento psicológico, legal ni médico y no proporciona un diagnóstico.",
       },
-      pt: null,
-      in: null,
+      pt: {
+        pageTitle: "Contato — RelationshipScan",
+        eyebrow: "Contato",
+        title: "Contato e dados da empresa",
+        intro: "Para suporte, cobrança ou questões jurídicas, use os dados abaixo.",
+        companyLabel: "Razão social:",
+        addressLabel: "Endereço registrado:",
+        vatLabel: "Número de identificação fiscal (VAT):",
+        emailLabel: "E-mail de contato:",
+        phoneLabel: "Telefone:",
+        responseTarget: "Meta de tempo de resposta: até 3 dias úteis.",
+        disclaimer:
+          "O RelationshipScan é uma ferramenta informativa e educacional. Não constitui aconselhamento psicológico, jurídico ou médico e não fornece diagnóstico.",
+      },
+      in: {
+        pageTitle: "Contact — RelationshipScan",
+        eyebrow: "Contact",
+        title: "Contact & company details",
+        intro: "For support, billing, or legal requests, use the details below.",
+        companyLabel: "Legal company name:",
+        addressLabel: "Registered address:",
+        vatLabel: "VAT ID:",
+        emailLabel: "Contact email:",
+        phoneLabel: "Phone:",
+        responseTarget: "Response time target: within 3 business days.",
+        disclaimer:
+          "RelationshipScan is an informational and educational tool. It is not psychological, legal, or medical advice and does not provide a diagnosis.",
+      },
     };
     const ui = uiMap[locale] || uiMap.en;
     document.title = ui.pageTitle;
@@ -5303,10 +5329,10 @@
         failed: "We did not receive a confirmed paid status yet. Complete payment in your bank app, then return here.",
       },
       pl: {
-        title: "Platnosc potwierdzona",
-        body: "Weryfikujemy platnosc po stronie Stripe...",
+        title: "Płatność potwierdzona",
+        body: "Weryfikujemy płatność po stronie Stripe...",
         failed:
-          "Nie mamy jeszcze potwierdzonej, oplaconej transakcji. Dokoncz autoryzacje w aplikacji banku i wroc do tego ekranu.",
+          "Nie mamy jeszcze potwierdzonej, opłaconej transakcji. Dokończ autoryzację w aplikacji banku i wróć na ten ekran.",
       },
       de: {
         title: "Zahlung bestätigt",
@@ -5900,14 +5926,18 @@
     if (recheckCta) recheckCta.setAttribute("href", getFlowPageUrl("test", locale));
   }
 
+  function isContactPagePath() {
+    const p = String(window.location.pathname || "").toLowerCase();
+    return p.endsWith("/contact.html") || p.endsWith("/contact") || p.endsWith("/contact/index.html");
+  }
+
   // --- Bootstrap wg adresu strony ---
   function boot() {
     document.documentElement.classList.add("js");
     initLocaleByLocation();
     persistPageLocale();
     const lang = getFlowLocale();
-    console.log("LANG ACTIVE:", lang);
-    localizeContactPageUi(lang);
+    if (isContactPagePath()) localizeContactPageUi(lang);
     appendLangToStripeLinks();
     initMarketPages();
     setYear();
