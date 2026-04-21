@@ -5,69 +5,18 @@ import Stripe from "stripe";
 const port = parseInt(process.env.PORT || "3001", 10);
 const frontendUrl = String(process.env.FRONTEND_URL || "").replace(/\/$/, "");
 const ttlHours = Math.max(1, parseInt(process.env.ACCESS_GRANT_TTL_HOURS || "24", 10));
+const stripeSecret = process.env.STRIPE_SECRET_KEY || "";
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("Missing STRIPE_SECRET_KEY");
-}
-if (!process.env.STRIPE_WEBHOOK_SECRET) {
-  throw new Error("Missing STRIPE_WEBHOOK_SECRET");
-}
-if (!frontendUrl) {
-  throw new Error("Missing FRONTEND_URL");
-}
+if (!stripeSecret) throw new Error("Missing STRIPE_SECRET_KEY");
+if (!frontendUrl) throw new Error("Missing FRONTEND_URL");
+if (!webhookSecret) throw new Error("Missing STRIPE_WEBHOOK_SECRET");
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2025-03-31.basil" });
+const stripe = new Stripe(stripeSecret, { apiVersion: "2025-03-31.basil" });
 const app = express();
-
-/** @type {Map<string, { paid: boolean, paymentIntentId: string|null, source: string, updatedAt: number }>} */
-const paidSessions = new Map();
-/** @type {Map<string, { paid: boolean, source: string, updatedAt: number }>} */
-const paidIntents = new Map();
-/** @type {Map<string, { sessionId: string|null, paymentIntentId: string|null, createdAt: number, expiresAt: number }>} */
-const grants = new Map();
-
-function now() {
-  return Date.now();
-}
 
 function log(event, payload = {}) {
   console.log(JSON.stringify({ ts: new Date().toISOString(), event, ...payload }));
-}
-
-function pruneExpiredGrants() {
-  const ts = now();
-  for (const [key, value] of grants.entries()) {
-    if (value.expiresAt <= ts) grants.delete(key);
-  }
-}
-
-function createGrant(sessionId, paymentIntentId) {
-  pruneExpiredGrants();
-  const token = crypto.randomUUID();
-  const createdAt = now();
-  const expiresAt = createdAt + ttlHours * 60 * 60 * 1000;
-  grants.set(token, {
-    sessionId: sessionId || null,
-    paymentIntentId: paymentIntentId || null,
-    createdAt,
-    expiresAt,
-  });
-  return { token, expiresAt };
-}
-
-function markSessionPaid(sessionId, paymentIntentId, source) {
-  if (!sessionId) return;
-  paidSessions.set(sessionId, {
-    paid: true,
-    paymentIntentId: paymentIntentId || null,
-    source,
-    updatedAt: now(),
-  });
-}
-
-function markIntentPaid(paymentIntentId, source) {
-  if (!paymentIntentId) return;
-  paidIntents.set(paymentIntentId, { paid: true, source, updatedAt: now() });
 }
 
 function allowedOrigin(reqOrigin) {
@@ -75,69 +24,95 @@ function allowedOrigin(reqOrigin) {
   return reqOrigin === frontendUrl ? reqOrigin : frontendUrl;
 }
 
+function hmac(encodedPayload) {
+  return crypto.createHmac("sha256", stripeSecret).update(encodedPayload, "utf8").digest("base64url");
+}
+
+function createGrant(sessionId, paymentIntentId) {
+  const iat = Date.now();
+  const exp = iat + ttlHours * 60 * 60 * 1000;
+  const payload = {
+    sid: sessionId || null,
+    pi: paymentIntentId || null,
+    iat,
+    exp,
+  };
+  const encoded = Buffer.from(JSON.stringify(payload), "utf8").toString("base64url");
+  const signature = hmac(encoded);
+  return {
+    token: `${encoded}.${signature}`,
+    expiresAt: exp,
+  };
+}
+
+function verifyGrant(token) {
+  const [encoded, signature] = String(token || "").split(".");
+  if (!encoded || !signature) return { ok: false, reason: "malformed" };
+  const expected = hmac(encoded);
+  if (!crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature))) {
+    return { ok: false, reason: "bad_signature" };
+  }
+  let payload = null;
+  try {
+    payload = JSON.parse(Buffer.from(encoded, "base64url").toString("utf8"));
+  } catch (e) {
+    return { ok: false, reason: "bad_payload" };
+  }
+  if (!payload?.exp || Date.now() > Number(payload.exp)) return { ok: false, reason: "expired" };
+  return { ok: true, payload };
+}
+
+async function hydrateSession(eventObject) {
+  if (!eventObject?.id) return null;
+  if (eventObject.payment_status && eventObject.payment_intent) return eventObject;
+  return stripe.checkout.sessions.retrieve(eventObject.id, { expand: ["payment_intent"] });
+}
+
 app.use((req, res, next) => {
   const origin = allowedOrigin(req.headers.origin);
   if (origin) res.setHeader("Access-Control-Allow-Origin", origin);
   res.setHeader("Vary", "Origin");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Stripe-Signature");
   if (req.method === "OPTIONS") return res.sendStatus(204);
   return next();
 });
 
-app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), (req, res) => {
+app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), async (req, res) => {
   const sig = req.headers["stripe-signature"];
-  if (!sig) {
-    log("webhook.missing_signature");
-    return res.status(400).send("Missing signature");
-  }
+  if (!sig) return res.status(400).send("Missing signature");
 
   let event;
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err) {
     log("webhook.signature_invalid", { message: String(err.message || err) });
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
   try {
-    switch (event.type) {
-      case "checkout.session.completed":
-      case "checkout.session.async_payment_succeeded": {
-        const session = event.data.object;
-        const isPaid = session.payment_status === "paid";
-        const paymentIntentId =
-          typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id || null;
-        if (isPaid && session.id) {
-          markSessionPaid(session.id, paymentIntentId, `webhook:${event.type}`);
-          if (paymentIntentId) markIntentPaid(paymentIntentId, `webhook:${event.type}`);
-        }
-        log("webhook.checkout_session", {
-          type: event.type,
-          sessionId: session.id || null,
-          paymentStatus: session.payment_status || null,
-          paymentIntentId,
-          paid: isPaid,
-        });
-        break;
-      }
-      case "payment_intent.succeeded": {
-        const pi = event.data.object;
-        if (pi.id) markIntentPaid(pi.id, "webhook:payment_intent.succeeded");
-        log("webhook.payment_intent_succeeded", { paymentIntentId: pi.id || null });
-        break;
-      }
-      case "payment_intent.payment_failed": {
-        const pi = event.data.object;
-        log("webhook.payment_intent_failed", { paymentIntentId: pi.id || null });
-        break;
-      }
-      default:
-        log("webhook.unhandled", { type: event.type });
+    if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
+      const session = await hydrateSession(event.data.object);
+      const paymentIntentId =
+        session && (typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id || null);
+      log("webhook.checkout_session", {
+        type: event.type,
+        sessionId: session?.id || null,
+        paymentStatus: session?.payment_status || null,
+        paymentIntentId,
+      });
+    } else if (event.type === "payment_intent.succeeded" || event.type === "payment_intent.payment_failed") {
+      const pi = event.data.object || {};
+      log(`webhook.${event.type.replace(/\./g, "_")}`, {
+        paymentIntentId: pi.id || null,
+        status: pi.status || null,
+      });
+    } else {
+      log("webhook.unhandled", { type: event.type });
     }
     return res.json({ received: true });
   } catch (err) {
-    log("webhook.handler_error", { message: String(err.message || err) });
+    log("webhook.handler_error", { message: String(err.message || err), type: event.type });
     return res.status(500).json({ error: "webhook_handler_error" });
   }
 });
@@ -149,27 +124,21 @@ app.get("/health", (_req, res) => {
 });
 
 app.get("/api/stripe/grant-status", (req, res) => {
-  pruneExpiredGrants();
   const token = String(req.query.grant || "").trim();
   if (!token) return res.status(400).json({ active: false, error: "missing_grant" });
-  const row = grants.get(token);
-  if (!row) return res.json({ active: false });
-  return res.json({
+  const verified = verifyGrant(token);
+  if (!verified.ok) return res.status(200).json({ active: false, reason: verified.reason });
+  return res.status(200).json({
     active: true,
-    expiresAt: row.expiresAt,
-    sessionId: row.sessionId,
-    paymentIntentId: row.paymentIntentId,
+    expiresAt: Number(verified.payload.exp),
+    sessionId: verified.payload.sid || null,
+    paymentIntentId: verified.payload.pi || null,
   });
 });
 
 app.post("/api/stripe/confirm-return", async (req, res) => {
   const sessionId = String(req.body?.session_id || "").trim();
   const paymentIntentIdRaw = String(req.body?.payment_intent || "").trim();
-  log("confirm_return.request", {
-    sessionId: sessionId || null,
-    paymentIntentId: paymentIntentIdRaw || null,
-  });
-
   if (!sessionId && !paymentIntentIdRaw) {
     return res.status(400).json({ paid: false, error: "missing_session_or_payment_intent" });
   }
@@ -177,13 +146,11 @@ app.post("/api/stripe/confirm-return", async (req, res) => {
   try {
     let paid = false;
     let paymentIntentId = paymentIntentIdRaw || null;
-    let paymentIntentStatus = null;
     let paymentStatus = null;
+    let paymentIntentStatus = null;
 
     if (sessionId) {
-      const session = await stripe.checkout.sessions.retrieve(sessionId, {
-        expand: ["payment_intent"],
-      });
+      const session = await stripe.checkout.sessions.retrieve(sessionId, { expand: ["payment_intent"] });
       paymentStatus = session.payment_status || null;
       if (!paymentIntentId) {
         paymentIntentId =
@@ -192,24 +159,15 @@ app.post("/api/stripe/confirm-return", async (req, res) => {
       if (session.payment_intent && typeof session.payment_intent !== "string") {
         paymentIntentStatus = session.payment_intent.status || null;
       }
-
       if (session.payment_status === "paid" && (!paymentIntentStatus || paymentIntentStatus === "succeeded")) {
         paid = true;
-        markSessionPaid(session.id, paymentIntentId, "confirm_return");
       }
     }
 
     if (!paid && paymentIntentId) {
       const pi = await stripe.paymentIntents.retrieve(paymentIntentId);
       paymentIntentStatus = pi.status || null;
-      if (pi.status === "succeeded") {
-        paid = true;
-        markIntentPaid(pi.id, "confirm_return");
-      }
-    }
-
-    if (paid && paymentIntentId) {
-      markIntentPaid(paymentIntentId, "confirm_return");
+      if (pi.status === "succeeded") paid = true;
     }
 
     if (!paid) {
@@ -219,20 +177,16 @@ app.post("/api/stripe/confirm-return", async (req, res) => {
         paymentStatus,
         paymentIntentStatus,
       });
-      return res.status(402).json({
-        paid: false,
-        paymentStatus,
-        paymentIntentStatus,
-      });
+      return res.status(402).json({ paid: false, paymentStatus, paymentIntentStatus });
     }
 
     const grant = createGrant(sessionId || null, paymentIntentId || null);
     log("confirm_return.paid", {
       sessionId: sessionId || null,
       paymentIntentId: paymentIntentId || null,
-      grantExpiresAt: grant.expiresAt,
+      expiresAt: grant.expiresAt,
     });
-    return res.json({
+    return res.status(200).json({
       paid: true,
       grantToken: grant.token,
       expiresAt: grant.expiresAt,
@@ -245,18 +199,10 @@ app.post("/api/stripe/confirm-return", async (req, res) => {
       paymentIntentId: paymentIntentIdRaw || null,
       message: String(err.message || err),
     });
-    return res.status(500).json({
-      paid: false,
-      error: "stripe_verify_failed",
-      message: String(err.message || err),
-    });
+    return res.status(500).json({ paid: false, error: "stripe_verify_failed", message: String(err.message || err) });
   }
 });
 
 app.listen(port, () => {
-  log("server.started", {
-    port,
-    frontendUrl,
-    ttlHours,
-  });
+  log("server.started", { port, frontendUrl, ttlHours, mode: "stateless" });
 });

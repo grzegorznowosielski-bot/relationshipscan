@@ -862,7 +862,8 @@
   function getFlowPageUrl(pageName, locale) {
     const normalizedLocale = normalizeLocale(locale);
     const runtime = getRuntimeLocaleConfig();
-    if (runtime && runtime[normalizedLocale] && runtime[normalizedLocale].basePath) {
+    const localizedPages = new Set(["index", "checkout", "success", "report"]);
+    if (runtime && runtime[normalizedLocale] && runtime[normalizedLocale].basePath && localizedPages.has(String(pageName || ""))) {
       return `${getLocaleBasePath(normalizedLocale)}${pageName}.html`;
     }
     return `${pageName}.html?lang=${encodeURIComponent(normalizedLocale)}`;

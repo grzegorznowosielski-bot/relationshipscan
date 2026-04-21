@@ -1,10 +1,10 @@
-STRIPE VERIFY BACKEND — FINAL SETUP (RENDER + DHOSTING FRONTEND)
+STRIPE VERIFY BACKEND — FINAL SETUP (VERCEL + DHOSTING FRONTEND)
 =================================================================
 
 DOCZELOWA ARCHITEKTURA
 ----------------------
 - Frontend (statyczny): dhosting
-- Backend weryfikacji Stripe: Render (Node)
+- Backend weryfikacji Stripe: Vercel (Node serverless)
 - Docelowy URL backendu: https://payments.relationshipscan.app
 
 To jest URL, który ma być ustawiony w:
@@ -21,15 +21,15 @@ meta: stripe-verify-api-base
 - Frontend meta ustawione na:
   https://payments.relationshipscan.app
 
-2) DEPLOY NA RENDER
+2) DEPLOY NA VERCEL
 -------------------
-1. W Render wybierz "New > Blueprint" i wskaż to repo.
-2. Render odczyta render.yaml i postawi usługę:
-   relationshipscan-stripe-verify
-3. Ustaw sekrety:
+1. W Vercel ustaw Root Directory = server/stripe
+2. W Vercel env ustaw:
    - STRIPE_SECRET_KEY
-   - STRIPE_WEBHOOK_SECRET (tymczasowo puste, ustawisz po utworzeniu webhooka)
-4. Po pierwszym deployu dodaj custom domain:
+   - STRIPE_WEBHOOK_SECRET
+   - FRONTEND_URL=https://relationshipscan.app
+   - ACCESS_GRANT_TTL_HOURS=24
+3. Ustaw custom domain:
    https://payments.relationshipscan.app
 
 3) DNS W DHOSTING
@@ -37,13 +37,13 @@ meta: stripe-verify-api-base
 W panelu DNS domeny relationshipscan.app dodaj rekord:
 - Type: CNAME
 - Host: payments
-- Value: target podany przez Render dla custom domain
+- Value: target podany przez Vercel dla custom domain
 
 Po propagacji:
 https://payments.relationshipscan.app/health
 ma zwracać JSON z ok:true.
 
-4) WEBHOOK STRIPE (PRODUKCJA)
+4) WEBHOOK STRIPE (PRODUKCJA) — JEDEN ENDPOINT
 -----------------------------
 W Stripe Dashboard:
 Developers > Webhooks > Add endpoint
@@ -57,10 +57,12 @@ Zdarzenia:
 - payment_intent.succeeded
 - payment_intent.payment_failed
 
-Po zapisaniu Stripe pokaże Signing secret (whsec_...).
-Wklej go do env:
+Webhook destinations:
+- ZOSTAW: thin payload
+- USUŃ: snapshot payload
+
+Backend używa tylko jednego sekretu:
 STRIPE_WEBHOOK_SECRET
-i zrób redeploy.
 
 5) CO WERYFIKUJE BACKEND
 ------------------------
@@ -76,7 +78,7 @@ Dopiero wtedy backend zwraca grantToken.
 
 6) KONTROLA DOSTEPU W FRONTEND
 ------------------------------
-- Front zapisuje wyłącznie grantToken z backendu.
+- Front zapisuje wyłącznie stateless grantToken podpisany po stronie backendu.
 - Każde wejście na report/result sprawdza:
   GET /api/stripe/grant-status?grant=...
 - Bez aktywnego grantu nie ma odblokowania premium.
