@@ -1050,244 +1050,238 @@
     return "niepewnosc";
   }
 
-  const RESULT_COPY = {
-    stabilna: {
-      headline: "Your relationship looks stable",
-      label: "Consistent trust signals",
-      lead:
-        "Right now, what you describe holds together. There are no clear breaks that would disrupt the connection between you.",
-      interpretation: [
-        "In many situations, you’re able to talk things through and not leave them hanging. When tension shows up, it doesn’t immediately blow up — you can pause it or come back to it later.",
-        "This can change. Stress or fatigue can easily shift the dynamic, even if things feel steady most of the time.",
+  const RESULT_COPY =   {
+    "stabilna": {
+      "headline": "Right now, this relationship is holding",
+      "label": "Mostly steady",
+      "lead": "You still have hard moments, but they do not blow everything up. You can usually talk, pause, and come back.",
+      "interpretation": [
+        "You are not stuck in daily drama. Contact does not disappear for days after every difficult talk.",
+        "This can still shift fast with stress, fatigue, or avoidance. But right now, things are more stable than messy."
       ],
-      tips: [
-        "Keep everyday contact, not only when something goes wrong.",
-        "If a topic gets dropped, come back to it instead of letting it fade.",
-        "Notice what already works and keep doing it.",
-      ],
+      "tips": [
+        "Keep an eye on what keeps you close on normal days.",
+        "Do not leave hard topics hanging for a week.",
+        "Judge by what happens repeatedly, not by one good night."
+      ]
     },
-    napiecia: {
-      headline: "Something is starting to shift",
-      label: "Mixed trust signals",
-      lead:
-        "There’s noticeable friction. Things aren’t falling apart, but the sense of stability isn’t consistent.",
-      interpretation: [
-        "Sometimes things feel normal, then distance or tension shows up. This pattern repeats.",
-        "Multiple topics at once, unfinished conversations, things coming back without closure. It gets hard to tell what the real issue is.",
+    "napiecia": {
+      "headline": "This is starting to break down",
+      "label": "Unstable",
+      "lead": "You are not in total collapse, but something is off. One day feels close, next day feels cold or tense.",
+      "interpretation": [
+        "Talks start and then die. Unfinished issues pile up and return in the next fight.",
+        "Words and behavior do not match often enough to create doubt."
       ],
-      tips: [
-        "Focus on one topic at a time and close it.",
-        "Watch behavior for a few days, not promises.",
-        "Agree on one small thing you can actually observe.",
-      ],
+      "tips": [
+        "Pick one unresolved issue and close it fully.",
+        "Watch behavior for a few days, not promises in one conversation.",
+        "If closeness-distance keeps repeating, treat it as real, not temporary."
+      ]
     },
-    niepewnosc: {
-      headline: "Your level of uncertainty is high",
-      label: "High uncertainty signals",
-      lead:
-        "There’s ongoing tension here. Too many things don’t line up or stay unresolved.",
-      interpretation: [
-        "Difficult topics don’t get resolved. They return or stay in the background. At the same time, signals are inconsistent — closeness one moment, distance the next.",
-        "In this state, it’s easy to overthink and fill in the gaps yourself. That usually makes things more confusing, not clearer.",
+    "niepewnosc": {
+      "headline": "Your uncertainty is high",
+      "label": "High risk of confusion",
+      "lead": "There is too much tension and too little clarity. Important things stay unanswered and your safety drops.",
+      "interpretation": [
+        "Hard topics keep returning without closure. You get closeness, then distance, then silence.",
+        "At this point people usually overthink because they have no stable ground."
       ],
-      tips: [
-        "Separate what actually happened from what you’re assuming.",
-        "Ask for one concrete change in behavior.",
-        "If tension stays high, getting outside perspective can help.",
-      ],
-    },
+      "tips": [
+        "Separate facts from what you are adding in your head.",
+        "Ask for one clear behavior change you can actually see.",
+        "If nothing changes, trust what keeps happening."
+      ]
+    }
   };
 
-  const RESULT_COPY_PL = {
-    stabilna: {
-      headline: "Twoja relacja wygląda stabilnie",
-      label: "Stabilne sygnały zaufania",
-      lead:
-        "Na teraz to, co opisujesz, układa się w spójny obraz. Nie widać większych rozjazdów, które rozwalałyby kontakt między Wami.",
-      interpretation: [
-        "W wielu sytuacjach jesteście w stanie się dogadać i nie zostawiać spraw niedomkniętych. Jeśli pojawia się napięcie, nie eskaluje od razu, tylko da się je zatrzymać albo wrócić do rozmowy później.",
-        "To może się zmieniać. Przy większym zmęczeniu albo stresie takie rzeczy potrafią się rozjechać, nawet jeśli na co dzień wszystko działa.",
+  const RESULT_COPY_PL =   {
+    "stabilna": {
+      "headline": "Na teraz ta relacja się trzyma",
+      "label": "Raczej stabilnie",
+      "lead": "Są trudniejsze momenty, ale nie rozwalają wszystkiego. Zwykle da się wrócić do rozmowy i domknąć temat.",
+      "interpretation": [
+        "Nie tkwicie w codziennym chaosie. Kontakt nie urywa się po każdej trudnej rozmowie.",
+        "To nadal może się szybko zmienić przy stresie, zmęczeniu albo unikaniu tematów. Na ten moment jest więcej spokoju niż bałaganu."
       ],
-      tips: [
-        "Dbajcie o zwykły kontakt, nie tylko wtedy, gdy coś się psuje.",
-        "Jeśli temat się urywa, wróćcie do niego zamiast zostawiać go w tle.",
-        "Zauważcie, co działa, i trzymajcie się tego w praktyce.",
-      ],
+      "tips": [
+        "Sprawdzaj, co Was trzyma blisko w zwykłe dni.",
+        "Nie zostawiaj trudnych tematów na później bez terminu.",
+        "Oceniaj po tym, co wraca regularnie, nie po jednym dobrym wieczorze."
+      ]
     },
-    napiecia: {
-      headline: "Coś zaczyna się zmieniać",
-      label: "Mieszane sygnały zaufania",
-      lead:
-        "Pojawia się tarcie. Nie wszystko się sypie, ale trudno mówić o stabilnym poczuciu oparcia.",
-      interpretation: [
-        "Raz jest normalnie, a potem pojawia się dystans, cisza albo napięcie. To zaczyna się powtarzać.",
-        "Kilka tematów naraz, niedopowiedzenia, wracające sprawy bez końca. W pewnym momencie nie wiadomo już, o co właściwie chodzi.",
+    "napiecia": {
+      "headline": "To zaczyna się rozjeżdżać",
+      "label": "Niestabilnie",
+      "lead": "To jeszcze nie totalny rozpad, ale coś wyraźnie nie działa. Jednego dnia jest blisko, drugiego chłód albo spięcie.",
+      "interpretation": [
+        "Rozmowy się zaczynają i urywają. Niedomknięte sprawy wracają przy kolejnej kłótni.",
+        "Słowa i zachowanie zbyt często się nie pokrywają, więc rośnie niepewność."
       ],
-      tips: [
-        "Bierzcie jeden temat naraz i zamykajcie go.",
-        "Patrz przez kilka dni na zachowanie, nie na deklaracje.",
-        "Ustalcie jedną rzecz, którą da się sprawdzić w działaniu.",
-      ],
+      "tips": [
+        "Weź jeden otwarty temat i zamknij go do końca.",
+        "Patrz na zachowanie przez kilka dni, nie na deklaracje z jednej rozmowy.",
+        "Jeśli wraca schemat blisko-dystans, traktuj to poważnie."
+      ]
     },
-    niepewnosc: {
-      headline: "Poziom Twojej niepewności jest wysoki",
-      label: "Wysokie sygnały niepewności",
-      lead:
-        "Napięcie jest wyraźne i nie wygląda na chwilowe. Za dużo rzeczy się nie zgadza albo zostaje bez odpowiedzi.",
-      interpretation: [
-        "Trudne tematy nie są domykane. Wracają albo wiszą w tle. Do tego dochodzą sprzeczne sygnały – raz blisko, raz dystans.",
-        "W takiej sytuacji łatwo zacząć wszystko analizować i dopowiadać sobie brakujące rzeczy. To tylko zwiększa chaos.",
+    "niepewnosc": {
+      "headline": "Twoja niepewność jest wysoka",
+      "label": "Wysokie ryzyko chaosu",
+      "lead": "Jest za dużo napięcia i za mało jasności. Ważne sprawy wiszą, a poczucie bezpieczeństwa spada.",
+      "interpretation": [
+        "Trudne tematy wracają bez domknięcia. Jest chwila bliskości, potem dystans i cisza.",
+        "Na tym etapie większość osób zaczyna myśleć za dużo, bo nie ma twardych faktów."
       ],
-      tips: [
-        "Oddziel fakty od tego, co dopowiadasz.",
-        "Poproś o jedną konkretną zmianę w zachowaniu.",
-        "Jeśli napięcie nie spada, dobrze to poukładać z kimś z zewnątrz.",
-      ],
-    },
+      "tips": [
+        "Oddziel fakty od tego, co sobie dopowiadasz.",
+        "Poproś o jedną konkretną zmianę, którą da się zobaczyć.",
+        "Jeśli nic się nie zmienia, trzymaj się tego, co się powtarza."
+      ]
+    }
   };
 
-  const RESULT_COPY_DE = {
-    stabilna: {
-      headline: "Deine Beziehung wirkt stabil",
-      label: "Stabile Vertrauenssignale",
-      lead: "Im Moment ergibt das, was du beschreibst, ein stimmiges Bild. Es gibt keine klaren Brüche im Kontakt zwischen euch.",
-      interpretation: [
-        "In vielen Situationen könnt ihr Dinge klären und lasst sie nicht offen stehen. Wenn Spannung entsteht, eskaliert sie nicht sofort, sondern lässt sich stoppen oder später aufgreifen.",
-        "Das kann sich ändern. Stress oder Erschöpfung können die Dynamik verschieben, auch wenn es im Alltag gut läuft.",
+  const RESULT_COPY_DE =   {
+    "stabilna": {
+      "headline": "Aktuell hält eure Beziehung",
+      "label": "Eher stabil",
+      "lead": "Es gibt schwierige Momente, aber sie sprengen nicht alles. Ihr könnt meist wieder ins Gespräch kommen.",
+      "interpretation": [
+        "Ihr steckt nicht in täglichem Drama. Der Kontakt bricht nicht nach jedem Konflikt für Tage ab.",
+        "Das kann sich schnell ändern bei Stress, Erschöpfung oder Ausweichen. Im Moment ist es aber eher ruhig als chaotisch."
       ],
-      tips: [
-        "Haltet den normalen Kontakt aufrecht, nicht nur wenn etwas schiefläuft.",
-        "Wenn ein Thema abbricht, kommt später darauf zurück.",
-        "Schaut, was funktioniert, und bleibt dabei.",
-      ],
+      "tips": [
+        "Achte darauf, was euch im Alltag stabil hält.",
+        "Lass schwierige Themen nicht offen stehen.",
+        "Bewerte nach Wiederholung, nicht nach einem guten Abend."
+      ]
     },
-    napiecia: {
-      headline: "Etwas beginnt sich zu verändern",
-      label: "Gemischte Vertrauenssignale",
-      lead: "Es gibt spürbare Reibung. Es bricht nicht alles auseinander, aber Stabilität fühlt sich nicht konstant an.",
-      interpretation: [
-        "Manchmal ist es normal, dann kommt plötzlich Distanz oder Spannung. Dieses Muster wiederholt sich.",
-        "Mehrere Themen gleichzeitig, offene Gespräche, Dinge ohne Abschluss. Irgendwann ist nicht mehr klar, worum es eigentlich geht.",
+    "napiecia": {
+      "headline": "Das beginnt zu kippen",
+      "label": "Instabil",
+      "lead": "Es ist noch kein kompletter Bruch, aber etwas läuft klar schief. Ein Tag Nähe, am nächsten Kälte oder Spannung.",
+      "interpretation": [
+        "Gespräche starten und enden ohne Abschluss. Offene Punkte kommen im nächsten Streit wieder hoch.",
+        "Worte und Verhalten passen oft genug nicht zusammen, um Misstrauen aufzubauen."
       ],
-      tips: [
-        "Ein Thema nach dem anderen klären.",
-        "Achte auf Verhalten, nicht auf Aussagen.",
-        "Vereinbart eine konkrete, überprüfbare Sache.",
-      ],
+      "tips": [
+        "Nimm ein offenes Thema und bring es vollständig zu Ende.",
+        "Beobachte Verhalten über mehrere Tage, nicht Versprechen in einem Gespräch.",
+        "Wenn Nähe und Distanz ständig wechseln, ist das ein echtes Problem."
+      ]
     },
-    niepewnosc: {
-      headline: "Dein Unsicherheitsniveau ist hoch",
-      label: "Hohe Unsicherheitssignale",
-      lead: "Die Spannung hält an. Zu viele Dinge passen nicht zusammen oder bleiben offen.",
-      interpretation: [
-        "Schwierige Themen werden nicht zu Ende gebracht. Sie kommen zurück oder bleiben im Hintergrund. Gleichzeitig sind die Signale widersprüchlich — Nähe und dann wieder Distanz.",
-        "In so einer Situation fängt man leicht an, alles zu analysieren und Lücken selbst zu füllen. Das macht es meist unklarer.",
+    "niepewnosc": {
+      "headline": "Deine Unsicherheit ist hoch",
+      "label": "Hohes Risiko für Verwirrung",
+      "lead": "Zu viel Spannung, zu wenig Klarheit. Wichtige Fragen bleiben offen und dein Sicherheitsgefühl sinkt.",
+      "interpretation": [
+        "Schwere Themen kommen ohne Abschluss immer wieder zurück. Kurz Nähe, dann Distanz, dann Schweigen.",
+        "In dieser Lage denkt man sich schnell alles zusammen, weil es keinen festen Boden gibt."
       ],
-      tips: [
-        "Trenne Fakten von Annahmen.",
-        "Bitte um eine konkrete, sichtbare Veränderung.",
-        "Wenn die Spannung bleibt, kann ein Blick von außen helfen.",
-      ],
-    },
+      "tips": [
+        "Trenne Fakten von dem, was du dazudenkst.",
+        "Bitte um eine konkrete Verhaltensänderung, die sichtbar ist.",
+        "Wenn nichts anders wird, glaub dem Verlauf, nicht den Worten."
+      ]
+    }
   };
 
-  const RESULT_COPY_ES = {
-    stabilna: {
-      headline: "Tu relación se ve estable",
-      label: "Señales estables de confianza",
-      lead: "Por ahora, lo que describes encaja bastante bien. No se ven rupturas claras en la forma en que os relacionáis.",
-      interpretation: [
-        "En muchas situaciones sois capaces de hablar las cosas y no dejarlas a medias. Si aparece tensión, no escala enseguida — podéis pararla o retomarla después.",
-        "Esto puede cambiar. El cansancio o el estrés pueden alterar esta dinámica, aunque normalmente funcione.",
+  const RESULT_COPY_ES =   {
+    "stabilna": {
+      "headline": "Ahora mismo esta relación se mantiene",
+      "label": "Bastante estable",
+      "lead": "Hay momentos difíciles, pero no rompen todo. Normalmente podéis volver a hablar y cerrar temas.",
+      "interpretation": [
+        "No estáis en drama diario. El contacto no desaparece días después de cada choque.",
+        "Esto puede cambiar rápido con estrés, cansancio o evasión. Ahora mismo hay más estabilidad que caos."
       ],
-      tips: [
-        "Mantened el contacto cotidiano, no solo cuando hay problemas.",
-        "Si un tema se corta, volved a él en otro momento.",
-        "Fijaos en lo que ya funciona y seguid haciéndolo.",
-      ],
+      "tips": [
+        "Mira qué os mantiene cerca en días normales.",
+        "No dejes temas difíciles sin cerrar durante semanas.",
+        "Juzga por lo que se repite, no por una noche buena."
+      ]
     },
-    napiecia: {
-      headline: "Algo está empezando a cambiar",
-      label: "Señales mixtas de confianza",
-      lead: "Hay fricción. No todo se rompe, pero la sensación de estabilidad no es constante.",
-      interpretation: [
-        "A veces todo parece normal, y luego aparece distancia o tensión. Esto empieza a repetirse.",
-        "Varios temas a la vez, conversaciones sin cerrar, cosas que vuelven una y otra vez. Llega un punto en el que no está claro cuál es el problema real.",
+    "napiecia": {
+      "headline": "Esto se está desordenando",
+      "label": "Inestable",
+      "lead": "No es ruptura total, pero algo va mal. Un día hay cercanía, al siguiente frialdad o tensión.",
+      "interpretation": [
+        "Las conversaciones empiezan y se cortan. Los temas abiertos vuelven en la siguiente discusión.",
+        "Lo que se dice y lo que se hace no coincide lo suficiente."
       ],
-      tips: [
-        "Centraos en un solo tema cada vez y cerradlo.",
-        "Observa el comportamiento durante unos días, no las promesas.",
-        "Acordad algo concreto que se pueda comprobar.",
-      ],
+      "tips": [
+        "Tomad un tema pendiente y cerradlo por completo.",
+        "Observa conducta varios días, no promesas de una charla.",
+        "Si se repite cercanía-distancia, no lo minimices."
+      ]
     },
-    niepewnosc: {
-      headline: "Tu nivel de incertidumbre es alto",
-      label: "Señales altas de incertidumbre",
-      lead: "Aquí la tensión ya es clara y se mantiene. Hay demasiadas cosas que no encajan o se quedan sin cerrar.",
-      interpretation: [
-        "Los temas difíciles no se resuelven. Vuelven o se quedan en segundo plano. Además, hay señales contradictorias — cercanía y luego distancia.",
-        "En esta situación es fácil empezar a analizar todo y rellenar los huecos por tu cuenta. Eso suele aumentar la confusión.",
+    "niepewnosc": {
+      "headline": "Tu incertidumbre es alta",
+      "label": "Riesgo alto de confusión",
+      "lead": "Hay demasiada tensión y muy poca claridad. Lo importante sigue sin respuesta y baja tu sensación de seguridad.",
+      "interpretation": [
+        "Los temas difíciles vuelven sin cierre. Hay un rato de cercanía y luego distancia y silencio.",
+        "En este punto la cabeza rellena huecos porque faltan hechos firmes."
       ],
-      tips: [
-        "Separa lo que realmente pasó de lo que estás interpretando.",
-        "Pide un cambio concreto en el comportamiento.",
-        "Si la tensión no baja, una mirada externa puede ayudar.",
-      ],
-    },
+      "tips": [
+        "Separa hechos de lo que estás imaginando.",
+        "Pide un cambio concreto que puedas ver.",
+        "Si no cambia nada, confía en lo que se repite."
+      ]
+    }
   };
 
-  const RESULT_COPY_PT = {
-    stabilna: {
-      headline: "A tua relação parece estável",
-      label: "Sinais estáveis de confiança",
-      lead: "Neste momento, o que descreves faz sentido no conjunto. Não há quebras claras na forma como se relacionam.",
-      interpretation: [
-        "Em muitas situações conseguem falar e não deixar assuntos em aberto. Se surge tensão, não explode logo — dá para parar ou retomar depois.",
-        "Isto pode mudar. Cansaço ou stress podem alterar essa dinâmica, mesmo que normalmente funcione.",
+  const RESULT_COPY_PT =   {
+    "stabilna": {
+      "headline": "Neste momento a relação está a aguentar",
+      "label": "Relativamente estável",
+      "lead": "Há momentos difíceis, mas não partem tudo. Normalmente conseguem voltar à conversa e fechar assuntos.",
+      "interpretation": [
+        "Não vivem em drama diário. O contacto não desaparece durante dias após cada conflito.",
+        "Isto pode mudar depressa com stress, cansaço ou fuga aos temas. Agora há mais estabilidade do que caos."
       ],
-      tips: [
-        "Mantém o contacto no dia a dia, não só quando algo corre mal.",
-        "Se um tema fica a meio, voltem a ele mais tarde.",
-        "Repara no que já funciona e continua a fazer isso.",
-      ],
+      "tips": [
+        "Vê o que vos mantém próximos nos dias normais.",
+        "Não deixes assuntos difíceis pendurados por muito tempo.",
+        "Avalia pelo que se repete, não por uma noite boa."
+      ]
     },
-    napiecia: {
-      headline: "Algo está a começar a mudar",
-      label: "Sinais mistos de confiança",
-      lead: "Há fricção. As coisas não estão a cair, mas a sensação de estabilidade não é constante.",
-      interpretation: [
-        "Há momentos em que tudo parece normal, e depois surge distância ou tensão. Isto começa a repetir-se.",
-        "Vários temas ao mesmo tempo, conversas que não acabam, assuntos que voltam. A certa altura já não é claro qual é o problema principal.",
+    "napiecia": {
+      "headline": "Isto está a sair do eixo",
+      "label": "Instável",
+      "lead": "Ainda não é rutura total, mas algo está a falhar. Num dia há proximidade, no outro frieza ou tensão.",
+      "interpretation": [
+        "As conversas começam e ficam a meio. Os temas por fechar voltam no conflito seguinte.",
+        "O que é dito e o que é feito não bate certo com frequência."
       ],
-      tips: [
-        "Foquem-se num tema de cada vez e fechem-no.",
-        "Observa o comportamento durante alguns dias, não as promessas.",
-        "Definam algo concreto que possa ser verificado.",
-      ],
+      "tips": [
+        "Escolham um tema pendente e fechem-no por completo.",
+        "Observa comportamento durante vários dias, não promessas de uma conversa.",
+        "Se o ciclo proximidade-distância repete, leva isso a sério."
+      ]
     },
-    niepewnosc: {
-      headline: "O teu nível de incerteza é alto",
-      label: "Sinais elevados de incerteza",
-      lead: "Aqui a tensão já é clara e mantém-se. Há demasiadas coisas que não batem certo ou ficam por resolver.",
-      interpretation: [
-        "Os temas difíceis não são resolvidos. Voltam ou ficam em segundo plano. Ao mesmo tempo, há sinais contraditórios — proximidade e depois distância.",
-        "Nesta situação é fácil começar a pensar demais e preencher as lacunas sozinho. Isso normalmente só aumenta a confusão.",
+    "niepewnosc": {
+      "headline": "A tua incerteza está alta",
+      "label": "Risco alto de confusão",
+      "lead": "Há tensão a mais e clareza a menos. Questões importantes ficam sem resposta e a segurança baixa.",
+      "interpretation": [
+        "Os temas difíceis voltam sem fecho. Há proximidade por pouco tempo, depois distância e silêncio.",
+        "Nesta fase a cabeça preenche lacunas porque faltam factos firmes."
       ],
-      tips: [
-        "Separa os factos do que estás a interpretar.",
-        "Pede uma mudança concreta no comportamento.",
-        "Se a tensão não baixa, pode ajudar ter alguém de fora.",
-      ],
-    },
+      "tips": [
+        "Separa factos do que estás a imaginar.",
+        "Pede uma mudança concreta que possas ver.",
+        "Se nada muda, confia no que se repete."
+      ]
+    }
   };
 
-  const RESULT_SIGNAL_LINE_BY_LOCALE = {
-    en: "This is an interpretation of your situation, not psychological, medical, or legal advice.",
-    pl: "To jest interpretacja Twojej sytuacji, nie porada psychologiczna, medyczna ani prawna.",
-    de: "Das ist eine Einschätzung deiner Situation, keine psychologische, medizinische oder rechtliche Beratung.",
-    es: "Esto es una interpretación de tu situación, no asesoramiento psicológico, médico ni legal.",
-    pt: "Isto é uma interpretação da tua situação, não aconselhamento psicológico, médico ou jurídico.",
-    in: "This is an interpretation of your situation, not psychological, medical, or legal advice.",
+  const RESULT_SIGNAL_LINE_BY_LOCALE =   {
+    "en": "This is an interpretation of your situation, not psychological, medical, or legal advice.",
+    "pl": "To jest interpretacja Twojej sytuacji, nie porada psychologiczna, medyczna ani prawna.",
+    "de": "Das ist eine Einschätzung deiner Situation, keine psychologische, medizinische oder rechtliche Beratung.",
+    "es": "Esto es una interpretación de tu situación, no asesoramiento psicológico, médico ni legal.",
+    "pt": "Isto é uma interpretação da tua situação, não aconselhamento psicológico, médico ou jurídico.",
+    "in": "This is an interpretation of your situation, not psychological, medical, or legal advice."
   };
 
   const RESULT_PAGE_UI = {
@@ -1751,338 +1745,302 @@
     };
   }
 
-  const RESULT_LAYOUT_UI = {
-    en: {
-      eyebrow: "Your result",
-      title: "Your Trust Index",
-      visualTitle: "Your score at a glance",
-      scaleLow: "Low",
-      scaleMid: "Medium",
-      scaleHigh: "High",
-      visualSub: "This comes directly from your answers",
-      freeHeading: "What this shows",
-      tipsHeading: "What you can do now",
-      premiumEyebrow: "Full view",
-      premiumTitle: "The rest of your result starts below",
-      premiumSubhead: "The number is just the surface. Below you see what’s actually going on.",
-      premiumIntro:
-        "Your answers point in a direction, but without the details it’s easy to read this the wrong way.",
-      lockedTitles: [
-        "How you actually talk to each other",
-        "Distance between you",
-        "Changes in behavior",
-        "Signals that build or break trust",
-        "What this may turn into",
-        "What to do with it",
+  const RESULT_LAYOUT_UI =   {
+    "en": {
+      "eyebrow": "Your result",
+      "title": "Your Trust Index",
+      "visualTitle": "Your score, quickly",
+      "scaleLow": "Low",
+      "scaleMid": "Medium",
+      "scaleHigh": "High",
+      "visualSub": "From your answers",
+      "freeHeading": "What is happening",
+      "tipsHeading": "What to do now",
+      "premiumEyebrow": "Full report",
+      "premiumTitle": "The score is the short version",
+      "premiumSubhead": "The real part is below: where things are breaking and why.",
+      "premiumIntro": "If you stop here, you can read this wrong and make the wrong move.",
+      "lockedTitles": [
+        "Where conversations break",
+        "Where distance is growing",
+        "What changed in behavior",
+        "Where trust is being damaged",
+        "What this is likely to become",
+        "What to do before it gets worse"
       ],
-      lockedTeaser: "There’s a pattern in your answers that repeats.",
-      lockedLabel: "Locked",
-      previewLabels: ["Communication", "Stability", "Honesty", "Emotional safety"],
-      previewOverlay: "Preview",
-      paywallHook: "This score looks simple, but without detail it’s easy to get it wrong.",
-      scoreLabel: "Your current score",
-      valueHeading: "What’s inside",
-      valueItems: [
-        "Full breakdown of your answers",
-        "Where risk shows up",
-        "Where this is heading",
-        "What it may look like in 3–6 months",
-        "What to actually do next",
+      "lockedTeaser": "Your answers point to one repeating dynamic.",
+      "lockedLabel": "Locked",
+      "previewLabels": [
+        "Communication",
+        "Stability",
+        "Honesty",
+        "Emotional safety"
       ],
-      priceSuffix: "one-time payment",
-      ctaButton: "Unlock full report",
-      ctaSecondary: "See what affects the score",
-      unlockedTitle: "Full report unlocked",
-      unlockedBody: "You now have access to everything. Go through the full report.",
-      unlockedButton: "Go to report",
-      notes: [
+      "previewOverlay": "Preview",
+      "paywallHook": "Without the full report, you are guessing.",
+      "scoreLabel": "Your current score",
+      "valueHeading": "Inside",
+      "valueItems": [
+        "What in your answers raised risk",
+        "What is still stable",
+        "Where this goes if nothing changes",
+        "How this may look in 3–6 months",
+        "Exact next steps for your case"
+      ],
+      "priceSuffix": "one-time payment",
+      "ctaButton": "Unlock full report",
+      "ctaSecondary": "See what drives this score",
+      "unlockedTitle": "Full report unlocked",
+      "unlockedBody": "You now have full access. Read the whole report.",
+      "unlockedButton": "Go to report",
+      "notes": [
         "Secure Stripe payment",
-        "Access right after payment",
-        "Most people in this situation check the full report",
+        "Instant access after payment",
+        "Most people in this situation open the full report"
       ],
-      disclaimer: "This is an interpretation of your situation, not psychological, medical or legal advice.",
-      freeTips: [
-        "Look at what repeats, not one-off moments",
-        "Separate facts from what you assume",
-        "Don’t decide in the middle of strong emotion",
-      ],
+      "disclaimer": "This is an interpretation of your situation, not psychological, medical, or legal advice.",
+      "freeTips": [
+        "Watch what repeats, not one intense moment",
+        "Separate facts from assumptions",
+        "Do not decide in peak emotion"
+      ]
     },
-    pl: {
-      eyebrow: "Twój wynik",
-      title: "Twój Trust Index",
-      visualTitle: "Wynik w skrócie",
-      scaleLow: "Niski",
-      scaleMid: "Średni",
-      scaleHigh: "Wysoki",
-      visualSub: "To wynika bezpośrednio z Twoich odpowiedzi",
-      freeHeading: "Co tu widać",
-      tipsHeading: "Co możesz zrobić teraz",
-      premiumEyebrow: "Pełny obraz",
-      premiumTitle: "Poniżej zaczyna się właściwa część",
-      premiumSubhead: "Na górze masz wynik. Niżej widać, co się naprawdę dzieje.",
-      premiumIntro:
-        "Twoje odpowiedzi idą w jakimś kierunku, ale bez szczegółów łatwo to źle odczytać.",
-      lockedTitles: [
-        "Jak naprawdę ze sobą rozmawiacie",
-        "Dystans między Wami",
-        "Zmiany w zachowaniu",
-        "Sygnały, które budują albo psują zaufanie",
-        "W którą stronę to może iść",
-        "Co z tym zrobić",
+    "pl": {
+      "eyebrow": "Twój wynik",
+      "title": "Twój Trust Index",
+      "visualTitle": "Twój wynik w skrócie",
+      "scaleLow": "Niski",
+      "scaleMid": "Średni",
+      "scaleHigh": "Wysoki",
+      "visualSub": "Na podstawie odpowiedzi",
+      "freeHeading": "Co się dzieje",
+      "tipsHeading": "Co zrobić teraz",
+      "premiumEyebrow": "Pełny raport",
+      "premiumTitle": "Wynik to tylko skrót",
+      "premiumSubhead": "Właściwa część jest niżej: gdzie to pęka i dlaczego.",
+      "premiumIntro": "Jeśli skończysz na tym ekranie, będziesz zgadywać.",
+      "lockedTitles": [
+        "Gdzie rozmowy się urywają",
+        "Gdzie rośnie dystans",
+        "Co zmieniło się w zachowaniu",
+        "Gdzie psuje się zaufanie",
+        "W co to najpewniej pójdzie",
+        "Co zrobić zanim będzie gorzej"
       ],
-      lockedTeaser: "W Twoich odpowiedziach powtarza się pewien schemat.",
-      lockedLabel: "Zablokowane",
-      previewLabels: ["Komunikacja", "Stabilność", "Szczerość", "Poczucie bezpieczeństwa"],
-      previewOverlay: "Podgląd",
-      paywallHook: "Ten wynik wygląda prosto, ale bez szczegółów łatwo go źle zrozumieć.",
-      scoreLabel: "Twój aktualny wynik",
-      valueHeading: "Co znajdziesz w środku",
-      valueItems: [
-        "Pełne rozbicie odpowiedzi",
-        "Gdzie pojawia się ryzyko",
-        "W którą stronę to idzie",
+      "lockedTeaser": "Twoje odpowiedzi pokazują jeden powtarzalny układ.",
+      "lockedLabel": "Zablokowane",
+      "previewLabels": [
+        "Komunikacja",
+        "Stabilność",
+        "Szczerość",
+        "Poczucie bezpieczeństwa"
+      ],
+      "previewOverlay": "Podgląd",
+      "paywallHook": "Bez pełnego raportu będziesz działać po omacku.",
+      "scoreLabel": "Twój aktualny wynik",
+      "valueHeading": "W środku",
+      "valueItems": [
+        "Które odpowiedzi podniosły ryzyko",
+        "Co jeszcze trzyma relację",
+        "Dokąd to idzie, jeśli nic się nie zmieni",
         "Jak to może wyglądać za 3–6 miesięcy",
-        "Co konkretnie możesz zrobić dalej",
+        "Kolejne kroki dla Twojej sytuacji"
       ],
-      priceSuffix: "jednorazowa płatność",
-      ctaButton: "Odblokuj pełny raport",
-      ctaSecondary: "Zobacz, co wpływa na wynik",
-      unlockedTitle: "Pełny raport odblokowany",
-      unlockedBody: "Masz już dostęp do wszystkiego. Przejdź przez cały raport.",
-      unlockedButton: "Przejdź do raportu",
-      notes: [
+      "priceSuffix": "jednorazowa płatność",
+      "ctaButton": "Odblokuj pełny raport",
+      "ctaSecondary": "Zobacz, co napędza wynik",
+      "unlockedTitle": "Pełny raport odblokowany",
+      "unlockedBody": "Masz pełny dostęp. Przeczytaj cały raport.",
+      "unlockedButton": "Przejdź do raportu",
+      "notes": [
         "Bezpieczna płatność Stripe",
         "Dostęp od razu po płatności",
-        "Większość osób w tej sytuacji sprawdza pełny raport",
+        "Większość osób w tej sytuacji otwiera pełny raport"
       ],
-      disclaimer:
-        "To jest interpretacja sytuacji, nie porada psychologiczna, medyczna ani prawna.",
-      freeTips: [
-        "Patrz na to, co się powtarza, nie na pojedyncze sytuacje",
-        "Oddziel fakty od tego, co dopowiadasz",
-        "Nie podejmuj decyzji w środku emocji",
-      ],
+      "disclaimer": "To jest interpretacja Twojej sytuacji, nie porada psychologiczna, medyczna ani prawna.",
+      "freeTips": [
+        "Patrz na to, co się powtarza, nie na jeden mocny moment",
+        "Oddziel fakty od założeń",
+        "Nie podejmuj decyzji w szczycie emocji"
+      ]
     },
-    de: {
-      eyebrow: "Dein Ergebnis",
-      title: "Dein Trust Index",
-      visualTitle: "Ergebnis im Überblick",
-      scaleLow: "Niedrig",
-      scaleMid: "Mittel",
-      scaleHigh: "Hoch",
-      visualSub: "Was deine Antworten zeigen",
-      freeHeading: "Was daraus sichtbar wird",
-      tipsHeading: "Für den Moment",
-      premiumEyebrow: "Vollständige Analyse",
-      premiumTitle: "Du hast den Wert gesehen — hier ist das Gesamtbild",
-      premiumSubhead: "Oben siehst du die Übersicht. Darunter wird es konkret.",
-      premiumIntro:
-        "Ein Wert allein sagt wenig. Erst die Analyse zeigt, was sich wiederholt und wo das eigentliche Problem liegt.",
-      lockedTitles: [
-        "Wie ihr miteinander sprecht",
-        "Distanz zwischen euch",
-        "Verhaltensänderungen",
-        "Vertrauenssignale",
-        "Was als Nächstes passieren könnte",
-        "Wie du damit umgehen kannst",
+    "de": {
+      "eyebrow": "Dein Ergebnis",
+      "title": "Dein Trust Index",
+      "visualTitle": "Dein Wert auf einen Blick",
+      "scaleLow": "Niedrig",
+      "scaleMid": "Mittel",
+      "scaleHigh": "Hoch",
+      "visualSub": "Aus deinen Antworten",
+      "freeHeading": "Was passiert",
+      "tipsHeading": "Was jetzt zu tun ist",
+      "premiumEyebrow": "Vollständiger Bericht",
+      "premiumTitle": "Der Wert ist nur die Kurzfassung",
+      "premiumSubhead": "Der wichtige Teil kommt unten: wo es bricht und warum.",
+      "premiumIntro": "Wenn du hier stoppst, triffst du Entscheidungen im Blindflug.",
+      "lockedTitles": [
+        "Wo Gespräche abbrechen",
+        "Wo Abstand wächst",
+        "Was sich im Verhalten geändert hat",
+        "Wo Vertrauen Schaden nimmt",
+        "Wozu sich das entwickeln kann",
+        "Was du tun solltest, bevor es kippt"
       ],
-      lockedTeaser: "In deinen Antworten zeigt sich ein Muster, das sich wiederholt.",
-      lockedLabel: "Gesperrt",
-      previewLabels: ["Kommunikation", "Stabilität", "Ehrlichkeit", "Emotionale Sicherheit"],
-      previewOverlay: "Vorschau",
-      paywallHook: "Dieser Wert wirkt simpel, aber ohne Details ist er leicht falsch zu lesen.",
-      scoreLabel: "Dein aktueller Wert",
-      valueHeading: "Was du darin findest",
-      valueItems: [
-        "Vollständige Auswertung deiner Antworten",
-        "Wo Risiken sichtbar werden",
-        "Wohin sich das entwickeln kann",
-        "Wie es in 3–6 Monaten aussehen könnte",
-        "Klare nächste Schritte",
+      "lockedTeaser": "Deine Antworten zeigen einen wiederkehrenden Ablauf.",
+      "lockedLabel": "Gesperrt",
+      "previewLabels": [
+        "Kommunikation",
+        "Stabilität",
+        "Ehrlichkeit",
+        "Emotionale Sicherheit"
       ],
-      priceSuffix: "einmalige Zahlung",
-      ctaButton: "Vollständigen Bericht freischalten",
-      ctaSecondary: "Sieh, was den Wert beeinflusst",
-      unlockedTitle: "Vollständiger Bericht freigeschaltet",
-      unlockedBody: "Du hast jetzt Zugriff auf alles. Gehe jetzt durch den vollständigen Bericht.",
-      unlockedButton: "Zum Bericht",
-      notes: [
+      "previewOverlay": "Vorschau",
+      "paywallHook": "Ohne den vollen Bericht bleibst du beim Raten.",
+      "scoreLabel": "Dein aktueller Wert",
+      "valueHeading": "Im Bericht",
+      "valueItems": [
+        "Welche Antworten das Risiko erhöhen",
+        "Was noch stabil ist",
+        "Wohin es geht, wenn nichts anders wird",
+        "Wie es in 3–6 Monaten aussehen kann",
+        "Konkrete nächste Schritte für deinen Fall"
+      ],
+      "priceSuffix": "einmalige Zahlung",
+      "ctaButton": "Vollständigen Bericht freischalten",
+      "ctaSecondary": "Sieh, was den Wert treibt",
+      "unlockedTitle": "Vollständiger Bericht freigeschaltet",
+      "unlockedBody": "Du hast jetzt vollen Zugriff. Lies den ganzen Bericht.",
+      "unlockedButton": "Zum Bericht",
+      "notes": [
         "Sichere Stripe-Zahlung",
-        "Sofortiger Zugriff nach der Zahlung",
-        "Die meisten in dieser Situation sehen sich den vollständigen Bericht an",
+        "Sofortiger Zugriff nach Zahlung",
+        "Die meisten in dieser Lage öffnen den vollständigen Bericht"
       ],
-      disclaimer: "Das ist eine Einschätzung deiner Situation, keine psychologische, medizinische oder rechtliche Beratung.",
-      freeTips: [
-        "Achte auf das, was sich wiederholt, nicht auf einzelne Momente",
+      "disclaimer": "Das ist eine Einschätzung deiner Situation, keine psychologische, medizinische oder rechtliche Beratung.",
+      "freeTips": [
+        "Achte auf Wiederholung, nicht auf einen einzelnen Moment",
         "Trenne Fakten von Annahmen",
-        "Triff keine großen Entscheidungen mitten in starken Emotionen",
-      ],
+        "Triff keine große Entscheidung im Emotionshoch"
+      ]
     },
-    es: {
-      eyebrow: "Tu resultado",
-      title: "Tu Trust Index",
-      visualTitle: "Tu resultado en breve",
-      scaleLow: "Bajo",
-      scaleMid: "Medio",
-      scaleHigh: "Alto",
-      visualSub: "Esto sale directamente de tus respuestas",
-      freeHeading: "Qué se ve aquí",
-      tipsHeading: "Qué puedes hacer ahora",
-      premiumEyebrow: "Vista completa",
-      premiumTitle: "Aquí empieza la parte importante",
-      premiumSubhead: "Arriba ves el número. Abajo se entiende lo que pasa de verdad.",
-      premiumIntro:
-        "Tus respuestas van en una dirección, pero sin detalle es fácil entenderlo mal.",
-      lockedTitles: [
-        "Cómo habláis realmente",
-        "Distancia entre vosotros",
-        "Cambios en el comportamiento",
-        "Señales que generan o rompen confianza",
-        "Hacia dónde puede ir esto",
-        "Qué hacer con ello",
+    "es": {
+      "eyebrow": "Tu resultado",
+      "title": "Tu Trust Index",
+      "visualTitle": "Tu resultado en breve",
+      "scaleLow": "Bajo",
+      "scaleMid": "Medio",
+      "scaleHigh": "Alto",
+      "visualSub": "Según tus respuestas",
+      "freeHeading": "Qué está pasando",
+      "tipsHeading": "Qué hacer ahora",
+      "premiumEyebrow": "Informe completo",
+      "premiumTitle": "El número es solo el resumen",
+      "premiumSubhead": "Lo importante está abajo: dónde se rompe y por qué.",
+      "premiumIntro": "Si te quedas aquí, vas a decidir a ciegas.",
+      "lockedTitles": [
+        "Dónde se cortan vuestras conversaciones",
+        "Dónde crece la distancia",
+        "Qué cambió en el comportamiento",
+        "Dónde se está rompiendo la confianza",
+        "En qué puede terminar esto",
+        "Qué hacer antes de que empeore"
       ],
-      lockedTeaser: "Hay un patrón que se repite en tus respuestas.",
-      lockedLabel: "Bloqueado",
-      previewLabels: ["Comunicación", "Estabilidad", "Sinceridad", "Seguridad emocional"],
-      previewOverlay: "Vista previa",
-      paywallHook: "Este resultado parece simple, pero sin detalle es fácil equivocarse.",
-      scoreLabel: "Tu resultado actual",
-      valueHeading: "Lo que verás dentro",
-      valueItems: [
-        "Análisis completo de respuestas",
-        "Dónde aparece el riesgo",
-        "Hacia dónde va esto",
+      "lockedTeaser": "Tus respuestas muestran una dinámica repetida.",
+      "lockedLabel": "Bloqueado",
+      "previewLabels": [
+        "Comunicación",
+        "Estabilidad",
+        "Sinceridad",
+        "Seguridad emocional"
+      ],
+      "previewOverlay": "Vista previa",
+      "paywallHook": "Sin el informe completo, estás adivinando.",
+      "scoreLabel": "Tu resultado actual",
+      "valueHeading": "Dentro",
+      "valueItems": [
+        "Qué respuestas subieron el riesgo",
+        "Qué parte sigue estable",
+        "Hacia dónde va esto si nada cambia",
         "Cómo puede verse en 3–6 meses",
-        "Qué hacer realmente después",
+        "Siguientes pasos concretos para tu caso"
       ],
-      priceSuffix: "pago único",
-      ctaButton: "Desbloquear informe completo",
-      ctaSecondary: "Ver qué cambia el resultado",
-      unlockedTitle: "Análisis completo desbloqueado",
-      unlockedBody: "Ya tienes acceso a todo. Revisa el informe completo.",
-      unlockedButton: "Ir al informe",
-      notes: [
+      "priceSuffix": "pago único",
+      "ctaButton": "Desbloquear informe completo",
+      "ctaSecondary": "Ver qué mueve el resultado",
+      "unlockedTitle": "Informe completo desbloqueado",
+      "unlockedBody": "Ya tienes acceso total. Lee todo el informe.",
+      "unlockedButton": "Ir al informe",
+      "notes": [
         "Pago seguro con Stripe",
-        "Acceso inmediato",
-        "La mayoría en esta situación ve el informe completo",
+        "Acceso inmediato tras el pago",
+        "La mayoría en esta situación abre el informe completo"
       ],
-      disclaimer: "Esto es una interpretación, no asesoramiento psicológico, médico ni legal.",
-      freeTips: [
-        "Mira lo que se repite, no casos sueltos",
-        "Separa hechos de lo que imaginas",
-        "No decidas en pleno pico emocional",
-      ],
+      "disclaimer": "Esto es una interpretación de tu situación, no asesoramiento psicológico, médico ni legal.",
+      "freeTips": [
+        "Mira lo que se repite, no un momento aislado",
+        "Separa hechos de suposiciones",
+        "No decidas en pico emocional"
+      ]
     },
-    pt: {
-      eyebrow: "O teu resultado",
-      title: "O teu Trust Index",
-      visualTitle: "Resultado em resumo",
-      scaleLow: "Baixo",
-      scaleMid: "Médio",
-      scaleHigh: "Alto",
-      visualSub: "Isto vem diretamente das tuas respostas",
-      freeHeading: "O que se vê aqui",
-      tipsHeading: "O que podes fazer agora",
-      premiumEyebrow: "Visão completa",
-      premiumTitle: "Aqui começa a parte importante",
-      premiumSubhead: "Em cima tens o número. Em baixo percebe-se o que se passa.",
-      premiumIntro:
-        "As respostas apontam numa direção, mas sem detalhe é fácil interpretar mal.",
-      lockedTitles: [
-        "Como vocês falam na prática",
-        "Distância entre vocês",
-        "Mudanças no comportamento",
-        "Sinais que constroem ou quebram confiança",
-        "Para onde isto pode ir",
-        "O que fazer com isto",
+    "pt": {
+      "eyebrow": "O teu resultado",
+      "title": "O teu Trust Index",
+      "visualTitle": "O teu resultado em resumo",
+      "scaleLow": "Baixo",
+      "scaleMid": "Médio",
+      "scaleHigh": "Alto",
+      "visualSub": "Com base nas tuas respostas",
+      "freeHeading": "O que está a acontecer",
+      "tipsHeading": "O que fazer agora",
+      "premiumEyebrow": "Relatório completo",
+      "premiumTitle": "O número é só o resumo",
+      "premiumSubhead": "A parte importante está em baixo: onde isto quebra e porquê.",
+      "premiumIntro": "Se parares aqui, vais decidir às cegas.",
+      "lockedTitles": [
+        "Onde as conversas quebram",
+        "Onde a distância cresce",
+        "O que mudou no comportamento",
+        "Onde a confiança está a falhar",
+        "No que isto pode acabar",
+        "O que fazer antes de piorar"
       ],
-      lockedTeaser: "Há um padrão que se repete nas tuas respostas.",
-      lockedLabel: "Bloqueado",
-      previewLabels: ["Comunicação", "Estabilidade", "Sinceridade", "Segurança emocional"],
-      previewOverlay: "Prévia",
-      paywallHook: "O resultado parece simples, mas sem detalhe é fácil errar a leitura.",
-      scoreLabel: "O teu resultado atual",
-      valueHeading: "O que vais encontrar",
-      valueItems: [
-        "Análise completa das respostas",
-        "Onde aparece risco",
-        "Para onde isto está a ir",
+      "lockedTeaser": "As tuas respostas mostram uma dinâmica repetida.",
+      "lockedLabel": "Bloqueado",
+      "previewLabels": [
+        "Comunicação",
+        "Estabilidade",
+        "Sinceridade",
+        "Segurança emocional"
+      ],
+      "previewOverlay": "Prévia",
+      "paywallHook": "Sem o relatório completo, estás a adivinhar.",
+      "scoreLabel": "O teu resultado atual",
+      "valueHeading": "Lá dentro",
+      "valueItems": [
+        "Que respostas aumentaram o risco",
+        "O que ainda se mantém estável",
+        "Para onde isto vai se nada mudar",
         "Como pode estar em 3–6 meses",
-        "O que fazer a seguir",
+        "Próximos passos concretos para o teu caso"
       ],
-      priceSuffix: "pagamento único",
-      ctaButton: "Desbloquear relatório completo",
-      ctaSecondary: "Ver o que muda o resultado",
-      unlockedTitle: "Relatório completo desbloqueado",
-      unlockedBody: "Agora tens acesso a tudo. Vê o relatório completo.",
-      unlockedButton: "Ir para o relatório",
-      notes: [
-        "Pagamento seguro via Stripe",
-        "Acesso imediato",
-        "A maioria das pessoas nesta situação vê o relatório completo",
+      "priceSuffix": "pagamento único",
+      "ctaButton": "Desbloquear relatório completo",
+      "ctaSecondary": "Ver o que move o resultado",
+      "unlockedTitle": "Relatório completo desbloqueado",
+      "unlockedBody": "Agora tens acesso total. Lê o relatório inteiro.",
+      "unlockedButton": "Ir para o relatório",
+      "notes": [
+        "Pagamento seguro com Stripe",
+        "Acesso imediato após pagamento",
+        "A maioria nesta situação abre o relatório completo"
       ],
-      disclaimer: "Isto é uma interpretação, não aconselhamento psicológico, médico ou legal.",
-      freeTips: [
-        "Olha para padrões, não momentos isolados",
+      "disclaimer": "Isto é uma interpretação da tua situação, não aconselhamento psicológico, médico ou jurídico.",
+      "freeTips": [
+        "Olha para o que se repete, não para um momento isolado",
         "Separa factos de suposições",
-        "Não tomes decisões no pico emocional",
-      ],
-    },
-    in: {
-      eyebrow: "Your result",
-      title: "Your Trust Index",
-      visualTitle: "Your score at a glance",
-      scaleLow: "Low",
-      scaleMid: "Medium",
-      scaleHigh: "High",
-      visualSub: "This comes directly from your answers",
-      freeHeading: "What this shows",
-      tipsHeading: "What you can do now",
-      premiumEyebrow: "Full view",
-      premiumTitle: "The rest of your result starts below",
-      premiumSubhead: "The number is just the surface. Below you see what’s actually going on.",
-      premiumIntro:
-        "Your answers point in a direction, but without the details it’s easy to read this the wrong way.",
-      lockedTitles: [
-        "How you actually talk to each other",
-        "Distance between you",
-        "Changes in behavior",
-        "Signals that build or break trust",
-        "What this may turn into",
-        "What to do with it",
-      ],
-      lockedTeaser: "There’s a pattern in your answers that repeats.",
-      lockedLabel: "Locked",
-      previewLabels: ["Communication", "Stability", "Honesty", "Emotional safety"],
-      previewOverlay: "Preview",
-      paywallHook: "This score looks simple, but without detail it’s easy to get it wrong.",
-      scoreLabel: "Your current score",
-      valueHeading: "What’s inside",
-      valueItems: [
-        "Full breakdown of your answers",
-        "Where risk shows up",
-        "Where this is heading",
-        "What it may look like in 3–6 months",
-        "What to actually do next",
-      ],
-      priceSuffix: "one-time payment",
-      ctaButton: "Unlock full report",
-      ctaSecondary: "See what affects the score",
-      unlockedTitle: "Full report unlocked",
-      unlockedBody: "You now have access to everything. Go through the full report.",
-      unlockedButton: "Go to report",
-      notes: [
-        "Secure Stripe payment",
-        "Access right after payment",
-        "Most people in this situation check the full report",
-      ],
-      disclaimer: "This is an interpretation of your situation, not psychological, medical, or legal advice.",
-      freeTips: [
-        "Look at what repeats, not one-off moments",
-        "Separate facts from what you assume",
-        "Don’t decide in the middle of strong emotion",
-      ],
-    },
+        "Não decidas no pico emocional"
+      ]
+    }
   };
 
   const CHECKOUT_UI = {
