@@ -793,6 +793,15 @@
     return PAYMENT_LINKS.default;
   }
 
+  function getStripeCheckoutLocale(locale) {
+    const L = normalizeLocale(locale);
+    if (L === "pl") return "pl";
+    if (L === "de") return "de";
+    if (L === "es") return "es";
+    if (L === "pt") return "pt";
+    return "en";
+  }
+
   function getPriceDisplayCompact(locale) {
     switch (getBillingCurrency(locale)) {
       case "pln":
@@ -4354,6 +4363,7 @@
       try {
         const url = new URL(base);
         url.searchParams.set("lang", locale);
+        url.searchParams.set("locale", getStripeCheckoutLocale(locale));
         url.searchParams.set("success_url", successUrl);
         url.searchParams.set("cancel_url", cancelUrl);
         a.setAttribute("href", url.toString());
