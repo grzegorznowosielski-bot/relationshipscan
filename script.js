@@ -765,27 +765,32 @@
     return LOCALE_PATHS[value] ? value : "en";
   }
 
-  /** Payment Link (Stripe Dashboard) — fallback gdy brak wpisu w locale.config.js */
-  const STRIPE_LINK_PLN = "https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01";
-  const STRIPE_LINK_USD = "https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01";
-  const STRIPE_LINK_EUR = "https://buy.stripe.com/5kQ7sN78ndmN3tM82j4ow01";
+  const PAYMENT_LINKS = {
+    pl: "https://buy.stripe.com/eVqaEZ2S7beFc0iaar4ow03",
+    en: "https://buy.stripe.com/fZubJ3dwL0A1ggybev4ow05",
+    default: "https://buy.stripe.com/4gM8wR3Wb3MdaWeeqH4ow04",
+  };
+
+  function getPaymentLink() {
+    const path = window.location.pathname.toLowerCase();
+    const lang = path.split("/")[1];
+    if (lang === "pl") return PAYMENT_LINKS.pl;
+    if (lang === "en") return PAYMENT_LINKS.en;
+    return PAYMENT_LINKS.default;
+  }
 
   function getBillingCurrency(locale) {
     const L = normalizeLocale(locale);
     if (L === "pl") return "pln";
-    if (L === "de") return "eur";
-    return "usd";
+    if (L === "en") return "usd";
+    return "eur";
   }
 
   function getStripeLinkForLocale(locale) {
     const normalized = normalizeLocale(locale);
-    const runtime = getRuntimeLocaleConfig();
-    const configured = runtime && runtime[normalized] && runtime[normalized].paymentLink;
-    if (configured) return String(configured);
-    const c = getBillingCurrency(locale);
-    if (c === "pln") return STRIPE_LINK_PLN;
-    if (c === "usd") return STRIPE_LINK_USD;
-    return STRIPE_LINK_EUR;
+    if (normalized === "pl") return PAYMENT_LINKS.pl;
+    if (normalized === "en") return PAYMENT_LINKS.en;
+    return PAYMENT_LINKS.default;
   }
 
   function getPriceDisplayCompact(locale) {
@@ -793,9 +798,9 @@
       case "pln":
         return "39 zł";
       case "usd":
-        return "$9.99";
+        return "$7.99";
       default:
-        return "€9.99";
+        return "€6.99";
     }
   }
 
@@ -4358,6 +4363,15 @@
     });
   }
 
+  function bindBuyButton() {
+    const btn = document.querySelector("#buy-button");
+    if (!btn) return;
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.location.href = getPaymentLink();
+    });
+  }
+
   function initMarketPages() {
     let path = (window.location.pathname || "").toLowerCase();
     if (path.length > 1 && path.endsWith("/")) {
@@ -6094,6 +6108,7 @@
     const lang = getFlowLocale();
     if (isContactPagePath()) localizeContactPageUi(lang);
     appendLangToStripeLinks();
+    bindBuyButton();
     initMarketPages();
     setYear();
     initLegalFooter();
