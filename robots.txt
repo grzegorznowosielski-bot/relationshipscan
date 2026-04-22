@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Keep conversion flow pages out of index via meta robots (already in HTML).
+# robots.txt remains open so bots can crawl and discover canonical/hreflang.
+
+Sitemap: https://relationshipscan.app/sitemap.xml

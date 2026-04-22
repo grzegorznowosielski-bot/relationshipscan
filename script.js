@@ -773,8 +773,8 @@
   function getBillingCurrency(locale) {
     const L = normalizeLocale(locale);
     if (L === "pl") return "pln";
-    if (L === "en" || L === "in") return "usd";
-    return "eur";
+    if (L === "de") return "eur";
+    return "usd";
   }
 
   function getStripeLinkForLocale(locale) {
