@@ -203,12 +203,12 @@
   }
   const LANG_KEY = "lang";
   const LEGAL_PATHS = {
-    en: { terms: "/en/terms.html", privacy: "/en/privacy.html", contact: "/contact.html?lang=en" },
-    pl: { terms: "/pl/regulamin.html", privacy: "/pl/polityka-prywatnosci.html", contact: "/contact.html?lang=pl" },
-    de: { terms: "/de/agb.html", privacy: "/de/datenschutz.html", contact: "/contact.html?lang=de" },
-    es: { terms: "/es/terminos.html", privacy: "/es/privacidad.html", contact: "/contact.html?lang=es" },
-    pt: { terms: "/pt/termos.html", privacy: "/pt/privacidade.html", contact: "/contact.html?lang=pt" },
-    in: { terms: "/in/terms.html", privacy: "/in/privacy.html", contact: "/contact.html?lang=in" },
+    en: { terms: "/en/terms.html", privacy: "/en/privacy.html", contact: "/en/contact.html" },
+    pl: { terms: "/pl/regulamin.html", privacy: "/pl/polityka-prywatnosci.html", contact: "/pl/contact.html" },
+    de: { terms: "/de/agb.html", privacy: "/de/datenschutz.html", contact: "/de/contact.html" },
+    es: { terms: "/es/terminos.html", privacy: "/es/privacidad.html", contact: "/es/contact.html" },
+    pt: { terms: "/pt/termos.html", privacy: "/pt/privacidade.html", contact: "/pt/contact.html" },
+    in: { terms: "/in/terms.html", privacy: "/in/privacy.html", contact: "/in/contact.html" },
   };
   const LEGAL_FOOTER_COPY = {
     en: {
