@@ -1160,7 +1160,7 @@
         "Co nie działa",
         "Inicjatywa – słaba lub jednostronna",
         "Zaangażowanie – spada lub jest niestabilne",
-        "Czas razem – rzadki albo powierzchowny",
+        "Czas razem – rzadki albo bez większej głębi",
         "Bliskość – wycofana lub sporadyczna",
         "Napięcie – zostaje i narasta"
       ],
@@ -1991,11 +1991,19 @@
       "scaleHigh": "High",
       "visualSub": "From your answers",
       "freeHeading": "What is happening",
-      "tipsHeading": "What to do now",
+      "tipsHeading": "What you can do",
+      "paywallPersonalized": "This result shows only part of the picture.",
+      "freeInsightBullets": [
+        "Contact is uneven",
+        "One person starts contact more often",
+        "Issues are left unresolved",
+        "Tension remains instead of fading",
+      ],
       "premiumEyebrow": "Full report",
-      "premiumTitle": "The score only shows the surface",
-      "premiumSubhead": "Below is the concrete part: where conversation, behavior, and trust are failing.",
-      "premiumIntro": "If you stop on this screen, you are left with guesses.",
+      "premiumTitle": "What you see here is only part of the picture",
+      "premiumSubhead":
+        "The full report shows:\n– what keeps repeating\n– where the relationship is losing balance\n– what may happen if nothing changes",
+      "premiumIntro": "On this screen you see a short summary, not the full narrative.",
       "lockedTitles": [
         "Where conversations break",
         "Where distance is growing",
@@ -2013,7 +2021,7 @@
         "Closeness"
       ],
       "previewOverlay": "Preview",
-      "paywallHook": "Without the full report, it is hard to tell a stress moment from an ongoing problem.",
+      "paywallHook": "Without the structured breakdown, it is harder to separate a difficult spell from a pattern that keeps returning.",
       "scoreLabel": "Your current score",
       "valueHeading": "Inside",
       "valueItems": [
@@ -2036,10 +2044,10 @@
       ],
       "disclaimer": "This is an interpretation of your situation, not psychological, medical, or legal advice.",
       "freeTips": [
-        "Watch what repeats, not one intense moment",
-        "Separate facts from assumptions",
-        "Do not decide in peak emotion"
-      ]
+        "See whether contact comes from both sides",
+        "Focus on what keeps repeating",
+        "Avoid making decisions at the peak of emotion",
+      ],
     },
     "pl": {
       "eyebrow": "Twój wynik",
@@ -2050,11 +2058,19 @@
       "scaleHigh": "Wysoki",
       "visualSub": "Na podstawie odpowiedzi",
       "freeHeading": "Co się dzieje",
-      "tipsHeading": "Co zrobić teraz",
+      "tipsHeading": "Co możesz zrobić",
+      "paywallPersonalized": "Ten wynik pokazuje tylko fragment.",
+      "freeInsightBullets": [
+        "kontakt jest nierówny",
+        "częściej jedna osoba zaczyna kontakt",
+        "sprawy nie są domykane",
+        "napięcie zostaje zamiast znikać",
+      ],
       "premiumEyebrow": "Pełny raport",
-      "premiumTitle": "Wynik pokazuje tylko wierzch",
-      "premiumSubhead": "Niżej jest konkret: co się psuje w rozmowach, zachowaniu i zaufaniu.",
-      "premiumIntro": "Jeśli skończysz na tym ekranie, zostajesz z domysłami.",
+      "premiumTitle": "To, co widzisz, to tylko część",
+      "premiumSubhead":
+        "Pełny raport pokaże dokładnie:\n– co się powtarza\n– gdzie relacja się rozjeżdża\n– co się stanie, jeśli nic się nie zmieni",
+      "premiumIntro": "Na tym ekranie widzisz skrót, a nie pełną narrację.",
       "lockedTitles": [
         "W którym momencie rozmowa się urywa",
         "Po czym dokładnie widać oddalenie",
@@ -2072,7 +2088,7 @@
         "Bliskość"
       ],
       "previewOverlay": "Podgląd",
-      "paywallHook": "Bez pełnego raportu trudno odróżnić chwilę stresu od stałego problemu.",
+      "paywallHook": "Bez pełnego raportu łatwiej pomylić chwilowy stres z powtarzającym się schematem.",
       "scoreLabel": "Twój aktualny wynik",
       "valueHeading": "W środku",
       "valueItems": [
@@ -2095,10 +2111,10 @@
       ],
       "disclaimer": "To jest interpretacja Twojej sytuacji, nie porada psychologiczna, medyczna ani prawna.",
       "freeTips": [
-        "Patrz na to, co się powtarza, nie na jeden mocny moment",
-        "Oddziel fakty od założeń",
-        "Nie podejmuj decyzji w szczycie emocji"
-      ]
+        "zobacz, czy kontakt wychodzi z obu stron",
+        "skup się na tym, co się powtarza",
+        "nie podejmuj decyzji w emocjach",
+      ],
     },
     "de": {
       "eyebrow": "Dein Ergebnis",
@@ -2109,11 +2125,19 @@
       "scaleHigh": "Hoch",
       "visualSub": "Aus deinen Antworten",
       "freeHeading": "Was passiert",
-      "tipsHeading": "Was jetzt zu tun ist",
+      "tipsHeading": "Was du tun kannst",
+      "paywallPersonalized": "Dieses Ergebnis zeigt nur einen Teil des Bildes.",
+      "freeInsightBullets": [
+        "der Kontakt ist ungleichmäßig",
+        "eine Person beginnt den Kontakt häufiger",
+        "Themen bleiben offen",
+        "Spannung bleibt bestehen, statt abzuklingen",
+      ],
       "premiumEyebrow": "Vollständiger Bericht",
-      "premiumTitle": "Der Wert zeigt nur die Oberfläche",
-      "premiumSubhead": "Unten kommt der konkrete Teil: wo Gespräch, Verhalten und Vertrauen kippen.",
-      "premiumIntro": "Wenn du hier stoppst, bleibst du bei Vermutungen.",
+      "premiumTitle": "Was du hier siehst, ist nur ein Teil des Bildes",
+      "premiumSubhead":
+        "Der vollständige Bericht zeigt:\n– was sich wiederholt\n– wo die Beziehung aus dem Gleichgewicht gerät\n– was passieren kann, wenn sich nichts ändert",
+      "premiumIntro": "Hier siehst du eine komprimierte Einordnung, nicht die vollständige Geschichte.",
       "lockedTitles": [
         "Wo Gespräche abbrechen",
         "Wo Abstand wächst",
@@ -2131,7 +2155,7 @@
         "Nähe"
       ],
       "previewOverlay": "Vorschau",
-      "paywallHook": "Ohne den vollen Bericht ist schwer zu sehen, was nur Stress ist und was schon dauerhaft kippt.",
+      "paywallHook": "Ohne die Details ist es schwieriger, Stressphasen von wiederkehrenden Mustern zu unterscheiden.",
       "scoreLabel": "Dein aktueller Wert",
       "valueHeading": "Im Bericht",
       "valueItems": [
@@ -2154,10 +2178,10 @@
       ],
       "disclaimer": "Das ist eine Einschätzung deiner Situation, keine psychologische, medizinische oder rechtliche Beratung.",
       "freeTips": [
-        "Achte auf Wiederholung, nicht auf einen einzelnen Moment",
-        "Trenne Fakten von Annahmen",
-        "Triff keine große Entscheidung im Emotionshoch"
-      ]
+        "schau, ob Kontakt von beiden Seiten kommt",
+        "achte darauf, was sich wiederholt",
+        "triff keine Entscheidungen im stärksten Moment der Emotion",
+      ],
     },
     "es": {
       "eyebrow": "Tu resultado",
@@ -2168,11 +2192,19 @@
       "scaleHigh": "Alto",
       "visualSub": "Según tus respuestas",
       "freeHeading": "Qué está pasando",
-      "tipsHeading": "Qué hacer ahora",
+      "tipsHeading": "Qué puedes hacer",
+      "paywallPersonalized": "Este resultado muestra solo una parte.",
+      "freeInsightBullets": [
+        "el contacto es irregular",
+        "una persona inicia el contacto con más frecuencia",
+        "los asuntos quedan sin cerrar",
+        "la tensión permanece en lugar de disminuir",
+      ],
       "premiumEyebrow": "Informe completo",
-      "premiumTitle": "El número solo enseña la superficie",
-      "premiumSubhead": "Abajo está lo concreto: dónde fallan conversación, conducta y confianza.",
-      "premiumIntro": "Si te quedas aquí, te quedas con suposiciones.",
+      "premiumTitle": "Lo que ves aquí es solo una parte",
+      "premiumSubhead":
+        "El informe completo muestra:\n– qué se repite\n– dónde la relación pierde equilibrio\n– qué puede pasar si nada cambia",
+      "premiumIntro": "En esta pantalla ves un resumen, no el relato completo.",
       "lockedTitles": [
         "Dónde se cortan vuestras conversaciones",
         "Dónde crece la distancia",
@@ -2190,7 +2222,7 @@
         "Cercanía"
       ],
       "previewOverlay": "Vista previa",
-      "paywallHook": "Sin el informe completo cuesta separar un momento de estrés de un problema que ya se repite.",
+      "paywallHook": "Sin el informe estructurado, cuesta separar un momento difícil de un patrón que vuelve.",
       "scoreLabel": "Tu resultado actual",
       "valueHeading": "Dentro",
       "valueItems": [
@@ -2213,10 +2245,10 @@
       ],
       "disclaimer": "Esto es una interpretación de tu situación, no asesoramiento psicológico, médico ni legal.",
       "freeTips": [
-        "Mira lo que se repite, no un momento aislado",
-        "Separa hechos de suposiciones",
-        "No decidas en pico emocional"
-      ]
+        "observa si el contacto viene de ambas partes",
+        "céntrate en lo que se repite",
+        "evita decidir en el punto más alto de la emoción",
+      ],
     },
     "pt": {
       "eyebrow": "O teu resultado",
@@ -2227,11 +2259,19 @@
       "scaleHigh": "Alto",
       "visualSub": "Com base nas tuas respostas",
       "freeHeading": "O que está a acontecer",
-      "tipsHeading": "O que fazer agora",
+      "tipsHeading": "O que podes fazer",
+      "paywallPersonalized": "Este resultado mostra apenas uma parte.",
+      "freeInsightBullets": [
+        "o contacto é irregular",
+        "uma pessoa inicia o contacto com mais frequência",
+        "os assuntos ficam por resolver",
+        "a tensão permanece em vez de diminuir",
+      ],
       "premiumEyebrow": "Relatório completo",
-      "premiumTitle": "O número mostra só a superfície",
-      "premiumSubhead": "Em baixo está a parte concreta: onde conversa, comportamento e confiança falham.",
-      "premiumIntro": "Se parares aqui, ficas com suposições.",
+      "premiumTitle": "O que vês aqui é apenas uma parte",
+      "premiumSubhead":
+        "O relatório completo mostra:\n– o que se repete\n– onde a relação perde equilíbrio\n– o que pode acontecer se nada mudar",
+      "premiumIntro": "Neste ecrã vês um resumo, não a narrativa completa.",
       "lockedTitles": [
         "Onde as conversas quebram",
         "Onde a distância cresce",
@@ -2249,7 +2289,7 @@
         "Proximidade"
       ],
       "previewOverlay": "Prévia",
-      "paywallHook": "Sem o relatório completo, é difícil separar um momento de stress de um problema que já se repete.",
+      "paywallHook": "Sem o relatório completo, é mais difícil separar um momento difícil de um padrão em repetição.",
       "scoreLabel": "O teu resultado atual",
       "valueHeading": "Lá dentro",
       "valueItems": [
@@ -2272,11 +2312,11 @@
       ],
       "disclaimer": "Isto é uma interpretação da tua situação, não aconselhamento psicológico, médico ou jurídico.",
       "freeTips": [
-        "Olha para o que se repete, não para um momento isolado",
-        "Separa factos de suposições",
-        "Não decidas no pico emocional"
-      ]
-    }
+        "observa se o contacto vem dos dois lados",
+        "foca-te no que se repete",
+        "evita decidir no pico da emoção",
+      ],
+    },
   };
 
   const CHECKOUT_UI = {
@@ -2531,11 +2571,11 @@
         sections: [
           { heading: "Obraz całości", paragraph: "Niektóre obszary działają dobrze, inne są przeciążone albo zaniedbane. Widać, że ciężar relacji nie rozkłada się równo - jedna strona częściej inicjuje, pilnuje kontaktu albo bierze odpowiedzialność za wspólne sprawy." },
           { heading: "Co nie domaga", list: [
-            "Inicjatywa - częściej po jednej stronie",
-            "Zaangażowanie - nierówne (ktoś „ciągnie” więcej)",
+            "częściej jedna osoba zaczyna kontakt",
+            "jedna osoba wkłada więcej czasu i uwagi",
             "Czas razem - jest, ale bywa przypadkowy lub ograniczony",
             "Bliskość - pojawia się, ale nie jest stabilna",
-            "Napięcie - nie znika, tylko przechodzi na kolejne sytuacje",
+            "po napięciu sprawy nie są zamykane",
           ] },
           { heading: "Jak to wygląda w praktyce", list: [
             "plany są robione, ale łatwo się rozjeżdżają",
@@ -2554,7 +2594,7 @@
           { heading: "Co nie działa", list: [
             "Inicjatywa - słaba lub jednostronna",
             "Zaangażowanie - spada lub jest niestabilne",
-            "Czas razem - rzadki albo powierzchowny",
+            "Czas razem - rzadki albo bez większej głębi",
             "Bliskość - wycofana lub sporadyczna",
             "Napięcie - zostaje i narasta",
           ] },
@@ -3802,7 +3842,7 @@
         mid:
           "Relacja działa, ale traci równowagę\n\nObraz całości\nNiektóre obszary działają dobrze, inne są przeciążone albo zaniedbane. Widać, że ciężar relacji nie rozkłada się równo - jedna strona częściej inicjuje, pilnuje kontaktu albo bierze odpowiedzialność za wspólne sprawy.\n\nCo nie domaga\n- Inicjatywa: częściej po jednej stronie\n- Zaangażowanie: nierówne (ktoś ciągnie więcej)\n- Czas razem: jest, ale bywa przypadkowy lub ograniczony\n- Bliskość: pojawia się, ale nie jest stabilna\n- Napięcie: nie znika, tylko przechodzi na kolejne sytuacje\n\nJak to wygląda w praktyce\n- plany są robione, ale łatwo się rozjeżdżają\n- drobne rzeczy zaczynają irytować bardziej niż powinny\n- kontakt bywa intensywny, a potem wyraźnie słabnie\n- ważne sprawy są odkładane, bo teraz nie ma kiedy\n\nCo z tego wynika\nRelacja nie rozpada się, ale zaczyna opierać się na wysiłku jednej strony. Jeśli to się utrzyma, pojawi się zmęczenie i dystans.",
         low:
-          "Relacja traci strukturę i kierunek\n\nObraz całości\nBrakuje wspólnego rytmu. Kontakt nie jest czymś oczywistym, tylko dzieje się nieregularnie. Inicjatywa, zaangażowanie i odpowiedzialność są ograniczone albo jednostronne.\n\nCo nie działa\n- Inicjatywa: słaba lub jednostronna\n- Zaangażowanie: spada lub jest niestabilne\n- Czas razem: rzadki albo powierzchowny\n- Bliskość: wycofana lub sporadyczna\n- Napięcie: zostaje i narasta\n\nJak to wygląda w praktyce\n- kontakt jest przerywany albo ograniczony do minimum\n- sprawy nie są załatwiane, tylko zostają\n- jedna lub obie strony wycofują się z relacji\n- nawet proste rzeczy zaczynają być trudne do ogarnięcia\n\nCo z tego wynika\nRelacja nie ma stabilnego oparcia. Jeśli ten stan się utrzyma, dystans będzie się pogłębiał, a kontakt stanie się coraz bardziej ograniczony.",
+          "Relacja traci strukturę i kierunek\n\nObraz całości\nBrakuje wspólnego rytmu. Kontakt nie jest czymś oczywistym, tylko dzieje się nieregularnie. Inicjatywa, zaangażowanie i odpowiedzialność są ograniczone albo jednostronne.\n\nCo nie działa\n- Inicjatywa: słaba lub jednostronna\n- Zaangażowanie: spada lub jest niestabilne\n- Czas razem: rzadki albo bez większej głębi\n- Bliskość: wycofana lub sporadyczna\n- Napięcie: zostaje i narasta\n\nJak to wygląda w praktyce\n- kontakt jest przerywany albo ograniczony do minimum\n- sprawy nie są załatwiane, tylko zostają\n- jedna lub obie strony wycofują się z relacji\n- nawet proste rzeczy zaczynają być trudne do ogarnięcia\n\nCo z tego wynika\nRelacja nie ma stabilnego oparcia. Jeśli ten stan się utrzyma, dystans będzie się pogłębiał, a kontakt stanie się coraz bardziej ograniczony.",
       },
       en: {
         high:
@@ -5690,7 +5730,7 @@
     document.title = chrome.resultPageTitle;
     setText("result-eyebrow", ui.eyebrow);
     setText("result-title", ui.title);
-    setText("result-visual-title", ui.visualTitle);
+    if (document.getElementById("result-visual-title")) setText("result-visual-title", ui.visualTitle);
     setText("result-scale-low", ui.scaleLow);
     setText("result-scale-mid", ui.scaleMid);
     setText("result-scale-high", ui.scaleHigh);
@@ -5968,8 +6008,13 @@
       headlineEl.textContent = chrome.noResultTitle;
       leadEl.textContent = chrome.noResultBody;
       interpEl.innerHTML = "";
-      insightsEl.innerHTML = "";
-      tipsEl.innerHTML = "";
+      const noResUi = RESULT_LAYOUT_UI[locale] || RESULT_LAYOUT_UI.en;
+      const fbIns = noResUi.freeInsightBullets && noResUi.freeInsightBullets.length
+        ? noResUi.freeInsightBullets
+        : RESULT_LAYOUT_UI.en.freeInsightBullets;
+      const fbTips = noResUi.freeTips && noResUi.freeTips.length ? noResUi.freeTips : RESULT_LAYOUT_UI.en.freeTips;
+      insightsEl.innerHTML = fbIns.map((t) => `<li>${escapeHtml(t)}</li>`).join("");
+      tipsEl.innerHTML = fbTips.map((t) => `<li>${escapeHtml(t)}</li>`).join("");
       const teaserPh = getPaywallTeaserPlaceholderLines(locale);
       setText("locked-teaser-1", teaserPh[0]);
       setText("locked-teaser-2", teaserPh[1]);
@@ -5995,21 +6040,27 @@
       trust: Math.max(0, Math.min(100, Number(details.areas.trust || score))),
     };
     const band = getBand(score);
-    const copy = getResultCopyByLocale(locale, band);
     scoreEl.textContent = `${score}/100`;
-    headlineEl.textContent = copy.headline;
-    leadEl.textContent = copy.lead;
+    headlineEl.textContent = "";
+    leadEl.textContent = "";
     interpEl.innerHTML = renderPrePaywallDescription(locale, band);
-    insightsEl.innerHTML = "";
-    tipsEl.innerHTML = "";
+    const uiResolved = RESULT_LAYOUT_UI[locale] || RESULT_LAYOUT_UI.en;
+    const insightLines =
+      uiResolved.freeInsightBullets && uiResolved.freeInsightBullets.length
+        ? uiResolved.freeInsightBullets
+        : RESULT_LAYOUT_UI.en.freeInsightBullets;
+    const tipLines =
+      uiResolved.freeTips && uiResolved.freeTips.length ? uiResolved.freeTips : RESULT_LAYOUT_UI.en.freeTips;
+    insightsEl.innerHTML = insightLines.map((t) => `<li>${escapeHtml(t)}</li>`).join("");
+    tipsEl.innerHTML = tipLines.map((t) => `<li>${escapeHtml(t)}</li>`).join("");
 
     if (donutValueEl) donutValueEl.textContent = String(score);
     if (donutEl) donutEl.style.setProperty("--result-percent", `${score}%`);
     if (rangeMarker) rangeMarker.style.left = `${score}%`;
     if (paywallScoreValueEl) paywallScoreValueEl.textContent = `${score}/100`;
     if (personalizedEl) {
-      const insight = getPersonalizedInsightSentence(locale, score, areaScores);
-      personalizedEl.textContent = insight.sentence;
+      personalizedEl.textContent =
+        uiResolved.paywallPersonalized || getPersonalizedInsightSentence(locale, score, areaScores).sentence;
     }
 
     const previewValues = {

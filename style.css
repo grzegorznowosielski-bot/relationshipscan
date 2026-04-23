@@ -1458,6 +1458,45 @@ a.lang-switch__item {
   padding-block: 2.5rem 4rem;
 }
 
+.result-layout {
+  box-sizing: border-box;
+  width: min(720px, 92vw);
+  max-width: 720px;
+  margin-inline: auto;
+  padding-inline: clamp(0.75rem, 2vw, 1rem);
+  text-align: left;
+}
+
+.page--result .result-hero .prose {
+  text-align: left;
+  margin-top: 0.35rem;
+}
+
+.result-layout .result-block {
+  text-align: left;
+}
+
+.result-hero-visual {
+  margin-block: 1.25rem 1.5rem;
+}
+
+.result-visual-grid--hero {
+  border: 1px solid rgba(29, 78, 216, 0.18);
+  border-radius: var(--radius-xl);
+  padding: 1.35rem 1.1rem;
+  background: var(--color-bg-white);
+  box-shadow: var(--shadow-soft);
+}
+
+.paywall-card .premium-subhead {
+  white-space: pre-line;
+}
+
+.result-dynamic-headline:empty,
+.result-lead:empty {
+  display: none;
+}
+
 .result-hero {
   text-align: center;
   margin-bottom: 2.75rem;

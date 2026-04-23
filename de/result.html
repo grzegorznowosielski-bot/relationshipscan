@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css?v=20260420j" />
+  <link rel="stylesheet" href="../style.css?v=20260423resultlayout" />
 </head>
 <body class="page page--result">
   <header class="site-header site-header--minimal">
@@ -25,57 +25,53 @@
   </header>
 
   <main class="result-main">
-    <div class="container narrow">
+    <div class="result-layout">
       <section class="result-hero reveal" id="result-hero">
         <p class="eyebrow" id="result-eyebrow">Dein Ergebnis</p>
         <h1 class="result-headline" id="result-title">Dein Trust Index</h1>
         <p class="result-score" id="result-score-display">—/100</p>
         <h2 class="result-dynamic-headline" id="result-headline">Deine Beziehung wirkt stabil</h2>
         <p class="result-lead" id="result-lead"></p>
+        <div class="result-hero-visual">
+          <div class="result-visual-grid result-visual-grid--hero">
+            <div class="result-donut" id="result-donut" aria-hidden="true">
+              <div class="result-donut__inner">
+                <p class="result-donut__value" id="result-donut-value">0</p>
+                <p class="result-donut__label" id="result-donut-label">Trust Index</p>
+              </div>
+            </div>
+            <div class="result-visual-range">
+              <div class="result-scale" aria-hidden="true">
+                <span class="result-scale__band result-scale__band--low" id="result-scale-low">Niedrig</span>
+                <span class="result-scale__band result-scale__band--mid" id="result-scale-mid">Mittel</span>
+                <span class="result-scale__band result-scale__band--high" id="result-scale-high">Hoch</span>
+                <span class="result-scale__marker" id="result-range-marker"></span>
+              </div>
+              <p class="result-visual-sub" id="result-visual-sub">Aus deinen Antworten</p>
+            </div>
+          </div>
+        </div>
         <div class="prose" id="result-interpretation"></div>
       </section>
 
-      <section class="result-block result-block--visual reveal" id="result-visual">
-        <h2 id="result-visual-title">Visuelle Bewertung</h2>
-        <div class="result-visual-grid">
-          <div class="result-donut" id="result-donut" aria-hidden="true">
-            <div class="result-donut__inner">
-              <p class="result-donut__value" id="result-donut-value">0</p>
-              <p class="result-donut__label" id="result-donut-label">Trust Index</p>
-            </div>
-          </div>
-          <div class="result-visual-range">
-            <div class="result-scale" aria-hidden="true">
-              <span class="result-scale__band result-scale__band--low" id="result-scale-low">Niedrig</span>
-              <span class="result-scale__band result-scale__band--mid" id="result-scale-mid">Mittel</span>
-              <span class="result-scale__band result-scale__band--high" id="result-scale-high">Hoch</span>
-              <span class="result-scale__marker" id="result-range-marker"></span>
-            </div>
-            <p class="result-visual-sub" id="result-visual-sub">Strukturierte Sicht auf deine Antworten</p>
-          </div>
-        </div>
-      </section>
-
       <section class="result-block reveal" id="result-free">
-        <h2 id="result-free-heading">Was das nahelegen kann</h2>
+        <h2 id="result-free-heading">Was passiert</h2>
         <ul class="tips-list" id="result-free-insights"></ul>
-        <h3 class="result-subheading" id="result-tips-heading">Praktische Hinweise</h3>
+        <h3 class="result-subheading" id="result-tips-heading">Was du tun kannst</h3>
         <ul class="tips-list" id="result-tips"></ul>
       </section>
 
       <section class="result-block result-block--premium reveal" id="premium-block">
         <div class="paywall-card">
           <p class="eyebrow" id="premium-eyebrow">Premium-Bereich</p>
-          <p class="paywall-card__personalized" id="paywall-personalized-sentence">Wir haben ein wiederkehrendes Muster erkannt, das genauer betrachtet werden sollte.</p>
-          <h2 id="premium-title">Dein vollständiges Ergebnis ist bereit</h2>
-          <p class="premium-subhead" id="premium-subhead">Du siehst bereits erste Signale. Das volle Bild beginnt erst unten.</p>
-          <p class="locked-intro" id="premium-intro-a">Deine Antworten zeigen bereits eine Richtung - aber ohne vollständige Analyse ist eine Fehlinterpretation sehr leicht.</p>
-          <p class="paywall-card__hook" id="paywall-emotional-hook">Ein Teilwert zeigt nicht, welche Entscheidung wirklich ansteht.</p>
-
-          <div class="paywall-score-row">
-            <p class="paywall-score-row__label" id="paywall-score-label">Aktueller Trust Index</p>
-            <p class="paywall-score-row__value" id="paywall-score-value">--/100</p>
-          </div>
+          <p class="paywall-card__personalized" id="paywall-personalized-sentence">Dieses Ergebnis zeigt nur einen Teil des Bildes.</p>
+          <h2 id="premium-title">Was du hier siehst, ist nur ein Teil des Bildes</h2>
+          <p class="premium-subhead" id="premium-subhead">Der vollständige Bericht zeigt:
+– was sich wiederholt
+– wo die Beziehung aus dem Gleichgewicht gerät
+– was passieren kann, wenn sich nichts ändert</p>
+          <p class="locked-intro" id="premium-intro-a">Hier siehst du eine komprimierte Einordnung, nicht die vollständige Geschichte.</p>
+          <p class="paywall-card__hook" id="paywall-emotional-hook">Ohne die Details ist es schwieriger, Stressphasen von wiederkehrenden Mustern zu unterscheiden.</p>
 
           <div class="locked-mini-chart">
             <div class="result-bars result-bars--preview" aria-hidden="true">
@@ -170,6 +166,6 @@
   </footer>
 
   <script src="/locale.config.js"></script>
-  <script src="../script.js?v=20260423mergefix" defer></script>
+  <script src="../script.js?v=20260423resultlayout" defer></script>
 </body>
 </html>

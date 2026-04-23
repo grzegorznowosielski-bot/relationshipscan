@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css?v=20260420j" />
+  <link rel="stylesheet" href="../style.css?v=20260423resultlayout" />
 </head>
 <body class="page page--result">
   <header class="site-header site-header--minimal">
@@ -25,57 +25,53 @@
   </header>
 
   <main class="result-main">
-    <div class="container narrow">
+    <div class="result-layout">
       <section class="result-hero reveal" id="result-hero">
-        <p class="eyebrow" id="result-eyebrow">Seu resultado</p>
-        <h1 class="result-headline" id="result-title">Seu Trust Index</h1>
+        <p class="eyebrow" id="result-eyebrow">O teu resultado</p>
+        <h1 class="result-headline" id="result-title">O teu Trust Index</h1>
         <p class="result-score" id="result-score-display">—/100</p>
-        <h2 class="result-dynamic-headline" id="result-headline">Seu relacionamento parece estável</h2>
+        <h2 class="result-dynamic-headline" id="result-headline">O teu relacionamento parece estável</h2>
         <p class="result-lead" id="result-lead"></p>
+        <div class="result-hero-visual">
+          <div class="result-visual-grid result-visual-grid--hero">
+            <div class="result-donut" id="result-donut" aria-hidden="true">
+              <div class="result-donut__inner">
+                <p class="result-donut__value" id="result-donut-value">0</p>
+                <p class="result-donut__label" id="result-donut-label">Trust Index</p>
+              </div>
+            </div>
+            <div class="result-visual-range">
+              <div class="result-scale" aria-hidden="true">
+                <span class="result-scale__band result-scale__band--low" id="result-scale-low">Baixo</span>
+                <span class="result-scale__band result-scale__band--mid" id="result-scale-mid">Médio</span>
+                <span class="result-scale__band result-scale__band--high" id="result-scale-high">Alto</span>
+                <span class="result-scale__marker" id="result-range-marker"></span>
+              </div>
+              <p class="result-visual-sub" id="result-visual-sub">Com base nas tuas respostas</p>
+            </div>
+          </div>
+        </div>
         <div class="prose" id="result-interpretation"></div>
       </section>
 
-      <section class="result-block result-block--visual reveal" id="result-visual">
-        <h2 id="result-visual-title">Pontuação visual</h2>
-        <div class="result-visual-grid">
-          <div class="result-donut" id="result-donut" aria-hidden="true">
-            <div class="result-donut__inner">
-              <p class="result-donut__value" id="result-donut-value">0</p>
-              <p class="result-donut__label" id="result-donut-label">Trust Index</p>
-            </div>
-          </div>
-          <div class="result-visual-range">
-            <div class="result-scale" aria-hidden="true">
-              <span class="result-scale__band result-scale__band--low" id="result-scale-low">Baixo</span>
-              <span class="result-scale__band result-scale__band--mid" id="result-scale-mid">Médio</span>
-              <span class="result-scale__band result-scale__band--high" id="result-scale-high">Alto</span>
-              <span class="result-scale__marker" id="result-range-marker"></span>
-            </div>
-            <p class="result-visual-sub" id="result-visual-sub">Visão estruturada das suas respostas</p>
-          </div>
-        </div>
-      </section>
-
       <section class="result-block reveal" id="result-free">
-        <h2 id="result-free-heading">O que isso pode sugerir</h2>
+        <h2 id="result-free-heading">O que está a acontecer</h2>
         <ul class="tips-list" id="result-free-insights"></ul>
-        <h3 class="result-subheading" id="result-tips-heading">Dicas práticas</h3>
+        <h3 class="result-subheading" id="result-tips-heading">O que podes fazer</h3>
         <ul class="tips-list" id="result-tips"></ul>
       </section>
 
       <section class="result-block result-block--premium reveal" id="premium-block">
         <div class="paywall-card">
           <p class="eyebrow" id="premium-eyebrow">Seção premium</p>
-          <p class="paywall-card__personalized" id="paywall-personalized-sentence">Identificamos um padrão recorrente que merece uma análise mais próxima.</p>
-          <h2 id="premium-title">Seu resultado completo está pronto</h2>
-          <p class="premium-subhead" id="premium-subhead">Você já vê os primeiros sinais. O panorama completo começa abaixo.</p>
-          <p class="locked-intro" id="premium-intro-a">Suas respostas já apontam uma direção, mas sem análise completa é fácil interpretar mal o que realmente significam.</p>
-          <p class="paywall-card__hook" id="paywall-emotional-hook">Um resultado parcial nao mostra a decisao real em jogo.</p>
-
-          <div class="paywall-score-row">
-            <p class="paywall-score-row__label" id="paywall-score-label">Trust Index atual</p>
-            <p class="paywall-score-row__value" id="paywall-score-value">--/100</p>
-          </div>
+          <p class="paywall-card__personalized" id="paywall-personalized-sentence">Este resultado mostra apenas uma parte.</p>
+          <h2 id="premium-title">O que vês aqui é apenas uma parte</h2>
+          <p class="premium-subhead" id="premium-subhead">O relatório completo mostra:
+– o que se repete
+– onde a relação perde equilíbrio
+– o que pode acontecer se nada mudar</p>
+          <p class="locked-intro" id="premium-intro-a">Neste ecrã vês um resumo, não a narrativa completa.</p>
+          <p class="paywall-card__hook" id="paywall-emotional-hook">Sem o relatório completo, é mais difícil separar um momento difícil de um padrão em repetição.</p>
 
           <div class="locked-mini-chart">
             <div class="result-bars result-bars--preview" aria-hidden="true">
@@ -170,6 +166,6 @@
   </footer>
 
   <script src="/locale.config.js"></script>
-  <script src="../script.js?v=20260423mergefix" defer></script>
+  <script src="../script.js?v=20260423resultlayout" defer></script>
 </body>
 </html>

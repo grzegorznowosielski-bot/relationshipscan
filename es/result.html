@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css?v=20260420j" />
+  <link rel="stylesheet" href="../style.css?v=20260423resultlayout" />
 </head>
 <body class="page page--result">
   <header class="site-header site-header--minimal">
@@ -25,57 +25,53 @@
   </header>
 
   <main class="result-main">
-    <div class="container narrow">
+    <div class="result-layout">
       <section class="result-hero reveal" id="result-hero">
         <p class="eyebrow" id="result-eyebrow">Tu resultado</p>
         <h1 class="result-headline" id="result-title">Tu Trust Index</h1>
         <p class="result-score" id="result-score-display">—/100</p>
         <h2 class="result-dynamic-headline" id="result-headline">Tu relación se ve estable</h2>
         <p class="result-lead" id="result-lead"></p>
+        <div class="result-hero-visual">
+          <div class="result-visual-grid result-visual-grid--hero">
+            <div class="result-donut" id="result-donut" aria-hidden="true">
+              <div class="result-donut__inner">
+                <p class="result-donut__value" id="result-donut-value">0</p>
+                <p class="result-donut__label" id="result-donut-label">Trust Index</p>
+              </div>
+            </div>
+            <div class="result-visual-range">
+              <div class="result-scale" aria-hidden="true">
+                <span class="result-scale__band result-scale__band--low" id="result-scale-low">Bajo</span>
+                <span class="result-scale__band result-scale__band--mid" id="result-scale-mid">Medio</span>
+                <span class="result-scale__band result-scale__band--high" id="result-scale-high">Alto</span>
+                <span class="result-scale__marker" id="result-range-marker"></span>
+              </div>
+              <p class="result-visual-sub" id="result-visual-sub">Según tus respuestas</p>
+            </div>
+          </div>
+        </div>
         <div class="prose" id="result-interpretation"></div>
       </section>
 
-      <section class="result-block result-block--visual reveal" id="result-visual">
-        <h2 id="result-visual-title">Puntuación visual</h2>
-        <div class="result-visual-grid">
-          <div class="result-donut" id="result-donut" aria-hidden="true">
-            <div class="result-donut__inner">
-              <p class="result-donut__value" id="result-donut-value">0</p>
-              <p class="result-donut__label" id="result-donut-label">Trust Index</p>
-            </div>
-          </div>
-          <div class="result-visual-range">
-            <div class="result-scale" aria-hidden="true">
-              <span class="result-scale__band result-scale__band--low" id="result-scale-low">Bajo</span>
-              <span class="result-scale__band result-scale__band--mid" id="result-scale-mid">Medio</span>
-              <span class="result-scale__band result-scale__band--high" id="result-scale-high">Alto</span>
-              <span class="result-scale__marker" id="result-range-marker"></span>
-            </div>
-            <p class="result-visual-sub" id="result-visual-sub">Vista estructurada de tus respuestas</p>
-          </div>
-        </div>
-      </section>
-
       <section class="result-block reveal" id="result-free">
-        <h2 id="result-free-heading">Qué puede sugerir</h2>
+        <h2 id="result-free-heading">Qué está pasando</h2>
         <ul class="tips-list" id="result-free-insights"></ul>
-        <h3 class="result-subheading" id="result-tips-heading">Consejos prácticos</h3>
+        <h3 class="result-subheading" id="result-tips-heading">Qué puedes hacer</h3>
         <ul class="tips-list" id="result-tips"></ul>
       </section>
 
       <section class="result-block result-block--premium reveal" id="premium-block">
         <div class="paywall-card">
           <p class="eyebrow" id="premium-eyebrow">Sección premium</p>
-          <p class="paywall-card__personalized" id="paywall-personalized-sentence">Hemos identificado un patrón recurrente que vale la pena revisar de cerca.</p>
-          <h2 id="premium-title">Tu resultado completo está listo</h2>
-          <p class="premium-subhead" id="premium-subhead">Ya ves las primeras señales. El panorama completo empieza abajo.</p>
-          <p class="locked-intro" id="premium-intro-a">Tus respuestas ya muestran una dirección, pero sin análisis completo es fácil interpretar mal lo que realmente significan.</p>
-          <p class="paywall-card__hook" id="paywall-emotional-hook">Un resultado parcial no muestra la decisión de fondo.</p>
-
-          <div class="paywall-score-row">
-            <p class="paywall-score-row__label" id="paywall-score-label">Trust Index actual</p>
-            <p class="paywall-score-row__value" id="paywall-score-value">--/100</p>
-          </div>
+          <p class="paywall-card__personalized" id="paywall-personalized-sentence">Este resultado muestra solo una parte.</p>
+          <h2 id="premium-title">Lo que ves aquí es solo una parte</h2>
+          <p class="premium-subhead" id="premium-subhead">El informe completo muestra:
+– qué se repite
+– dónde la relación pierde equilibrio
+– qué puede pasar si nada cambia</p>
+          <p class="locked-intro" id="premium-intro-a">En esta pantalla ves un resumen, no el relato completo.</p>
+          <p class="paywall-card__hook" id="paywall-emotional-hook">Sin el informe estructurado, cuesta separar un momento difícil de un patrón que vuelve.</p>
 
           <div class="locked-mini-chart">
             <div class="result-bars result-bars--preview" aria-hidden="true">
@@ -170,6 +166,6 @@
   </footer>
 
   <script src="/locale.config.js"></script>
-  <script src="../script.js?v=20260423mergefix" defer></script>
+  <script src="../script.js?v=20260423resultlayout" defer></script>
 </body>
 </html>
