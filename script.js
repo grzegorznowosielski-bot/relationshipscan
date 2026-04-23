@@ -998,12 +998,12 @@
 
   function getAreaSegmentLabel(locale, segment) {
     const labels = {
-      en: { low: "Fragile", mid: "Mixed", high: "Stable" },
+      en: { low: "Fragile", mid: "In-between", high: "Stable" },
       pl: { low: "Kruche", mid: "Mieszane", high: "Stabilne" },
       de: { low: "Kritisch", mid: "Gemischt", high: "Stabil" },
       es: { low: "Fragil", mid: "Mixto", high: "Estable" },
-      pt: { low: "Fragil", mid: "Misto", high: "Estavel" },
-      in: { low: "Fragile", mid: "Mixed", high: "Stable" },
+      pt: { low: "Fragil", mid: "Intermedio", high: "Estavel" },
+      in: { low: "Fragile", mid: "In-between", high: "Stable" },
     };
     const lang = labels[locale] ? locale : "en";
     return labels[lang][segment] || labels[lang].mid;
@@ -1053,225 +1053,225 @@
 
   const RESULT_COPY =   {
     "stabilna": {
-      "headline": "Right now, this relationship is holding",
+      "headline": "Right now this still works day to day",
       "label": "Mostly steady",
-      "lead": "You still have hard moments, but they do not blow everything up. You can usually talk, pause, and come back.",
+      "lead": "You still have hard moments, but talks usually come back to normal and do not stay frozen for days.",
       "interpretation": [
-        "You are not stuck in daily drama. Contact does not disappear for days after every difficult talk.",
-        "This can still shift fast with stress, fatigue, or avoidance. But right now, things are more stable than messy."
+        "After friction, contact returns the same day more often than not. You can still finish difficult talks without shutting down.",
+        "There are weak moments, but they do not run the whole week. The relationship still has working routines."
       ],
       "tips": [
-        "Keep an eye on what keeps you close on normal days.",
-        "Do not leave hard topics hanging for a week.",
-        "Judge by what happens repeatedly, not by one good night."
+        "Watch what keeps working after stress, not only during good evenings.",
+        "Notice whether difficult topics get an actual ending, not just a pause.",
+        "Judge by repeated behavior across days, not by one emotional conversation."
       ]
     },
     "napiecia": {
-      "headline": "This is starting to break down",
+      "headline": "This is slipping",
       "label": "Unstable",
-      "lead": "You still have contact, but more things stop halfway. One day feels close, the next one feels cold or tense.",
+      "lead": "You still talk, but more topics stop halfway. One day feels close, the next day feels guarded.",
       "interpretation": [
-        "Important talks stop before a clear ending. The same issue comes back in the next argument.",
-        "After conflict, contact often returns slower, so tension stays in the background."
+        "Important conversations start, then stall before a clear ending. The same issue comes back under a new topic.",
+        "After conflict, contact returns slower, so tension stays between talks instead of clearing."
       ],
       "tips": [
-        "Watch whether behavior changes in the week after a difficult talk.",
-        "Track what happens after tension: reconnecting or silence.",
-        "Do not judge by one good evening; judge by what keeps repeating."
+        "Track what happens in the week after a hard talk, not just what was said in that talk.",
+        "Watch the first hours after conflict: reconnecting or silence.",
+        "If the same issue returns again, treat it as ongoing, not temporary."
       ]
     },
     "niepewnosc": {
-      "headline": "Your uncertainty is high",
-      "label": "High risk of confusion",
-      "lead": "Tension is high and clear answers are missing. Important topics stay open.",
+      "headline": "Uncertainty is high right now",
+      "label": "High confusion risk",
+      "lead": "There is too much tension and too few clear answers. Important topics stay open.",
       "interpretation": [
-        "A hard topic comes up, then the talk breaks, then there is distance and silence again.",
-        "Words and behavior split too often, so you start checking more and trusting less."
+        "A difficult topic comes up, the talk breaks, then distance and silence return again.",
+        "Words and behavior split often enough that you start checking instead of trusting."
       ],
       "tips": [
-        "Separate facts from what you are adding in your head.",
-        "Check whether normal contact comes back the same day after tension.",
-        "If nothing changes across several days, treat it as direction, not accident."
+        "Separate what happened from what you are assuming.",
+        "Check if normal contact returns the same day after tension.",
+        "If several days pass with no change, treat that as the current direction."
       ]
     }
   };
 
   const RESULT_COPY_PL =   {
     "stabilna": {
-      "headline": "Na teraz ta relacja się trzyma",
+      "headline": "Na teraz to działa w codzienności",
       "label": "Raczej stabilnie",
-      "lead": "Są trudniejsze momenty, ale nie rozwalają wszystkiego. Zwykle da się wrócić do rozmowy i domknąć temat.",
+      "lead": "Są trudniejsze chwile, ale rozmowy zwykle wracają do normalnego tonu i nie wiszą przez kilka dni.",
       "interpretation": [
-        "Nie tkwicie w codziennym chaosie. Kontakt nie urywa się po każdej trudnej rozmowie.",
-        "To nadal może się szybko zmienić przy stresie, zmęczeniu albo unikaniu tematów. Na ten moment jest więcej spokoju niż bałaganu."
+        "Po spięciu częściej wracacie do kontaktu tego samego dnia. Trudny temat da się domknąć bez długiej ciszy.",
+        "Słabsze momenty się zdarzają, ale nie ustawiają całego tygodnia. Relacja ma jeszcze działające podstawy."
       ],
       "tips": [
-        "Sprawdzaj, co Was trzyma blisko w zwykłe dni.",
-        "Nie zostawiaj trudnych tematów na później bez terminu.",
-        "Oceniaj po tym, co wraca regularnie, nie po jednym dobrym wieczorze."
+        "Patrz, co realnie działa po stresie, nie tylko w dobrym momencie.",
+        "Sprawdzaj, czy trudny temat kończy się konkretem, a nie tylko pauzą.",
+        "Oceniaj po tym, co dzieje się przez kilka dni z rzędu."
       ]
     },
     "napiecia": {
-      "headline": "To zaczyna się rozjeżdżać",
+      "headline": "To zaczyna się osuwać",
       "label": "Niestabilnie",
-      "lead": "Jeszcze trzymacie kontakt, ale coraz częściej coś się urywa. Jednego dnia jest normalnie, drugiego napięcie i wycofanie.",
+      "lead": "Kontakt jeszcze jest, ale coraz więcej tematów urywa się w połowie. Jednego dnia jest blisko, drugiego sztywno.",
       "interpretation": [
-        "Ważne tematy kończą się bez konkretu. Wracają przy kolejnym spięciu i zaczynacie od zera.",
-        "Po trudniejszym momencie kontakt bywa krótszy i chłodniejszy, więc rośnie napięcie przed następną rozmową."
+        "Ważna rozmowa rusza, ale staje przed końcem. Ten sam temat wraca potem pod innym pretekstem.",
+        "Po konflikcie powrót do normalnego kontaktu jest wolniejszy, więc napięcie zostaje między rozmowami."
       ],
       "tips": [
-        "Patrz, czy po rozmowie coś realnie się zmienia w kolejnym tygodniu.",
-        "Sprawdzaj to, co dzieje się po konflikcie: powrót do kontaktu albo dalsza cisza.",
-        "Nie opieraj się na jednej dobrej rozmowie, tylko na tym, co wraca regularnie."
+        "Patrz na tydzień po rozmowie, nie tylko na samą rozmowę.",
+        "Sprawdzaj pierwsze godziny po spięciu: powrót do kontaktu albo cisza.",
+        "Jeśli ten sam problem wraca, traktuj to jako stały kierunek."
       ]
     },
     "niepewnosc": {
-      "headline": "Twoja niepewność jest wysoka",
+      "headline": "Niepewność jest teraz wysoka",
       "label": "Wysokie ryzyko chaosu",
-      "lead": "Napięcie jest wysokie, a odpowiedzi jest mało. Najważniejsze sprawy wiszą i nie mają końca.",
+      "lead": "Jest dużo napięcia i za mało jasnych odpowiedzi. Najważniejsze sprawy dalej są otwarte.",
       "interpretation": [
-        "Rozmowa dochodzi do trudnego miejsca i się urywa. Potem jest chwila spokoju, dystans i znowu cisza.",
-        "Słowa i działania często się rozchodzą, więc zaczynasz bardziej sprawdzać niż ufać."
+        "Trudny temat się pojawia, rozmowa się urywa, potem wraca dystans i cisza.",
+        "Słowa i działania rozchodzą się na tyle często, że pojawia się kontrolowanie zamiast zaufania."
       ],
       "tips": [
-        "Oddziel to, co faktycznie się wydarzyło, od tego, co sobie dopowiadasz.",
-        "Patrz, czy po napięciu wraca normalny kontakt jeszcze tego samego dnia.",
-        "Jeśli przez kilka dni nic się nie zmienia, traktuj to jako realny kierunek, nie przypadek."
+        "Oddziel fakty od tego, co dopowiadasz sobie w głowie.",
+        "Sprawdzaj, czy po spięciu normalny kontakt wraca jeszcze tego samego dnia.",
+        "Jeśli kilka dni mija bez zmiany, to jest obecny kierunek."
       ]
     }
   };
 
   const RESULT_COPY_DE =   {
     "stabilna": {
-      "headline": "Aktuell hält eure Beziehung",
+      "headline": "Im Alltag hält es gerade noch",
       "label": "Eher stabil",
-      "lead": "Es gibt schwierige Momente, aber sie sprengen nicht alles. Ihr könnt meist wieder ins Gespräch kommen.",
+      "lead": "Es gibt schwierige Momente, aber Gespräche kommen meist wieder in normalen Kontakt zurück.",
       "interpretation": [
-        "Ihr steckt nicht in täglichem Drama. Der Kontakt bricht nicht nach jedem Konflikt für Tage ab.",
-        "Das kann sich schnell ändern bei Stress, Erschöpfung oder Ausweichen. Im Moment ist es aber eher ruhig als chaotisch."
+        "Nach Reibung findet ihr oft noch am selben Tag zurück ins Gespräch.",
+        "Schwache Phasen sind da, aber sie steuern nicht jede Woche komplett."
       ],
       "tips": [
-        "Achte darauf, was euch im Alltag stabil hält.",
-        "Lass schwierige Themen nicht offen stehen.",
-        "Bewerte nach Wiederholung, nicht nach einem guten Abend."
+        "Achte darauf, was nach Stress noch funktioniert, nicht nur in guten Momenten.",
+        "Prüfe, ob ein schwieriges Thema wirklich abgeschlossen wird.",
+        "Bewerte mehrere Tage zusammen statt einen einzelnen Abend."
       ]
     },
     "napiecia": {
-      "headline": "Das beginnt zu kippen",
+      "headline": "Das rutscht langsam weg",
       "label": "Instabil",
-      "lead": "Ihr habt noch Kontakt, aber immer mehr Themen bleiben offen. Ein Tag ist nah, der nächste kühl oder angespannt.",
+      "lead": "Kontakt ist noch da, aber mehr Themen bleiben offen. Ein Tag wirkt nah, der nächste kühl.",
       "interpretation": [
-        "Wichtige Gespräche enden ohne klare Entscheidung. Beim nächsten Streit ist dasselbe Thema wieder da.",
-        "Nach Konflikten bleibt Abstand länger, deshalb baut sich Spannung zwischen den Gesprächen auf."
+        "Wichtige Gespräche stoppen vor einem klaren Ende, dann taucht dasselbe Thema wieder auf.",
+        "Nach Konflikten bleibt Abstand länger bestehen, dadurch sammelt sich Druck zwischen den Gesprächen."
       ],
       "tips": [
-        "Prüfe, ob sich Verhalten in den Tagen nach dem Gespräch wirklich ändert.",
-        "Achte auf die Stunden nach Streit: Rückkehr in Kontakt oder Funkstille.",
-        "Nicht ein guter Abend zählt, sondern was Woche für Woche wieder passiert."
+        "Schau auf die Tage nach dem Gespräch: ändert sich Verhalten sichtbar oder nicht?",
+        "Achte auf die ersten Stunden nach Streit: Rückkehr oder Funkstille.",
+        "Wenn es wiederkommt, ist es kein Ausrutscher mehr."
       ]
     },
     "niepewnosc": {
-      "headline": "Deine Unsicherheit ist hoch",
+      "headline": "Unsicherheit ist jetzt hoch",
       "label": "Hohes Risiko für Verwirrung",
-      "lead": "Die Spannung ist hoch und klare Antworten fehlen. Wichtige Fragen bleiben offen.",
+      "lead": "Spannung ist hoch, klare Antworten fehlen. Die wichtigsten Fragen bleiben offen.",
       "interpretation": [
         "Schwierige Themen kommen hoch, brechen ab und enden wieder in Abstand und Schweigen.",
-        "Worte und Verhalten laufen zu oft auseinander, dadurch wächst Kontrolle statt Vertrauen."
+        "Worte und Verhalten laufen oft auseinander, deshalb wächst Prüfen statt Vertrauen."
       ],
       "tips": [
-        "Trenne Fakten von dem, was du dazudenkst.",
-        "Schau, ob am selben Tag nach Spannung wieder normaler Kontakt möglich ist.",
-        "Wenn sich tagelang nichts ändert, ist das keine Ausnahme, sondern Richtung."
+        "Trenne beobachtete Fakten von dem, was du hineinliest.",
+        "Prüfe, ob normaler Kontakt am selben Tag zurückkommt.",
+        "Wenn mehrere Tage gleich bleiben, zeigt das die aktuelle Richtung."
       ]
     }
   };
 
   const RESULT_COPY_ES =   {
     "stabilna": {
-      "headline": "Ahora mismo esta relación se mantiene",
+      "headline": "Ahora mismo aún se sostiene",
       "label": "Bastante estable",
-      "lead": "Hay momentos difíciles, pero no rompen todo. Normalmente podéis volver a hablar y cerrar temas.",
+      "lead": "Hay momentos difíciles, pero la conversación suele volver a un tono normal.",
       "interpretation": [
-        "No estáis en drama diario. El contacto no desaparece días después de cada choque.",
-        "Esto puede cambiar rápido con estrés, cansancio o evasión. Ahora mismo hay más estabilidad que caos."
+        "Después de tensión, el contacto suele volver el mismo día.",
+        "Hay días flojos, pero no marcan toda la semana."
       ],
       "tips": [
-        "Mira qué os mantiene cerca en días normales.",
-        "No dejes temas difíciles sin cerrar durante semanas.",
-        "Juzga por lo que se repite, no por una noche buena."
+        "Mira qué sigue funcionando después del estrés.",
+        "Comprueba si un tema difícil queda realmente cerrado.",
+        "Evalúa varios días seguidos, no una sola noche."
       ]
     },
     "napiecia": {
-      "headline": "Esto se está desordenando",
+      "headline": "Esto se está yendo de las manos",
       "label": "Inestable",
-      "lead": "Aún hay contacto, pero más temas se quedan a medias. Un día hay cercanía y al siguiente frialdad.",
+      "lead": "Aún hay contacto, pero más temas quedan a medias. Un día hay cercanía y al siguiente distancia.",
       "interpretation": [
-        "Las conversaciones importantes terminan sin cierre claro y vuelven en la discusión siguiente.",
-        "Después del conflicto el contacto tarda en volver, por eso la tensión se queda entre vosotros."
+        "Las conversaciones importantes paran antes del cierre y vuelven en la discusión siguiente.",
+        "Tras el conflicto, el contacto tarda en volver y la tensión se queda entre vosotros."
       ],
       "tips": [
-        "Mira si el comportamiento cambia de verdad en la semana siguiente.",
-        "Fíjate en lo que pasa tras tensión: reconexión o silencio.",
-        "No midas por una noche buena, mide por lo que se repite."
+        "Mira la semana después de hablar: ¿cambia algo visible o no?",
+        "Fíjate en las primeras horas tras tensión: reconexión o silencio.",
+        "Si vuelve otra vez, ya no es algo puntual."
       ]
     },
     "niepewnosc": {
-      "headline": "Tu incertidumbre es alta",
+      "headline": "La incertidumbre está alta",
       "label": "Riesgo alto de confusión",
       "lead": "Hay mucha tensión y pocas respuestas claras. Lo importante sigue abierto.",
       "interpretation": [
-        "Un tema difícil aparece, la conversación se corta y volvéis a distancia y silencio.",
-        "Palabras y hechos se separan demasiado, así que aparece más control y menos confianza."
+        "Aparece un tema difícil, la conversación se corta y volvéis a distancia y silencio.",
+        "Palabras y hechos se separan tantas veces que aparece más control y menos confianza."
       ],
       "tips": [
         "Separa hechos de lo que estás imaginando.",
-        "Mira si el contacto normal vuelve el mismo día tras el conflicto.",
-        "Si pasan varios días sin cambio, tómalo como dirección real."
+        "Comprueba si el contacto normal vuelve el mismo día.",
+        "Si pasan varios días iguales, esa es la dirección actual."
       ]
     }
   };
 
   const RESULT_COPY_PT =   {
     "stabilna": {
-      "headline": "Neste momento a relação está a aguentar",
+      "headline": "Neste momento ainda se aguenta",
       "label": "Relativamente estável",
-      "lead": "Há momentos difíceis, mas não partem tudo. Normalmente conseguem voltar à conversa e fechar assuntos.",
+      "lead": "Há momentos difíceis, mas o contacto costuma voltar ao normal.",
       "interpretation": [
-        "Não vivem em drama diário. O contacto não desaparece durante dias após cada conflito.",
-        "Isto pode mudar depressa com stress, cansaço ou fuga aos temas. Agora há mais estabilidade do que caos."
+        "Depois da tensão, o contacto costuma regressar no mesmo dia.",
+        "Há dias fracos, mas não comandam a semana inteira."
       ],
       "tips": [
-        "Vê o que vos mantém próximos nos dias normais.",
-        "Não deixes assuntos difíceis pendurados por muito tempo.",
-        "Avalia pelo que se repete, não por uma noite boa."
+        "Vê o que continua a funcionar depois do stress.",
+        "Confirma se tema difícil fica mesmo fechado.",
+        "Avalia vários dias seguidos, não uma noite isolada."
       ]
     },
     "napiecia": {
-      "headline": "Isto está a sair do eixo",
+      "headline": "Isto está a fugir do controlo",
       "label": "Instável",
-      "lead": "Ainda há contacto, mas mais assuntos ficam por fechar. Num dia há proximidade, no outro frieza ou tensão.",
+      "lead": "Ainda há contacto, mas mais assuntos ficam por fechar. Num dia há proximidade, no outro há distância.",
       "interpretation": [
-        "Conversas importantes acabam sem fecho claro e o mesmo tema volta no conflito seguinte.",
+        "Conversas importantes param antes do fecho e o mesmo tema volta no conflito seguinte.",
         "Depois da tensão, o contacto demora a regressar e o mal-estar fica entre vocês."
       ],
       "tips": [
-        "Vê se o comportamento muda de facto na semana depois da conversa.",
-        "Observa o que acontece após conflito: reconexão ou silêncio.",
-        "Não avalies por uma noite boa, avalia pelo que se repete."
+        "Vê a semana depois da conversa: há mudança visível ou não.",
+        "Observa as primeiras horas após conflito: reconexão ou silêncio.",
+        "Se volta outra vez, já não é algo passageiro."
       ]
     },
     "niepewnosc": {
-      "headline": "A tua incerteza está alta",
+      "headline": "A incerteza está alta",
       "label": "Risco alto de confusão",
       "lead": "Há muita tensão e poucas respostas claras. As questões principais ficam abertas.",
       "interpretation": [
-        "Tema difícil aparece, a conversa corta e voltam distância e silêncio.",
-        "Palavras e ações afastam-se vezes demais, e surge mais controlo do que confiança."
+        "Um tema difícil aparece, a conversa corta e voltam distância e silêncio.",
+        "Palavras e ações afastam-se vezes demais e aparece mais controlo do que confiança."
       ],
       "tips": [
         "Separa factos do que estás a imaginar.",
-        "Vê se o contacto normal regressa no mesmo dia após tensão.",
-        "Se vários dias passam sem mudança, trata isso como direção real."
+        "Confirma se o contacto normal regressa no mesmo dia.",
+        "Se vários dias passam iguais, essa é a direção atual."
       ]
     }
   };
@@ -1889,9 +1889,9 @@
       "freeHeading": "What is happening",
       "tipsHeading": "What to do now",
       "premiumEyebrow": "Full report",
-      "premiumTitle": "The score only shows the surface",
-      "premiumSubhead": "Below is the concrete part: where conversation, behavior, and trust are failing.",
-      "premiumIntro": "If you stop on this screen, you are left with guesses.",
+      "premiumTitle": "The score is only the first read",
+      "premiumSubhead": "Below you see where talks stop, where behavior shifts, and where trust drops.",
+      "premiumIntro": "If you stop on this screen, the missing pieces stay unanswered.",
       "lockedTitles": [
         "Where conversations break",
         "Where distance is growing",
@@ -1909,7 +1909,7 @@
         "Closeness"
       ],
       "previewOverlay": "Preview",
-      "paywallHook": "Without the full report, it is hard to tell a stress moment from an ongoing problem.",
+      "paywallHook": "Without the full report, one tense day and a repeating weekly issue look the same.",
       "scoreLabel": "Your current score",
       "valueHeading": "Inside",
       "valueItems": [
@@ -1921,7 +1921,7 @@
       ],
       "priceSuffix": "one-time payment",
       "ctaButton": "Unlock full report",
-      "ctaSecondary": "See what drives this score",
+      "ctaSecondary": "See what lowered this score",
       "unlockedTitle": "Full report unlocked",
       "unlockedBody": "You now have full access. Read the whole report.",
       "unlockedButton": "Go to report",
@@ -1948,9 +1948,9 @@
       "freeHeading": "Co się dzieje",
       "tipsHeading": "Co zrobić teraz",
       "premiumEyebrow": "Pełny raport",
-      "premiumTitle": "Wynik pokazuje tylko wierzch",
-      "premiumSubhead": "Niżej jest konkret: co się psuje w rozmowach, zachowaniu i zaufaniu.",
-      "premiumIntro": "Jeśli skończysz na tym ekranie, zostajesz z domysłami.",
+      "premiumTitle": "Wynik to tylko pierwszy odczyt",
+      "premiumSubhead": "Niżej widać, gdzie rozmowa się urywa, gdzie zachowanie się zmienia i gdzie spada zaufanie.",
+      "premiumIntro": "Jeśli skończysz na tym ekranie, brakujące części dalej są niejasne.",
       "lockedTitles": [
         "W którym momencie rozmowa się urywa",
         "Po czym dokładnie widać oddalenie",
@@ -1968,7 +1968,7 @@
         "Bliskość"
       ],
       "previewOverlay": "Podgląd",
-      "paywallHook": "Bez pełnego raportu trudno odróżnić chwilę stresu od stałego problemu.",
+      "paywallHook": "Bez pełnego raportu jeden nerwowy dzień wygląda tak samo jak problem wracający co tydzień.",
       "scoreLabel": "Twój aktualny wynik",
       "valueHeading": "W środku",
       "valueItems": [
@@ -1980,7 +1980,7 @@
       ],
       "priceSuffix": "jednorazowa płatność",
       "ctaButton": "Odblokuj pełny raport",
-      "ctaSecondary": "Zobacz, co napędza wynik",
+      "ctaSecondary": "Zobacz, co obniżyło wynik",
       "unlockedTitle": "Pełny raport odblokowany",
       "unlockedBody": "Masz pełny dostęp. Przeczytaj cały raport.",
       "unlockedButton": "Przejdź do raportu",
@@ -2007,9 +2007,9 @@
       "freeHeading": "Was passiert",
       "tipsHeading": "Was jetzt zu tun ist",
       "premiumEyebrow": "Vollständiger Bericht",
-      "premiumTitle": "Der Wert zeigt nur die Oberfläche",
-      "premiumSubhead": "Unten kommt der konkrete Teil: wo Gespräch, Verhalten und Vertrauen kippen.",
-      "premiumIntro": "Wenn du hier stoppst, bleibst du bei Vermutungen.",
+      "premiumTitle": "Der Wert ist nur der erste Überblick",
+      "premiumSubhead": "Unten siehst du, wo Gespräche abbrechen, wo Verhalten kippt und wo Vertrauen sinkt.",
+      "premiumIntro": "Wenn du hier stoppst, bleiben die fehlenden Teile offen.",
       "lockedTitles": [
         "Wo Gespräche abbrechen",
         "Wo Abstand wächst",
@@ -2027,7 +2027,7 @@
         "Nähe"
       ],
       "previewOverlay": "Vorschau",
-      "paywallHook": "Ohne den vollen Bericht ist schwer zu sehen, was nur Stress ist und was schon dauerhaft kippt.",
+      "paywallHook": "Ohne den vollen Bericht sieht ein stressiger Tag schnell gleich aus wie ein Problem, das jede Woche wiederkommt.",
       "scoreLabel": "Dein aktueller Wert",
       "valueHeading": "Im Bericht",
       "valueItems": [
@@ -2039,7 +2039,7 @@
       ],
       "priceSuffix": "einmalige Zahlung",
       "ctaButton": "Vollständigen Bericht freischalten",
-      "ctaSecondary": "Sieh, was den Wert treibt",
+      "ctaSecondary": "Sieh, was den Wert gedrückt hat",
       "unlockedTitle": "Vollständiger Bericht freigeschaltet",
       "unlockedBody": "Du hast jetzt vollen Zugriff. Lies den ganzen Bericht.",
       "unlockedButton": "Zum Bericht",
@@ -2066,9 +2066,9 @@
       "freeHeading": "Qué está pasando",
       "tipsHeading": "Qué hacer ahora",
       "premiumEyebrow": "Informe completo",
-      "premiumTitle": "El número solo enseña la superficie",
-      "premiumSubhead": "Abajo está lo concreto: dónde fallan conversación, conducta y confianza.",
-      "premiumIntro": "Si te quedas aquí, te quedas con suposiciones.",
+      "premiumTitle": "El número es solo la primera lectura",
+      "premiumSubhead": "Abajo ves dónde se cortan las conversaciones, dónde cambia la conducta y dónde baja la confianza.",
+      "premiumIntro": "Si te quedas aquí, lo más importante sigue sin responder.",
       "lockedTitles": [
         "Dónde se cortan vuestras conversaciones",
         "Dónde crece la distancia",
@@ -2086,7 +2086,7 @@
         "Cercanía"
       ],
       "previewOverlay": "Vista previa",
-      "paywallHook": "Sin el informe completo cuesta separar un momento de estrés de un problema que ya se repite.",
+      "paywallHook": "Sin el informe completo, un día de estrés puede parecer lo mismo que un problema que vuelve cada semana.",
       "scoreLabel": "Tu resultado actual",
       "valueHeading": "Dentro",
       "valueItems": [
@@ -2098,7 +2098,7 @@
       ],
       "priceSuffix": "pago único",
       "ctaButton": "Desbloquear informe completo",
-      "ctaSecondary": "Ver qué mueve el resultado",
+      "ctaSecondary": "Ver qué bajó el resultado",
       "unlockedTitle": "Informe completo desbloqueado",
       "unlockedBody": "Ya tienes acceso total. Lee todo el informe.",
       "unlockedButton": "Ir al informe",
@@ -2125,9 +2125,9 @@
       "freeHeading": "O que está a acontecer",
       "tipsHeading": "O que fazer agora",
       "premiumEyebrow": "Relatório completo",
-      "premiumTitle": "O número mostra só a superfície",
-      "premiumSubhead": "Em baixo está a parte concreta: onde conversa, comportamento e confiança falham.",
-      "premiumIntro": "Se parares aqui, ficas com suposições.",
+      "premiumTitle": "O número é só a primeira leitura",
+      "premiumSubhead": "Em baixo vês onde as conversas cortam, onde o comportamento muda e onde a confiança desce.",
+      "premiumIntro": "Se parares aqui, a parte principal fica por responder.",
       "lockedTitles": [
         "Onde as conversas quebram",
         "Onde a distância cresce",
@@ -2145,7 +2145,7 @@
         "Proximidade"
       ],
       "previewOverlay": "Prévia",
-      "paywallHook": "Sem o relatório completo, é difícil separar um momento de stress de um problema que já se repete.",
+      "paywallHook": "Sem o relatório completo, um dia de stress pode parecer igual a um problema que volta todas as semanas.",
       "scoreLabel": "O teu resultado atual",
       "valueHeading": "Lá dentro",
       "valueItems": [
@@ -2157,7 +2157,7 @@
       ],
       "priceSuffix": "pagamento único",
       "ctaButton": "Desbloquear relatório completo",
-      "ctaSecondary": "Ver o que move o resultado",
+      "ctaSecondary": "Ver o que baixou o resultado",
       "unlockedTitle": "Relatório completo desbloqueado",
       "unlockedBody": "Agora tens acesso total. Lê o relatório inteiro.",
       "unlockedButton": "Ir para o relatório",
@@ -6259,7 +6259,7 @@
           overview: "Main areas",
           charts: "Score and area split",
           chartNote: "Treat this as a weekly picture, not a one-day mood.",
-          scale: ["Lower strain", "Mixed", "Higher strain"],
+          scale: ["Lower strain", "Middle range", "Higher strain"],
           areas: ["Communication", "Behavior", "Trust", "Emotional distance"],
           comm: "Communication",
           emotional: "Emotional distance",
@@ -6739,7 +6739,7 @@
           overview: "Areas clave",
           charts: "Resultado y reparto por areas",
           chartNote: "Es una foto de semanas, no de un dia suelto.",
-          scale: ["Menos tension", "Mezclado", "Mas tension"],
+          scale: ["Menos tension", "Nivel medio", "Mas tension"],
           areas: ["Comunicacion", "Conducta", "Confianza", "Distancia emocional"],
           comm: "Comunicacion",
           emotional: "Distancia emocional",
@@ -6899,7 +6899,7 @@
           overview: "Areas principais",
           charts: "Pontuacao e divisao por areas",
           chartNote: "Isto mostra semanas, nao apenas um dia.",
-          scale: ["Menos tensao", "Misto", "Mais tensao"],
+          scale: ["Menos tensao", "Faixa media", "Mais tensao"],
           areas: ["Comunicacao", "Comportamento", "Confianca", "Distancia emocional"],
           comm: "Comunicacao",
           emotional: "Distancia emocional",
