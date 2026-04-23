@@ -233,7 +233,7 @@
       ],
       contact: "Kontakt: help@relationshipscan.app",
       terms: "Regulamin",
-      privacy: "Polityka prywatnosci",
+      privacy: "Polityka prywatności",
       contactLink: "Kontakt",
       trust: "Bezpieczne platnosci obslugiwane przez Stripe",
     },
@@ -997,11 +997,11 @@
 
   function getAreaSegmentLabel(locale, segment) {
     const labels = {
-      en: { low: "Fragile", mid: "Mixed", high: "Stable" },
-      pl: { low: "Kruche", mid: "Mieszane", high: "Stabilne" },
-      de: { low: "Kritisch", mid: "Gemischt", high: "Stabil" },
-      es: { low: "Fragil", mid: "Mixto", high: "Estable" },
-      pt: { low: "Fragil", mid: "Misto", high: "Estavel" },
+      en: { low: "Low", mid: "Medium", high: "High" },
+      pl: { low: "Niski", mid: "Średni", high: "Wysoki" },
+      de: { low: "Niedrig", mid: "Mittel", high: "Hoch" },
+      es: { low: "Bajo", mid: "Medio", high: "Alto" },
+      pt: { low: "Baixo", mid: "Médio", high: "Alto" },
       in: { low: "Fragile", mid: "Mixed", high: "Stable" },
     };
     const lang = labels[locale] ? locale : "en";
@@ -1599,9 +1599,9 @@
         "A structured, data-driven view of your current relationship dynamics. The goal is clarity: what looks stable, what needs attention, and what to do next.",
       indexLabel: "Your Trust Index:",
       scoreOverviewTitle: "Score overview",
-      scaleLow: "Low uncertainty",
+      scaleLow: "Low",
       scaleMid: "Medium",
-      scaleHigh: "High uncertainty",
+      scaleHigh: "High",
       roadmapTitle: "9. 14-day action roadmap",
       matrixTitle: "10. Priority matrix",
       matrixLabels: ["High impact / start now", "Medium impact / this week", "Track and review"],
@@ -2503,6 +2503,331 @@
     return RESULT_COPY[band];
   }
 
+  const PREPAYWALL_SECTION_CONTENT = {
+    pl: {
+      stabilna: {
+        title: "WYSOKI WYNIK (75-100)",
+        subtitle: "Relacja jest spójna i funkcjonalna",
+        sections: [
+          { heading: "Obraz całości", paragraph: "W większości obszarów działacie razem: jest inicjatywa z obu stron, kontakt nie zależy od jednego z Was, sprawy są ogarniane na bieżąco. Widać, że potraficie wrócić do równowagi po napięciu, a codzienne rzeczy nie zamieniają się w problem." },
+          { heading: "Co działa", list: [
+            "Inicjatywa - obie strony wychodzą z propozycjami (kontakt, spotkania, decyzje)",
+            "Zaangażowanie - czas i uwaga są rozłożone dość równo",
+            "Bliskość - obecna nie tylko „od święta”, ale w zwykłych sytuacjach",
+            "Odpowiedzialność - sprawy są doprowadzane do końca (organizacja, zobowiązania)",
+            "Granice - różnice nie rozwalają relacji, tylko są do ogarnięcia",
+          ] },
+          { heading: "Sygnały ostrzegawcze", list: [
+            "odkładanie drobnych tematów „na później”",
+            "spadki inicjatywy u jednej ze stron w gorszych okresach",
+            "rutyna, która zaczyna wypierać uważność",
+          ] },
+          { heading: "Co z tego wynika", paragraph: "Relacja działa, bo ma równowagę między bliskością a autonomią. Utrzymanie tego wymaga pilnowania drobnych rzeczy zanim się skumulują." },
+        ],
+      },
+      napiecia: {
+        title: "ŚREDNI WYNIK (45-74)",
+        subtitle: "Relacja działa, ale traci równowagę",
+        sections: [
+          { heading: "Obraz całości", paragraph: "Niektóre obszary działają dobrze, inne są przeciążone albo zaniedbane. Widać, że ciężar relacji nie rozkłada się równo - jedna strona częściej inicjuje, pilnuje kontaktu albo bierze odpowiedzialność za wspólne sprawy." },
+          { heading: "Co nie domaga", list: [
+            "Inicjatywa - częściej po jednej stronie",
+            "Zaangażowanie - nierówne (ktoś „ciągnie” więcej)",
+            "Czas razem - jest, ale bywa przypadkowy lub ograniczony",
+            "Bliskość - pojawia się, ale nie jest stabilna",
+            "Napięcie - nie znika, tylko przechodzi na kolejne sytuacje",
+          ] },
+          { heading: "Jak to wygląda w praktyce", list: [
+            "plany są robione, ale łatwo się rozjeżdżają",
+            "drobne rzeczy zaczynają irytować bardziej niż powinny",
+            "kontakt bywa intensywny, a potem wyraźnie słabnie",
+            "ważne sprawy są odkładane, bo „teraz nie ma kiedy”",
+          ] },
+          { heading: "Co z tego wynika", paragraph: "Relacja nie rozpada się, ale zaczyna opierać się na wysiłku jednej strony. Jeśli to się utrzyma, pojawi się zmęczenie i dystans." },
+        ],
+      },
+      niepewnosc: {
+        title: "NISKI WYNIK (0-44)",
+        subtitle: "Relacja traci strukturę i kierunek",
+        sections: [
+          { heading: "Obraz całości", paragraph: "Brakuje wspólnego rytmu. Kontakt nie jest czymś oczywistym, tylko dzieje się nieregularnie. Inicjatywa, zaangażowanie i odpowiedzialność są ograniczone albo jednostronne." },
+          { heading: "Co nie działa", list: [
+            "Inicjatywa - słaba lub jednostronna",
+            "Zaangażowanie - spada lub jest niestabilne",
+            "Czas razem - rzadki albo powierzchowny",
+            "Bliskość - wycofana lub sporadyczna",
+            "Napięcie - zostaje i narasta",
+          ] },
+          { heading: "Jak to wygląda w praktyce", list: [
+            "kontakt jest przerywany albo ograniczony do minimum",
+            "sprawy nie są załatwiane, tylko zostają",
+            "jedna lub obie strony wycofują się z relacji",
+            "nawet proste rzeczy zaczynają być trudne do ogarnięcia",
+          ] },
+          { heading: "Co z tego wynika", paragraph: "Relacja nie ma stabilnego oparcia. Jeśli ten stan się utrzyma, dystans będzie się pogłębiał, a kontakt stanie się coraz bardziej ograniczony." },
+        ],
+      },
+    },
+    en: {
+      stabilna: {
+        title: "HIGH SCORE (75-100)",
+        subtitle: "The relationship is stable and well-balanced",
+        sections: [
+          { heading: "Overall picture", paragraph: "Most areas are working: both sides take initiative, time and attention are shared, and everyday matters are handled without friction. After tension, the relationship returns to balance without long disruption." },
+          { heading: "What works", list: [
+            "Initiative - both sides engage",
+            "Involvement - effort is balanced",
+            "Closeness - present in everyday life",
+            "Responsibility - commitments are handled",
+            "Boundaries - differences don’t break the connection",
+          ] },
+          { heading: "Warning signs", list: [
+            "postponing small issues",
+            "temporary drop in effort from one side",
+            "routine replacing attention",
+          ] },
+          { heading: "What it means", paragraph: "The relationship works because it stays balanced." },
+        ],
+      },
+      napiecia: {
+        title: "MEDIUM SCORE (45-74)",
+        subtitle: "The relationship is uneven",
+        sections: [
+          { heading: "Overall picture", paragraph: "Some areas work well, others are strained. The effort is not evenly distributed." },
+          { heading: "What is off", list: [
+            "Initiative - often comes from one side",
+            "Involvement - unbalanced",
+            "Time together - inconsistent",
+            "Closeness - fluctuates",
+            "Tension - carries over",
+          ] },
+          { heading: "What it means", paragraph: "The relationship depends on effort rather than stability." },
+        ],
+      },
+      niepewnosc: {
+        title: "LOW SCORE (0-44)",
+        subtitle: "The relationship is losing structure",
+        sections: [
+          { heading: "Overall picture", paragraph: "There is no stable rhythm. Contact is inconsistent and often one-sided." },
+          { heading: "What is not working", list: [
+            "Initiative - low or one-sided",
+            "Involvement - reduced",
+            "Time together - limited",
+            "Closeness - weak",
+            "Tension - unresolved",
+          ] },
+          { heading: "What it means", paragraph: "Without change, the relationship will continue to weaken." },
+        ],
+      },
+    },
+    de: {
+      stabilna: {
+        title: "HOHER WERT (75-100)",
+        subtitle: "Die Beziehung ist stabil und funktional",
+        sections: [
+          { heading: "Gesamtbild", paragraph: "In den meisten Bereichen funktioniert ihr als Team: beide Seiten zeigen Initiative, der Kontakt hängt nicht nur von einer Person ab, und alltägliche Dinge werden laufend geklärt. Nach Spannungen findet ihr wieder ins Gleichgewicht zurück, und Alltagsthemen entwickeln sich nicht zu Problemen." },
+          { heading: "Was funktioniert", list: [
+            "Initiative - beide Seiten bringen Vorschläge ein (Kontakt, Pläne, Entscheidungen)",
+            "Engagement - Zeit und Aufmerksamkeit sind relativ ausgeglichen",
+            "Nähe - nicht nur in besonderen Momenten, sondern auch im Alltag präsent",
+            "Verantwortung - Verpflichtungen werden umgesetzt (Organisation, Absprachen)",
+            "Grenzen - Unterschiede führen nicht zum Bruch, sondern bleiben handhabbar",
+          ] },
+          { heading: "Warnsignale", list: [
+            "kleine Themen werden auf später verschoben",
+            "vorübergehender Rückgang der Initiative auf einer Seite",
+            "Routine ersetzt allmählich Aufmerksamkeit",
+          ] },
+          { heading: "Was das bedeutet", paragraph: "Die Beziehung funktioniert durch das Gleichgewicht zwischen Nähe und Eigenständigkeit. Dieses Niveau bleibt nur erhalten, wenn kleine Dinge rechtzeitig geklärt werden." },
+        ],
+      },
+      napiecia: {
+        title: "MITTLERER WERT (45-74)",
+        subtitle: "Die Beziehung funktioniert, verliert aber an Balance",
+        sections: [
+          { heading: "Gesamtbild", paragraph: "Einige Bereiche funktionieren gut, andere sind belastet oder vernachlässigt. Die Verantwortung ist ungleich verteilt - eine Person übernimmt häufiger Initiative, Kontakt oder Organisation." },
+          { heading: "Was nicht funktioniert", list: [
+            "Initiative - häufiger auf einer Seite",
+            "Engagement - ungleich verteilt",
+            "Gemeinsame Zeit - vorhanden, aber unregelmäßig",
+            "Nähe - vorhanden, aber nicht stabil",
+            "Spannung - bleibt bestehen und überträgt sich",
+          ] },
+          { heading: "Wie es sich zeigt", list: [
+            "Pläne werden gemacht, halten aber nicht",
+            "kleine Dinge werden schnell belastend",
+            "Kontakt schwankt zwischen intensiv und schwach",
+            "wichtige Themen werden verschoben",
+          ] },
+          { heading: "Was das bedeutet", paragraph: "Die Beziehung besteht, basiert aber zunehmend auf einseitigem Aufwand. Das führt zu Ermüdung und Distanz." },
+        ],
+      },
+      niepewnosc: {
+        title: "NIEDRIGER WERT (0-44)",
+        subtitle: "Die Beziehung verliert Struktur und Richtung",
+        sections: [
+          { heading: "Gesamtbild", paragraph: "Es fehlt ein gemeinsamer Rhythmus. Kontakt entsteht unregelmäßig. Initiative, Engagement und Verantwortung sind schwach oder einseitig." },
+          { heading: "Was nicht funktioniert", list: [
+            "Initiative - gering oder einseitig",
+            "Engagement - sinkt oder schwankt",
+            "Gemeinsame Zeit - selten oder oberflächlich",
+            "Nähe - zurückgezogen oder sporadisch",
+            "Spannung - bleibt bestehen und wächst",
+          ] },
+          { heading: "Wie es sich zeigt", list: [
+            "Kontakt ist unterbrochen oder minimal",
+            "Themen werden nicht geklärt",
+            "Rückzug aus der Beziehung",
+            "selbst einfache Dinge werden schwierig",
+          ] },
+          { heading: "Was das bedeutet", paragraph: "Die Beziehung hat kein stabiles Fundament. Ohne Veränderung nimmt die Distanz weiter zu." },
+        ],
+      },
+    },
+    es: {
+      stabilna: {
+        title: "RESULTADO ALTO (75-100)",
+        subtitle: "La relación es coherente y funcional",
+        sections: [
+          { heading: "Visión general", paragraph: "En la mayoría de los aspectos funcionan como un equipo: hay iniciativa por parte de ambos, el contacto no depende de una sola persona y las situaciones cotidianas se gestionan de forma continua. Se nota que, después de momentos de tensión, sois capaces de recuperar el equilibrio y que los asuntos diarios no se convierten en problemas prolongados." },
+          { heading: "Qué funciona", list: [
+            "Iniciativa - ambas personas proponen contacto, planes y decisiones",
+            "Compromiso - el tiempo y la atención están relativamente equilibrados",
+            "Cercanía - presente no solo en momentos especiales, sino también en lo cotidiano",
+            "Responsabilidad - los compromisos se cumplen (organización, acuerdos)",
+            "Límites - las diferencias no rompen la relación, se pueden gestionar",
+          ] },
+          { heading: "Señales de alerta", list: [
+            "aplazar temas pequeños “para más adelante”",
+            "descensos puntuales de iniciativa por parte de uno",
+            "la rutina empieza a sustituir la atención",
+          ] },
+          { heading: "Qué significa", paragraph: "La relación funciona porque mantiene un equilibrio entre cercanía y autonomía. Para sostener este nivel, es importante atender a los detalles antes de que se acumulen." },
+        ],
+      },
+      napiecia: {
+        title: "RESULTADO MEDIO (45-74)",
+        subtitle: "La relación funciona, pero pierde equilibrio",
+        sections: [
+          { heading: "Visión general", paragraph: "Algunas áreas funcionan bien, mientras que otras están sobrecargadas o descuidadas. Se observa que el peso de la relación no se reparte de forma equitativa: una persona inicia más, mantiene el contacto o asume más responsabilidad en lo compartido." },
+          { heading: "Qué no funciona", list: [
+            "Iniciativa - más frecuente en una sola persona",
+            "Compromiso - desigual (alguien sostiene más)",
+            "Tiempo juntos - existe, pero es irregular o limitado",
+            "Cercanía - aparece, pero no es constante",
+            "Tensión - no desaparece, se traslada a otras situaciones",
+          ] },
+          { heading: "Cómo se ve en la práctica", list: [
+            "se hacen planes, pero se desorganizan con facilidad",
+            "pequeñas situaciones generan más irritación de lo habitual",
+            "el contacto pasa de ser intenso a debilitarse claramente",
+            "temas importantes se posponen porque “no es el momento”",
+          ] },
+          { heading: "Qué significa", paragraph: "La relación no se rompe, pero empieza a depender del esfuerzo de una sola parte. Si esto continúa, aparecerán cansancio y distancia." },
+        ],
+      },
+      niepewnosc: {
+        title: "RESULTADO BAJO (0-44)",
+        subtitle: "La relación pierde estructura y dirección",
+        sections: [
+          { heading: "Visión general", paragraph: "Falta un ritmo compartido. El contacto no es algo natural, sino irregular. La iniciativa, el compromiso y la responsabilidad son limitados o unilaterales." },
+          { heading: "Qué no funciona", list: [
+            "Iniciativa - débil o concentrada en una sola persona",
+            "Compromiso - bajo o inestable",
+            "Tiempo juntos - escaso o superficial",
+            "Cercanía - limitada o esporádica",
+            "Tensión - permanece y se acumula",
+          ] },
+          { heading: "Cómo se ve en la práctica", list: [
+            "el contacto se interrumpe o se reduce al mínimo",
+            "los asuntos no se resuelven y quedan pendientes",
+            "una o ambas personas se retiran de la relación",
+            "incluso las cosas simples resultan difíciles de manejar",
+          ] },
+          { heading: "Qué significa", paragraph: "La relación no tiene una base estable. Si la situación se mantiene, la distancia aumentará y el contacto será cada vez más limitado." },
+        ],
+      },
+    },
+    pt: {
+      stabilna: {
+        title: "RESULTADO ALTO (75-100)",
+        subtitle: "A relação é coerente e funcional",
+        sections: [
+          { heading: "Visão geral", paragraph: "Na maioria dos aspetos, vocês funcionam como uma equipa: há iniciativa dos dois lados, o contacto não depende de uma única pessoa e as situações do dia a dia são resolvidas de forma contínua. É visível a capacidade de recuperar o equilíbrio após momentos de tensão, sem que as questões quotidianas se transformem em problemas duradouros." },
+          { heading: "O que funciona", list: [
+            "Iniciativa - ambos tomam iniciativa em contacto, planos e decisões",
+            "Envolvimento - tempo e atenção distribuídos de forma equilibrada",
+            "Proximidade - presente não só em momentos especiais, mas também no dia a dia",
+            "Responsabilidade - compromissos são cumpridos (organização, acordos)",
+            "Limites - diferenças não destabilizam a relação, são geridas",
+          ] },
+          { heading: "Sinais de alerta", list: [
+            "adiar pequenos assuntos “para depois”",
+            "redução temporária de iniciativa de uma das partes",
+            "rotina a substituir a atenção",
+          ] },
+          { heading: "O que significa", paragraph: "A relação funciona porque mantém equilíbrio entre proximidade e autonomia. Para preservar isso, é importante não deixar acumular pequenas questões." },
+        ],
+      },
+      napiecia: {
+        title: "RESULTADO MÉDIO (45-74)",
+        subtitle: "A relação funciona, mas perde equilíbrio",
+        sections: [
+          { heading: "Visão geral", paragraph: "Algumas áreas funcionam bem, enquanto outras estão sobrecarregadas ou negligenciadas. O peso da relação não está distribuído de forma equilibrada - uma pessoa assume mais iniciativa, mantém o contacto ou gere mais responsabilidades." },
+          { heading: "O que não funciona", list: [
+            "Iniciativa - mais presente de um lado",
+            "Envolvimento - desigual (alguém sustenta mais)",
+            "Tempo juntos - existe, mas é irregular ou limitado",
+            "Proximidade - aparece, mas não é consistente",
+            "Tensão - não desaparece, acumula-se",
+          ] },
+          { heading: "Como se manifesta na prática", list: [
+            "planos são feitos, mas facilmente se desorganizam",
+            "pequenas situações geram irritação desproporcional",
+            "o contacto alterna entre intensidade e afastamento",
+            "assuntos importantes são adiados",
+          ] },
+          { heading: "O que significa", paragraph: "A relação não está a terminar, mas começa a depender do esforço de uma só pessoa. Se continuar assim, surgem desgaste e distanciamento." },
+        ],
+      },
+      niepewnosc: {
+        title: "RESULTADO BAIXO (0-44)",
+        subtitle: "A relação perde estrutura e direção",
+        sections: [
+          { heading: "Visão geral", paragraph: "Falta um ritmo comum. O contacto não é natural, mas irregular. Iniciativa, envolvimento e responsabilidade são limitados ou unilaterais." },
+          { heading: "O que não funciona", list: [
+            "Iniciativa - fraca ou concentrada numa só pessoa",
+            "Envolvimento - baixo ou instável",
+            "Tempo juntos - raro ou superficial",
+            "Proximidade - reduzida ou esporádica",
+            "Tensão - permanece e acumula",
+          ] },
+          { heading: "Como se manifesta na prática", list: [
+            "o contacto é interrompido ou mínimo",
+            "assuntos ficam por resolver",
+            "há afastamento de uma ou ambas as partes",
+            "até situações simples se tornam difíceis",
+          ] },
+          { heading: "O que significa", paragraph: "A relação não tem base estável. Se nada mudar, o distanciamento vai aumentar e o contacto será cada vez mais limitado." },
+        ],
+      },
+    },
+  };
+
+  function renderPrePaywallDescription(locale, band) {
+    const lang = ["pl", "en", "de", "es", "pt"].includes(locale) ? locale : "en";
+    const content = (PREPAYWALL_SECTION_CONTENT[lang] && PREPAYWALL_SECTION_CONTENT[lang][band]) || PREPAYWALL_SECTION_CONTENT.en.napiecia;
+    let html = `<h3>${escapeHtml(content.title)}</h3><p>${escapeHtml(content.subtitle)}</p>`;
+    content.sections.forEach((section) => {
+      html += `<h4>${escapeHtml(section.heading)}</h4>`;
+      if (section.paragraph) html += `<p>${escapeHtml(section.paragraph)}</p>`;
+      if (section.list && section.list.length) {
+        html += `<ul>${section.list.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+      }
+    });
+    return html;
+  }
+
   /** Raport pogłębiony: podsumowanie i profil (wg pasma wyniku) */
   const REPORT_SUMMARY = {
     stabilna: [
@@ -2596,7 +2921,7 @@
     const severity = getSeverity(score);
     const labels = {
       en: { Low: "Low", Medium: "Medium", High: "High" },
-      pl: { Low: "Niski", Medium: "Sredni", High: "Wysoki" },
+      pl: { Low: "Niski", Medium: "Średni", High: "Wysoki" },
       de: { Low: "Niedrig", Medium: "Mittel", High: "Hoch" },
       es: { Low: "Bajo", Medium: "Medio", High: "Alto" },
       pt: { Low: "Baixo", Medium: "Medio", High: "Alto" },
@@ -2623,8 +2948,8 @@
   function getBenchmarkLabels(locale) {
     const map = {
       en: {
-        heading: "How you compare",
-        average: "Average",
+        heading: "Overall picture",
+        average: "Reference",
         above: "Above average",
         around: "Around average",
         below: "Below average",
@@ -2637,8 +2962,8 @@
         },
       },
       pl: {
-        heading: "Jak wypadasz na tle benchmarku",
-        average: "Srednia",
+        heading: "Porównanie",
+        average: "Punkt odniesienia",
         above: "Powyzej sredniej",
         around: "W okolicy sredniej",
         below: "Ponizej sredniej",
@@ -2693,8 +3018,8 @@
         },
       },
       in: {
-        heading: "How you compare",
-        average: "Average",
+        heading: "Overall picture",
+        average: "Reference",
         above: "Above average",
         around: "Around average",
         below: "Below average",
@@ -2858,7 +3183,7 @@
         },
       },
       pl: {
-        heading: "Trajektoria relacji",
+        heading: "Kierunek relacji",
         avgLabel: "srednia",
         varianceLabel: "rozrzut",
         stable: {
@@ -3763,7 +4088,7 @@
         },
       },
       pl: {
-        heading: "Co zmienia wynik",
+        heading: "Co może to zmienić",
         highImpact: "Dzialania o wysokim wplywie",
         mediumImpact: "Dzialania o srednim wplywie",
         lowImpact: "Dzialania o nizszym wplywie",
@@ -5425,7 +5750,7 @@
         charts: "Score overview and chart",
         chartNote:
           "The chart shows where pressure is concentrated and where your relationship still has structural support.",
-        scale: ["Low uncertainty", "Medium uncertainty", "High uncertainty"],
+        scale: ["Low", "Medium", "High"],
         areas: ["Communication", "Stability", "Clarity", "Emotional closeness"],
         comm: "Communication",
         emotional: "Emotional closeness",
@@ -5453,11 +5778,11 @@
         emotional: "Bliskość emocjonalna",
         stability: "Stabilność",
         clarity: "Klarowność",
-        pattern: "Powtarzający się wzorzec",
-        meaning: "Znaczenie całego obrazu",
-        next: "Praktyczne kolejne kroki",
+        pattern: "Powtarzający się schemat",
+        meaning: "Wniosek końcowy",
+        next: "Co możesz zrobić teraz",
         noChange: "Co się stanie, jeśli nic nie zmienicie (3–6 tygodni)",
-        recheck: "Sprawdź zmianę za 2–3 tygodnie",
+        recheck: "Sprawdź zmianę",
         recheckCta: "Powtórz skan",
         back: "Wróć do wyniku",
       },
@@ -5571,6 +5896,10 @@
     const trajectoryUi = getTrajectoryContent(locale);
     const timelineUi = getTimelineContent(locale);
     const outcomeUi = getOutcomeActionsContent(locale);
+    const tensionRaw = Number(details.areas.tension ?? details.tension);
+    const tensionScore = Number.isFinite(tensionRaw)
+      ? Math.max(0, Math.min(100, Math.round(tensionRaw)))
+      : Math.max(0, Math.min(100, Math.round(100 - (areaScores.communication + areaScores.emotional + areaScores.behavior + areaScores.trust) / 4)));
     setText("report-benchmark-heading", benchmarkUi.heading);
     setText("report-alerts-heading", alertsUi.heading);
     setText("report-trajectory-heading", trajectoryUi.heading);
@@ -5670,9 +5999,9 @@
     scoreEl.textContent = `${score}/100`;
     headlineEl.textContent = copy.headline;
     leadEl.textContent = copy.lead;
-    interpEl.innerHTML = copy.interpretation.slice(0, 2).map((p) => `<p>${escapeHtml(p)}</p>`).join("");
-    insightsEl.innerHTML = copy.tips.slice(0, 3).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
-    tipsEl.innerHTML = ui.freeTips.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+    interpEl.innerHTML = renderPrePaywallDescription(locale, band);
+    insightsEl.innerHTML = "";
+    tipsEl.innerHTML = "";
 
     if (donutValueEl) donutValueEl.textContent = String(score);
     if (donutEl) donutEl.style.setProperty("--result-percent", `${score}%`);
@@ -6202,31 +6531,20 @@
 
     const benchmarkGridEl = document.getElementById("report-benchmark-grid");
     if (benchmarkGridEl) {
-      const benchmarkUi = getBenchmarkLabels(locale);
-      benchmarkGridEl.innerHTML = ["overall", "communication", "emotional", "stability", "clarity"]
-        .map((key) => {
-          const userScore = Math.round(benchmarkScores[key]);
-          const averageScore = BENCHMARK_SCORES[key];
-          const bandKey = getComparisonBand(userScore, averageScore);
-          const comparisonLabel = benchmarkUi[bandKey] || benchmarkUi.around;
-          return `<article class="report-benchmark-card"><div class="report-benchmark-card__head"><h3>${escapeHtml(
-            benchmarkUi.dimensions[key]
-          )}</h3><p class="report-benchmark-card__score">${userScore}/100</p></div><p class="report-benchmark-card__meta">${escapeHtml(
-            benchmarkUi.average
-          )}: ${averageScore}/100</p><p class="report-benchmark-card__result">${escapeHtml(comparisonLabel)}</p></article>`;
-        })
-        .join("");
+      const overallLead = getOverviewNarrative(locale, score, areaScores, tensionScore);
+      benchmarkGridEl.innerHTML = `<article class="report-benchmark-card"><div class="report-benchmark-card__head"><h3>${escapeHtml(
+        overallLead.heading
+      )}</h3><p class="report-benchmark-card__score">${score}/100</p></div><p class="report-benchmark-card__meta">${escapeHtml(
+        overallLead.body
+      )}</p></article>`;
     }
     const benchmarkNoteEl = document.getElementById("report-benchmark-note");
-    if (benchmarkNoteEl) benchmarkNoteEl.textContent = narrative.benchmarkNote;
+    if (benchmarkNoteEl) benchmarkNoteEl.textContent = getOverviewCaption(locale);
 
     const alertsEl = document.getElementById("report-alerts");
     if (alertsEl) {
-      alertsEl.innerHTML = alertItems.length
-        ? alertItems
-            .map((item) => `<article class="report-alert-card"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p></article>`)
-            .join("")
-        : `<p class="report-alerts__empty">${escapeHtml(alertsUi.none)}</p>`;
+      const primary = getPrimaryIssueBlock(locale, areaScores, tensionScore);
+      alertsEl.innerHTML = `<article class="report-alert-card"><h3>${escapeHtml(primary.title)}</h3><p>${escapeHtml(primary.body)}</p></article>`;
     }
 
     const trajectoryEl = document.getElementById("report-trajectory");
@@ -6235,8 +6553,8 @@
       const trajectoryText = trajectoryContent[trajectory.label] || trajectoryContent.unstable;
       trajectoryEl.innerHTML = `<div class="report-trajectory__header"><p class="report-trajectory__label">${escapeHtml(
         trajectoryText.label
-      )}</p><p class="report-trajectory__meta">${escapeHtml(trajectoryContent.avgLabel)} ${trajectory.avgScore}/100 | ${escapeHtml(
-        trajectoryContent.varianceLabel
+      )}</p><p class="report-trajectory__meta">${escapeHtml(getTrajectoryMetaLabel(locale))} ${trajectory.avgScore}/100 · ${escapeHtml(
+        getSpreadMetaLabel(locale)
       )} ${trajectory.variance}</p></div><p class="report-trajectory__body">${escapeHtml(trajectoryText.text)}</p>`;
     }
 
@@ -6285,10 +6603,18 @@
     const operationalEmotional = buildOperationalDimension(locale, "emotional", areaScores, trajectory);
     const operationalStability = buildOperationalDimension(locale, "stability", areaScores, trajectory);
     const operationalClarity = buildOperationalDimension(locale, "clarity", areaScores, trajectory);
-    required.communicationEl.innerHTML = `<p>${escapeHtml(operationalCommunication.body)}</p>`;
-    required.emotionalEl.innerHTML = `<p>${escapeHtml(operationalEmotional.body)}</p>`;
-    required.stabilityEl.innerHTML = `<p>${escapeHtml(operationalStability.body)}</p>`;
-    required.clarityEl.innerHTML = `<p>${escapeHtml(operationalClarity.body)}</p>`;
+    required.communicationEl.innerHTML = `<p>${escapeHtml(operationalCommunication.body)}</p><p><strong>${escapeHtml(getInterpretationLead(locale))}</strong> ${escapeHtml(
+      getAreaInterpretation(locale, "initiative")
+    )}</p>`;
+    required.emotionalEl.innerHTML = `<p>${escapeHtml(operationalEmotional.body)}</p><p><strong>${escapeHtml(getInterpretationLead(locale))}</strong> ${escapeHtml(
+      getAreaInterpretation(locale, "engagement")
+    )}</p>`;
+    required.stabilityEl.innerHTML = `<p>${escapeHtml(operationalStability.body)}</p><p><strong>${escapeHtml(getInterpretationLead(locale))}</strong> ${escapeHtml(
+      getAreaInterpretation(locale, "closeness")
+    )}</p>`;
+    required.clarityEl.innerHTML = `<p>${escapeHtml(operationalClarity.body)}</p><p><strong>${escapeHtml(getInterpretationLead(locale))}</strong> ${escapeHtml(
+      getAreaInterpretation(locale, "stability")
+    )}</p>`;
     const checksMap = [
       ["report-communication-checks", [operationalCommunication.check]],
       ["report-emotional-checks", [operationalEmotional.check]],
@@ -6299,6 +6625,20 @@
       const el = document.getElementById(id);
       if (el) el.innerHTML = items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
     });
+
+    const tensionScoreEl = document.getElementById("report-dim-tension-score");
+    const tensionLabelEl = document.getElementById("report-dim-tension-label");
+    const tensionBodyEl = document.getElementById("report-tension-body");
+    const tensionChecksEl = document.getElementById("report-tension-checks");
+    const tensionSegment = getAreaSegment(tensionScore);
+    if (tensionScoreEl) tensionScoreEl.textContent = `${tensionScore}/100`;
+    if (tensionLabelEl) tensionLabelEl.textContent = getAreaSegmentLabel(locale, tensionSegment);
+    if (tensionBodyEl) {
+      tensionBodyEl.innerHTML = `<p>${escapeHtml(getTensionNarrative(locale, tensionScore, trajectory.label))}</p><p><strong>${escapeHtml(
+        getInterpretationLead(locale)
+      )}</strong> ${escapeHtml(getAreaInterpretation(locale, "tension"))}</p>`;
+    }
+    if (tensionChecksEl) tensionChecksEl.innerHTML = `<li>${escapeHtml(getTensionCheck(locale))}</li>`;
 
     const patternMeaning = buildPatternAndMeaning(locale, areaScores, trajectory, alertCount);
     required.patternEl.innerHTML = `<p>${escapeHtml(patternMeaning.pattern)}</p>`;
@@ -7179,123 +7519,143 @@
     const chrome = PAGE_CHROME_UI[L] || PAGE_CHROME_UI.en;
     const map = {
       pl: {
-        eyebrow: "RelationshipScan — Raport premium",
-        title: "Twoj wynik: Trust Index",
-        indexLabel: "Wynik:",
-        subhead:
-          "Ten wynik pokazuje aktualny uklad relacji: jak rozklada sie inicjatywa, zaangazowanie, bliskosc, stabilnosc i napiecie.",
-        overview: "Rozklad kluczowych obszarow",
-        charts: "Wynik i wykres",
-        chartNote:
-          "Wysoki wynik w jednym obszarze nie wyrownuje niskiego w innym. Relacja dziala najlepiej, gdy te obszary sa spojne.",
-        scale: ["Niski", "Sredni", "Wysoki"],
-        areas: ["Inicjatywa", "Zaangazowanie", "Bliskosc", "Stabilnosc"],
+        eyebrow: "Raport premium RelationshipScan",
+        title: "Pełna analiza relacji na podstawie Twoich odpowiedzi",
+        indexLabel: "Trust Index:",
+        subhead: "Krótka interpretacja",
+        overview: "Rozkład kluczowych obszarów",
+        charts: "Trust Index i wykres",
+        chartNote: "Wysoki wynik w jednym obszarze nie równoważy automatycznie niskiego wyniku w innym. Relacja działa stabilnie wtedy, gdy te elementy są względnie spójne.",
+        scale: ["Niski", "Średni", "Wysoki"],
+        areas: ["Inicjatywa", "Zaangażowanie", "Bliskość", "Stabilność"],
         comm: "Inicjatywa",
-        emotional: "Zaangazowanie",
-        stability: "Bliskosc",
-        clarity: "Stabilnosc i napiecie",
-        pattern: "Powtarzajace sie wzorce",
-        meaning: "Mechanizm relacji",
-        next: "Co mozesz zrobic teraz",
-        noChange: "Jesli nic sie nie zmieni",
-        recheck: "Najprostszy plan dzialania (3 kroki)",
-        recheckCta: "Powtorz test",
-        back: "Wroc do wyniku",
+        emotional: "Zaangażowanie",
+        stability: "Bliskość",
+        clarity: "Stabilność",
+        tension: "Napięcie",
+        benchmark: "Obraz całości",
+        alerts: "Główny problem",
+        pattern: "Powtarzający się schemat",
+        meaning: "Wniosek końcowy",
+        trajectory: "Kierunek relacji w najbliższych tygodniach",
+        outcome: "Co może zmienić wynik",
+        next: "Co możesz zrobić teraz",
+        summary: "Podsumowanie raportu",
+        noChange: "Jeśli nic się nie zmieni",
+        recheck: "Plan 3 kroków",
+        recheckCta: "Powtórz skan",
+        back: "Wróć do wyniku",
       },
       en: {
-        eyebrow: "RelationshipScan — Premium report",
-        title: "Your result: Trust Index",
-        indexLabel: "Score:",
-        subhead:
-          "This score shows the current structure of your relationship: initiative, involvement, closeness, stability and tension.",
+        eyebrow: "RelationshipScan Premium Report",
+        title: "Full relationship analysis based on your answers",
+        indexLabel: "Trust Index:",
+        subhead: "Short interpretation",
         overview: "Breakdown of key areas",
-        charts: "Score and chart",
-        chartNote:
-          "A high score in one area does not compensate for a low score in another. The relationship works when these areas stay relatively consistent.",
+        charts: "Trust Index and chart",
+        chartNote: "A high score in one area does not automatically compensate for a low score in another. A relationship is stable when these elements remain relatively consistent.",
         scale: ["Low", "Medium", "High"],
         areas: ["Initiative", "Involvement", "Closeness", "Stability"],
         comm: "Initiative",
         emotional: "Involvement",
         stability: "Closeness",
-        clarity: "Stability and tension",
-        pattern: "Recurring patterns",
-        meaning: "Relationship mechanism",
+        clarity: "Stability",
+        tension: "Tension",
+        benchmark: "Overall picture",
+        alerts: "Main issue",
+        pattern: "Recurring pattern",
+        meaning: "Final conclusion",
+        trajectory: "Relationship direction in the coming weeks",
+        outcome: "What can change the result",
         next: "What you can do now",
+        summary: "Report summary",
         noChange: "If nothing changes",
-        recheck: "Simplest action plan (3 steps)",
-        recheckCta: "Run the test again",
+        recheck: "3-step plan",
+        recheckCta: "Run scan again",
         back: "Back to result",
       },
       de: {
-        eyebrow: "RelationshipScan — Premium Bericht",
-        title: "Dein Ergebnis: Trust Index",
-        indexLabel: "Ergebnis:",
-        subhead:
-          "Dieses Ergebnis zeigt die aktuelle Struktur der Beziehung: Initiative, Engagement, Naehe, Stabilitaet und Spannung.",
+        eyebrow: "RelationshipScan Premium-Bericht",
+        title: "Vollständige Beziehungsanalyse auf Grundlage deiner Antworten",
+        indexLabel: "Trust Index:",
+        subhead: "Kurzinterpretation",
         overview: "Verteilung der zentralen Bereiche",
-        charts: "Wert und Diagramm",
-        chartNote:
-          "Ein hoher Wert in einem Bereich gleicht einen niedrigen in einem anderen nicht aus. Die Beziehung funktioniert, wenn die Bereiche stimmig bleiben.",
+        charts: "Trust Index und Diagramm",
+        chartNote: "Ein hoher Wert in einem Bereich gleicht einen niedrigen Wert in einem anderen nicht automatisch aus. Eine Beziehung ist stabil, wenn diese Elemente relativ stimmig zueinander bleiben.",
         scale: ["Niedrig", "Mittel", "Hoch"],
-        areas: ["Initiative", "Engagement", "Naehe", "Stabilitaet"],
+        areas: ["Initiative", "Engagement", "Nähe", "Stabilität"],
         comm: "Initiative",
         emotional: "Engagement",
-        stability: "Naehe",
-        clarity: "Stabilitaet und Spannung",
-        pattern: "Wiederkehrende Muster",
-        meaning: "Beziehungsmechanismus",
+        stability: "Nähe",
+        clarity: "Stabilität",
+        tension: "Spannung",
+        benchmark: "Gesamtbild",
+        alerts: "Hauptproblem",
+        pattern: "Wiederkehrendes Muster",
+        meaning: "Abschließende Einschätzung",
+        trajectory: "Richtung der Beziehung in den kommenden Wochen",
+        outcome: "Was das Ergebnis verändern kann",
         next: "Was du jetzt tun kannst",
-        noChange: "Wenn sich nichts aendert",
-        recheck: "Einfachster Handlungsplan (3 Schritte)",
-        recheckCta: "Test wiederholen",
-        back: "Zurueck zum Ergebnis",
+        summary: "Zusammenfassung",
+        noChange: "Wenn sich nichts ändert",
+        recheck: "3-Schritte-Plan",
+        recheckCta: "Scan erneut starten",
+        back: "Zurück zum Ergebnis",
       },
       es: {
-        eyebrow: "RelationshipScan — Informe premium",
-        title: "Tu resultado: Trust Index",
-        indexLabel: "Resultado:",
-        subhead:
-          "Este resultado muestra la estructura actual: iniciativa, compromiso, cercania, estabilidad y tension.",
-        overview: "Distribucion de areas clave",
-        charts: "Resultado y grafico",
-        chartNote:
-          "Un resultado alto en un area no compensa uno bajo en otra. La relacion funciona cuando las areas se mantienen coherentes.",
+        eyebrow: "Informe premium de RelationshipScan",
+        title: "Análisis completo de la relación basado en tus respuestas",
+        indexLabel: "Trust Index:",
+        subhead: "Interpretación breve",
+        overview: "Distribución de las áreas clave",
+        charts: "Trust Index y gráfico",
+        chartNote: "Un resultado alto en un área no compensa automáticamente un resultado bajo en otra. La relación se mantiene estable cuando estos elementos son relativamente coherentes entre sí.",
         scale: ["Bajo", "Medio", "Alto"],
-        areas: ["Iniciativa", "Compromiso", "Cercania", "Estabilidad"],
+        areas: ["Iniciativa", "Compromiso", "Cercanía", "Estabilidad"],
         comm: "Iniciativa",
         emotional: "Compromiso",
-        stability: "Cercania",
-        clarity: "Estabilidad y tension",
-        pattern: "Patrones repetitivos",
-        meaning: "Mecanismo de la relacion",
-        next: "Que puedes hacer ahora",
+        stability: "Cercanía",
+        clarity: "Estabilidad",
+        tension: "Tensión",
+        benchmark: "Visión general",
+        alerts: "Problema principal",
+        pattern: "Patrón repetitivo",
+        meaning: "Conclusión final",
+        trajectory: "Dirección de la relación en las próximas semanas",
+        outcome: "Qué puede cambiar el resultado",
+        next: "Qué puedes hacer ahora",
+        summary: "Resumen",
         noChange: "Si nada cambia",
-        recheck: "Plan de accion mas simple (3 pasos)",
-        recheckCta: "Repetir test",
+        recheck: "Plan de 3 pasos",
+        recheckCta: "Repetir scan",
         back: "Volver al resultado",
       },
       pt: {
-        eyebrow: "RelationshipScan — Relatorio premium",
-        title: "O teu resultado: Trust Index",
-        indexLabel: "Resultado:",
-        subhead:
-          "Este resultado mostra a estrutura atual: iniciativa, envolvimento, proximidade, estabilidade e tensao.",
-        overview: "Distribuicao das areas principais",
-        charts: "Resultado e grafico",
-        chartNote:
-          "Um resultado alto numa area nao compensa um baixo noutra. A relacao funciona quando as areas se mantem coerentes.",
-        scale: ["Baixo", "Medio", "Alto"],
+        eyebrow: "Relatório premium RelationshipScan",
+        title: "Análise completa da relação com base nas tuas respostas",
+        indexLabel: "Trust Index:",
+        subhead: "Interpretação breve",
+        overview: "Distribuição das áreas principais",
+        charts: "Trust Index e gráfico",
+        chartNote: "Um resultado alto numa área não compensa automaticamente um resultado baixo noutra. A relação mantém-se estável quando estes elementos são relativamente coerentes entre si.",
+        scale: ["Baixo", "Médio", "Alto"],
         areas: ["Iniciativa", "Envolvimento", "Proximidade", "Estabilidade"],
         comm: "Iniciativa",
         emotional: "Envolvimento",
         stability: "Proximidade",
-        clarity: "Estabilidade e tensao",
-        pattern: "Padroes recorrentes",
-        meaning: "Mecanismo da relacao",
+        clarity: "Estabilidade",
+        tension: "Tensão",
+        benchmark: "Visão geral",
+        alerts: "Problema principal",
+        pattern: "Padrão recorrente",
+        meaning: "Conclusão final",
+        trajectory: "Direção da relação nas próximas semanas",
+        outcome: "O que pode mudar o resultado",
         next: "O que podes fazer agora",
+        summary: "Resumo",
         noChange: "Se nada mudar",
-        recheck: "Plano de acao mais simples (3 passos)",
-        recheckCta: "Repetir teste",
+        recheck: "Plano de 3 passos",
+        recheckCta: "Repetir scan",
         back: "Voltar ao resultado",
       },
     };
@@ -7323,6 +7683,7 @@
     setText("report-emotion-heading", ui.emotional);
     setText("report-stability-heading", ui.stability);
     setText("report-clarity-heading", ui.clarity);
+    setText("report-tension-heading", ui.tension);
     setText("report-pattern-heading", ui.pattern);
     setText("report-meaning-heading", ui.meaning);
     setText("report-next-heading", ui.next);
@@ -7330,7 +7691,11 @@
     setText("report-recheck-heading", ui.recheck);
     setText("report-recheck-cta", ui.recheckCta);
     const outcomeUi = getOutcomeActionsContent(L);
-    setText("report-outcome-heading", outcomeUi.heading);
+    setText("report-benchmark-heading", ui.benchmark);
+    setText("report-alerts-heading", ui.alerts);
+    setText("report-trajectory-heading", ui.trajectory);
+    setText("report-outcome-heading", ui.outcome || outcomeUi.heading);
+    setText("report-timeline-heading", ui.summary);
     setText("report-disclaimer-text", RESULT_SIGNAL_LINE_BY_LOCALE[L] || RESULT_SIGNAL_LINE_BY_LOCALE.en);
     setText("report-back-link", ui.back);
     setText("report-donut-label", "Trust Index");
@@ -7341,6 +7706,142 @@
     if (reportBackLink) reportBackLink.setAttribute("href", getFlowPageUrl("result", L));
     if (reportHomeLink) reportHomeLink.setAttribute("href", LOCALE_PATHS[L] || LOCALE_PATHS.en);
     if (document.getElementById("report-lock-title")) renderPaywallModalText(L);
+  }
+
+  function getInterpretationLead(locale) {
+    const map = { pl: "Interpretacja:", en: "Interpretation:", de: "Interpretation:", es: "Interpretación:", pt: "Interpretação:" };
+    return map[getPremiumRewriteLocale(locale)] || map.en;
+  }
+
+  function getAreaInterpretation(locale, key) {
+    const L = getPremiumRewriteLocale(locale);
+    const map = {
+      pl: {
+        initiative: "Inicjatywa pokazuje, czy relacja ma naturalny ruch po obu stronach, czy wymaga stałego podtrzymywania przez jedną osobę.",
+        engagement: "Zaangażowanie nie oznacza tylko czasu. Chodzi też o uwagę, gotowość i realny udział w codziennym utrzymywaniu relacji.",
+        closeness: "Bliskość nie opiera się na pojedynczych dobrych momentach, tylko na powtarzalności. Brak ciągłości powoduje poczucie niestabilności.",
+        stability: "Stabilność pokazuje, czy relacja ma rytm, do którego można wracać. Bez rytmu nawet dobre momenty nie budują trwałego poczucia bezpieczeństwa.",
+        tension: "Napięcie samo w sobie nie przekreśla relacji. Problem zaczyna się wtedy, gdy nie zostaje domknięte i przechodzi na kolejne sytuacje.",
+      },
+      en: {
+        initiative: "Initiative shows whether the relationship has movement from both sides, or whether it needs to be constantly maintained by one person.",
+        engagement: "Involvement is not only about time. It is also about attention, readiness and real participation in maintaining the relationship day to day.",
+        closeness: "Closeness is not based on single good moments, but on repetition. A lack of continuity creates a sense of instability.",
+        stability: "Stability shows whether the relationship has a rhythm to return to. Without rhythm, even good moments do not build lasting safety.",
+        tension: "Tension itself does not cancel a relationship. The problem begins when it is not resolved and carries into the next situations.",
+      },
+      de: {
+        initiative: "Initiative zeigt, ob die Beziehung Bewegung von beiden Seiten hat oder ob sie dauerhaft von einer Person aufrechterhalten werden muss.",
+        engagement: "Engagement bedeutet nicht nur Zeit. Es geht auch um Aufmerksamkeit, Bereitschaft und echte Beteiligung am täglichen Erhalt der Beziehung.",
+        closeness: "Nähe entsteht nicht durch einzelne gute Momente, sondern durch Wiederholung. Fehlende Kontinuität erzeugt ein Gefühl von Instabilität.",
+        stability: "Stabilität zeigt, ob die Beziehung einen Rhythmus hat, zu dem man zurückkehren kann. Ohne Rhythmus bauen selbst gute Momente kein dauerhaftes Sicherheitsgefühl auf.",
+        tension: "Spannung allein beendet keine Beziehung. Problematisch wird es, wenn sie nicht geklärt wird und in die nächsten Situationen übergeht.",
+      },
+      es: {
+        initiative: "La iniciativa muestra si la relación tiene movimiento por ambas partes o si necesita ser sostenida constantemente por una sola persona.",
+        engagement: "El compromiso no es solo tiempo. También incluye atención, disposición y participación real en el mantenimiento cotidiano de la relación.",
+        closeness: "La cercanía no se basa en momentos buenos aislados, sino en su repetición. La falta de continuidad genera sensación de inestabilidad.",
+        stability: "La estabilidad muestra si la relación tiene un ritmo al que se puede volver. Sin ritmo, incluso los buenos momentos no construyen una seguridad duradera.",
+        tension: "La tensión por sí sola no invalida una relación. El problema empieza cuando no se resuelve y pasa a las siguientes situaciones.",
+      },
+      pt: {
+        initiative: "A iniciativa mostra se a relação tem movimento dos dois lados ou se precisa de ser sustentada constantemente por uma só pessoa.",
+        engagement: "O envolvimento não é apenas tempo. Também inclui atenção, disponibilidade e participação real na manutenção diária da relação.",
+        closeness: "A proximidade não se baseia em bons momentos isolados, mas na sua repetição. A falta de continuidade cria uma sensação de instabilidade.",
+        stability: "A estabilidade mostra se a relação tem um ritmo ao qual se pode voltar. Sem ritmo, até os bons momentos deixam de construir uma segurança duradoura.",
+        tension: "A tensão por si só não invalida uma relação. O problema começa quando ela não é resolvida e passa para as situações seguintes.",
+      },
+    };
+    return (map[L] && map[L][key]) || (map.en && map.en[key]) || "";
+  }
+
+  function getOverviewCaption(locale) {
+    const map = {
+      pl: "Ten wynik nie opisuje całej relacji raz na zawsze. Pokazuje jej aktualny układ: jak rozkładają się inicjatywa, zaangażowanie, bliskość, stabilność i napięcie w tym momencie.",
+      en: "This score does not describe the whole relationship once and for all. It shows its current structure: how initiative, involvement, closeness, stability and tension are distributed at this moment.",
+      de: "Dieses Ergebnis beschreibt nicht die ganze Beziehung für immer. Es zeigt ihre aktuelle Struktur: wie sich Initiative, Engagement, Nähe, Stabilität und Spannung in diesem Moment verteilen.",
+      es: "Este resultado no describe toda la relación para siempre. Muestra su configuración actual: cómo se distribuyen la iniciativa, el compromiso, la cercanía, la estabilidad y la tensión en este momento.",
+      pt: "Este resultado não descreve a relação inteira para sempre. Mostra a sua estrutura atual: como se distribuem a iniciativa, o envolvimento, a proximidade, a estabilidade e a tensão neste momento.",
+    };
+    return map[getPremiumRewriteLocale(locale)] || map.en;
+  }
+
+  function getOverviewNarrative(locale, score, areaScores, tensionScore) {
+    const L = getPremiumRewriteLocale(locale);
+    const heading = {
+      pl: "Trust Index i obraz relacji",
+      en: "Trust Index and overall picture",
+      de: "Trust Index und Gesamtbild",
+      es: "Trust Index y visión general",
+      pt: "Trust Index e visão geral",
+    };
+    const body = {
+      pl: `Trust Index: ${score}/100. Inicjatywa ${Math.round(areaScores.communication)}/100, zaangażowanie ${Math.round(areaScores.emotional)}/100, bliskość ${Math.round(areaScores.behavior)}/100, stabilność ${Math.round(areaScores.trust)}/100, napięcie ${tensionScore}/100.`,
+      en: `Trust Index: ${score}/100. Initiative ${Math.round(areaScores.communication)}/100, involvement ${Math.round(areaScores.emotional)}/100, closeness ${Math.round(areaScores.behavior)}/100, stability ${Math.round(areaScores.trust)}/100, tension ${tensionScore}/100.`,
+      de: `Trust Index: ${score}/100. Initiative ${Math.round(areaScores.communication)}/100, Engagement ${Math.round(areaScores.emotional)}/100, Nähe ${Math.round(areaScores.behavior)}/100, Stabilität ${Math.round(areaScores.trust)}/100, Spannung ${tensionScore}/100.`,
+      es: `Trust Index: ${score}/100. Iniciativa ${Math.round(areaScores.communication)}/100, compromiso ${Math.round(areaScores.emotional)}/100, cercanía ${Math.round(areaScores.behavior)}/100, estabilidad ${Math.round(areaScores.trust)}/100, tensión ${tensionScore}/100.`,
+      pt: `Trust Index: ${score}/100. Iniciativa ${Math.round(areaScores.communication)}/100, envolvimento ${Math.round(areaScores.emotional)}/100, proximidade ${Math.round(areaScores.behavior)}/100, estabilidade ${Math.round(areaScores.trust)}/100, tensão ${tensionScore}/100.`,
+    };
+    return { heading: heading[L] || heading.en, body: body[L] || body.en };
+  }
+
+  function getPrimaryIssueBlock(locale, areaScores, tensionScore) {
+    const L = getPremiumRewriteLocale(locale);
+    const values = [
+      ["initiative", Math.round(areaScores.communication)],
+      ["engagement", Math.round(areaScores.emotional)],
+      ["closeness", Math.round(areaScores.behavior)],
+      ["stability", Math.round(areaScores.trust)],
+      ["tension", Math.round(100 - tensionScore)],
+    ].sort((a, b) => a[1] - b[1]);
+    const weakest = values[0][0];
+    const names = {
+      pl: { initiative: "inicjatywa", engagement: "zaangażowanie", closeness: "bliskość", stability: "stabilność", tension: "napięcie" },
+      en: { initiative: "initiative", engagement: "involvement", closeness: "closeness", stability: "stability", tension: "tension" },
+      de: { initiative: "Initiative", engagement: "Engagement", closeness: "Nähe", stability: "Stabilität", tension: "Spannung" },
+      es: { initiative: "iniciativa", engagement: "compromiso", closeness: "cercanía", stability: "estabilidad", tension: "tensión" },
+      pt: { initiative: "iniciativa", engagement: "envolvimento", closeness: "proximidade", stability: "estabilidade", tension: "tensão" },
+    };
+    const nm = (names[L] && names[L][weakest]) || names.en[weakest];
+    const titleMap = { pl: `Główny problem: ${nm}`, en: `Main issue: ${nm}`, de: `Hauptproblem: ${nm}`, es: `Problema principal: ${nm}`, pt: `Problema principal: ${nm}` };
+    const bodyMap = {
+      pl: "Najczęściej nie chodzi o jedną sytuację, tylko o układ, który wraca. Bez zmiany mechanizmu ten sam schemat będzie się powtarzał.",
+      en: "Most often this is not one situation, but a recurring setup. Without a concrete change, the same loop will return.",
+      de: "Meist geht es nicht um eine einzelne Situation, sondern um ein wiederkehrendes Muster. Ohne konkrete Änderung kehrt dieselbe Schleife zurück.",
+      es: "La mayoría de las veces no se trata de una sola situación, sino de un patrón que vuelve. Sin un cambio concreto, el mismo ciclo regresará.",
+      pt: "Na maioria das vezes não se trata de uma única situação, mas de um padrão recorrente. Sem uma mudança concreta, o mesmo ciclo voltará.",
+    };
+    return { title: titleMap[L] || titleMap.en, body: bodyMap[L] || bodyMap.en };
+  }
+
+  function getTrajectoryMetaLabel(locale) {
+    const map = { pl: "Wynik", en: "Score", de: "Wert", es: "Resultado", pt: "Resultado" };
+    return map[getPremiumRewriteLocale(locale)] || map.en;
+  }
+
+  function getSpreadMetaLabel(locale) {
+    const map = { pl: "Rozkład", en: "Spread", de: "Streuung", es: "Dispersión", pt: "Dispersão" };
+    return map[getPremiumRewriteLocale(locale)] || map.en;
+  }
+
+  function getTensionNarrative(locale, tensionScore, trajectoryLabel) {
+    const L = getPremiumRewriteLocale(locale);
+    if (L === "pl") return `Wynik napięcia: ${tensionScore}/100. Gdy napięcie nie jest domykane, przechodzi na kolejne rozmowy i osłabia stabilność.`;
+    if (L === "de") return `Spannungswert: ${tensionScore}/100. Wenn Spannung nicht geklärt wird, trägt sie sich in die nächsten Gespräche und schwächt die Stabilität.`;
+    if (L === "es") return `Resultado de tensión: ${tensionScore}/100. Cuando la tensión no se cierra, pasa a las siguientes conversaciones y debilita la estabilidad.`;
+    if (L === "pt") return `Resultado de tensão: ${tensionScore}/100. Quando a tensão não é resolvida, passa para as conversas seguintes e enfraquece a estabilidade.`;
+    return `Tension score: ${tensionScore}/100. When tension is not resolved, it carries into the next conversations and weakens stability.`;
+  }
+
+  function getTensionCheck(locale) {
+    const map = {
+      pl: "Sprawdź, czy po konflikcie wracacie do tematu i domykacie go tego samego dnia.",
+      en: "Check whether you return to the topic after conflict and close it on the same day.",
+      de: "Prüfe, ob ihr nach Konflikten zum Thema zurückkehrt und es am selben Tag abschließt.",
+      es: "Comprueba si después del conflicto volvéis al tema y lo cerráis el mismo día.",
+      pt: "Verifica se após o conflito vocês voltam ao tema e fecham no mesmo dia.",
+    };
+    return map[getPremiumRewriteLocale(locale)] || map.en;
   }
 
   function buildOperationalDimension(locale, key, areaScores, trajectory) {

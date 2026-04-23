@@ -3,21 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="stripe-verify-api-base" content="https://payments.relationshipscan.app" />
-  <meta name="description" content="Pełny raport premium RelationshipScan z podsumowaniem, profilami obszarów, sygnałami ryzyka i kolejnymi krokami." />
-  <title>Pełny raport relacji — RelationshipScan</title>
-  <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="Pełny raport relacji — RelationshipScan" />
-  <meta property="og:description" content="Szczegółowy raport premium na podstawie Trust Index i wzorców odpowiedzi." />
-  <meta property="og:type" content="article" />
-  <meta property="og:locale" content="pl_PL" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Podgląd pełnego raportu premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css?v=20260422report" />
+  <link rel="stylesheet" href="style.css?v=20260422report" />
 </head>
-<body class="page page--report report-is-locked">
+<body class="page page--report">
   <header class="site-header site-header--minimal">
     <div class="container site-header__inner">
       <a class="logo" href="index.html">RelationshipScan</a>
@@ -25,19 +18,12 @@
   </header>
 
   <main class="report-main report-main--premium">
-    <div class="report-lock-overlay" id="report-lock-overlay">
-      <div class="report-lock-overlay__card">
-        <h2 id="report-lock-title">Odblokuj pełny raport</h2>
-        <p id="report-lock-body">Pełna analiza jest dostępna po płatności Stripe.</p>
-        <a class="cta-button" id="report-lock-cta" href="https://buy.stripe.com/eVqaEZ2S7beFc0iaar4ow03">Przejdź do płatności Stripe</a>
-      </div>
-    </div>
     <div class="container report-layout">
       <header class="report-header reveal">
-        <p class="eyebrow" id="report-eyebrow">Raport premium</p>
+        <p class="eyebrow" id="report-eyebrow">Raport premium — podgląd</p>
         <h1 id="report-title">Pełna analiza relacji</h1>
         <p class="report-ref"><span id="report-index-label">Trust Index:</span> <strong id="report-score">—</strong></p>
-        <p class="report-header__sub" id="report-subhead">Uporządkowany raport premium o sygnałach w relacji i aktualnym ryzyku decyzji.</p>
+        <p class="report-header__sub" id="report-subhead">Podgląd układu raportu premium bez płatności (tryb tymczasowy).</p>
         <p class="report-header__insight" id="report-personalized-insight"></p>
       </header>
 
@@ -46,7 +32,7 @@
         <div class="report-analysis-grid">
           <article class="analysis-area-card">
             <div class="analysis-area-card__head">
-              <h3 id="report-area-title-communication">Komunikacja</h3>
+              <h3 id="report-area-title-communication">Inicjatywa</h3>
               <p class="analysis-area-card__score" id="report-area-communication-score">—</p>
             </div>
             <p class="analysis-area-card__label" id="report-area-communication-label">—</p>
@@ -64,7 +50,7 @@
           </article>
           <article class="analysis-area-card">
             <div class="analysis-area-card__head">
-              <h3 id="report-area-title-transparency">Przejrzystość</h3>
+              <h3 id="report-area-title-transparency">Zaangażowanie</h3>
               <p class="analysis-area-card__score" id="report-area-transparency-score">—</p>
             </div>
             <p class="analysis-area-card__label" id="report-area-transparency-label">—</p>
@@ -73,7 +59,7 @@
           </article>
           <article class="analysis-area-card">
             <div class="analysis-area-card__head">
-              <h3 id="report-area-title-safety">Bezpieczeństwo emocjonalne</h3>
+              <h3 id="report-area-title-safety">Bliskość</h3>
               <p class="analysis-area-card__score" id="report-area-safety-score">—</p>
             </div>
             <p class="analysis-area-card__label" id="report-area-safety-label">—</p>
@@ -94,14 +80,14 @@
           </div>
         </div>
         <div class="report-score-scale" aria-hidden="true">
-          <div class="report-score-scale__range report-score-scale__range--low" id="report-scale-low">Niska niepewność</div>
-          <div class="report-score-scale__range report-score-scale__range--mid" id="report-scale-mid">Średnia niepewność</div>
-          <div class="report-score-scale__range report-score-scale__range--high" id="report-scale-high">Wysoka niepewność</div>
+          <div class="report-score-scale__range report-score-scale__range--low" id="report-scale-low">Niski</div>
+          <div class="report-score-scale__range report-score-scale__range--mid" id="report-scale-mid">Średni</div>
+          <div class="report-score-scale__range report-score-scale__range--high" id="report-scale-high">Wysoki</div>
           <span class="report-score-scale__marker" id="report-score-position"></span>
         </div>
         <div class="report-bars" id="report-bars-main">
           <div class="report-bars__item">
-            <div class="report-bars__head"><span id="report-bar-title-communication">Komunikacja</span><span id="report-bar-label-communication">—</span></div>
+            <div class="report-bars__head"><span id="report-bar-title-communication">Inicjatywa</span><span id="report-bar-label-communication">—</span></div>
             <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-communication"></span></div>
           </div>
           <div class="report-bars__item">
@@ -109,11 +95,11 @@
             <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-stability"></span></div>
           </div>
           <div class="report-bars__item">
-            <div class="report-bars__head"><span id="report-bar-title-transparency">Klarowność</span><span id="report-bar-label-transparency">—</span></div>
+            <div class="report-bars__head"><span id="report-bar-title-transparency">Zaangażowanie</span><span id="report-bar-label-transparency">—</span></div>
             <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-transparency"></span></div>
           </div>
           <div class="report-bars__item">
-            <div class="report-bars__head"><span id="report-bar-title-safety">Bliskość emocjonalna</span><span id="report-bar-label-safety">—</span></div>
+            <div class="report-bars__head"><span id="report-bar-title-safety">Bliskość</span><span id="report-bar-label-safety">—</span></div>
             <div class="report-bars__track"><span class="report-bars__fill" id="report-bar-safety"></span></div>
           </div>
         </div>
@@ -121,7 +107,7 @@
       </section>
 
       <section class="report-card reveal" aria-labelledby="report-benchmark-heading">
-        <h2 id="report-benchmark-heading">Obraz całości</h2>
+        <h2 id="report-benchmark-heading">Porównanie</h2>
         <div class="report-benchmark-grid" id="report-benchmark-grid"></div>
         <p class="report-benchmark-note" id="report-benchmark-note"></p>
       </section>
@@ -186,16 +172,6 @@
         <ul class="report-list" id="report-clarity-checks"></ul>
       </section>
 
-      <section class="report-card reveal" aria-labelledby="report-tension-heading">
-        <h2 id="report-tension-heading">Napięcie</h2>
-        <div class="report-dimension-meta">
-          <p class="report-dimension-score" id="report-dim-tension-score">—</p>
-          <p class="report-dimension-label" id="report-dim-tension-label">—</p>
-        </div>
-        <div class="prose prose--report" id="report-tension-body"></div>
-        <ul class="report-list" id="report-tension-checks"></ul>
-      </section>
-
       <section class="report-card reveal" aria-labelledby="report-pattern-heading">
         <h2 id="report-pattern-heading">Powtarzający się schemat</h2>
         <div class="prose prose--report" id="report-pattern-body"></div>
@@ -220,35 +196,130 @@
         <h2 id="report-recheck-heading">Sprawdź zmianę</h2>
         <div class="prose prose--report" id="report-recheck-body"></div>
         <p class="report-recheck-cta-wrap">
-          <a class="btn btn--accent" href="/test.html?lang=pl" id="report-recheck-cta">Uruchom skan ponownie</a>
+          <a class="btn btn--accent" href="test.html?lang=pl" id="report-recheck-cta">Powtórz skan</a>
         </p>
       </section>
-
-      <section class="disclaimer-box disclaimer-box--compact reveal">
-        <p>
-          <span id="report-disclaimer-text">To narzędzie dostarcza interpretacyjne wskazówki i nie stanowi porady psychologicznej, medycznej ani prawnej.</span>
-        </p>
-      </section>
-
-      <p class="result-footer-links">
-        <a href="index.html" id="report-footer-home-link">Start</a>
-        ·
-        <a href="result.html" id="report-back-link">Wróć do wyniku</a>
-      </p>
     </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="container site-footer__inner">
-      <p class="site-footer__note">© <span data-year></span> RelationshipScan</p>
-      <p class="site-footer__note" id="report-footer-note-disclaimer">To narzędzie dostarcza interpretacyjne wskazówki i nie stanowi porady psychologicznej, medycznej ani prawnej.</p>
-      <p class="site-footer__links">
-        <a href="polityka-prywatnosci.html">Polityka prywatności</a> · <a href="regulamin.html">Regulamin</a> · <a href="/pl/contact.html">Kontakt</a>
-      </p>
-    </div>
-  </footer>
+  <script>
+    (function () {
+      const data = {
+        score: 62,
+        initiative: 38,
+        engagement: 44,
+        closeness: 51,
+        stability: 47,
+        tension: 72,
+        strongest_area: "Bliskość",
+        weakest_area: "Inicjatywa",
+        primary_issue: "nierówna inicjatywa"
+      };
 
-  <script src="/locale.config.js"></script>
-  <script src="../script.js?v=20260423paywallv6" defer></script>
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      function setHTML(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = value;
+      }
+
+      function scoreLabel(v) {
+        if (v >= 75) return "Wysoki";
+        if (v >= 45) return "Średni";
+        return "Niski";
+      }
+
+      setText("report-score", data.score + "/100");
+      setText("report-donut-value", String(data.score));
+      setText("report-chart-note", "Najmocniejszy obszar: " + data.strongest_area + ". Najsłabszy obszar: " + data.weakest_area + ".");
+      setText("report-personalized-insight", "Główny problem: " + data.primary_issue + ".");
+
+      const donut = document.getElementById("report-donut");
+      if (donut) donut.style.setProperty("--result-percent", data.score + "%");
+      const marker = document.getElementById("report-score-position");
+      if (marker) marker.style.left = data.score + "%";
+
+      const map = [
+        { key: "initiative", dom: "communication", title: "Inicjatywa" },
+        { key: "stability", dom: "stability", title: "Stabilność" },
+        { key: "engagement", dom: "transparency", title: "Zaangażowanie" },
+        { key: "closeness", dom: "safety", title: "Bliskość" }
+      ];
+
+      map.forEach((m) => {
+        const v = data[m.key];
+        setText("report-area-" + m.dom + "-score", v + "/100");
+        setText("report-area-" + m.dom + "-label", scoreLabel(v));
+        setText("report-area-" + m.dom + "-insight", m.title + " — " + (v < 45 ? "wymaga szybkiej korekty" : (v < 60 ? "obszar niestabilny" : "obszar względnie stabilny")));
+        setText("report-area-" + m.dom + "-text", "Podgląd sekcji premium dla obszaru: " + m.title + ".");
+        setText("report-bar-label-" + m.dom, v + "/100");
+        const bar = document.getElementById("report-bar-" + m.dom);
+        if (bar) bar.style.width = v + "%";
+      });
+
+      setHTML("report-benchmark-grid",
+        '<article class="report-benchmark-card"><div class="report-benchmark-card__head"><h3>Wynik ogólny</h3><p class="report-benchmark-card__score">' + data.score + '/100</p></div><p class="report-benchmark-card__meta">Punkt odniesienia: 54/100</p><p class="report-benchmark-card__result">Powyżej poziomu odniesienia</p></article>' +
+        '<article class="report-benchmark-card"><div class="report-benchmark-card__head"><h3>Inicjatywa</h3><p class="report-benchmark-card__score">' + data.initiative + '/100</p></div><p class="report-benchmark-card__meta">Punkt odniesienia: 52/100</p><p class="report-benchmark-card__result">Poniżej poziomu odniesienia</p></article>' +
+        '<article class="report-benchmark-card"><div class="report-benchmark-card__head"><h3>Bliskość</h3><p class="report-benchmark-card__score">' + data.closeness + '/100</p></div><p class="report-benchmark-card__meta">Punkt odniesienia: 50/100</p><p class="report-benchmark-card__result">Blisko poziomu odniesienia</p></article>'
+      );
+      setText("report-benchmark-note", "Wartości są statyczne i służą wyłącznie do podglądu układu.");
+
+      setHTML("report-alerts",
+        '<article class="report-alert-card"><h3>Wysokie napięcie</h3><p>Wynik napięcia to 72/100. To zwykle zwiększa nadinterpretację po konflikcie.</p></article>' +
+        '<article class="report-alert-card"><h3>Nierówna inicjatywa</h3><p>Wynik inicjatywy to 38/100. Ciężar relacji może przesuwać się na jedną stronę.</p></article>'
+      );
+
+      setHTML("report-trajectory",
+        '<div class="report-trajectory__header"><p class="report-trajectory__label">Kierunek mieszany</p><p class="report-trajectory__meta">Wynik łączny 49/100 | Rozrzut 13</p></div>' +
+        '<p class="report-trajectory__body">Bez poprawy inicjatywy profil może przejść z niestabilnego do spadkowego pod presją.</p>'
+      );
+
+      setHTML("report-timeline",
+        '<div class="report-timeline__grid">' +
+        '<article class="report-timeline__stage"><h3>Tydzień 1-2</h3><p>Kontakt pozostaje aktywny, ale emocjonalnie nierówny po trudnych tematach.</p></article>' +
+        '<article class="report-timeline__stage"><h3>Tydzień 3-4</h3><p>Jeśli inicjatywa pozostanie jednostronna, niedomknięte pętle będą wracać częściej.</p></article>' +
+        '<article class="report-timeline__stage"><h3>Tydzień 5-6</h3><p>Rośnie zmęczenie, a powrót do równowagi po napięciu trwa dłużej.</p></article>' +
+        '</div>'
+      );
+
+      setHTML("report-outcome",
+        '<div class="report-outcome-block">' +
+        '<h3>Priorytet teraz</h3>' +
+        '<p>Wyrównaj inicjatywę w konkretnych działaniach tygodniowych (kontakt, planowanie, domykanie).</p>' +
+        '<h3>Dodatkowe działanie</h3>' +
+        '<p>Ustal jeden stały check-in tygodniowy i domknij jeden otwarty temat na tydzień.</p>' +
+        '</div>'
+      );
+
+      setText("report-dim-communication-score", data.initiative + "/100");
+      setText("report-dim-communication-label", "Niski");
+      setHTML("report-communication-body", "<p>Inicjatywa jest obecnie najsłabszym obszarem i głównym źródłem nierównowagi.</p>");
+      setHTML("report-communication-checks", "<li>Sprawdzaj, kto zaczyna trudne rozmowy.</li><li>Sprawdzaj, kto domyka otwarte tematy.</li>");
+
+      setText("report-dim-emotional-score", data.closeness + "/100");
+      setText("report-dim-emotional-label", "Średni");
+      setHTML("report-emotional-body", "<p>Bliskość jest obecna, ale powrót do równowagi po napięciu jest niestabilny.</p>");
+      setHTML("report-emotional-checks", "<li>Sprawdzaj ton emocjonalny po konflikcie tego samego dnia.</li><li>Zapisuj przejścia między bliskością i dystansem.</li>");
+
+      setText("report-dim-stability-score", data.stability + "/100");
+      setText("report-dim-stability-label", "Średni");
+      setHTML("report-stability-body", "<p>Stabilność nie załamuje się, ale opiera się na ciągłym wysiłku zamiast stałej równowagi.</p>");
+      setHTML("report-stability-checks", "<li>Domknij jedno zobowiązanie tygodniowo.</li><li>Ogranicz przenoszenie niedomkniętych spraw.</li>");
+
+      setText("report-dim-clarity-score", data.engagement + "/100");
+      setText("report-dim-clarity-label", "Średni");
+      setHTML("report-clarity-body", "<p>Zaangażowanie jest nierówne między tygodniami, co utrudnia czytelność intencji pod presją.</p>");
+      setHTML("report-clarity-checks", "<li>Ustal jedną konkretną zasadę reakcji po konflikcie.</li><li>Stosuj jawne kolejne kroki po ważnych rozmowach.</li>");
+
+      setHTML("report-pattern-body", "<p>Powtarzający się schemat: <strong>" + data.primary_issue + "</strong> + wysokie napięcie (" + data.tension + "/100) prowadzi do opóźnionego domykania i nawrotów tych samych pętli.</p>");
+      setHTML("report-meaning-body", "<p>Profil nie jest krytyczny, ale obecna struktura jest niestabilna. Jeśli inicjatywa pozostanie nierówna, jakość relacji może stopniowo spadać.</p>");
+      setHTML("report-next-steps-body", "<li>Ustal tygodniowe minimum inicjatywy po obu stronach.</li><li>Domykaj jeden otwarty wątek co 7 dni.</li><li>Sprawdź zmianę po 2-3 tygodniach.</li>");
+      setHTML("report-nochange-body", "<p>Jeśli nic się nie zmieni, napięcie pozostanie wysokie, a niedomknięte tematy będą się kumulować. W perspektywie 3-6 tygodni zwykle rośnie zmęczenie i dystans.</p>");
+      setHTML("report-recheck-body", "<p>Powtórz pomiar po dwóch tygodniach i najpierw porównaj inicjatywę oraz napięcie.</p>");
+    })();
+  </script>
 </body>
 </html>
