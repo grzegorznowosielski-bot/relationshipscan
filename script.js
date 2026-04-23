@@ -882,7 +882,7 @@
     if (runtime && runtime[normalizedLocale] && runtime[normalizedLocale].basePath && localizedPages.has(String(pageName || ""))) {
       return `${getLocaleBasePath(normalizedLocale)}${pageName}.html`;
     }
-    return `${pageName}.html?lang=${encodeURIComponent(normalizedLocale)}`;
+    return `/${pageName}.html?lang=${encodeURIComponent(normalizedLocale)}`;
   }
 
   function getQueryLang() {
@@ -1068,29 +1068,29 @@
     "napiecia": {
       "headline": "This is starting to break down",
       "label": "Unstable",
-      "lead": "You are not in total collapse, but something is off. One day feels close, next day feels cold or tense.",
+      "lead": "You still have contact, but more things stop halfway. One day feels close, the next one feels cold or tense.",
       "interpretation": [
-        "Talks start and then die. Unfinished issues pile up and return in the next fight.",
-        "Words and behavior do not match often enough to create doubt."
+        "Important talks stop before a clear ending. The same issue comes back in the next argument.",
+        "After conflict, contact often returns slower, so tension stays in the background."
       ],
       "tips": [
-        "Pick one unresolved issue and close it fully.",
-        "Watch behavior for a few days, not promises in one conversation.",
-        "If closeness-distance keeps repeating, treat it as real, not temporary."
+        "Watch whether behavior changes in the week after a difficult talk.",
+        "Track what happens after tension: reconnecting or silence.",
+        "Do not judge by one good evening; judge by what keeps repeating."
       ]
     },
     "niepewnosc": {
       "headline": "Your uncertainty is high",
       "label": "High risk of confusion",
-      "lead": "There is too much tension and too little clarity. Important things stay unanswered and your safety drops.",
+      "lead": "Tension is high and clear answers are missing. Important topics stay open.",
       "interpretation": [
-        "Hard topics keep returning without closure. You get closeness, then distance, then silence.",
-        "At this point people usually overthink because they have no stable ground."
+        "A hard topic comes up, then the talk breaks, then there is distance and silence again.",
+        "Words and behavior split too often, so you start checking more and trusting less."
       ],
       "tips": [
         "Separate facts from what you are adding in your head.",
-        "Ask for one clear behavior change you can actually see.",
-        "If nothing changes, trust what keeps happening."
+        "Check whether normal contact comes back the same day after tension.",
+        "If nothing changes across several days, treat it as direction, not accident."
       ]
     }
   };
@@ -1158,29 +1158,29 @@
     "napiecia": {
       "headline": "Das beginnt zu kippen",
       "label": "Instabil",
-      "lead": "Es ist noch kein kompletter Bruch, aber etwas läuft klar schief. Ein Tag Nähe, am nächsten Kälte oder Spannung.",
+      "lead": "Ihr habt noch Kontakt, aber immer mehr Themen bleiben offen. Ein Tag ist nah, der nächste kühl oder angespannt.",
       "interpretation": [
-        "Gespräche starten und enden ohne Abschluss. Offene Punkte kommen im nächsten Streit wieder hoch.",
-        "Worte und Verhalten passen oft genug nicht zusammen, um Misstrauen aufzubauen."
+        "Wichtige Gespräche enden ohne klare Entscheidung. Beim nächsten Streit ist dasselbe Thema wieder da.",
+        "Nach Konflikten bleibt Abstand länger, deshalb baut sich Spannung zwischen den Gesprächen auf."
       ],
       "tips": [
-        "Nimm ein offenes Thema und bring es vollständig zu Ende.",
-        "Beobachte Verhalten über mehrere Tage, nicht Versprechen in einem Gespräch.",
-        "Wenn Nähe und Distanz ständig wechseln, ist das ein echtes Problem."
+        "Prüfe, ob sich Verhalten in den Tagen nach dem Gespräch wirklich ändert.",
+        "Achte auf die Stunden nach Streit: Rückkehr in Kontakt oder Funkstille.",
+        "Nicht ein guter Abend zählt, sondern was Woche für Woche wieder passiert."
       ]
     },
     "niepewnosc": {
       "headline": "Deine Unsicherheit ist hoch",
       "label": "Hohes Risiko für Verwirrung",
-      "lead": "Zu viel Spannung, zu wenig Klarheit. Wichtige Fragen bleiben offen und dein Sicherheitsgefühl sinkt.",
+      "lead": "Die Spannung ist hoch und klare Antworten fehlen. Wichtige Fragen bleiben offen.",
       "interpretation": [
-        "Schwere Themen kommen ohne Abschluss immer wieder zurück. Kurz Nähe, dann Distanz, dann Schweigen.",
-        "In dieser Lage denkt man sich schnell alles zusammen, weil es keinen festen Boden gibt."
+        "Schwierige Themen kommen hoch, brechen ab und enden wieder in Abstand und Schweigen.",
+        "Worte und Verhalten laufen zu oft auseinander, dadurch wächst Kontrolle statt Vertrauen."
       ],
       "tips": [
         "Trenne Fakten von dem, was du dazudenkst.",
-        "Bitte um eine konkrete Verhaltensänderung, die sichtbar ist.",
-        "Wenn nichts anders wird, glaub dem Verlauf, nicht den Worten."
+        "Schau, ob am selben Tag nach Spannung wieder normaler Kontakt möglich ist.",
+        "Wenn sich tagelang nichts ändert, ist das keine Ausnahme, sondern Richtung."
       ]
     }
   };
@@ -1203,29 +1203,29 @@
     "napiecia": {
       "headline": "Esto se está desordenando",
       "label": "Inestable",
-      "lead": "No es ruptura total, pero algo va mal. Un día hay cercanía, al siguiente frialdad o tensión.",
+      "lead": "Aún hay contacto, pero más temas se quedan a medias. Un día hay cercanía y al siguiente frialdad.",
       "interpretation": [
-        "Las conversaciones empiezan y se cortan. Los temas abiertos vuelven en la siguiente discusión.",
-        "Lo que se dice y lo que se hace no coincide lo suficiente."
+        "Las conversaciones importantes terminan sin cierre claro y vuelven en la discusión siguiente.",
+        "Después del conflicto el contacto tarda en volver, por eso la tensión se queda entre vosotros."
       ],
       "tips": [
-        "Tomad un tema pendiente y cerradlo por completo.",
-        "Observa conducta varios días, no promesas de una charla.",
-        "Si se repite cercanía-distancia, no lo minimices."
+        "Mira si el comportamiento cambia de verdad en la semana siguiente.",
+        "Fíjate en lo que pasa tras tensión: reconexión o silencio.",
+        "No midas por una noche buena, mide por lo que se repite."
       ]
     },
     "niepewnosc": {
       "headline": "Tu incertidumbre es alta",
       "label": "Riesgo alto de confusión",
-      "lead": "Hay demasiada tensión y muy poca claridad. Lo importante sigue sin respuesta y baja tu sensación de seguridad.",
+      "lead": "Hay mucha tensión y pocas respuestas claras. Lo importante sigue abierto.",
       "interpretation": [
-        "Los temas difíciles vuelven sin cierre. Hay un rato de cercanía y luego distancia y silencio.",
-        "En este punto la cabeza rellena huecos porque faltan hechos firmes."
+        "Un tema difícil aparece, la conversación se corta y volvéis a distancia y silencio.",
+        "Palabras y hechos se separan demasiado, así que aparece más control y menos confianza."
       ],
       "tips": [
         "Separa hechos de lo que estás imaginando.",
-        "Pide un cambio concreto que puedas ver.",
-        "Si no cambia nada, confía en lo que se repite."
+        "Mira si el contacto normal vuelve el mismo día tras el conflicto.",
+        "Si pasan varios días sin cambio, tómalo como dirección real."
       ]
     }
   };
@@ -1248,29 +1248,29 @@
     "napiecia": {
       "headline": "Isto está a sair do eixo",
       "label": "Instável",
-      "lead": "Ainda não é rutura total, mas algo está a falhar. Num dia há proximidade, no outro frieza ou tensão.",
+      "lead": "Ainda há contacto, mas mais assuntos ficam por fechar. Num dia há proximidade, no outro frieza ou tensão.",
       "interpretation": [
-        "As conversas começam e ficam a meio. Os temas por fechar voltam no conflito seguinte.",
-        "O que é dito e o que é feito não bate certo com frequência."
+        "Conversas importantes acabam sem fecho claro e o mesmo tema volta no conflito seguinte.",
+        "Depois da tensão, o contacto demora a regressar e o mal-estar fica entre vocês."
       ],
       "tips": [
-        "Escolham um tema pendente e fechem-no por completo.",
-        "Observa comportamento durante vários dias, não promessas de uma conversa.",
-        "Se o ciclo proximidade-distância repete, leva isso a sério."
+        "Vê se o comportamento muda de facto na semana depois da conversa.",
+        "Observa o que acontece após conflito: reconexão ou silêncio.",
+        "Não avalies por uma noite boa, avalia pelo que se repete."
       ]
     },
     "niepewnosc": {
       "headline": "A tua incerteza está alta",
       "label": "Risco alto de confusão",
-      "lead": "Há tensão a mais e clareza a menos. Questões importantes ficam sem resposta e a segurança baixa.",
+      "lead": "Há muita tensão e poucas respostas claras. As questões principais ficam abertas.",
       "interpretation": [
-        "Os temas difíceis voltam sem fecho. Há proximidade por pouco tempo, depois distância e silêncio.",
-        "Nesta fase a cabeça preenche lacunas porque faltam factos firmes."
+        "Tema difícil aparece, a conversa corta e voltam distância e silêncio.",
+        "Palavras e ações afastam-se vezes demais, e surge mais controlo do que confiança."
       ],
       "tips": [
         "Separa factos do que estás a imaginar.",
-        "Pede uma mudança concreta que possas ver.",
-        "Se nada muda, confia no que se repete."
+        "Vê se o contacto normal regressa no mesmo dia após tensão.",
+        "Se vários dias passam sem mudança, trata isso como direção real."
       ]
     }
   };
@@ -1888,9 +1888,9 @@
       "freeHeading": "What is happening",
       "tipsHeading": "What to do now",
       "premiumEyebrow": "Full report",
-      "premiumTitle": "The score is the short version",
-      "premiumSubhead": "The real part is below: where things are breaking and why.",
-      "premiumIntro": "If you stop here, you can read this wrong and make the wrong move.",
+      "premiumTitle": "The score only shows the surface",
+      "premiumSubhead": "Below is the concrete part: where conversation, behavior, and trust are failing.",
+      "premiumIntro": "If you stop on this screen, you are left with guesses.",
       "lockedTitles": [
         "Where conversations break",
         "Where distance is growing",
@@ -1899,24 +1899,24 @@
         "What this is likely to become",
         "What to do before it gets worse"
       ],
-      "lockedTeaser": "Your answers point to one repeating dynamic.",
+      "lockedTeaser": "This is not one bad day. The same problem returns step by step.",
       "lockedLabel": "Locked",
       "previewLabels": [
         "Communication",
         "Stability",
-        "Honesty",
-        "Emotional safety"
+        "Trust",
+        "Closeness"
       ],
       "previewOverlay": "Preview",
-      "paywallHook": "Without the full report, you are guessing.",
+      "paywallHook": "Without the full report, it is hard to tell a stress moment from an ongoing problem.",
       "scoreLabel": "Your current score",
       "valueHeading": "Inside",
       "valueItems": [
-        "What in your answers raised risk",
-        "What is still stable",
-        "Where this goes if nothing changes",
-        "How this may look in 3–6 months",
-        "Exact next steps for your case"
+        "Which answers pushed your score down the most",
+        "What still works and where it already fails",
+        "What happens if everything stays as it is",
+        "How contact may look in 3-6 weeks",
+        "What to base your decision on without guessing"
       ],
       "priceSuffix": "one-time payment",
       "ctaButton": "Unlock full report",
@@ -2006,9 +2006,9 @@
       "freeHeading": "Was passiert",
       "tipsHeading": "Was jetzt zu tun ist",
       "premiumEyebrow": "Vollständiger Bericht",
-      "premiumTitle": "Der Wert ist nur die Kurzfassung",
-      "premiumSubhead": "Der wichtige Teil kommt unten: wo es bricht und warum.",
-      "premiumIntro": "Wenn du hier stoppst, triffst du Entscheidungen im Blindflug.",
+      "premiumTitle": "Der Wert zeigt nur die Oberfläche",
+      "premiumSubhead": "Unten kommt der konkrete Teil: wo Gespräch, Verhalten und Vertrauen kippen.",
+      "premiumIntro": "Wenn du hier stoppst, bleibst du bei Vermutungen.",
       "lockedTitles": [
         "Wo Gespräche abbrechen",
         "Wo Abstand wächst",
@@ -2017,24 +2017,24 @@
         "Wozu sich das entwickeln kann",
         "Was du tun solltest, bevor es kippt"
       ],
-      "lockedTeaser": "Deine Antworten zeigen einen wiederkehrenden Ablauf.",
+      "lockedTeaser": "Das ist nicht nur ein schlechter Tag. Dasselbe Problem kommt Schritt für Schritt zurück.",
       "lockedLabel": "Gesperrt",
       "previewLabels": [
         "Kommunikation",
         "Stabilität",
-        "Ehrlichkeit",
-        "Emotionale Sicherheit"
+        "Vertrauen",
+        "Nähe"
       ],
       "previewOverlay": "Vorschau",
-      "paywallHook": "Ohne den vollen Bericht bleibst du beim Raten.",
+      "paywallHook": "Ohne den vollen Bericht ist schwer zu sehen, was nur Stress ist und was schon dauerhaft kippt.",
       "scoreLabel": "Dein aktueller Wert",
       "valueHeading": "Im Bericht",
       "valueItems": [
-        "Welche Antworten das Risiko erhöhen",
-        "Was noch stabil ist",
-        "Wohin es geht, wenn nichts anders wird",
-        "Wie es in 3–6 Monaten aussehen kann",
-        "Konkrete nächste Schritte für deinen Fall"
+        "Welche Antworten den Wert am stärksten gedrückt haben",
+        "Was noch trägt und wo es schon endet",
+        "Was passiert, wenn alles so bleibt",
+        "Wie Kontakt in 3-6 Wochen aussehen kann",
+        "Worauf du eine Entscheidung ohne Raten stützt"
       ],
       "priceSuffix": "einmalige Zahlung",
       "ctaButton": "Vollständigen Bericht freischalten",
@@ -2065,9 +2065,9 @@
       "freeHeading": "Qué está pasando",
       "tipsHeading": "Qué hacer ahora",
       "premiumEyebrow": "Informe completo",
-      "premiumTitle": "El número es solo el resumen",
-      "premiumSubhead": "Lo importante está abajo: dónde se rompe y por qué.",
-      "premiumIntro": "Si te quedas aquí, vas a decidir a ciegas.",
+      "premiumTitle": "El número solo enseña la superficie",
+      "premiumSubhead": "Abajo está lo concreto: dónde fallan conversación, conducta y confianza.",
+      "premiumIntro": "Si te quedas aquí, te quedas con suposiciones.",
       "lockedTitles": [
         "Dónde se cortan vuestras conversaciones",
         "Dónde crece la distancia",
@@ -2076,24 +2076,24 @@
         "En qué puede terminar esto",
         "Qué hacer antes de que empeore"
       ],
-      "lockedTeaser": "Tus respuestas muestran una dinámica repetida.",
+      "lockedTeaser": "No es un mal día aislado. El mismo problema vuelve paso a paso.",
       "lockedLabel": "Bloqueado",
       "previewLabels": [
         "Comunicación",
         "Estabilidad",
-        "Sinceridad",
-        "Seguridad emocional"
+        "Confianza",
+        "Cercanía"
       ],
       "previewOverlay": "Vista previa",
-      "paywallHook": "Sin el informe completo, estás adivinando.",
+      "paywallHook": "Sin el informe completo cuesta separar un momento de estrés de un problema que ya se repite.",
       "scoreLabel": "Tu resultado actual",
       "valueHeading": "Dentro",
       "valueItems": [
-        "Qué respuestas subieron el riesgo",
-        "Qué parte sigue estable",
-        "Hacia dónde va esto si nada cambia",
-        "Cómo puede verse en 3–6 meses",
-        "Siguientes pasos concretos para tu caso"
+        "Qué respuestas bajaron más tu resultado",
+        "Qué todavía funciona y dónde ya se rompe",
+        "Qué pasará si todo sigue igual",
+        "Cómo puede verse el contacto en 3-6 semanas",
+        "En qué basar una decisión sin adivinar"
       ],
       "priceSuffix": "pago único",
       "ctaButton": "Desbloquear informe completo",
@@ -2124,9 +2124,9 @@
       "freeHeading": "O que está a acontecer",
       "tipsHeading": "O que fazer agora",
       "premiumEyebrow": "Relatório completo",
-      "premiumTitle": "O número é só o resumo",
-      "premiumSubhead": "A parte importante está em baixo: onde isto quebra e porquê.",
-      "premiumIntro": "Se parares aqui, vais decidir às cegas.",
+      "premiumTitle": "O número mostra só a superfície",
+      "premiumSubhead": "Em baixo está a parte concreta: onde conversa, comportamento e confiança falham.",
+      "premiumIntro": "Se parares aqui, ficas com suposições.",
       "lockedTitles": [
         "Onde as conversas quebram",
         "Onde a distância cresce",
@@ -2135,24 +2135,24 @@
         "No que isto pode acabar",
         "O que fazer antes de piorar"
       ],
-      "lockedTeaser": "As tuas respostas mostram uma dinâmica repetida.",
+      "lockedTeaser": "Isto não é só um dia mau. O mesmo problema volta passo a passo.",
       "lockedLabel": "Bloqueado",
       "previewLabels": [
         "Comunicação",
         "Estabilidade",
-        "Sinceridade",
-        "Segurança emocional"
+        "Confiança",
+        "Proximidade"
       ],
       "previewOverlay": "Prévia",
-      "paywallHook": "Sem o relatório completo, estás a adivinhar.",
+      "paywallHook": "Sem o relatório completo, é difícil separar um momento de stress de um problema que já se repete.",
       "scoreLabel": "O teu resultado atual",
       "valueHeading": "Lá dentro",
       "valueItems": [
-        "Que respostas aumentaram o risco",
-        "O que ainda se mantém estável",
-        "Para onde isto vai se nada mudar",
-        "Como pode estar em 3–6 meses",
-        "Próximos passos concretos para o teu caso"
+        "Que respostas baixaram mais o teu resultado",
+        "O que ainda funciona e onde já falha",
+        "O que acontece se tudo continuar igual",
+        "Como pode estar o contacto em 3-6 semanas",
+        "Em que basear uma decisão sem adivinhar"
       ],
       "priceSuffix": "pagamento único",
       "ctaButton": "Desbloquear relatório completo",
@@ -5129,11 +5129,11 @@
           stability: "stability",
           clarity: "clarity",
         },
-        line1: score >= 70 ? "Detected pattern: high score with hidden pressure point." : "Detected pattern: recurring uncertainty loop.",
+        line1: score >= 70 ? "From outside it looks calm, but one topic keeps coming back." : "After each tense moment, the same topic returns under a new label.",
         line2:
           clarityScore < BENCHMARK_SCORES.clarity
-            ? "Clarity score below average. Hidden intent risk detected."
-            : "Clarity score near average. One signal still stays unresolved.",
+            ? "Clear answers are missing, so it is easy to misread the other person’s intent."
+            : "You have partial clarity, but one issue still stays open.",
         line3: `Weakest area: ${weakestArea}. Current level: ${weakestScore}/100.`,
       },
       pl: {
@@ -5157,11 +5157,11 @@
           stability: "Stabilität",
           clarity: "Klarheit",
         },
-        line1: score >= 70 ? "Erkanntes Muster: hoher Score mit verdecktem Druckpunkt." : "Erkanntes Muster: wiederkehrende Unsicherheitsschleife.",
+        line1: score >= 70 ? "Nach außen wirkt es ruhig, aber ein Thema kehrt regelmäßig zurück." : "Nach jeder Spannung kommt dasselbe Thema unter neuem Namen wieder.",
         line2:
           clarityScore < BENCHMARK_SCORES.clarity
-            ? "Klarheitswert unter Durchschnitt. Erhöhtes Fehlinterpretationsrisiko."
-            : "Klarheitswert nahe Durchschnitt. Ein Signal bleibt offen.",
+            ? "Es fehlen klare Antworten, deshalb wird die Absicht der anderen Person leicht falsch gelesen."
+            : "Teilweise Klarheit ist da, aber ein Thema bleibt offen.",
         line3: `Schwächster Bereich: ${weakestArea}. Aktuelles Niveau: ${weakestScore}/100.`,
       },
       es: {
@@ -5171,11 +5171,11 @@
           stability: "estabilidad",
           clarity: "claridad",
         },
-        line1: score >= 70 ? "Patron detectado: puntaje alto con punto de presion oculto." : "Patron detectado: ciclo recurrente de incertidumbre.",
+        line1: score >= 70 ? "Por fuera parece estable, pero un tema vuelve de forma regular." : "Después de cada tensión vuelve el mismo tema con otro nombre.",
         line2:
           clarityScore < BENCHMARK_SCORES.clarity
-            ? "Claridad por debajo del promedio. Riesgo alto de lectura incorrecta."
-            : "Claridad cerca del promedio. Una señal sigue sin cierre.",
+            ? "Faltan respuestas claras y por eso es fácil leer mal la intención de la otra persona."
+            : "Hay claridad parcial, pero un tema sigue abierto.",
         line3: `Area mas debil: ${weakestArea}. Nivel actual: ${weakestScore}/100.`,
       },
       pt: {
@@ -5185,11 +5185,11 @@
           stability: "estabilidade",
           clarity: "clareza",
         },
-        line1: score >= 70 ? "Padrao detectado: score alto com ponto de pressao oculto." : "Padrao detectado: ciclo recorrente de incerteza.",
+        line1: score >= 70 ? "Por fora parece estável, mas um tema volta com frequência." : "Depois de cada tensão, o mesmo tema regressa com outro nome.",
         line2:
           clarityScore < BENCHMARK_SCORES.clarity
-            ? "Clareza abaixo da media. Risco elevado de interpretacao incorreta."
-            : "Clareza perto da media. Um sinal permanece sem fechamento.",
+            ? "Faltam respostas claras, por isso é fácil ler mal a intenção da outra pessoa."
+            : "Há clareza parcial, mas um tema continua aberto.",
         line3: `Area mais fraca: ${weakestArea}. Nivel atual: ${weakestScore}/100.`,
       },
       in: null,
@@ -5204,8 +5204,8 @@
     const L = normalizeLocale(locale);
     const m = {
       en: [
-        "Detected pattern: recurring uncertainty loop.",
-        "Clarity score near average. One signal still stays unresolved.",
+        "After tension, the same topic returns and ends without closure again.",
+        "Clear answers are missing, so guesses are easy to mistake for facts.",
         "Weakest area: communication. Current level: 52/100.",
       ],
       pl: [
@@ -5214,23 +5214,23 @@
         "Najsłabszy obszar: komunikacja. Obecny poziom: 52/100.",
       ],
       de: [
-        "Erkanntes Muster: wiederkehrende Unsicherheitsschleife.",
-        "Klarheitswert nahe Durchschnitt. Ein Signal bleibt offen.",
+        "Nach Spannung kehrt dasselbe Thema zurück und endet wieder ohne Abschluss.",
+        "Klare Antworten fehlen, dadurch werden Vermutungen schnell mit Fakten verwechselt.",
         "Schwächster Bereich: Kommunikation. Aktuelles Niveau: 52/100.",
       ],
       es: [
-        "Patron detectado: ciclo recurrente de incertidumbre.",
-        "Claridad cerca del promedio. Una señal sigue sin cierre.",
+        "Tras la tensión vuelve el mismo tema y se queda otra vez sin cierre.",
+        "Faltan respuestas claras y es fácil confundir suposición con hecho.",
         "Area mas debil: comunicacion. Nivel actual: 52/100.",
       ],
       pt: [
-        "Padrao detectado: ciclo recorrente de incerteza.",
-        "Clareza perto da media. Um sinal permanece sem fechamento.",
+        "Depois da tensão, o mesmo tema volta e fica outra vez sem fecho.",
+        "Faltam respostas claras e fica fácil confundir suposição com facto.",
         "Area mais fraca: comunicacao. Nivel atual: 52/100.",
       ],
       in: [
-        "Detected pattern: recurring uncertainty loop.",
-        "Clarity score near average. One signal still stays unresolved.",
+        "After tension, the same topic returns and ends without closure again.",
+        "Clear answers are missing, so guesses are easy to mistake for facts.",
         "Weakest area: communication. Current level: 52/100.",
       ],
     };
