@@ -1113,29 +1113,29 @@
     "napiecia": {
       "headline": "To zaczyna się rozjeżdżać",
       "label": "Niestabilnie",
-      "lead": "To jeszcze nie totalny rozpad, ale coś wyraźnie nie działa. Jednego dnia jest blisko, drugiego chłód albo spięcie.",
+      "lead": "Jeszcze trzymacie kontakt, ale coraz częściej coś się urywa. Jednego dnia jest normalnie, drugiego napięcie i wycofanie.",
       "interpretation": [
-        "Rozmowy się zaczynają i urywają. Niedomknięte sprawy wracają przy kolejnej kłótni.",
-        "Słowa i zachowanie zbyt często się nie pokrywają, więc rośnie niepewność."
+        "Ważne tematy kończą się bez konkretu. Wracają przy kolejnym spięciu i zaczynacie od zera.",
+        "Po trudniejszym momencie kontakt bywa krótszy i chłodniejszy, więc rośnie napięcie przed następną rozmową."
       ],
       "tips": [
-        "Weź jeden otwarty temat i zamknij go do końca.",
-        "Patrz na zachowanie przez kilka dni, nie na deklaracje z jednej rozmowy.",
-        "Jeśli wraca schemat blisko-dystans, traktuj to poważnie."
+        "Patrz, czy po rozmowie coś realnie się zmienia w kolejnym tygodniu.",
+        "Sprawdzaj to, co dzieje się po konflikcie: powrót do kontaktu albo dalsza cisza.",
+        "Nie opieraj się na jednej dobrej rozmowie, tylko na tym, co wraca regularnie."
       ]
     },
     "niepewnosc": {
       "headline": "Twoja niepewność jest wysoka",
       "label": "Wysokie ryzyko chaosu",
-      "lead": "Jest za dużo napięcia i za mało jasności. Ważne sprawy wiszą, a poczucie bezpieczeństwa spada.",
+      "lead": "Napięcie jest wysokie, a odpowiedzi jest mało. Najważniejsze sprawy wiszą i nie mają końca.",
       "interpretation": [
-        "Trudne tematy wracają bez domknięcia. Jest chwila bliskości, potem dystans i cisza.",
-        "Na tym etapie większość osób zaczyna myśleć za dużo, bo nie ma twardych faktów."
+        "Rozmowa dochodzi do trudnego miejsca i się urywa. Potem jest chwila spokoju, dystans i znowu cisza.",
+        "Słowa i działania często się rozchodzą, więc zaczynasz bardziej sprawdzać niż ufać."
       ],
       "tips": [
-        "Oddziel fakty od tego, co sobie dopowiadasz.",
-        "Poproś o jedną konkretną zmianę, którą da się zobaczyć.",
-        "Jeśli nic się nie zmienia, trzymaj się tego, co się powtarza."
+        "Oddziel to, co faktycznie się wydarzyło, od tego, co sobie dopowiadasz.",
+        "Patrz, czy po napięciu wraca normalny kontakt jeszcze tego samego dnia.",
+        "Jeśli przez kilka dni nic się nie zmienia, traktuj to jako realny kierunek, nie przypadek."
       ]
     }
   };
@@ -1947,35 +1947,35 @@
       "freeHeading": "Co się dzieje",
       "tipsHeading": "Co zrobić teraz",
       "premiumEyebrow": "Pełny raport",
-      "premiumTitle": "Wynik to tylko skrót",
-      "premiumSubhead": "Właściwa część jest niżej: gdzie to pęka i dlaczego.",
-      "premiumIntro": "Jeśli skończysz na tym ekranie, będziesz zgadywać.",
+      "premiumTitle": "Wynik pokazuje tylko wierzch",
+      "premiumSubhead": "Niżej jest konkret: co się psuje w rozmowach, zachowaniu i zaufaniu.",
+      "premiumIntro": "Jeśli skończysz na tym ekranie, zostajesz z domysłami.",
       "lockedTitles": [
-        "Gdzie rozmowy się urywają",
-        "Gdzie rośnie dystans",
-        "Co zmieniło się w zachowaniu",
-        "Gdzie psuje się zaufanie",
-        "W co to najpewniej pójdzie",
-        "Co zrobić zanim będzie gorzej"
+        "W którym momencie rozmowa się urywa",
+        "Po czym dokładnie widać oddalenie",
+        "Które zachowania zmieniły się najbardziej",
+        "Co najmocniej podcina zaufanie",
+        "Jak to będzie wyglądać za kilka tygodni",
+        "Co jeszcze można zatrzymać"
       ],
-      "lockedTeaser": "Twoje odpowiedzi pokazują jeden powtarzalny układ.",
+      "lockedTeaser": "To nie jest jeden gorszy dzień. Ten sam problem wraca krok po kroku.",
       "lockedLabel": "Zablokowane",
       "previewLabels": [
         "Komunikacja",
         "Stabilność",
-        "Szczerość",
-        "Poczucie bezpieczeństwa"
+        "Zaufanie",
+        "Bliskość"
       ],
       "previewOverlay": "Podgląd",
-      "paywallHook": "Bez pełnego raportu będziesz działać po omacku.",
+      "paywallHook": "Bez pełnego raportu trudno odróżnić chwilę stresu od stałego problemu.",
       "scoreLabel": "Twój aktualny wynik",
       "valueHeading": "W środku",
       "valueItems": [
-        "Które odpowiedzi podniosły ryzyko",
-        "Co jeszcze trzyma relację",
-        "Dokąd to idzie, jeśli nic się nie zmieni",
-        "Jak to może wyglądać za 3–6 miesięcy",
-        "Kolejne kroki dla Twojej sytuacji"
+        "Które odpowiedzi najmocniej obniżyły wynik",
+        "Co jeszcze działa i gdzie to się kończy",
+        "Co się stanie, jeśli wszystko zostanie jak teraz",
+        "Jak może wyglądać kontakt za 3–6 tygodni",
+        "Na czym oprzeć decyzję bez zgadywania"
       ],
       "priceSuffix": "jednorazowa płatność",
       "ctaButton": "Odblokuj pełny raport",
@@ -5143,12 +5143,12 @@
           stability: "stabilnosc",
           clarity: "klarownosc",
         },
-        line1: score >= 70 ? "Wykryty wzorzec: wysoki wynik z ukrytym punktem nacisku." : "Wykryty wzorzec: powtarzajaca sie petla niepewnosci.",
+        line1: score >= 70 ? "Na zewnątrz wygląda spokojnie, ale jeden temat regularnie wraca." : "Po każdym spięciu temat wraca, tylko pod inną nazwą.",
         line2:
           clarityScore < BENCHMARK_SCORES.clarity
-            ? "Wynik klarownosci ponizej sredniej. Wysokie ryzyko blednej oceny."
-            : "Wynik klarownosci blisko sredniej. Jeden sygnal nadal nie jest domkniety.",
-        line3: `Najsłabszy obszar: ${weakestArea}. Biezacy poziom: ${weakestScore}/100.`,
+            ? "Jest mało jasnych odpowiedzi, dlatego łatwo źle odczytać intencję drugiej osoby."
+            : "Macie częściową jasność, ale jedna sprawa dalej jest niedomknięta.",
+        line3: `Najsłabszy obszar: ${weakestArea}. Obecny poziom: ${weakestScore}/100.`,
       },
       de: {
         area: {
@@ -5209,9 +5209,9 @@
         "Weakest area: communication. Current level: 52/100.",
       ],
       pl: [
-        "Wykryty wzorzec: powtarzajaca sie petla niepewnosci.",
-        "Wynik klarownosci blisko sredniej. Jeden sygnal nadal nie jest domkniety.",
-        "Najsłabszy obszar: komunikacja. Biezacy poziom: 52/100.",
+        "Po napięciu wraca ten sam temat i znów kończy się bez domknięcia.",
+        "Brakuje jasnej odpowiedzi, więc łatwo pomylić domysł z faktem.",
+        "Najsłabszy obszar: komunikacja. Obecny poziom: 52/100.",
       ],
       de: [
         "Erkanntes Muster: wiederkehrende Unsicherheitsschleife.",
@@ -5570,6 +5570,8 @@
     };
     setText("preview-bar-value-1", `${previewValues.communication}`);
     setText("preview-bar-value-2", `${previewValues.stability}`);
+    setText("preview-bar-value-3", `${previewValues.transparency}`);
+    setText("preview-bar-value-4", `${previewValues.emotional}`);
     const barFill1 = document.getElementById("preview-bar-fill-1");
     const barFill2 = document.getElementById("preview-bar-fill-2");
     const barFill3 = document.getElementById("preview-bar-fill-3");
