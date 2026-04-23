@@ -6237,6 +6237,934 @@
     }
   }
 
+  function getPremiumRewriteLocale(locale) {
+    return ["pl", "de", "es", "pt"].includes(locale) ? locale : "en";
+  }
+
+  function fillScore(text, score) {
+    return String(text || "").replace("{score}", String(Math.round(score || 0)));
+  }
+
+  function getPremiumRewritePack(locale) {
+    const packs = {
+      en: {
+        ui: {
+          eyebrow: "Full report",
+          title: "What is happening between you",
+          indexLabel: "Trust Index:",
+          subhead: "This is a direct read from your answers and repeated behavior.",
+          overview: "Main areas",
+          charts: "Score and area split",
+          chartNote: "Treat this as a weekly picture, not a one-day mood.",
+          scale: ["Lower strain", "Mixed", "Higher strain"],
+          areas: ["Communication", "Behavior", "Trust", "Emotional distance"],
+          comm: "Communication",
+          emotional: "Emotional distance",
+          stability: "Behavior",
+          clarity: "Trust",
+          pattern: "What keeps happening",
+          meaning: "What it means right now",
+          next: "What this is turning into",
+          noChange: "If nothing changes in the next 3-6 weeks",
+          recheck: "Check again in 2-3 weeks",
+          recheckCta: "Run scan again",
+          back: "Back to result",
+        },
+        sections: {
+          communication: {
+            body:
+              "Conversations start, then stop when the important part comes up. One person says \"later\" and the topic never closes. In day-to-day behavior this shows as delayed replies, topic changes, and no final decision after hard talks. That creates uncertainty because both of you leave the conversation with different versions of what was agreed. If this repeats, old arguments keep coming back under new topics. Current score: {score}/100.",
+            check: "Repeated marker: after conflict, there is no one clear sentence with who does what by when.",
+          },
+          emotional: {
+            body:
+              "Closeness appears in short bursts, then drops fast. One evening feels warm, next day feels cold without explanation. In behavior this looks like less contact after stress, less softness in tone, and longer silent windows after disagreement. Uncertainty grows because good moments stop feeling reliable; you do not know which version of the relationship you will get tomorrow. If this repeats, both people protect themselves first and reconnect less. Current score: {score}/100.",
+            check: "Repeated marker: after disappointment, contact stays distant into the next day.",
+          },
+          stability: {
+            body:
+              "What is promised and what happens do not stay aligned. Plans are made in calm moments and then canceled, postponed, or diluted later. In behavior this shows as uneven follow-through, missed small commitments, and frequent last-minute changes. Uncertainty rises because words lose value when execution keeps shifting. If this repeats, daily life becomes monitoring instead of trust. Current score: {score}/100.",
+            check: "Repeated marker: the same small commitment is missed more than once in the same week.",
+          },
+          clarity: {
+            body:
+              "Trust is no longer automatic and gets checked constantly. Neutral events get read through doubt first. In behavior this shows as re-reading chats, measuring reply time, and testing instead of asking directly. Uncertainty rises because gaps are filled with worst-case stories before facts are confirmed. If this repeats, both people speak less openly and assume more. Current score: {score}/100.",
+            check: "Repeated marker: simple questions are replaced by hints, tests, or silence.",
+          },
+        },
+        pattern:
+          "The same sequence keeps showing up: tension, partial calm, no full closure, then the same issue returns.",
+        meaning:
+          "This is not one bad day. It is a repeated weekly cycle that is already shaping decisions between you.",
+        noChange:
+          "If nothing changes, contact will become more practical and less personal. You can still look like a couple from outside, but inside there will be less repair, more silence, and slower return after conflict. The weakest area is where the next rupture is most likely.",
+        recheck:
+          "Run this again after 2-3 weeks and compare whether the same weak area still drags everything else.",
+        benchmarkNote:
+          "Area scores matter more than one headline number. The weakest area usually decides the next conflict.",
+        outcome: {
+          heading: "Where this goes next",
+          highImpact: "Most visible now",
+          mediumImpact: "Building in the background",
+          lowImpact: "Still lighter, but present",
+          whyLabel: "Why it matters",
+          changeLabel: "What shows up",
+          high: {
+            highImpact: [
+              {
+                title: "Unfinished conversations",
+                explanation: "Important talks stop at the hardest point, then restart later without closure.",
+                why: "Unclosed topics return with extra frustration.",
+                change: "Same argument comes back faster each time.",
+              },
+              {
+                title: "Uneven emotional availability",
+                explanation: "Support is present on easy days and disappears on pressure days.",
+                why: "Pressure days are where trust is tested most.",
+                change: "Distance lasts longer after conflict.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Promise fatigue",
+                explanation: "New promises are heard as temporary because old ones were not completed.",
+                why: "Reliability drops quietly before major breaks.",
+                change: "People stop asking directly for what they need.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Background irritation",
+                explanation: "Small remarks, short tone, and low patience increase.",
+                why: "Tiny cuts accumulate into bigger distance.",
+                change: "Ordinary days feel tense more often.",
+              },
+            ],
+          },
+          mid: {
+            highImpact: [
+              {
+                title: "Stop-start contact",
+                explanation: "There is closeness, then sudden withdrawal, then partial return.",
+                why: "Unpredictable contact weakens emotional safety.",
+                change: "Both sides prepare for disappointment.",
+              },
+              {
+                title: "Agreement drift",
+                explanation: "What was agreed in talk is not visible in the week after.",
+                why: "Execution is what keeps trust alive.",
+                change: "Trust gets replaced by checking behavior.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Delayed repair",
+                explanation: "Conflict settles slowly, often over days not hours.",
+                why: "Long recovery windows increase emotional cost.",
+                change: "More time spent in emotional distance.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "External noise",
+                explanation: "Outside opinions start filling gaps left by unclear talks.",
+                why: "Unclear internal contact invites outside interpretation.",
+                change: "Decisions feel less grounded in what actually happened.",
+              },
+            ],
+          },
+          low: {
+            highImpact: [
+              {
+                title: "Chronic uncertainty",
+                explanation: "Core questions about commitment and direction stay unanswered.",
+                why: "No stable baseline means every week restarts from doubt.",
+                change: "Emotional energy goes into decoding, not connecting.",
+              },
+              {
+                title: "Fast trust erosion",
+                explanation: "Contradictions between words and actions are frequent.",
+                why: "Repeated mismatch quickly breaks confidence.",
+                change: "Neutral events are read as threat.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Conflict stacking",
+                explanation: "New disagreements pull old unfinished topics immediately.",
+                why: "No closure means unresolved backlog stays active.",
+                change: "Arguments get longer and less clear.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Logistic strain",
+                explanation: "Daily planning becomes harder because basic coordination is weak.",
+                why: "Practical friction adds to emotional overload.",
+                change: "Even small plans feel heavy.",
+              },
+            ],
+          },
+        },
+      },
+      pl: {
+        ui: {
+          eyebrow: "Pelny raport",
+          title: "Co sie dzieje miedzy Wami",
+          indexLabel: "Trust Index:",
+          subhead: "To prosty odczyt z odpowiedzi i z tego, co wraca w zachowaniu.",
+          overview: "Glowne obszary",
+          charts: "Wynik i rozbicie obszarow",
+          chartNote: "Traktuj to jak obraz tygodnia, nie jednego dnia.",
+          scale: ["Mniejsze napiecie", "Mieszanie", "Wieksze napiecie"],
+          areas: ["Komunikacja", "Zachowanie", "Zaufanie", "Dystans emocjonalny"],
+          comm: "Komunikacja",
+          emotional: "Dystans emocjonalny",
+          stability: "Zachowanie",
+          clarity: "Zaufanie",
+          pattern: "Co tu wraca",
+          meaning: "Co to znaczy teraz",
+          next: "W co to idzie",
+          noChange: "Jesli nic sie nie zmieni przez 3-6 tygodni",
+          recheck: "Sprawdz ponownie za 2-3 tygodnie",
+          recheckCta: "Powtorz skan",
+          back: "Wroc do wyniku",
+        },
+        sections: {
+          communication: {
+            body:
+              "Rozmowy sie zaczynaja, ale urywaja tam, gdzie trzeba powiedziec cos konkretnego. Jedna osoba mowi \"pozniej\" i temat nie wraca do domkniecia. W zachowaniu widac to jako opoznione odpowiedzi, zmiane tematu i brak jednego jasnego ustalenia po trudnej rozmowie. To daje niepewnosc, bo kazde z Was wychodzi z inna wersja tego, co zostalo ustalone. Gdy to sie powtarza, stary konflikt wraca pod nowym pretekstem. Aktualny wynik: {score}/100.",
+            check: "Powtarzalny marker: po klotni nie ma jednego zdania \"kto, co, do kiedy\".",
+          },
+          emotional: {
+            body:
+              "Bliskosc pojawia sie na chwile i szybko znika. Wieczorem bywa cieplo, a nastepnego dnia robi sie zimno bez wyjasnienia. W zachowaniu to mniej kontaktu po stresie, mniej miekkiego tonu i dluzsze okresy ciszy po sporze. Niepewnosc rosnie, bo dobre chwile przestaja byc wiarygodne i nie wiadomo, jaka wersja relacji bedzie jutro. Gdy to sie powtarza, obie strony bardziej sie chronia niz zblizaja. Aktualny wynik: {score}/100.",
+            check: "Powtarzalny marker: po rozczarowaniu dystans trzyma sie do nastepnego dnia.",
+          },
+          stability: {
+            body:
+              "To, co jest obiecane, nie zgadza sie stabilnie z tym, co sie dzieje. Ustalenia padaja w spokojnym momencie, a potem sa przesuwane albo rozmywane. W zachowaniu widac to jako nierowne domykanie, gubienie drobnych zobowiazan i odwolania na ostatnia chwile. Niepewnosc rosnie, bo slowa traca wartosc, kiedy wykonanie stale sie rozjezdza. Gdy to sie powtarza, codziennosc zamienia sie w kontrolowanie, a nie w bycie razem. Aktualny wynik: {score}/100.",
+            check: "Powtarzalny marker: to samo male ustalenie pada wiecej niz raz w jednym tygodniu.",
+          },
+          clarity: {
+            body:
+              "Zaufanie nie dziala juz automatycznie, tylko wymaga ciaglego sprawdzania. Neutralne sytuacje sa czytane przez filtr watpliwosci. W zachowaniu to wracanie do starych wiadomosci, liczenie czasu odpowiedzi i testowanie zamiast prostego pytania. Niepewnosc rosnie, bo luki sa wypelniane najgorszym scenariuszem, zanim padna fakty. Gdy to sie powtarza, obie strony mowia mniej wprost i bardziej sie domyslaja. Aktualny wynik: {score}/100.",
+            check: "Powtarzalny marker: proste pytanie jest zastapione aluzja albo cisza.",
+          },
+        },
+        pattern:
+          "Wraca ten sam ciag: napiecie, chwilowe uspokojenie, brak domkniecia, i znowu ten sam temat.",
+        meaning:
+          "To nie jest jeden zly dzien. To tygodniowy cykl, ktory juz ustawia decyzje miedzy Wami.",
+        noChange:
+          "Jesli nic sie nie zmieni, kontakt bedzie coraz bardziej techniczny i coraz mniej bliski. Z zewnatrz nadal mozecie wygladac jak para, ale w srodku bedzie mniej naprawy, wiecej ciszy i wolniejszy powrot po konflikcie. Najslabszy obszar najpewniej odpali kolejne pekniecie.",
+        recheck:
+          "Powtorz to za 2-3 tygodnie i zobacz, czy ten sam slaby obszar dalej sciaga reszte w dol.",
+        benchmarkNote:
+          "Wazniejsze od liczby glownej jest to, ktory obszar jest najslabszy. To on zwykle uruchamia kolejna klotnie.",
+        outcome: {
+          heading: "Co bedzie widac dalej",
+          highImpact: "Najbardziej widoczne teraz",
+          mediumImpact: "Buduje sie w tle",
+          lowImpact: "Lzejsze, ale juz obecne",
+          whyLabel: "Dlaczego to wazne",
+          changeLabel: "Co bedzie widac",
+          high: {
+            highImpact: [
+              {
+                title: "Niedomkniete rozmowy",
+                explanation: "Wazne tematy zatrzymuja sie przy najtrudniejszym miejscu i nie maja finalu.",
+                why: "Niedomkniety temat wraca z wieksza frustracja.",
+                change: "Ten sam spor wraca coraz szybciej.",
+              },
+              {
+                title: "Nierowna dostepnosc emocjonalna",
+                explanation: "Wsparcie jest w latwych dniach, a znika, gdy rosnnie presja.",
+                why: "To dni stresowe testuja relacje najmocniej.",
+                change: "Dystans po konflikcie trzyma dluzej.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Zmeczenie obietnicami",
+                explanation: "Nowe deklaracje sa odbierane jako chwilowe, bo stare nie byly dowiezione.",
+                why: "Wiarygodnosc spada po cichu zanim padna duze slowa.",
+                change: "Mniej prostych prosb, wiecej ostroznego tonu.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Ciche podraznienie",
+                explanation: "Wzrastaja krotkie odpowiedzi, ciecia tonem i brak cierpliwosci.",
+                why: "Male rzeczy kumuluja dystans.",
+                change: "Zwykle dni czesciej sa napiete.",
+              },
+            ],
+          },
+          mid: {
+            highImpact: [
+              {
+                title: "Kontakt typu start-stop",
+                explanation: "Jest blisko, potem nagly odstep, potem czesciowy powrot.",
+                why: "Nieprzewidywalnosc oslabia poczucie bezpieczenstwa.",
+                change: "Obie strony szykuja sie na rozczarowanie.",
+              },
+              {
+                title: "Rozjazd ustalen",
+                explanation: "To, co bylo ustalone, nie jest widoczne w kolejnym tygodniu.",
+                why: "Zaufanie trzyma sie na wykonaniu, nie na deklaracji.",
+                change: "Zamiast zaufania pojawia sie sprawdzanie.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Opozniona naprawa",
+                explanation: "Spor stygnie wolno, czesto przez dni, nie godziny.",
+                why: "Dlugie gaszenie zwieksza koszt emocjonalny.",
+                change: "Wiecej czasu mija w dystansie.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Szum z zewnatrz",
+                explanation: "Opinie innych wypelniaja luki po niedomknietych rozmowach.",
+                why: "Brak jasnosci w srodku otwiera miejsce na cudze narracje.",
+                change: "Decyzje sa mniej osadzone w faktach z relacji.",
+              },
+            ],
+          },
+          low: {
+            highImpact: [
+              {
+                title: "Przewlekla niepewnosc",
+                explanation: "Podstawowe pytania o kierunek i zaangazowanie zostaja bez odpowiedzi.",
+                why: "Bez bazy kazdy tydzien zaczyna sie od nowa.",
+                change: "Energia idzie w rozszyfrowywanie zamiast bycie blisko.",
+              },
+              {
+                title: "Szybka erozja zaufania",
+                explanation: "Rozbieznosc miedzy slowem a dzialaniem pojawia sie regularnie.",
+                why: "Powtarzalny rozjazd szybko podcina wiarygodnosc.",
+                change: "Neutralne rzeczy sa czytane jak zagrozenie.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Nawarstwianie konfliktow",
+                explanation: "Nowy spor od razu odpala stare niedomkniete sprawy.",
+                why: "Brak finalu trzyma backlog aktywny.",
+                change: "Klotnie sa dluzsze i mniej konkretne.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Przeciazenie codziennosci",
+                explanation: "Nawet proste ustalenia dnia robia sie trudne.",
+                why: "Tarcie organizacyjne doklada sie do emocjonalnego.",
+                change: "Male rzeczy zaczynaja wazyc za duzo.",
+              },
+            ],
+          },
+        },
+      },
+      de: {
+        ui: {
+          eyebrow: "Voller Bericht",
+          title: "Was zwischen euch passiert",
+          indexLabel: "Trust Index:",
+          subhead: "Direkter Abgleich aus Antworten und wiederholtem Verhalten.",
+          overview: "Hauptbereiche",
+          charts: "Score und Bereiche",
+          chartNote: "Das ist ein Wochenbild, nicht nur ein Tagesgefuhl.",
+          scale: ["Weniger Druck", "Gemischt", "Mehr Druck"],
+          areas: ["Kommunikation", "Verhalten", "Vertrauen", "Emotionale Distanz"],
+          comm: "Kommunikation",
+          emotional: "Emotionale Distanz",
+          stability: "Verhalten",
+          clarity: "Vertrauen",
+          pattern: "Was sich wiederholt",
+          meaning: "Was das jetzt bedeutet",
+          next: "Wohin es kippt",
+          noChange: "Wenn in den nachsten 3-6 Wochen nichts anders wird",
+          recheck: "In 2-3 Wochen erneut prufen",
+          recheckCta: "Scan erneut starten",
+          back: "Zuruck zum Ergebnis",
+        },
+        sections: {
+          communication: {
+            body:
+              "Gesprache starten normal und stoppen genau am wichtigsten Punkt. Eine Person sagt \"spater\" und das Thema bleibt offen. Im Alltag zeigt sich das durch spate Antworten auf heikle Themen, Themenwechsel und fehlende klare Absprachen nach Streit. Das erzeugt Unsicherheit, weil beide mit anderer Erwartung aus dem Gesprach gehen. Wenn das bleibt, kommt derselbe Streit mit neuem Anlass zuruck. Aktueller Wert: {score}/100.",
+            check: "Wiederkehrender Marker: nach Konflikt gibt es keinen klaren Satz mit wer macht was bis wann.",
+          },
+          emotional: {
+            body:
+              "Nahe kommt kurz, dann fallt sie schnell weg. Abends ist Verbindung da, am nachsten Tag wirkt alles kuhl ohne Erklarung. Im Verhalten sind das weniger Kontakt nach Stress, harterer Ton und langere Funkstille nach Uneinigkeit. Unsicherheit steigt, weil gute Momente nicht mehr verlasslich wirken. Wenn das sich wiederholt, schutzen sich beide mehr als sie sich annahern. Aktueller Wert: {score}/100.",
+            check: "Wiederkehrender Marker: nach Enttauschung bleibt der Abstand bis zum nachsten Tag.",
+          },
+          stability: {
+            body:
+              "Worte und Handeln laufen nicht mehr stabil zusammen. Zusagen werden gemacht und spater verschoben oder abgeschwacht. Im Verhalten sieht man kurzfristige Absagen, vergessene kleine Absprachen und ungleiches Dranbleiben. Unsicherheit wachst, weil Zusagen an Gewicht verlieren. Wenn das bleibt, wird Alltag zu Kontrolle statt Vertrauen. Aktueller Wert: {score}/100.",
+            check: "Wiederkehrender Marker: dieselbe kleine Zusage kippt mehr als einmal pro Woche.",
+          },
+          clarity: {
+            body:
+              "Vertrauen ist nicht mehr automatisch, sondern wird laufend gepruft. Neutrale Situationen werden zuerst mit Zweifel gelesen. Im Verhalten zeigt sich das durch Chat-Nachlesen, Antwortzeit-Vergleiche und indirekte Tests statt direkter Fragen. Unsicherheit wachst, weil Lucken mit schlechten Deutungen gefullt werden, bevor Fakten kommen. Wenn das bleibt, wird weniger offen gesprochen und mehr angenommen. Aktueller Wert: {score}/100.",
+            check: "Wiederkehrender Marker: klare Fragen werden durch Andeutungen oder Schweigen ersetzt.",
+          },
+        },
+        pattern:
+          "Es lauft immer gleich: Druck, kurze Beruhigung, kein Abschluss, dann Ruckkehr desselben Themas.",
+        meaning:
+          "Das ist kein einzelner Ausrutscher, sondern ein Wochenablauf, der schon eure Entscheidungen steuert.",
+        noChange:
+          "Wenn nichts passiert, wird der Kontakt funktional und verliert Nahe. Nach aussen kann es weiter wie Beziehung aussehen, innen gibt es weniger Reparatur, mehr stille Tage und spatere Ruckkehr nach Konflikten. Der schwachste Bereich wird sehr wahrscheinlich den nachsten Bruch auslosen.",
+        recheck:
+          "In 2-3 Wochen erneut prufen, ob derselbe schwache Bereich weiter alles runterzieht.",
+        benchmarkNote:
+          "Wichtiger als der Gesamtwert ist der schwachste Bereich. Dort startet meist der nachste Konflikt.",
+        outcome: {
+          heading: "Was als Nachstes sichtbar wird",
+          highImpact: "Jetzt am deutlichsten",
+          mediumImpact: "Baut sich im Hintergrund auf",
+          lowImpact: "Noch leichter, aber da",
+          whyLabel: "Warum es zahlt",
+          changeLabel: "Was sichtbar wird",
+          high: {
+            highImpact: [
+              {
+                title: "Offene Gesprache ohne Abschluss",
+                explanation: "Wichtige Themen stoppen am schwierigsten Punkt und bleiben offen.",
+                why: "Offene Punkte kommen mit mehr Frust zuruck.",
+                change: "Der gleiche Streit kehrt schneller zuruck.",
+              },
+              {
+                title: "Unregelmassige emotionale Erreichbarkeit",
+                explanation: "An leichten Tagen ist Nahe da, an Drucktagen bricht sie weg.",
+                why: "Drucktage entscheiden, ob Vertrauen halt.",
+                change: "Abstand nach Konflikt dauert langer.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Mudigkeit bei Zusagen",
+                explanation: "Neue Zusagen wirken schwach, weil alte nicht getragen haben.",
+                why: "Verlasslichkeit fallt leise, bevor es offen knallt.",
+                change: "Direkte Wunsche werden seltener ausgesprochen.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Stille Gereiztheit",
+                explanation: "Kurzer Ton, kleine Stiche, weniger Geduld nehmen zu.",
+                why: "Kleine Reibung sammelt Distanz an.",
+                change: "Normale Tage fuhlen sich ofter angespannt an.",
+              },
+            ],
+          },
+          mid: {
+            highImpact: [
+              {
+                title: "Start-Stopp-Kontakt",
+                explanation: "Nahe, dann Ruckzug, dann halbherzige Ruckkehr.",
+                why: "Unvorhersehbarkeit schwacht Sicherheit.",
+                change: "Beide rechnen fruher mit Enttauschung.",
+              },
+              {
+                title: "Absprachen rutschen weg",
+                explanation: "Was besprochen wurde, taucht in der Woche nicht als Verhalten auf.",
+                why: "Vertrauen halt an Umsetzung, nicht an Worten.",
+                change: "Kontrolle ersetzt Vertrauen.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Spate Reparatur",
+                explanation: "Streit beruhigt sich uber Tage statt uber Stunden.",
+                why: "Lange Erholung erhoht den Preis jedes Konflikts.",
+                change: "Mehr Zeit im Abstand statt in Verbindung.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Aussenlarm",
+                explanation: "Externe Meinungen fullen Lucken aus unklaren Gesprachen.",
+                why: "Unklarheit innen offnet die Tur nach aussen.",
+                change: "Entscheidungen werden weniger aus eigenen Fakten getroffen.",
+              },
+            ],
+          },
+          low: {
+            highImpact: [
+              {
+                title: "Dauerunsicherheit",
+                explanation: "Grundfragen zu Richtung und Bindung bleiben offen.",
+                why: "Ohne Basis startet jede Woche mit Zweifel.",
+                change: "Energie geht in Deuten statt in Nahe.",
+              },
+              {
+                title: "Schneller Vertrauensabbau",
+                explanation: "Widerspruch zwischen Worten und Verhalten taucht haufig auf.",
+                why: "Wiederholter Widerspruch zerstort Verlasslichkeit schnell.",
+                change: "Neutrale Ereignisse wirken bedrohlich.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Konfliktstapel",
+                explanation: "Neue Themen ziehen sofort alte offene Themen rein.",
+                why: "Offene Altlasten bleiben aktiv.",
+                change: "Streit wird langer und unklarer.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Alltagsuberlastung",
+                explanation: "Selbst kleine Planungen werden schwer.",
+                why: "Praktische Reibung verstarkt den inneren Druck.",
+                change: "Kleine Dinge wirken zu gross.",
+              },
+            ],
+          },
+        },
+      },
+      es: {
+        ui: {
+          eyebrow: "Informe completo",
+          title: "Lo que esta pasando entre vosotros",
+          indexLabel: "Trust Index:",
+          subhead: "Lectura directa desde respuestas y conductas que se repiten.",
+          overview: "Areas clave",
+          charts: "Resultado y reparto por areas",
+          chartNote: "Es una foto de semanas, no de un dia suelto.",
+          scale: ["Menos tension", "Mezclado", "Mas tension"],
+          areas: ["Comunicacion", "Conducta", "Confianza", "Distancia emocional"],
+          comm: "Comunicacion",
+          emotional: "Distancia emocional",
+          stability: "Conducta",
+          clarity: "Confianza",
+          pattern: "Lo que vuelve",
+          meaning: "Lo que significa ahora",
+          next: "Hacia donde va",
+          noChange: "Si nada cambia en 3-6 semanas",
+          recheck: "Revisar otra vez en 2-3 semanas",
+          recheckCta: "Repetir scan",
+          back: "Volver al resultado",
+        },
+        sections: {
+          communication: {
+            body:
+              "Las conversaciones empiezan, pero se cortan justo donde hay que concretar. Una persona dice \"luego\" y el tema queda abierto. En conducta se ve con respuestas tardias en temas importantes, cambios de tema y cero cierre claro despues del conflicto. Eso crea incertidumbre porque cada uno sale con una idea distinta de lo acordado. Si se repite, el mismo conflicto vuelve con otra forma. Resultado actual: {score}/100.",
+            check: "Marcador repetido: tras discutir no queda una frase clara de quien hace que y cuando.",
+          },
+          emotional: {
+            body:
+              "La cercania aparece por ratos y luego cae de golpe. Una noche estais cerca y al dia siguiente hay frialdad sin explicacion. En conducta se nota en menos contacto bajo estres, tono mas seco y silencio mas largo tras desacuerdo. La incertidumbre sube porque los momentos buenos dejan de sentirse estables. Si se repite, ambos se protegen mas de lo que se acercan. Resultado actual: {score}/100.",
+            check: "Marcador repetido: tras una decepcion la distancia sigue hasta el dia siguiente.",
+          },
+          stability: {
+            body:
+              "Lo prometido y lo que ocurre ya no van juntos de forma estable. Se acuerda algo en calma y luego se aplaza o se diluye. En conducta se ve en cancelaciones de ultima hora, pequenos acuerdos olvidados y seguimiento irregular. La incertidumbre crece porque las palabras pierden peso cuando la ejecucion cambia cada semana. Si se repite, el dia a dia se vuelve control y no descanso. Resultado actual: {score}/100.",
+            check: "Marcador repetido: el mismo compromiso pequeno falla mas de una vez por semana.",
+          },
+          clarity: {
+            body:
+              "La confianza ya no es automatica y se revisa todo el tiempo. Situaciones neutras se leen primero con duda. En conducta aparece como releer chats, medir tiempos de respuesta y probar en vez de preguntar directo. La incertidumbre sube porque los huecos se llenan con la peor lectura antes de confirmar hechos. Si se repite, se habla menos claro y se supone mas. Resultado actual: {score}/100.",
+            check: "Marcador repetido: preguntas simples se cambian por indirectas o silencio.",
+          },
+        },
+        pattern:
+          "Se repite la misma secuencia: tension, calma parcial, falta de cierre, regreso del mismo tema.",
+        meaning:
+          "No es un mal dia suelto. Es un ciclo semanal que ya esta marcando decisiones.",
+        noChange:
+          "Si nada cambia, el contacto sera mas funcional y menos cercano. Por fuera podeis seguir pareciendo pareja, pero por dentro habra menos reparacion, mas silencio y vuelta mas lenta despues de discutir. El area mas debil es donde es mas probable el siguiente quiebre.",
+        recheck:
+          "Repite en 2-3 semanas y mira si el mismo punto debil sigue arrastrando todo.",
+        benchmarkNote:
+          "Importa mas el area mas baja que el numero global. Ahi suele empezar la siguiente pelea.",
+        outcome: {
+          heading: "Lo que se vera despues",
+          highImpact: "Lo mas visible ahora",
+          mediumImpact: "Lo que crece por debajo",
+          lowImpact: "Mas suave, pero ya presente",
+          whyLabel: "Por que importa",
+          changeLabel: "Lo que se ve",
+          high: {
+            highImpact: [
+              {
+                title: "Conversaciones sin cierre",
+                explanation: "Los temas clave paran justo en la parte dificil y quedan abiertos.",
+                why: "Lo abierto vuelve con mas carga.",
+                change: "La misma pelea vuelve antes.",
+              },
+              {
+                title: "Disponibilidad emocional irregular",
+                explanation: "Hay apoyo en dias faciles y retirada en dias de presion.",
+                why: "Los dias duros prueban de verdad la relacion.",
+                change: "La distancia tras conflicto dura mas.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Cansancio de promesas",
+                explanation: "Las nuevas promesas se oyen debiles por incumplimientos previos.",
+                why: "La fiabilidad cae antes del conflicto grande.",
+                change: "Se piden menos cosas de forma directa.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Irritacion de fondo",
+                explanation: "Suben respuestas cortas, tono seco y poca paciencia.",
+                why: "Lo pequeno se acumula y pesa.",
+                change: "Dias normales se sienten tensos mas seguido.",
+              },
+            ],
+          },
+          mid: {
+            highImpact: [
+              {
+                title: "Contacto de encender-apagar",
+                explanation: "Hay cercania, luego retirada, luego regreso parcial.",
+                why: "La imprevisibilidad rompe seguridad.",
+                change: "Ambos esperan decepcion antes.",
+              },
+              {
+                title: "Deriva de acuerdos",
+                explanation: "Lo hablado no aparece en la semana siguiente.",
+                why: "La confianza depende de hechos, no de intencion.",
+                change: "Se cambia confianza por vigilancia.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Reparacion lenta",
+                explanation: "Los choques tardan dias en bajar en vez de horas.",
+                why: "Recuperar lento sube el coste emocional.",
+                change: "Mas tiempo en distancia.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Ruido externo",
+                explanation: "Opiniones externas llenan huecos de conversaciones poco claras.",
+                why: "La falta de claridad interna abre esa puerta.",
+                change: "Decisiones menos basadas en lo vivido entre vosotros.",
+              },
+            ],
+          },
+          low: {
+            highImpact: [
+              {
+                title: "Incertidumbre constante",
+                explanation: "Preguntas base de rumbo y compromiso siguen sin respuesta.",
+                why: "Sin base, cada semana empieza en duda.",
+                change: "La energia se va en descifrar, no en acercarse.",
+              },
+              {
+                title: "Desgaste rapido de confianza",
+                explanation: "Chocan seguido palabras y hechos.",
+                why: "Ese choque repetido rompe fiabilidad.",
+                change: "Lo neutro se vive como amenaza.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Acumulacion de conflictos",
+                explanation: "Cada tema nuevo arrastra viejos temas abiertos.",
+                why: "Lo no cerrado sigue activo.",
+                change: "Discusiones mas largas y menos claras.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Carga diaria",
+                explanation: "Hasta planes simples se vuelven pesados.",
+                why: "La friccion practica suma mas tension.",
+                change: "Lo pequeno pesa demasiado.",
+              },
+            ],
+          },
+        },
+      },
+      pt: {
+        ui: {
+          eyebrow: "Relatorio completo",
+          title: "O que esta a acontecer entre voces",
+          indexLabel: "Trust Index:",
+          subhead: "Leitura direta das respostas e do comportamento que se repete.",
+          overview: "Areas principais",
+          charts: "Pontuacao e divisao por areas",
+          chartNote: "Isto mostra semanas, nao apenas um dia.",
+          scale: ["Menos tensao", "Misto", "Mais tensao"],
+          areas: ["Comunicacao", "Comportamento", "Confianca", "Distancia emocional"],
+          comm: "Comunicacao",
+          emotional: "Distancia emocional",
+          stability: "Comportamento",
+          clarity: "Confianca",
+          pattern: "O que volta a acontecer",
+          meaning: "O que isto significa agora",
+          next: "Para onde isto caminha",
+          noChange: "Se nada mudar nas proximas 3-6 semanas",
+          recheck: "Ver novamente em 2-3 semanas",
+          recheckCta: "Refazer scan",
+          back: "Voltar ao resultado",
+        },
+        sections: {
+          communication: {
+            body:
+              "As conversas comecam normais, mas param no ponto mais importante. Uma pessoa diz \"depois\" e o tema fica aberto. No comportamento isso aparece como resposta tardia em temas sensiveis, mudanca de assunto e falta de fecho claro apos conflito. Isso cria incerteza porque cada um sai com uma versao diferente do que ficou combinado. Se se repetir, o mesmo conflito volta com outra forma. Pontuacao atual: {score}/100.",
+            check: "Marcador repetido: depois da discussao nao fica uma frase clara de quem faz o que e quando.",
+          },
+          emotional: {
+            body:
+              "A proximidade aparece por momentos e cai rapido. Numa noite ha ligacao, no dia seguinte ha frieza sem explicacao. No comportamento nota-se menos contacto quando ha stress, tom mais duro e silencio mais longo apos desacordo. A incerteza sobe porque os momentos bons deixam de parecer seguros. Se isto se repetir, ambos protegem-se mais do que se aproximam. Pontuacao atual: {score}/100.",
+            check: "Marcador repetido: depois de dececao, o afastamento segue ate ao dia seguinte.",
+          },
+          stability: {
+            body:
+              "O que e prometido e o que acontece deixam de andar juntos. O acordo e feito em calma e depois e adiado ou enfraquecido. No comportamento isso aparece em cancelamentos de ultima hora, pequenos combinados esquecidos e seguimento irregular. A incerteza cresce porque a palavra perde valor quando a execucao oscila. Se se repetir, o dia a dia vira verificacao em vez de confianca. Pontuacao atual: {score}/100.",
+            check: "Marcador repetido: o mesmo combinado pequeno falha mais de uma vez na mesma semana.",
+          },
+          clarity: {
+            body:
+              "A confianca deixa de ser automatica e passa a ser verificada o tempo todo. Situacoes neutras sao lidas primeiro com duvida. No comportamento isso aparece em reler conversas, medir tempo de resposta e testar em vez de perguntar diretamente. A incerteza cresce porque os vazios sao preenchidos com a pior leitura antes dos factos. Se se repetir, fala-se menos claro e assume-se mais. Pontuacao atual: {score}/100.",
+            check: "Marcador repetido: perguntas simples viram indiretas ou silencio.",
+          },
+        },
+        pattern:
+          "Repete-se a mesma sequencia: tensao, alivio parcial, falta de fecho, regresso do mesmo tema.",
+        meaning:
+          "Nao e um dia mau isolado. E um ciclo semanal que ja esta a guiar as vossas decisoes.",
+        noChange:
+          "Se nada mudar, o contacto fica mais funcional e menos proximo. Por fora pode parecer que continua tudo, mas por dentro havera menos reparacao, mais silencio e regresso mais lento depois de conflito. A area mais fraca e onde o proximo corte e mais provavel.",
+        recheck:
+          "Refaz em 2-3 semanas e ve se o mesmo ponto fraco continua a puxar o resto para baixo.",
+        benchmarkNote:
+          "Mais importante que o numero geral e a area mais baixa. E ali que o proximo conflito costuma comecar.",
+        outcome: {
+          heading: "O que vai aparecer a seguir",
+          highImpact: "Mais visivel agora",
+          mediumImpact: "A crescer no fundo",
+          lowImpact: "Mais leve, mas ja presente",
+          whyLabel: "Porque importa",
+          changeLabel: "O que aparece",
+          high: {
+            highImpact: [
+              {
+                title: "Conversas sem fecho",
+                explanation: "Temas centrais param no ponto mais dificil e ficam abertos.",
+                why: "Tema aberto volta com mais friccao.",
+                change: "A mesma discussao volta mais cedo.",
+              },
+              {
+                title: "Disponibilidade emocional irregular",
+                explanation: "Ha apoio em dias leves e afastamento em dias de pressao.",
+                why: "E no stress que a relacao e testada.",
+                change: "A distancia apos conflito dura mais.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Cansaco de promessas",
+                explanation: "Novas promessas soam fracas por causa das antigas nao cumpridas.",
+                why: "A confiabilidade cai antes do conflito grande.",
+                change: "Menos pedidos diretos, mais cautela.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Irritacao de fundo",
+                explanation: "Resposta curta, tom seco e pouca paciencia aparecem mais.",
+                why: "Pequenas coisas acumulam desgaste.",
+                change: "Dias normais ficam tensos com mais frequencia.",
+              },
+            ],
+          },
+          mid: {
+            highImpact: [
+              {
+                title: "Contacto liga-desliga",
+                explanation: "Ha proximidade, depois afastamento, depois retorno parcial.",
+                why: "Imprevisibilidade baixa a seguranca.",
+                change: "Os dois antecipam dececao.",
+              },
+              {
+                title: "Deriva dos acordos",
+                explanation: "O que foi combinado nao aparece no comportamento da semana seguinte.",
+                why: "Confianca depende de execucao, nao de intencao.",
+                change: "Vigilancia substitui confianca.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Reparo lento",
+                explanation: "Conflito baixa em dias, nao em horas.",
+                why: "Recuperacao lenta aumenta o custo emocional.",
+                change: "Mais tempo em distancia.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Ruido externo",
+                explanation: "Opinioes de fora ocupam espaco deixado por conversas pouco claras.",
+                why: "Falta de clareza interna abre essa porta.",
+                change: "Decisao menos baseada no que voces vivem.",
+              },
+            ],
+          },
+          low: {
+            highImpact: [
+              {
+                title: "Incerteza cronica",
+                explanation: "Perguntas base sobre rumo e compromisso ficam sem resposta.",
+                why: "Sem base, cada semana recomeca na duvida.",
+                change: "Energia vai para decifrar, nao para aproximar.",
+              },
+              {
+                title: "Desgaste rapido da confianca",
+                explanation: "Conflito entre palavra e acao aparece com frequencia.",
+                why: "Esse choque repetido quebra confiabilidade.",
+                change: "O neutro parece ameaca.",
+              },
+            ],
+            mediumImpact: [
+              {
+                title: "Empilhamento de conflitos",
+                explanation: "Tema novo puxa temas antigos que ficaram abertos.",
+                why: "Sem fecho, backlog continua ativo.",
+                change: "Discussao mais longa e menos clara.",
+              },
+            ],
+            lowImpact: [
+              {
+                title: "Peso na rotina",
+                explanation: "Ate combinados simples do dia ficam pesados.",
+                why: "Friccao pratica soma com desgaste emocional.",
+                change: "Coisas pequenas pesam demasiado.",
+              },
+            ],
+          },
+        },
+      },
+    };
+    return packs[getPremiumRewriteLocale(locale)];
+  }
+
+  function localizeReportPageUi(locale) {
+    const pack = getPremiumRewritePack(locale);
+    const ui = pack.ui;
+    const chrome = PAGE_CHROME_UI[locale] || PAGE_CHROME_UI.en;
+    document.title = chrome.reportPageTitle;
+    setText("report-eyebrow", ui.eyebrow);
+    setText("report-title", ui.title);
+    setText("report-index-label", ui.indexLabel);
+    setText("report-subhead", ui.subhead);
+    setText("report-overview-title", ui.overview);
+    setText("report-score-overview-title", ui.charts);
+    setText("report-chart-note", ui.chartNote);
+    setText("report-scale-low", ui.scale[0]);
+    setText("report-scale-mid", ui.scale[1]);
+    setText("report-scale-high", ui.scale[2]);
+    setText("report-area-title-communication", ui.areas[0]);
+    setText("report-area-title-stability", ui.areas[1]);
+    setText("report-area-title-transparency", ui.areas[2]);
+    setText("report-area-title-safety", ui.areas[3]);
+    setText("report-bar-title-communication", ui.areas[0]);
+    setText("report-bar-title-stability", ui.areas[1]);
+    setText("report-bar-title-transparency", ui.areas[2]);
+    setText("report-bar-title-safety", ui.areas[3]);
+    setText("report-comm-heading", ui.comm);
+    setText("report-emotion-heading", ui.emotional);
+    setText("report-stability-heading", ui.stability);
+    setText("report-clarity-heading", ui.clarity);
+    setText("report-pattern-heading", ui.pattern);
+    setText("report-meaning-heading", ui.meaning);
+    setText("report-next-heading", ui.next);
+    setText("report-nochange-heading", ui.noChange);
+    setText("report-recheck-heading", ui.recheck);
+    setText("report-recheck-cta", ui.recheckCta);
+    const outcomeUi = getOutcomeActionsContent(locale);
+    setText("report-outcome-heading", outcomeUi.heading);
+    setText("report-disclaimer-text", RESULT_SIGNAL_LINE_BY_LOCALE[locale] || RESULT_SIGNAL_LINE_BY_LOCALE.en);
+    setText("report-back-link", ui.back);
+    setText("report-donut-label", chrome.donutLabel);
+    setText("report-footer-home-link", chrome.homeLink);
+    setText("report-footer-note-disclaimer", chrome.footerDisclaimer);
+    const reportBackLink = document.getElementById("report-back-link");
+    const reportHomeLink = document.getElementById("report-footer-home-link");
+    if (reportBackLink) reportBackLink.setAttribute("href", getFlowPageUrl("result", locale));
+    if (reportHomeLink) reportHomeLink.setAttribute("href", LOCALE_PATHS[locale] || LOCALE_PATHS.en);
+    if (document.getElementById("report-lock-title")) {
+      renderPaywallModalText(locale);
+    }
+  }
+
+  function buildOperationalDimension(locale, key, areaScores, trajectory) {
+    const pack = getPremiumRewritePack(locale);
+    const sectionMap = {
+      communication: "communication",
+      emotional: "emotional",
+      stability: "stability",
+      clarity: "clarity",
+    };
+    const areaKey = sectionMap[key] || "communication";
+    const score =
+      areaKey === "communication"
+        ? areaScores.communication
+        : areaKey === "emotional"
+          ? areaScores.emotional
+          : areaKey === "stability"
+            ? areaScores.behavior
+            : areaScores.trust;
+    const section = pack.sections[areaKey] || pack.sections.communication;
+    return {
+      body: fillScore(section.body, score),
+      check: section.check,
+    };
+  }
+
+  function buildNoChangeScenario(locale, areaScores, trajectory, alertCount) {
+    const pack = getPremiumRewritePack(locale);
+    return pack.noChange;
+  }
+
+  function buildPatternAndMeaning(locale, areaScores, trajectory, alertCount) {
+    const pack = getPremiumRewritePack(locale);
+    return {
+      pattern: pack.pattern,
+      meaning: pack.meaning,
+    };
+  }
+
+  function getPremiumReportNarrative(locale) {
+    const pack = getPremiumRewritePack(locale);
+    return {
+      opening: pack.ui.subhead,
+      benchmarkNote: pack.benchmarkNote,
+      dimensions: {},
+      pattern: pack.pattern,
+      meaning: pack.meaning,
+      recheck: pack.recheck,
+    };
+  }
+
+  function getOutcomeActionsContent(locale) {
+    const pack = getPremiumRewritePack(locale);
+    const o = pack.outcome;
+    return {
+      heading: o.heading,
+      highImpact: o.highImpact,
+      mediumImpact: o.mediumImpact,
+      lowImpact: o.lowImpact,
+      whyLabel: o.whyLabel,
+      changeLabel: o.changeLabel,
+      high: o.high,
+      mid: o.mid,
+      low: o.low,
+    };
+  }
+
   // --- Bootstrap wg adresu strony ---
   function boot() {
     document.documentElement.classList.add("js");
