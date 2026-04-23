@@ -15,6 +15,7 @@
   const PREMIUM_GRANT_EXP_KEY = "premium_access_grant_exp_v1";
   const TEST_SESSION_KEY = "relationshipscan_test_session_v1";
   const STRIPE_API_BASE_META = "stripe-verify-api-base";
+  const WORK_MULTILINGUAL_BUNDLE_TAG = "20260423workbundle";
 
   function getStripeVerifyApiBase() {
     try {
