@@ -638,7 +638,7 @@
       back: "Wstecz",
       backHome: "Powrót na stronę główną",
       loading: "Liczymy Twój wynik…",
-      disclaimer: "Około dwóch minut. Pierwsza odpowiedź z brzucha — bez polerowania.",
+      disclaimer: "Około dwóch minut. Odpowiadaj spontanicznie, bez długiego zastanawiania się.",
       micro: "Bez podchwytliwych pytań.",
     },
     de: {
@@ -1052,225 +1052,225 @@
 
   const RESULT_COPY =   {
     "stabilna": {
-      "headline": "Right now, this relationship is holding",
-      "label": "Mostly steady",
-      "lead": "You still have hard moments, but they do not blow everything up. You can usually talk, pause, and come back.",
+      "headline": "The relationship is coherent and functional",
+      "label": "High score",
+      "lead": "In most areas, you function as a team. Both sides take initiative, daily matters are handled, and contact does not depend on one person.",
       "interpretation": [
-        "You are not stuck in daily drama. Contact does not disappear for days after every difficult talk.",
-        "This can still shift fast with stress, fatigue, or avoidance. But right now, things are more stable than messy."
+        "You usually return to balance after tension, so daily issues do not become long problems.",
+        "Closeness, involvement, responsibility, and boundaries are present in normal situations, not only on good days."
       ],
       "tips": [
-        "Keep an eye on what keeps you close on normal days.",
-        "Do not leave hard topics hanging for a week.",
-        "Judge by what happens repeatedly, not by one good night."
+        "Watch for small topics being postponed for too long.",
+        "Notice temporary drops in initiative from one side during harder periods.",
+        "Keep handling small issues early, so routine does not replace attention."
       ]
     },
     "napiecia": {
-      "headline": "This is starting to break down",
-      "label": "Unstable",
-      "lead": "You still have contact, but more things stop halfway. One day feels close, the next one feels cold or tense.",
+      "headline": "The relationship works, but is losing balance",
+      "label": "Medium score",
+      "lead": "Some areas are stable, while others are strained or neglected. One person more often carries initiative, contact, or responsibility.",
       "interpretation": [
-        "Important talks stop before a clear ending. The same issue comes back in the next argument.",
-        "After conflict, contact often returns slower, so tension stays in the background."
+        "Plans are made, but they often fall apart. Small things become more irritating than they should.",
+        "Contact can be intense and then clearly weaker, while important topics are postponed."
       ],
       "tips": [
-        "Watch whether behavior changes in the week after a difficult talk.",
-        "Track what happens after tension: reconnecting or silence.",
-        "Do not judge by one good evening; judge by what keeps repeating."
+        "Track whether effort is distributed on both sides week by week.",
+        "Check if tension is resolved or simply pushed into the next situation.",
+        "If this pattern repeats, one-sided effort turns into fatigue and distance."
       ]
     },
     "niepewnosc": {
-      "headline": "Your uncertainty is high",
-      "label": "High risk of confusion",
-      "lead": "Tension is high and clear answers are missing. Important topics stay open.",
+      "headline": "The relationship is losing structure and direction",
+      "label": "Low score",
+      "lead": "There is no shared rhythm. Contact is irregular, and initiative, involvement, and responsibility are limited or one-sided.",
       "interpretation": [
-        "A hard topic comes up, then the talk breaks, then there is distance and silence again.",
-        "Words and behavior split too often, so you start checking more and trusting less."
+        "Contact is interrupted or reduced to a minimum, and open matters stay unresolved.",
+        "One or both sides withdraw, and even simple tasks become hard to handle together."
       ],
       "tips": [
-        "Separate facts from what you are adding in your head.",
-        "Check whether normal contact comes back the same day after tension.",
-        "If nothing changes across several days, treat it as direction, not accident."
+        "Look at what happens in practice: regular contact or repeated withdrawal.",
+        "Watch whether open issues are closed or left hanging again.",
+        "If this continues, distance grows and contact becomes increasingly limited."
       ]
     }
   };
 
   const RESULT_COPY_PL =   {
     "stabilna": {
-      "headline": "Na teraz ta relacja się trzyma",
-      "label": "Raczej stabilnie",
-      "lead": "Są trudniejsze momenty, ale nie rozwalają wszystkiego. Zwykle da się wrócić do rozmowy i domknąć temat.",
+      "headline": "Relacja jest spójna i funkcjonalna",
+      "label": "Wysoki wynik",
+      "lead": "W większości obszarów działacie razem. Inicjatywa jest po obu stronach, kontakt nie zależy od jednej osoby, a codzienne sprawy są ogarniane na bieżąco.",
       "interpretation": [
-        "Nie tkwicie w codziennym chaosie. Kontakt nie urywa się po każdej trudnej rozmowie.",
-        "To nadal może się szybko zmienić przy stresie, zmęczeniu albo unikaniu tematów. Na ten moment jest więcej spokoju niż bałaganu."
+        "Po napięciu zwykle wracacie do równowagi, więc drobne problemy nie zamieniają się w długie konflikty.",
+        "Bliskość, zaangażowanie i odpowiedzialność są widoczne także w zwykłych dniach, nie tylko przy dobrym nastroju."
       ],
       "tips": [
-        "Sprawdzaj, co Was trzyma blisko w zwykłe dni.",
-        "Nie zostawiaj trudnych tematów na później bez terminu.",
-        "Oceniaj po tym, co wraca regularnie, nie po jednym dobrym wieczorze."
+        "Pilnujcie odkładanych drobiazgów, zanim urosną.",
+        "Zwracajcie uwagę na okresowe spadki inicjatywy u jednej strony.",
+        "Ta relacja działa, jeśli utrzymacie uwagę na małych rzeczach."
       ]
     },
     "napiecia": {
-      "headline": "To zaczyna się rozjeżdżać",
-      "label": "Niestabilnie",
-      "lead": "Jeszcze trzymacie kontakt, ale coraz częściej coś się urywa. Jednego dnia jest normalnie, drugiego napięcie i wycofanie.",
+      "headline": "Relacja działa, ale traci równowagę",
+      "label": "Średni wynik",
+      "lead": "Część obszarów działa, część jest przeciążona. Ciężar relacji rozkłada się nierówno i jedna strona częściej ciągnie kontakt lub organizację.",
       "interpretation": [
-        "Ważne tematy kończą się bez konkretu. Wracają przy kolejnym spięciu i zaczynacie od zera.",
-        "Po trudniejszym momencie kontakt bywa krótszy i chłodniejszy, więc rośnie napięcie przed następną rozmową."
+        "Plany są robione, ale łatwo się rozjeżdżają. Drobne rzeczy irytują bardziej niż powinny.",
+        "Kontakt potrafi być intensywny, a potem wyraźnie słabnie, a ważne sprawy są odkładane."
       ],
       "tips": [
-        "Patrz, czy po rozmowie coś realnie się zmienia w kolejnym tygodniu.",
-        "Sprawdzaj to, co dzieje się po konflikcie: powrót do kontaktu albo dalsza cisza.",
-        "Nie opieraj się na jednej dobrej rozmowie, tylko na tym, co wraca regularnie."
+        "Sprawdzajcie co tydzień, czy wysiłek jest po obu stronach.",
+        "Patrzcie, czy napięcie znika, czy przechodzi na kolejne sytuacje.",
+        "Jeśli ten układ się utrzyma, pojawi się zmęczenie i dystans."
       ]
     },
     "niepewnosc": {
-      "headline": "Twoja niepewność jest wysoka",
-      "label": "Wysokie ryzyko chaosu",
-      "lead": "Napięcie jest wysokie, a odpowiedzi jest mało. Najważniejsze sprawy wiszą i nie mają końca.",
+      "headline": "Relacja traci strukturę i kierunek",
+      "label": "Niski wynik",
+      "lead": "Brakuje wspólnego rytmu. Kontakt jest nieregularny, a inicjatywa, zaangażowanie i odpowiedzialność są ograniczone albo jednostronne.",
       "interpretation": [
-        "Rozmowa dochodzi do trudnego miejsca i się urywa. Potem jest chwila spokoju, dystans i znowu cisza.",
-        "Słowa i działania często się rozchodzą, więc zaczynasz bardziej sprawdzać niż ufać."
+        "Kontakt bywa przerywany lub ograniczony do minimum, a sprawy zostają bez domknięcia.",
+        "Jedna albo obie strony się wycofują i nawet proste rzeczy stają się trudne do ogarnięcia razem."
       ],
       "tips": [
-        "Oddziel to, co faktycznie się wydarzyło, od tego, co sobie dopowiadasz.",
-        "Patrz, czy po napięciu wraca normalny kontakt jeszcze tego samego dnia.",
-        "Jeśli przez kilka dni nic się nie zmienia, traktuj to jako realny kierunek, nie przypadek."
+        "Patrzcie na fakty: regularny kontakt albo powtarzalne wycofanie.",
+        "Sprawdzajcie, czy otwarte sprawy są domykane, czy znowu zostają.",
+        "Jeśli ten stan się utrzyma, dystans będzie się pogłębiał."
       ]
     }
   };
 
   const RESULT_COPY_DE =   {
     "stabilna": {
-      "headline": "Aktuell hält eure Beziehung",
-      "label": "Eher stabil",
-      "lead": "Es gibt schwierige Momente, aber sie sprengen nicht alles. Ihr könnt meist wieder ins Gespräch kommen.",
+      "headline": "Die Beziehung ist stabil und funktional",
+      "label": "Hoher Wert",
+      "lead": "In den meisten Bereichen funktioniert ihr als Team. Initiative kommt von beiden Seiten, Kontakt hängt nicht an einer Person, und Alltagsdinge werden geklärt.",
       "interpretation": [
-        "Ihr steckt nicht in täglichem Drama. Der Kontakt bricht nicht nach jedem Konflikt für Tage ab.",
-        "Das kann sich schnell ändern bei Stress, Erschöpfung oder Ausweichen. Im Moment ist es aber eher ruhig als chaotisch."
+        "Nach Spannungen findet ihr meist zurück ins Gleichgewicht, statt im Dauerkonflikt hängen zu bleiben.",
+        "Nähe, Engagement und Verantwortung zeigen sich auch im normalen Alltag."
       ],
       "tips": [
-        "Achte darauf, was euch im Alltag stabil hält.",
-        "Lass schwierige Themen nicht offen stehen.",
-        "Bewerte nach Wiederholung, nicht nach einem guten Abend."
+        "Verschobene Kleinthemen früh klären.",
+        "Auf vorübergehende Initiative-Einbrüche auf einer Seite achten.",
+        "Das Niveau bleibt stabil, wenn kleine Dinge nicht liegen bleiben."
       ]
     },
     "napiecia": {
-      "headline": "Das beginnt zu kippen",
-      "label": "Instabil",
-      "lead": "Ihr habt noch Kontakt, aber immer mehr Themen bleiben offen. Ein Tag ist nah, der nächste kühl oder angespannt.",
+      "headline": "Die Beziehung funktioniert, verliert aber Balance",
+      "label": "Mittlerer Wert",
+      "lead": "Einige Bereiche laufen gut, andere sind überlastet. Eine Person übernimmt häufiger Initiative, Kontakt oder Organisation.",
       "interpretation": [
-        "Wichtige Gespräche enden ohne klare Entscheidung. Beim nächsten Streit ist dasselbe Thema wieder da.",
-        "Nach Konflikten bleibt Abstand länger, deshalb baut sich Spannung zwischen den Gesprächen auf."
+        "Pläne werden gemacht, halten aber nicht. Kleine Dinge belasten stärker als nötig.",
+        "Kontakt schwankt zwischen intensiv und schwach, wichtige Themen werden verschoben."
       ],
       "tips": [
-        "Prüfe, ob sich Verhalten in den Tagen nach dem Gespräch wirklich ändert.",
-        "Achte auf die Stunden nach Streit: Rückkehr in Kontakt oder Funkstille.",
-        "Nicht ein guter Abend zählt, sondern was Woche für Woche wieder passiert."
+        "Wöchentlich prüfen, ob Aufwand auf beide Seiten verteilt ist.",
+        "Beobachten, ob Spannung wirklich geklärt wird oder nur weitergetragen wird.",
+        "Wenn das so bleibt, folgen Ermüdung und Distanz."
       ]
     },
     "niepewnosc": {
-      "headline": "Deine Unsicherheit ist hoch",
-      "label": "Hohes Risiko für Verwirrung",
-      "lead": "Die Spannung ist hoch und klare Antworten fehlen. Wichtige Fragen bleiben offen.",
+      "headline": "Die Beziehung verliert Struktur und Richtung",
+      "label": "Niedriger Wert",
+      "lead": "Es fehlt ein gemeinsamer Rhythmus. Kontakt ist unregelmäßig, und Initiative, Engagement sowie Verantwortung sind schwach oder einseitig.",
       "interpretation": [
-        "Schwierige Themen kommen hoch, brechen ab und enden wieder in Abstand und Schweigen.",
-        "Worte und Verhalten laufen zu oft auseinander, dadurch wächst Kontrolle statt Vertrauen."
+        "Kontakt ist unterbrochen oder minimal, offene Themen bleiben liegen.",
+        "Eine oder beide Seiten ziehen sich zurück, selbst einfache Dinge werden schwierig."
       ],
       "tips": [
-        "Trenne Fakten von dem, was du dazudenkst.",
-        "Schau, ob am selben Tag nach Spannung wieder normaler Kontakt möglich ist.",
-        "Wenn sich tagelang nichts ändert, ist das keine Ausnahme, sondern Richtung."
+        "Auf Fakten schauen: verlässlicher Kontakt oder wiederholter Rückzug.",
+        "Prüfen, ob offene Punkte abgeschlossen oder erneut vertagt werden.",
+        "Ohne Veränderung nimmt die Distanz weiter zu."
       ]
     }
   };
 
   const RESULT_COPY_ES =   {
     "stabilna": {
-      "headline": "Ahora mismo esta relación se mantiene",
-      "label": "Bastante estable",
-      "lead": "Hay momentos difíciles, pero no rompen todo. Normalmente podéis volver a hablar y cerrar temas.",
+      "headline": "La relación es coherente y funcional",
+      "label": "Resultado alto",
+      "lead": "En la mayoría de áreas funcionáis como equipo. Hay iniciativa de ambos, el contacto no depende de una sola persona y lo cotidiano se gestiona.",
       "interpretation": [
-        "No estáis en drama diario. El contacto no desaparece días después de cada choque.",
-        "Esto puede cambiar rápido con estrés, cansancio o evasión. Ahora mismo hay más estabilidad que caos."
+        "Después de tensión, normalmente recuperáis el equilibrio en lugar de arrastrar el conflicto.",
+        "La cercanía, el compromiso y la responsabilidad aparecen también en días normales."
       ],
       "tips": [
-        "Mira qué os mantiene cerca en días normales.",
-        "No dejes temas difíciles sin cerrar durante semanas.",
-        "Juzga por lo que se repite, no por una noche buena."
+        "No dejéis pequeños temas para después durante semanas.",
+        "Vigilad bajadas puntuales de iniciativa por una de las partes.",
+        "Este nivel se mantiene si atendéis lo pequeño antes de que se acumule."
       ]
     },
     "napiecia": {
-      "headline": "Esto se está desordenando",
-      "label": "Inestable",
-      "lead": "Aún hay contacto, pero más temas se quedan a medias. Un día hay cercanía y al siguiente frialdad.",
+      "headline": "La relación funciona, pero pierde equilibrio",
+      "label": "Resultado medio",
+      "lead": "Algunas áreas funcionan y otras están sobrecargadas. Una persona suele llevar más iniciativa, contacto o responsabilidad.",
       "interpretation": [
-        "Las conversaciones importantes terminan sin cierre claro y vuelven en la discusión siguiente.",
-        "Después del conflicto el contacto tarda en volver, por eso la tensión se queda entre vosotros."
+        "Se hacen planes, pero se desordenan con facilidad. Pequeñas cosas irritan más de lo normal.",
+        "El contacto pasa de intenso a débil y los temas importantes se posponen."
       ],
       "tips": [
-        "Mira si el comportamiento cambia de verdad en la semana siguiente.",
-        "Fíjate en lo que pasa tras tensión: reconexión o silencio.",
-        "No midas por una noche buena, mide por lo que se repite."
+        "Revisad cada semana si el esfuerzo está repartido.",
+        "Observad si la tensión se resuelve o se traslada a la siguiente situación.",
+        "Si esto sigue así, aparecerán cansancio y distancia."
       ]
     },
     "niepewnosc": {
-      "headline": "Tu incertidumbre es alta",
-      "label": "Riesgo alto de confusión",
-      "lead": "Hay mucha tensión y pocas respuestas claras. Lo importante sigue abierto.",
+      "headline": "La relación pierde estructura y dirección",
+      "label": "Resultado bajo",
+      "lead": "Falta un ritmo común. El contacto es irregular y la iniciativa, el compromiso y la responsabilidad son limitados o unilaterales.",
       "interpretation": [
-        "Un tema difícil aparece, la conversación se corta y volvéis a distancia y silencio.",
-        "Palabras y hechos se separan demasiado, así que aparece más control y menos confianza."
+        "El contacto se corta o queda al mínimo, y los asuntos siguen sin cerrarse.",
+        "Una o ambas personas se retiran y hasta lo simple se vuelve difícil."
       ],
       "tips": [
-        "Separa hechos de lo que estás imaginando.",
-        "Mira si el contacto normal vuelve el mismo día tras el conflicto.",
-        "Si pasan varios días sin cambio, tómalo como dirección real."
+        "Mirad hechos concretos: contacto constante o retirada repetida.",
+        "Comprobad si los temas abiertos se cierran o vuelven a quedar pendientes.",
+        "Si no cambia nada, la distancia seguirá creciendo."
       ]
     }
   };
 
   const RESULT_COPY_PT =   {
     "stabilna": {
-      "headline": "Neste momento a relação está a aguentar",
-      "label": "Relativamente estável",
-      "lead": "Há momentos difíceis, mas não partem tudo. Normalmente conseguem voltar à conversa e fechar assuntos.",
+      "headline": "A relação é coerente e funcional",
+      "label": "Resultado alto",
+      "lead": "Na maioria das áreas, vocês funcionam como equipa. Há iniciativa dos dois lados, o contacto não depende de uma só pessoa e as situações do dia a dia são resolvidas.",
       "interpretation": [
-        "Não vivem em drama diário. O contacto não desaparece durante dias após cada conflito.",
-        "Isto pode mudar depressa com stress, cansaço ou fuga aos temas. Agora há mais estabilidade do que caos."
+        "Depois de tensão, conseguem normalmente recuperar o equilíbrio sem arrastar o problema por dias.",
+        "Proximidade, envolvimento e responsabilidade aparecem também nas situações normais."
       ],
       "tips": [
-        "Vê o que vos mantém próximos nos dias normais.",
-        "Não deixes assuntos difíceis pendurados por muito tempo.",
-        "Avalia pelo que se repete, não por uma noite boa."
+        "Não adiem pequenos assuntos por muito tempo.",
+        "Estejam atentos a quebras temporárias de iniciativa de um dos lados.",
+        "Este nível mantém-se quando as pequenas questões são tratadas cedo."
       ]
     },
     "napiecia": {
-      "headline": "Isto está a sair do eixo",
-      "label": "Instável",
-      "lead": "Ainda há contacto, mas mais assuntos ficam por fechar. Num dia há proximidade, no outro frieza ou tensão.",
+      "headline": "A relação funciona, mas perde equilíbrio",
+      "label": "Resultado médio",
+      "lead": "Algumas áreas funcionam, outras estão sobrecarregadas. Uma pessoa assume mais iniciativa, mantém mais o contacto ou carrega mais responsabilidades.",
       "interpretation": [
-        "Conversas importantes acabam sem fecho claro e o mesmo tema volta no conflito seguinte.",
-        "Depois da tensão, o contacto demora a regressar e o mal-estar fica entre vocês."
+        "Fazem planos, mas desorganizam-se facilmente. Pequenas situações começam a irritar mais do que deviam.",
+        "O contacto alterna entre intensidade e afastamento, e os temas importantes são adiados."
       ],
       "tips": [
-        "Vê se o comportamento muda de facto na semana depois da conversa.",
-        "Observa o que acontece após conflito: reconexão ou silêncio.",
-        "Não avalies por uma noite boa, avalia pelo que se repete."
+        "Revejam semanalmente se o esforço está distribuído.",
+        "Vejam se a tensão é resolvida ou se passa para a situação seguinte.",
+        "Se isto continuar, surgem desgaste e distanciamento."
       ]
     },
     "niepewnosc": {
-      "headline": "A tua incerteza está alta",
-      "label": "Risco alto de confusão",
-      "lead": "Há muita tensão e poucas respostas claras. As questões principais ficam abertas.",
+      "headline": "A relação perde estrutura e direção",
+      "label": "Resultado baixo",
+      "lead": "Falta um ritmo comum. O contacto é irregular e iniciativa, envolvimento e responsabilidade ficam limitados ou de um lado só.",
       "interpretation": [
-        "Tema difícil aparece, a conversa corta e voltam distância e silêncio.",
-        "Palavras e ações afastam-se vezes demais, e surge mais controlo do que confiança."
+        "O contacto é interrompido ou mínimo e os assuntos ficam por resolver.",
+        "Uma ou ambas as partes afastam-se, e até situações simples se tornam difíceis."
       ],
       "tips": [
-        "Separa factos do que estás a imaginar.",
-        "Vê se o contacto normal regressa no mesmo dia após tensão.",
-        "Se vários dias passam sem mudança, trata isso como direção real."
+        "Olhem para factos: contacto regular ou afastamento repetido.",
+        "Verifiquem se os temas abertos são fechados ou ficam novamente pendentes.",
+        "Se nada mudar, o distanciamento vai aumentar."
       ]
     }
   };
