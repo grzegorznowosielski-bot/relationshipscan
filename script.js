@@ -1052,45 +1052,45 @@
 
   const RESULT_COPY =   {
     "stabilna": {
-      "headline": "The relationship is coherent and functional",
+      "headline": "The relationship is stable and well-balanced",
       "label": "High score",
-      "lead": "In most areas, you function as a team. Both sides take initiative, daily matters are handled, and contact does not depend on one person.",
+      "lead": "Most areas are working: both sides take initiative, time and attention are shared, and everyday matters are handled without friction. After tension, the relationship returns to balance without long disruption.",
       "interpretation": [
-        "You usually return to balance after tension, so daily issues do not become long problems.",
-        "Closeness, involvement, responsibility, and boundaries are present in normal situations, not only on good days."
+        "What works: initiative from both sides, balanced involvement, everyday closeness, handled commitments, and boundaries that do not break the connection.",
+        "What it means: The relationship works because it stays balanced."
       ],
       "tips": [
-        "Watch for small topics being postponed for too long.",
-        "Notice temporary drops in initiative from one side during harder periods.",
-        "Keep handling small issues early, so routine does not replace attention."
+        "Warning sign: postponing small issues.",
+        "Warning sign: temporary drop in effort from one side.",
+        "Warning sign: routine replacing attention."
       ]
     },
     "napiecia": {
-      "headline": "The relationship works, but is losing balance",
+      "headline": "The relationship is uneven",
       "label": "Medium score",
-      "lead": "Some areas are stable, while others are strained or neglected. One person more often carries initiative, contact, or responsibility.",
+      "lead": "Some areas work well, others are strained. The effort is not evenly distributed.",
       "interpretation": [
-        "Plans are made, but they often fall apart. Small things become more irritating than they should.",
-        "Contact can be intense and then clearly weaker, while important topics are postponed."
+        "What is off: initiative often comes from one side, involvement is unbalanced, time together is inconsistent, closeness fluctuates, and tension carries over.",
+        "What it means: The relationship depends on effort rather than stability."
       ],
       "tips": [
-        "Track whether effort is distributed on both sides week by week.",
-        "Check if tension is resolved or simply pushed into the next situation.",
-        "If this pattern repeats, one-sided effort turns into fatigue and distance."
+        "Practical sign: plans are made, but often fall apart.",
+        "Practical sign: small issues create more irritation than expected.",
+        "Practical sign: contact swings between intensity and distance."
       ]
     },
     "niepewnosc": {
-      "headline": "The relationship is losing structure and direction",
+      "headline": "The relationship is losing structure",
       "label": "Low score",
-      "lead": "There is no shared rhythm. Contact is irregular, and initiative, involvement, and responsibility are limited or one-sided.",
+      "lead": "There is no stable rhythm. Contact is inconsistent and often one-sided.",
       "interpretation": [
-        "Contact is interrupted or reduced to a minimum, and open matters stay unresolved.",
-        "One or both sides withdraw, and even simple tasks become hard to handle together."
+        "What is not working: low or one-sided initiative, reduced involvement, limited time together, weak closeness, and unresolved tension.",
+        "What it means: Without change, the relationship will continue to weaken."
       ],
       "tips": [
-        "Look at what happens in practice: regular contact or repeated withdrawal.",
-        "Watch whether open issues are closed or left hanging again.",
-        "If this continues, distance grows and contact becomes increasingly limited."
+        "Practical sign: contact drops to a minimum.",
+        "Practical sign: important matters stay unresolved.",
+        "Practical sign: one or both sides keep withdrawing."
       ]
     }
   };
@@ -1098,44 +1098,44 @@
   const RESULT_COPY_PL =   {
     "stabilna": {
       "headline": "Relacja jest spójna i funkcjonalna",
-      "label": "Wysoki wynik",
-      "lead": "W większości obszarów działacie razem. Inicjatywa jest po obu stronach, kontakt nie zależy od jednej osoby, a codzienne sprawy są ogarniane na bieżąco.",
+      "label": "Wysoki wynik (75–100)",
+      "lead": "W większości obszarów działacie razem: jest inicjatywa z obu stron, kontakt nie zależy od jednego z Was, sprawy są ogarniane na bieżąco. Widać, że potraficie wrócić do równowagi po napięciu, a codzienne rzeczy nie zamieniają się w problem.",
       "interpretation": [
-        "Po napięciu zwykle wracacie do równowagi, więc drobne problemy nie zamieniają się w długie konflikty.",
-        "Bliskość, zaangażowanie i odpowiedzialność są widoczne także w zwykłych dniach, nie tylko przy dobrym nastroju."
+        "Co działa: inicjatywa po obu stronach, zaangażowanie rozłożone dość równo, bliskość obecna także w zwykłych sytuacjach, odpowiedzialność za dopinanie spraw i granice, które nie rozwalają relacji.",
+        "Co z tego wynika: relacja działa, bo ma równowagę między bliskością a autonomią."
       ],
       "tips": [
-        "Pilnujcie odkładanych drobiazgów, zanim urosną.",
-        "Zwracajcie uwagę na okresowe spadki inicjatywy u jednej strony.",
-        "Ta relacja działa, jeśli utrzymacie uwagę na małych rzeczach."
+        "Sygnał ostrzegawczy: odkładanie drobnych tematów na później.",
+        "Sygnał ostrzegawczy: spadki inicjatywy u jednej ze stron w gorszych okresach.",
+        "Sygnał ostrzegawczy: rutyna, która zaczyna wypierać uważność."
       ]
     },
     "napiecia": {
       "headline": "Relacja działa, ale traci równowagę",
-      "label": "Średni wynik",
-      "lead": "Część obszarów działa, część jest przeciążona. Ciężar relacji rozkłada się nierówno i jedna strona częściej ciągnie kontakt lub organizację.",
+      "label": "Średni wynik (45–74)",
+      "lead": "Niektóre obszary działają dobrze, inne są przeciążone albo zaniedbane. Widać, że ciężar relacji nie rozkłada się równo — jedna strona częściej inicjuje, pilnuje kontaktu albo bierze odpowiedzialność za wspólne sprawy.",
       "interpretation": [
-        "Plany są robione, ale łatwo się rozjeżdżają. Drobne rzeczy irytują bardziej niż powinny.",
-        "Kontakt potrafi być intensywny, a potem wyraźnie słabnie, a ważne sprawy są odkładane."
+        "Co nie domaga: inicjatywa częściej po jednej stronie, zaangażowanie nierówne, czas razem bywa przypadkowy, bliskość jest niestabilna, a napięcie przechodzi na kolejne sytuacje.",
+        "Co z tego wynika: relacja nie rozpada się, ale zaczyna opierać się na wysiłku jednej strony."
       ],
       "tips": [
-        "Sprawdzajcie co tydzień, czy wysiłek jest po obu stronach.",
-        "Patrzcie, czy napięcie znika, czy przechodzi na kolejne sytuacje.",
-        "Jeśli ten układ się utrzyma, pojawi się zmęczenie i dystans."
+        "Jak to wygląda w praktyce: plany są robione, ale łatwo się rozjeżdżają.",
+        "Jak to wygląda w praktyce: drobne rzeczy zaczynają irytować bardziej niż powinny.",
+        "Jak to wygląda w praktyce: kontakt bywa intensywny, a potem wyraźnie słabnie; ważne sprawy są odkładane."
       ]
     },
     "niepewnosc": {
       "headline": "Relacja traci strukturę i kierunek",
-      "label": "Niski wynik",
-      "lead": "Brakuje wspólnego rytmu. Kontakt jest nieregularny, a inicjatywa, zaangażowanie i odpowiedzialność są ograniczone albo jednostronne.",
+      "label": "Niski wynik (0–44)",
+      "lead": "Brakuje wspólnego rytmu. Kontakt nie jest czymś oczywistym, tylko dzieje się nieregularnie. Inicjatywa, zaangażowanie i odpowiedzialność są ograniczone albo jednostronne.",
       "interpretation": [
-        "Kontakt bywa przerywany lub ograniczony do minimum, a sprawy zostają bez domknięcia.",
-        "Jedna albo obie strony się wycofują i nawet proste rzeczy stają się trudne do ogarnięcia razem."
+        "Co nie działa: inicjatywa jest słaba lub jednostronna, zaangażowanie spada lub jest niestabilne, czas razem jest rzadki albo powierzchowny, bliskość wycofana, a napięcie narasta.",
+        "Co z tego wynika: relacja nie ma stabilnego oparcia i bez zmiany dystans będzie się pogłębiał."
       ],
       "tips": [
-        "Patrzcie na fakty: regularny kontakt albo powtarzalne wycofanie.",
-        "Sprawdzajcie, czy otwarte sprawy są domykane, czy znowu zostają.",
-        "Jeśli ten stan się utrzyma, dystans będzie się pogłębiał."
+        "Jak to wygląda w praktyce: kontakt jest przerywany albo ograniczony do minimum.",
+        "Jak to wygląda w praktyce: sprawy nie są załatwiane, tylko zostają.",
+        "Jak to wygląda w praktyce: jedna lub obie strony wycofują się z relacji, nawet proste rzeczy stają się trudne."
       ]
     }
   };
@@ -1143,44 +1143,44 @@
   const RESULT_COPY_DE =   {
     "stabilna": {
       "headline": "Die Beziehung ist stabil und funktional",
-      "label": "Hoher Wert",
-      "lead": "In den meisten Bereichen funktioniert ihr als Team. Initiative kommt von beiden Seiten, Kontakt hängt nicht an einer Person, und Alltagsdinge werden geklärt.",
+      "label": "Hoher Wert (75–100)",
+      "lead": "In den meisten Bereichen funktioniert ihr als Team: beide Seiten zeigen Initiative, der Kontakt hängt nicht nur von einer Person ab, und alltägliche Dinge werden laufend geklärt. Nach Spannungen findet ihr wieder ins Gleichgewicht zurück, und Alltagsthemen entwickeln sich nicht zu Problemen.",
       "interpretation": [
-        "Nach Spannungen findet ihr meist zurück ins Gleichgewicht, statt im Dauerkonflikt hängen zu bleiben.",
-        "Nähe, Engagement und Verantwortung zeigen sich auch im normalen Alltag."
+        "Was funktioniert: Initiative auf beiden Seiten, relativ ausgeglichenes Engagement, Nähe im Alltag, umgesetzte Verpflichtungen und handhabbare Unterschiede.",
+        "Was das bedeutet: Die Beziehung funktioniert durch das Gleichgewicht zwischen Nähe und Eigenständigkeit."
       ],
       "tips": [
-        "Verschobene Kleinthemen früh klären.",
-        "Auf vorübergehende Initiative-Einbrüche auf einer Seite achten.",
-        "Das Niveau bleibt stabil, wenn kleine Dinge nicht liegen bleiben."
+        "Warnsignal: kleine Themen werden auf später verschoben.",
+        "Warnsignal: vorübergehender Rückgang der Initiative auf einer Seite.",
+        "Warnsignal: Routine ersetzt allmählich Aufmerksamkeit."
       ]
     },
     "napiecia": {
-      "headline": "Die Beziehung funktioniert, verliert aber Balance",
-      "label": "Mittlerer Wert",
-      "lead": "Einige Bereiche laufen gut, andere sind überlastet. Eine Person übernimmt häufiger Initiative, Kontakt oder Organisation.",
+      "headline": "Die Beziehung funktioniert, verliert aber an Balance",
+      "label": "Mittlerer Wert (45–74)",
+      "lead": "Einige Bereiche funktionieren gut, andere sind belastet oder vernachlässigt. Die Verantwortung ist ungleich verteilt — eine Person übernimmt häufiger Initiative, Kontakt oder Organisation.",
       "interpretation": [
-        "Pläne werden gemacht, halten aber nicht. Kleine Dinge belasten stärker als nötig.",
-        "Kontakt schwankt zwischen intensiv und schwach, wichtige Themen werden verschoben."
+        "Was nicht funktioniert: Initiative häufiger auf einer Seite, ungleiches Engagement, unregelmäßige gemeinsame Zeit, instabile Nähe und Spannung, die sich überträgt.",
+        "Was das bedeutet: Die Beziehung besteht, basiert aber zunehmend auf einseitigem Aufwand."
       ],
       "tips": [
-        "Wöchentlich prüfen, ob Aufwand auf beide Seiten verteilt ist.",
-        "Beobachten, ob Spannung wirklich geklärt wird oder nur weitergetragen wird.",
-        "Wenn das so bleibt, folgen Ermüdung und Distanz."
+        "Wie es sich zeigt: Pläne werden gemacht, halten aber nicht.",
+        "Wie es sich zeigt: kleine Dinge werden schnell belastend.",
+        "Wie es sich zeigt: Kontakt schwankt zwischen intensiv und schwach; wichtige Themen werden verschoben."
       ]
     },
     "niepewnosc": {
       "headline": "Die Beziehung verliert Struktur und Richtung",
-      "label": "Niedriger Wert",
-      "lead": "Es fehlt ein gemeinsamer Rhythmus. Kontakt ist unregelmäßig, und Initiative, Engagement sowie Verantwortung sind schwach oder einseitig.",
+      "label": "Niedriger Wert (0–44)",
+      "lead": "Es fehlt ein gemeinsamer Rhythmus. Kontakt entsteht unregelmäßig. Initiative, Engagement und Verantwortung sind schwach oder einseitig.",
       "interpretation": [
-        "Kontakt ist unterbrochen oder minimal, offene Themen bleiben liegen.",
-        "Eine oder beide Seiten ziehen sich zurück, selbst einfache Dinge werden schwierig."
+        "Was nicht funktioniert: geringe oder einseitige Initiative, sinkendes Engagement, seltene gemeinsame Zeit, zurückgezogene Nähe und wachsende Spannung.",
+        "Was das bedeutet: Die Beziehung hat kein stabiles Fundament und ohne Veränderung nimmt die Distanz weiter zu."
       ],
       "tips": [
-        "Auf Fakten schauen: verlässlicher Kontakt oder wiederholter Rückzug.",
-        "Prüfen, ob offene Punkte abgeschlossen oder erneut vertagt werden.",
-        "Ohne Veränderung nimmt die Distanz weiter zu."
+        "Wie es sich zeigt: Kontakt ist unterbrochen oder minimal.",
+        "Wie es sich zeigt: Themen werden nicht geklärt.",
+        "Wie es sich zeigt: Rückzug aus der Beziehung; selbst einfache Dinge werden schwierig."
       ]
     }
   };
@@ -1188,44 +1188,44 @@
   const RESULT_COPY_ES =   {
     "stabilna": {
       "headline": "La relación es coherente y funcional",
-      "label": "Resultado alto",
-      "lead": "En la mayoría de áreas funcionáis como equipo. Hay iniciativa de ambos, el contacto no depende de una sola persona y lo cotidiano se gestiona.",
+      "label": "Resultado alto (75–100)",
+      "lead": "En la mayoría de los aspectos funcionan como un equipo: hay iniciativa por parte de ambos, el contacto no depende de una sola persona y las situaciones cotidianas se gestionan de forma continua. Se nota que, después de momentos de tensión, sois capaces de recuperar el equilibrio y que los asuntos diarios no se convierten en problemas prolongados.",
       "interpretation": [
-        "Después de tensión, normalmente recuperáis el equilibrio en lugar de arrastrar el conflicto.",
-        "La cercanía, el compromiso y la responsabilidad aparecen también en días normales."
+        "Qué funciona: iniciativa de ambas personas, compromiso equilibrado, cercanía en lo cotidiano, responsabilidad en los acuerdos y límites manejables.",
+        "Qué significa: La relación funciona porque mantiene un equilibrio entre cercanía y autonomía."
       ],
       "tips": [
-        "No dejéis pequeños temas para después durante semanas.",
-        "Vigilad bajadas puntuales de iniciativa por una de las partes.",
-        "Este nivel se mantiene si atendéis lo pequeño antes de que se acumule."
+        "Señal de alerta: aplazar temas pequeños para más adelante.",
+        "Señal de alerta: descensos puntuales de iniciativa por parte de uno.",
+        "Señal de alerta: la rutina empieza a sustituir la atención."
       ]
     },
     "napiecia": {
       "headline": "La relación funciona, pero pierde equilibrio",
-      "label": "Resultado medio",
-      "lead": "Algunas áreas funcionan y otras están sobrecargadas. Una persona suele llevar más iniciativa, contacto o responsabilidad.",
+      "label": "Resultado medio (45–74)",
+      "lead": "Algunas áreas funcionan bien, mientras que otras están sobrecargadas o descuidadas. Se observa que el peso de la relación no se reparte de forma equitativa: una persona inicia más, mantiene el contacto o asume más responsabilidad en lo compartido.",
       "interpretation": [
-        "Se hacen planes, pero se desordenan con facilidad. Pequeñas cosas irritan más de lo normal.",
-        "El contacto pasa de intenso a débil y los temas importantes se posponen."
+        "Qué no funciona: iniciativa más frecuente en una sola persona, compromiso desigual, tiempo irregular, cercanía inconstante y tensión que se traslada.",
+        "Qué significa: La relación no se rompe, pero empieza a depender del esfuerzo de una sola parte."
       ],
       "tips": [
-        "Revisad cada semana si el esfuerzo está repartido.",
-        "Observad si la tensión se resuelve o se traslada a la siguiente situación.",
-        "Si esto sigue así, aparecerán cansancio y distancia."
+        "Cómo se ve en la práctica: se hacen planes, pero se desorganizan con facilidad.",
+        "Cómo se ve en la práctica: pequeñas situaciones generan más irritación de lo habitual.",
+        "Cómo se ve en la práctica: el contacto pasa de intenso a débil; temas importantes se posponen."
       ]
     },
     "niepewnosc": {
       "headline": "La relación pierde estructura y dirección",
-      "label": "Resultado bajo",
-      "lead": "Falta un ritmo común. El contacto es irregular y la iniciativa, el compromiso y la responsabilidad son limitados o unilaterales.",
+      "label": "Resultado bajo (0–44)",
+      "lead": "Falta un ritmo compartido. El contacto no es algo natural, sino irregular. La iniciativa, el compromiso y la responsabilidad son limitados o unilaterales.",
       "interpretation": [
-        "El contacto se corta o queda al mínimo, y los asuntos siguen sin cerrarse.",
-        "Una o ambas personas se retiran y hasta lo simple se vuelve difícil."
+        "Qué no funciona: iniciativa débil o concentrada en una sola persona, compromiso bajo, poco tiempo juntos, cercanía limitada y tensión acumulada.",
+        "Qué significa: La relación no tiene una base estable y, si se mantiene así, la distancia aumentará."
       ],
       "tips": [
-        "Mirad hechos concretos: contacto constante o retirada repetida.",
-        "Comprobad si los temas abiertos se cierran o vuelven a quedar pendientes.",
-        "Si no cambia nada, la distancia seguirá creciendo."
+        "Cómo se ve en la práctica: el contacto se interrumpe o se reduce al mínimo.",
+        "Cómo se ve en la práctica: los asuntos no se resuelven y quedan pendientes.",
+        "Cómo se ve en la práctica: una o ambas personas se retiran; incluso lo simple se vuelve difícil."
       ]
     }
   };
@@ -1233,44 +1233,44 @@
   const RESULT_COPY_PT =   {
     "stabilna": {
       "headline": "A relação é coerente e funcional",
-      "label": "Resultado alto",
-      "lead": "Na maioria das áreas, vocês funcionam como equipa. Há iniciativa dos dois lados, o contacto não depende de uma só pessoa e as situações do dia a dia são resolvidas.",
+      "label": "Resultado alto (75–100)",
+      "lead": "Na maioria dos aspetos, vocês funcionam como uma equipa: há iniciativa dos dois lados, o contacto não depende de uma única pessoa e as situações do dia a dia são resolvidas de forma contínua. É visível a capacidade de recuperar o equilíbrio após momentos de tensão, sem que as questões quotidianas se transformem em problemas duradouros.",
       "interpretation": [
-        "Depois de tensão, conseguem normalmente recuperar o equilíbrio sem arrastar o problema por dias.",
-        "Proximidade, envolvimento e responsabilidade aparecem também nas situações normais."
+        "O que funciona: iniciativa de ambos, envolvimento equilibrado, proximidade no dia a dia, responsabilidade nos compromissos e limites bem geridos.",
+        "O que significa: A relação funciona porque mantém equilíbrio entre proximidade e autonomia."
       ],
       "tips": [
-        "Não adiem pequenos assuntos por muito tempo.",
-        "Estejam atentos a quebras temporárias de iniciativa de um dos lados.",
-        "Este nível mantém-se quando as pequenas questões são tratadas cedo."
+        "Sinal de alerta: adiar pequenos assuntos para depois.",
+        "Sinal de alerta: redução temporária de iniciativa de uma das partes.",
+        "Sinal de alerta: rotina a substituir a atenção."
       ]
     },
     "napiecia": {
       "headline": "A relação funciona, mas perde equilíbrio",
-      "label": "Resultado médio",
-      "lead": "Algumas áreas funcionam, outras estão sobrecarregadas. Uma pessoa assume mais iniciativa, mantém mais o contacto ou carrega mais responsabilidades.",
+      "label": "Resultado médio (45–74)",
+      "lead": "Algumas áreas funcionam bem, enquanto outras estão sobrecarregadas ou negligenciadas. O peso da relação não está distribuído de forma equilibrada — uma pessoa assume mais iniciativa, mantém o contacto ou gere mais responsabilidades.",
       "interpretation": [
-        "Fazem planos, mas desorganizam-se facilmente. Pequenas situações começam a irritar mais do que deviam.",
-        "O contacto alterna entre intensidade e afastamento, e os temas importantes são adiados."
+        "O que não funciona: iniciativa mais presente de um lado, envolvimento desigual, tempo juntos irregular, proximidade inconsistente e tensão acumulada.",
+        "O que significa: A relação não está a terminar, mas começa a depender do esforço de uma só pessoa."
       ],
       "tips": [
-        "Revejam semanalmente se o esforço está distribuído.",
-        "Vejam se a tensão é resolvida ou se passa para a situação seguinte.",
-        "Se isto continuar, surgem desgaste e distanciamento."
+        "Como se manifesta: planos são feitos, mas facilmente se desorganizam.",
+        "Como se manifesta: pequenas situações geram irritação desproporcional.",
+        "Como se manifesta: o contacto alterna entre intensidade e afastamento; assuntos importantes são adiados."
       ]
     },
     "niepewnosc": {
       "headline": "A relação perde estrutura e direção",
-      "label": "Resultado baixo",
-      "lead": "Falta um ritmo comum. O contacto é irregular e iniciativa, envolvimento e responsabilidade ficam limitados ou de um lado só.",
+      "label": "Resultado baixo (0–44)",
+      "lead": "Falta um ritmo comum. O contacto não é natural, mas irregular. Iniciativa, envolvimento e responsabilidade são limitados ou unilaterais.",
       "interpretation": [
-        "O contacto é interrompido ou mínimo e os assuntos ficam por resolver.",
-        "Uma ou ambas as partes afastam-se, e até situações simples se tornam difíceis."
+        "O que não funciona: iniciativa fraca ou concentrada numa só pessoa, envolvimento baixo, tempo juntos raro, proximidade reduzida e tensão que acumula.",
+        "O que significa: A relação não tem base estável e, se nada mudar, o distanciamento vai aumentar."
       ],
       "tips": [
-        "Olhem para factos: contacto regular ou afastamento repetido.",
-        "Verifiquem se os temas abertos são fechados ou ficam novamente pendentes.",
-        "Se nada mudar, o distanciamento vai aumentar."
+        "Como se manifesta: o contacto é interrompido ou mínimo.",
+        "Como se manifesta: assuntos ficam por resolver.",
+        "Como se manifesta: há afastamento de uma ou ambas as partes; até situações simples se tornam difíceis."
       ]
     }
   };
