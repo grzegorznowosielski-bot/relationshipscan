@@ -3362,36 +3362,52 @@
     },
   };
 
-  function executiveRiskLineForReport(locale, alertCount) {
-    const isPl = locale === "pl";
-    if (isPl) {
-      if (alertCount >= 2) {
-        return "Największe ryzyko: kilka słabych punktów naraz — przy kolejnym stresie nie macie zapasu i wraca stary schemat.";
-      }
-      if (alertCount === 1) {
-        return "Największe ryzyko: jeden niedomknięty obszar zacznie ciągnąć resztę (więcej obrony, mniej domykania).";
-      }
-      return "Największe ryzyko: ten sam schemat wróci przy kolejnym zmęczeniu, dopóki przyczyna u źródła zostaje.";
-    }
-    if (alertCount >= 2) {
-      return "Biggest risk: multiple weak spots at once—the next stressful week clears your buffer and old loops restart.";
-    }
-    if (alertCount === 1) {
-      return "Biggest risk: one unresolved lane starts dragging the rest (more defence, less closure).";
-    }
-    return "Biggest risk: the same loop returns on the next tired week until the root cause actually changes.";
-  }
-
   function getReportExecutiveSummary(locale, score, areaScores, alertCount) {
     const range = getScoreRange(score);
-    const w = getWeakestAreaKey(areaScores);
-    const lang = locale === "pl" ? "pl" : "en";
-    const triple =
-      (EXEC_SUMMARY_LINES[lang] && EXEC_SUMMARY_LINES[lang][range] && EXEC_SUMMARY_LINES[lang][range][w]) ||
-      (EXEC_SUMMARY_LINES.en[range] && EXEC_SUMMARY_LINES.en[range][w]) ||
-      EXEC_SUMMARY_LINES.en.mid.communication;
-    const risk = executiveRiskLineForReport(locale, alertCount);
-    return `${triple[0]}\n\n${triple[1]}\n\n${risk}\n\n${triple[2]}`;
+    const lang = ["pl", "de", "es", "pt"].includes(locale) ? locale : "en";
+    const content = {
+      pl: {
+        high:
+          "Relacja jest spójna i funkcjonalna\n\nObraz całości\nW większości obszarów działacie razem: jest inicjatywa z obu stron, kontakt nie zależy od jednego z Was, sprawy są ogarniane na bieżąco. Widać, że potraficie wrócić do równowagi po napięciu, a codzienne rzeczy nie zamieniają się w problem.\n\nCo działa\n- Inicjatywa: obie strony wychodzą z propozycjami (kontakt, spotkania, decyzje)\n- Zaangażowanie: czas i uwaga są rozłożone dość równo\n- Bliskość: obecna nie tylko od święta, ale też w zwykłych sytuacjach\n- Odpowiedzialność: sprawy są doprowadzane do końca (organizacja, zobowiązania)\n- Granice: różnice nie rozwalają relacji, tylko są do ogarnięcia\n\nSygnały ostrzegawcze\n- odkładanie drobnych tematów na później\n- spadki inicjatywy u jednej ze stron w gorszych okresach\n- rutyna, która zaczyna wypierać uważność\n\nCo z tego wynika\nRelacja działa, bo ma równowagę między bliskością a autonomią. Utrzymanie tego wymaga pilnowania drobnych rzeczy zanim się skumulują.",
+        mid:
+          "Relacja działa, ale traci równowagę\n\nObraz całości\nNiektóre obszary działają dobrze, inne są przeciążone albo zaniedbane. Widać, że ciężar relacji nie rozkłada się równo - jedna strona częściej inicjuje, pilnuje kontaktu albo bierze odpowiedzialność za wspólne sprawy.\n\nCo nie domaga\n- Inicjatywa: częściej po jednej stronie\n- Zaangażowanie: nierówne (ktoś ciągnie więcej)\n- Czas razem: jest, ale bywa przypadkowy lub ograniczony\n- Bliskość: pojawia się, ale nie jest stabilna\n- Napięcie: nie znika, tylko przechodzi na kolejne sytuacje\n\nJak to wygląda w praktyce\n- plany są robione, ale łatwo się rozjeżdżają\n- drobne rzeczy zaczynają irytować bardziej niż powinny\n- kontakt bywa intensywny, a potem wyraźnie słabnie\n- ważne sprawy są odkładane, bo teraz nie ma kiedy\n\nCo z tego wynika\nRelacja nie rozpada się, ale zaczyna opierać się na wysiłku jednej strony. Jeśli to się utrzyma, pojawi się zmęczenie i dystans.",
+        low:
+          "Relacja traci strukturę i kierunek\n\nObraz całości\nBrakuje wspólnego rytmu. Kontakt nie jest czymś oczywistym, tylko dzieje się nieregularnie. Inicjatywa, zaangażowanie i odpowiedzialność są ograniczone albo jednostronne.\n\nCo nie działa\n- Inicjatywa: słaba lub jednostronna\n- Zaangażowanie: spada lub jest niestabilne\n- Czas razem: rzadki albo powierzchowny\n- Bliskość: wycofana lub sporadyczna\n- Napięcie: zostaje i narasta\n\nJak to wygląda w praktyce\n- kontakt jest przerywany albo ograniczony do minimum\n- sprawy nie są załatwiane, tylko zostają\n- jedna lub obie strony wycofują się z relacji\n- nawet proste rzeczy zaczynają być trudne do ogarnięcia\n\nCo z tego wynika\nRelacja nie ma stabilnego oparcia. Jeśli ten stan się utrzyma, dystans będzie się pogłębiał, a kontakt stanie się coraz bardziej ograniczony.",
+      },
+      en: {
+        high:
+          "The relationship is coherent and functional\n\nOverall picture\nIn most areas, you function as a team: both sides take initiative, contact does not depend on one person, and everyday matters are handled on an ongoing basis. When tension appears, you are able to return to balance, and daily issues do not turn into ongoing problems.\n\nWhat works\n- Initiative: both sides actively propose contact, plans and decisions\n- Involvement: time and attention are relatively balanced\n- Closeness: present not only in special moments, but in everyday situations\n- Responsibility: commitments are followed through (organization, agreements)\n- Boundaries: differences do not break the relationship, they are manageable\n\nWarning signals\n- postponing small issues for later\n- temporary drops in initiative from one side during more difficult periods\n- routine starting to replace attention\n\nWhat it means\nThe relationship works because it maintains balance between closeness and autonomy. Keeping this level requires attention to small things before they accumulate.",
+        mid:
+          "The relationship works, but is losing balance\n\nOverall picture\nSome areas work well, others are strained or neglected. The weight of the relationship is not evenly distributed - one person more often initiates, maintains contact, or takes responsibility for shared matters.\n\nWhat is not working\n- Initiative: more often on one side\n- Involvement: uneven (one person carries more)\n- Time together: present, but inconsistent or limited\n- Closeness: appears, but is not stable\n- Tension: does not disappear, carries over into other situations\n\nHow it looks in practice\n- plans are made, but easily fall apart\n- small things become more irritating than they should\n- contact can be intense, then clearly weakens\n- important matters are postponed because now is not the right time\n\nWhat it means\nThe relationship is not breaking, but starts to rely on one-sided effort. If this continues, it will lead to fatigue and distance.",
+        low:
+          "The relationship is losing structure and direction\n\nOverall picture\nThere is no shared rhythm. Contact is not something natural, but happens irregularly. Initiative, involvement and responsibility are limited or one-sided.\n\nWhat is not working\n- Initiative: weak or one-sided\n- Involvement: declining or unstable\n- Time together: rare or superficial\n- Closeness: withdrawn or occasional\n- Tension: remains and builds up\n\nHow it looks in practice\n- contact is interrupted or reduced to a minimum\n- matters are not resolved, they remain open\n- one or both sides withdraw from the relationship\n- even simple things become difficult to handle\n\nWhat it means\nThe relationship has no stable foundation. If this continues, distance will increase and contact will become more and more limited.",
+      },
+      de: {
+        high:
+          "Die Beziehung ist stabil und funktional\n\nGesamtbild\nIn den meisten Bereichen funktioniert ihr als Team: beide Seiten zeigen Initiative, der Kontakt hängt nicht nur von einer Person ab, und alltägliche Dinge werden laufend geklärt. Nach Spannungen findet ihr wieder ins Gleichgewicht zurück, und Alltagsthemen entwickeln sich nicht zu Problemen.\n\nWas funktioniert\n- Initiative: beide Seiten bringen Vorschläge ein (Kontakt, Pläne, Entscheidungen)\n- Engagement: Zeit und Aufmerksamkeit sind relativ ausgeglichen\n- Nähe: nicht nur in besonderen Momenten, sondern auch im Alltag präsent\n- Verantwortung: Verpflichtungen werden umgesetzt (Organisation, Absprachen)\n- Grenzen: Unterschiede führen nicht zum Bruch, sondern bleiben handhabbar\n\nWarnsignale\n- kleine Themen werden auf später verschoben\n- vorübergehender Rückgang der Initiative auf einer Seite\n- Routine ersetzt allmählich Aufmerksamkeit\n\nWas das bedeutet\nDie Beziehung funktioniert durch das Gleichgewicht zwischen Nähe und Eigenständigkeit. Dieses Niveau bleibt nur erhalten, wenn kleine Dinge rechtzeitig geklärt werden.",
+        mid:
+          "Die Beziehung funktioniert, verliert aber an Balance\n\nGesamtbild\nEinige Bereiche funktionieren gut, andere sind belastet oder vernachlässigt. Die Verantwortung ist ungleich verteilt - eine Person übernimmt häufiger Initiative, Kontakt oder Organisation.\n\nWas nicht funktioniert\n- Initiative: häufiger auf einer Seite\n- Engagement: ungleich verteilt\n- Gemeinsame Zeit: vorhanden, aber unregelmäßig\n- Nähe: vorhanden, aber nicht stabil\n- Spannung: bleibt bestehen und überträgt sich\n\nWie es sich zeigt\n- Pläne werden gemacht, halten aber nicht\n- kleine Dinge werden schnell belastend\n- Kontakt schwankt zwischen intensiv und schwach\n- wichtige Themen werden verschoben\n\nWas das bedeutet\nDie Beziehung besteht, basiert aber zunehmend auf einseitigem Aufwand. Das führt zu Ermüdung und Distanz.",
+        low:
+          "Die Beziehung verliert Struktur und Richtung\n\nGesamtbild\nEs fehlt ein gemeinsamer Rhythmus. Kontakt entsteht unregelmäßig. Initiative, Engagement und Verantwortung sind schwach oder einseitig.\n\nWas nicht funktioniert\n- Initiative: gering oder einseitig\n- Engagement: sinkt oder schwankt\n- Gemeinsame Zeit: selten oder oberflächlich\n- Nähe: zurückgezogen oder sporadisch\n- Spannung: bleibt bestehen und wächst\n\nWie es sich zeigt\n- Kontakt ist unterbrochen oder minimal\n- Themen werden nicht geklärt\n- Rückzug aus der Beziehung\n- selbst einfache Dinge werden schwierig\n\nWas das bedeutet\nDie Beziehung hat kein stabiles Fundament. Ohne Veränderung nimmt die Distanz weiter zu.",
+      },
+      es: {
+        high:
+          "La relación es coherente y funcional\n\nVisión general\nEn la mayoría de los aspectos funcionan como un equipo: hay iniciativa por parte de ambos, el contacto no depende de una sola persona y las situaciones cotidianas se gestionan de forma continua. Se nota que, después de momentos de tensión, sois capaces de recuperar el equilibrio y que los asuntos diarios no se convierten en problemas prolongados.\n\nQué funciona\n- Iniciativa: ambas personas proponen contacto, planes y decisiones\n- Compromiso: el tiempo y la atención están relativamente equilibrados\n- Cercanía: presente no solo en momentos especiales, sino también en lo cotidiano\n- Responsabilidad: los compromisos se cumplen (organización, acuerdos)\n- Límites: las diferencias no rompen la relación, se pueden gestionar\n\nSeñales de alerta\n- aplazar temas pequeños para más adelante\n- descensos puntuales de iniciativa por parte de uno\n- la rutina empieza a sustituir la atención\n\nQué significa\nLa relación funciona porque mantiene un equilibrio entre cercanía y autonomía. Para sostener este nivel, es importante atender a los detalles antes de que se acumulen.",
+        mid:
+          "La relación funciona, pero pierde equilibrio\n\nVisión general\nAlgunas áreas funcionan bien, mientras que otras están sobrecargadas o descuidadas. Se observa que el peso de la relación no se reparte de forma equitativa: una persona inicia más, mantiene el contacto o asume más responsabilidad en lo compartido.\n\nQué no funciona\n- Iniciativa: más frecuente en una sola persona\n- Compromiso: desigual (alguien sostiene más)\n- Tiempo juntos: existe, pero es irregular o limitado\n- Cercanía: aparece, pero no es constante\n- Tensión: no desaparece, se traslada a otras situaciones\n\nCómo se ve en la práctica\n- se hacen planes, pero se desorganizan con facilidad\n- pequeñas situaciones generan más irritación de lo habitual\n- el contacto pasa de ser intenso a debilitarse claramente\n- temas importantes se posponen porque no es el momento\n\nQué significa\nLa relación no se rompe, pero empieza a depender del esfuerzo de una sola parte. Si esto continúa, aparecerán cansancio y distancia.",
+        low:
+          "La relación pierde estructura y dirección\n\nVisión general\nFalta un ritmo compartido. El contacto no es algo natural, sino irregular. La iniciativa, el compromiso y la responsabilidad son limitados o unilaterales.\n\nQué no funciona\n- Iniciativa: débil o concentrada en una sola persona\n- Compromiso: bajo o inestable\n- Tiempo juntos: escaso o superficial\n- Cercanía: limitada o esporádica\n- Tensión: permanece y se acumula\n\nCómo se ve en la práctica\n- el contacto se interrumpe o se reduce al mínimo\n- los asuntos no se resuelven y quedan pendientes\n- una o ambas personas se retiran de la relación\n- incluso las cosas simples resultan difíciles de manejar\n\nQué significa\nLa relación no tiene una base estable. Si la situación se mantiene, la distancia aumentará y el contacto será cada vez más limitado.",
+      },
+      pt: {
+        high:
+          "A relação é coerente e funcional\n\nVisão geral\nNa maioria dos aspetos, vocês funcionam como uma equipa: há iniciativa dos dois lados, o contacto não depende de uma única pessoa e as situações do dia a dia são resolvidas de forma contínua. É visível a capacidade de recuperar o equilíbrio após momentos de tensão, sem que as questões quotidianas se transformem em problemas duradouros.\n\nO que funciona\n- Iniciativa: ambos tomam iniciativa em contacto, planos e decisões\n- Envolvimento: tempo e atenção distribuídos de forma equilibrada\n- Proximidade: presente não só em momentos especiais, mas também no dia a dia\n- Responsabilidade: compromissos são cumpridos (organização, acordos)\n- Limites: diferenças não destabilizam a relação, são geridas\n\nSinais de alerta\n- adiar pequenos assuntos para depois\n- redução temporária de iniciativa de uma das partes\n- rotina a substituir a atenção\n\nO que significa\nA relação funciona porque mantém equilíbrio entre proximidade e autonomia. Para preservar isso, é importante não deixar acumular pequenas questões.",
+        mid:
+          "A relação funciona, mas perde equilíbrio\n\nVisão geral\nAlgumas áreas funcionam bem, enquanto outras estão sobrecarregadas ou negligenciadas. O peso da relação não está distribuído de forma equilibrada - uma pessoa assume mais iniciativa, mantém o contacto ou gere mais responsabilidades.\n\nO que não funciona\n- Iniciativa: mais presente de um lado\n- Envolvimento: desigual (alguém sustenta mais)\n- Tempo juntos: existe, mas é irregular ou limitado\n- Proximidade: aparece, mas não é consistente\n- Tensão: não desaparece, acumula-se\n\nComo se manifesta na prática\n- planos são feitos, mas facilmente se desorganizam\n- pequenas situações geram irritação desproporcional\n- o contacto alterna entre intensidade e afastamento\n- assuntos importantes são adiados\n\nO que significa\nA relação não está a terminar, mas começa a depender do esforço de uma só pessoa. Se continuar assim, surgem desgaste e distanciamento.",
+        low:
+          "A relação perde estrutura e direção\n\nVisão geral\nFalta um ritmo comum. O contacto não é natural, mas irregular. Iniciativa, envolvimento e responsabilidade são limitados ou unilaterais.\n\nO que não funciona\n- Iniciativa: fraca ou concentrada numa só pessoa\n- Envolvimento: baixo ou instável\n- Tempo juntos: raro ou superficial\n- Proximidade: reduzida ou esporádica\n- Tensão: permanece e acumula\n\nComo se manifesta na prática\n- o contacto é interrompido ou mínimo\n- assuntos ficam por resolver\n- há afastamento de uma ou ambas as partes\n- até situações simples se tornam difíceis\n\nO que significa\nA relação não tem base estável. Se nada mudar, o distanciamento vai aumentar e o contacto será cada vez mais limitado.",
+      },
+    };
+    return (content[lang] && content[lang][range]) || content.en.mid;
   }
 
   function getPersonalizedInsightSentence(locale, score, areaScores, alertCount = 0) {
@@ -7054,9 +7070,131 @@
   }
 
   function localizeReportPageUi(locale) {
-    const pack = getPremiumRewritePack(locale);
-    const ui = pack.ui;
-    const chrome = PAGE_CHROME_UI[locale] || PAGE_CHROME_UI.en;
+    const L = getPremiumRewriteLocale(locale);
+    const chrome = PAGE_CHROME_UI[L] || PAGE_CHROME_UI.en;
+    const map = {
+      pl: {
+        eyebrow: "RelationshipScan — Raport premium",
+        title: "Twoj wynik: Trust Index",
+        indexLabel: "Wynik:",
+        subhead:
+          "Ten wynik pokazuje aktualny uklad relacji: jak rozklada sie inicjatywa, zaangazowanie, bliskosc, stabilnosc i napiecie.",
+        overview: "Rozklad kluczowych obszarow",
+        charts: "Wynik i wykres",
+        chartNote:
+          "Wysoki wynik w jednym obszarze nie wyrownuje niskiego w innym. Relacja dziala najlepiej, gdy te obszary sa spojne.",
+        scale: ["Niski", "Sredni", "Wysoki"],
+        areas: ["Inicjatywa", "Zaangazowanie", "Bliskosc", "Stabilnosc"],
+        comm: "Inicjatywa",
+        emotional: "Zaangazowanie",
+        stability: "Bliskosc",
+        clarity: "Stabilnosc i napiecie",
+        pattern: "Powtarzajace sie wzorce",
+        meaning: "Mechanizm relacji",
+        next: "Co mozesz zrobic teraz",
+        noChange: "Jesli nic sie nie zmieni",
+        recheck: "Najprostszy plan dzialania (3 kroki)",
+        recheckCta: "Powtorz test",
+        back: "Wroc do wyniku",
+      },
+      en: {
+        eyebrow: "RelationshipScan — Premium report",
+        title: "Your result: Trust Index",
+        indexLabel: "Score:",
+        subhead:
+          "This score shows the current structure of your relationship: initiative, involvement, closeness, stability and tension.",
+        overview: "Breakdown of key areas",
+        charts: "Score and chart",
+        chartNote:
+          "A high score in one area does not compensate for a low score in another. The relationship works when these areas stay relatively consistent.",
+        scale: ["Low", "Medium", "High"],
+        areas: ["Initiative", "Involvement", "Closeness", "Stability"],
+        comm: "Initiative",
+        emotional: "Involvement",
+        stability: "Closeness",
+        clarity: "Stability and tension",
+        pattern: "Recurring patterns",
+        meaning: "Relationship mechanism",
+        next: "What you can do now",
+        noChange: "If nothing changes",
+        recheck: "Simplest action plan (3 steps)",
+        recheckCta: "Run the test again",
+        back: "Back to result",
+      },
+      de: {
+        eyebrow: "RelationshipScan — Premium Bericht",
+        title: "Dein Ergebnis: Trust Index",
+        indexLabel: "Ergebnis:",
+        subhead:
+          "Dieses Ergebnis zeigt die aktuelle Struktur der Beziehung: Initiative, Engagement, Naehe, Stabilitaet und Spannung.",
+        overview: "Verteilung der zentralen Bereiche",
+        charts: "Wert und Diagramm",
+        chartNote:
+          "Ein hoher Wert in einem Bereich gleicht einen niedrigen in einem anderen nicht aus. Die Beziehung funktioniert, wenn die Bereiche stimmig bleiben.",
+        scale: ["Niedrig", "Mittel", "Hoch"],
+        areas: ["Initiative", "Engagement", "Naehe", "Stabilitaet"],
+        comm: "Initiative",
+        emotional: "Engagement",
+        stability: "Naehe",
+        clarity: "Stabilitaet und Spannung",
+        pattern: "Wiederkehrende Muster",
+        meaning: "Beziehungsmechanismus",
+        next: "Was du jetzt tun kannst",
+        noChange: "Wenn sich nichts aendert",
+        recheck: "Einfachster Handlungsplan (3 Schritte)",
+        recheckCta: "Test wiederholen",
+        back: "Zurueck zum Ergebnis",
+      },
+      es: {
+        eyebrow: "RelationshipScan — Informe premium",
+        title: "Tu resultado: Trust Index",
+        indexLabel: "Resultado:",
+        subhead:
+          "Este resultado muestra la estructura actual: iniciativa, compromiso, cercania, estabilidad y tension.",
+        overview: "Distribucion de areas clave",
+        charts: "Resultado y grafico",
+        chartNote:
+          "Un resultado alto en un area no compensa uno bajo en otra. La relacion funciona cuando las areas se mantienen coherentes.",
+        scale: ["Bajo", "Medio", "Alto"],
+        areas: ["Iniciativa", "Compromiso", "Cercania", "Estabilidad"],
+        comm: "Iniciativa",
+        emotional: "Compromiso",
+        stability: "Cercania",
+        clarity: "Estabilidad y tension",
+        pattern: "Patrones repetitivos",
+        meaning: "Mecanismo de la relacion",
+        next: "Que puedes hacer ahora",
+        noChange: "Si nada cambia",
+        recheck: "Plan de accion mas simple (3 pasos)",
+        recheckCta: "Repetir test",
+        back: "Volver al resultado",
+      },
+      pt: {
+        eyebrow: "RelationshipScan — Relatorio premium",
+        title: "O teu resultado: Trust Index",
+        indexLabel: "Resultado:",
+        subhead:
+          "Este resultado mostra a estrutura atual: iniciativa, envolvimento, proximidade, estabilidade e tensao.",
+        overview: "Distribuicao das areas principais",
+        charts: "Resultado e grafico",
+        chartNote:
+          "Um resultado alto numa area nao compensa um baixo noutra. A relacao funciona quando as areas se mantem coerentes.",
+        scale: ["Baixo", "Medio", "Alto"],
+        areas: ["Iniciativa", "Envolvimento", "Proximidade", "Estabilidade"],
+        comm: "Iniciativa",
+        emotional: "Envolvimento",
+        stability: "Proximidade",
+        clarity: "Estabilidade e tensao",
+        pattern: "Padroes recorrentes",
+        meaning: "Mecanismo da relacao",
+        next: "O que podes fazer agora",
+        noChange: "Se nada mudar",
+        recheck: "Plano de acao mais simples (3 passos)",
+        recheckCta: "Repetir teste",
+        back: "Voltar ao resultado",
+      },
+    };
+    const ui = map[L] || map.en;
     document.title = chrome.reportPageTitle;
     setText("report-eyebrow", ui.eyebrow);
     setText("report-title", ui.title);
@@ -7086,84 +7224,338 @@
     setText("report-nochange-heading", ui.noChange);
     setText("report-recheck-heading", ui.recheck);
     setText("report-recheck-cta", ui.recheckCta);
-    const outcomeUi = getOutcomeActionsContent(locale);
+    const outcomeUi = getOutcomeActionsContent(L);
     setText("report-outcome-heading", outcomeUi.heading);
-    setText("report-disclaimer-text", RESULT_SIGNAL_LINE_BY_LOCALE[locale] || RESULT_SIGNAL_LINE_BY_LOCALE.en);
+    setText("report-disclaimer-text", RESULT_SIGNAL_LINE_BY_LOCALE[L] || RESULT_SIGNAL_LINE_BY_LOCALE.en);
     setText("report-back-link", ui.back);
-    setText("report-donut-label", chrome.donutLabel);
+    setText("report-donut-label", "Trust Index");
     setText("report-footer-home-link", chrome.homeLink);
     setText("report-footer-note-disclaimer", chrome.footerDisclaimer);
     const reportBackLink = document.getElementById("report-back-link");
     const reportHomeLink = document.getElementById("report-footer-home-link");
-    if (reportBackLink) reportBackLink.setAttribute("href", getFlowPageUrl("result", locale));
-    if (reportHomeLink) reportHomeLink.setAttribute("href", LOCALE_PATHS[locale] || LOCALE_PATHS.en);
-    if (document.getElementById("report-lock-title")) {
-      renderPaywallModalText(locale);
-    }
+    if (reportBackLink) reportBackLink.setAttribute("href", getFlowPageUrl("result", L));
+    if (reportHomeLink) reportHomeLink.setAttribute("href", LOCALE_PATHS[L] || LOCALE_PATHS.en);
+    if (document.getElementById("report-lock-title")) renderPaywallModalText(L);
   }
 
   function buildOperationalDimension(locale, key, areaScores, trajectory) {
-    const pack = getPremiumRewritePack(locale);
-    const sectionMap = {
-      communication: "communication",
-      emotional: "emotional",
-      stability: "stability",
-      clarity: "clarity",
+    const L = getPremiumRewriteLocale(locale);
+    const sectionMap = { communication: "initiative", emotional: "engagement", stability: "closeness", clarity: "stability" };
+    const areaKey = sectionMap[key] || "initiative";
+    const score = areaKey === "initiative" ? areaScores.communication : areaKey === "engagement" ? areaScores.emotional : areaKey === "closeness" ? areaScores.behavior : areaScores.trust;
+    const range = getScoreRange(score);
+    const byLocale = {
+      pl: {
+        initiative: {
+          high: "Inicjatywa jest po obu stronach. Kontakt i decyzje nie wisza na jednej osobie. To utrzymuje rowny rytm relacji.",
+          mid: "Inicjatywa czesciej jest po jednej stronie. Jedna osoba czesciej zaczyna rozmowy i domyka sprawy. Taki uklad z czasem meczy.",
+          low: "Inicjatywa jest slaba albo jednostronna. Kontakt urywa sie i wraca nieregularnie. Relacja traci kierunek.",
+          i: "Interpretacja: ten obszar pokazuje, czy relacja niesie sie sama, czy wymaga stalego podtrzymywania przez jedna osobe.",
+        },
+        engagement: {
+          high: "Zaangazowanie jest wzglednie rowne. Czas i uwaga sa dzielone po obu stronach. Obecnosc jest stabilna, nie przypadkowa.",
+          mid: "Zaangazowanie jest nierowne. Ktos niesie wiekszy ciezar codziennych spraw i kontaktu. To podnosi napiecie w tle.",
+          low: "Zaangazowanie spada albo jest niestabilne. Wspolne sprawy czesciej sa odkladane niz domykane. Narasta dystans.",
+          i: "Interpretacja: tu chodzi nie tylko o czas, ale o jakosc obecnosci i gotowosc do brania odpowiedzialnosci.",
+        },
+        closeness: {
+          high: "Bliskosc jest obecna rowniez w zwyklych dniach. Nie znika po pierwszym napieciu. To buduje poczucie oparcia.",
+          mid: "Bliskosc pojawia sie, ale nie jest stabilna. Kontakt bywa intensywny, a potem wyraznie slabnie. Brakuje ciaglosci.",
+          low: "Bliskosc jest ograniczona albo sporadyczna. Po trudnych sytuacjach szybciej pojawia sie wycofanie niz naprawa. Rosnie niepewnosc.",
+          i: "Interpretacja: bliskosc działa wtedy, gdy wraca regularnie, a nie tylko w pojedynczych momentach.",
+        },
+        stability: {
+          high: "Relacja ma rytm i przewidywalnosc. Ustalenia sa czesciej realizowane niz odkładane. Napiecie da sie domykac.",
+          mid: "Stabilnosc jest chwiejna. Plany sa robione, ale latwo sie rozjezdzaja. Te same sprawy wracaja bez finalu.",
+          low: "Stabilnosc jest niska. Sprawy zostaja otwarte, kontakt bywa minimalny, a napiecie przechodzi na kolejne sytuacje.",
+          i: "Interpretacja: napiecie samo w sobie nie jest problemem; kluczowe jest, czy zostaje rozwiazane, czy narasta.",
+        },
+      },
+      en: {
+        initiative: { high: "Initiative is present on both sides. Contact and decisions do not depend on one person. This keeps the relationship moving in a shared rhythm.", mid: "Initiative is more often on one side. One person starts contact and closes open topics more often. Over time this creates imbalance.", low: "Initiative is weak or one-sided. Contact starts and stops irregularly. The relationship begins to lose direction.", i: "Interpretation: this area shows whether the relationship moves forward naturally or needs constant push from one side." },
+        engagement: { high: "Involvement is relatively balanced. Time and attention are shared by both people. Presence stays consistent, not random.", mid: "Involvement is uneven. One side carries more of the shared load. This adds background tension.", low: "Involvement is declining or unstable. Shared matters are postponed more often than resolved. Distance grows.", i: "Interpretation: this is not only about time, but about quality of presence and practical follow-through." },
+        closeness: { high: "Closeness is present in ordinary days, not only in special moments. It does not disappear after the first difficult talk.", mid: "Closeness appears, but it is inconsistent. Contact can be intense and then clearly weakens. Continuity is missing.", low: "Closeness is reduced or occasional. After hard moments, withdrawal is more common than repair. Uncertainty rises.", i: "Interpretation: closeness is built by repetition and continuity, not by isolated highs." },
+        stability: { high: "The relationship has rhythm and predictability. Agreements are followed through more often than delayed. Tension gets closed.", mid: "Stability is mixed. Plans are made but often drift. The same issues return without closure.", low: "Stability is low. Matters stay unresolved, contact is minimal, and tension carries into new situations.", i: "Interpretation: tension itself is not the issue; the issue is whether it gets resolved or keeps accumulating." },
+      },
+      de: {
+        initiative: { high: "Initiative ist auf beiden Seiten sichtbar. Kontakt und Entscheidungen hängen nicht nur an einer Person.", mid: "Initiative liegt häufiger auf einer Seite. Eine Person trägt mehr Start- und Klärungsarbeit.", low: "Initiative ist schwach oder einseitig. Kontakt entsteht unregelmäßig und verliert Richtung.", i: "Interpretation: Dieser Bereich zeigt, ob die Beziehung sich selbst trägt oder ständig angeschoben werden muss." },
+        engagement: { high: "Engagement ist relativ ausgeglichen. Zeit und Aufmerksamkeit werden von beiden getragen.", mid: "Engagement ist ungleich verteilt. Eine Seite trägt deutlich mehr alltägliche Verantwortung.", low: "Engagement sinkt oder schwankt stark. Themen bleiben offen und Distanz wächst.", i: "Interpretation: Es geht nicht nur um Zeit, sondern um verlässliche Präsenz und Umsetzung." },
+        closeness: { high: "Nähe ist auch im Alltag vorhanden, nicht nur in guten Momenten.", mid: "Nähe ist da, aber nicht stabil. Der Kontakt wechselt zwischen intensiv und deutlich schwächer.", low: "Nähe ist reduziert oder sporadisch. Nach Spannung folgt häufiger Rückzug als Reparatur.", i: "Interpretation: Nähe entsteht durch Wiederholung, nicht durch einzelne starke Momente." },
+        stability: { high: "Die Beziehung hat Rhythmus. Vereinbarungen werden häufiger umgesetzt als verschoben.", mid: "Stabilität ist gemischt. Pläne werden gemacht, halten aber nicht konsequent.", low: "Stabilität ist niedrig. Offene Themen bleiben offen und Spannung trägt sich weiter.", i: "Interpretation: Spannung ist nicht das Hauptproblem - entscheidend ist, ob sie abgeschlossen wird." },
+      },
+      es: {
+        initiative: { high: "La iniciativa aparece en ambos lados. El contacto y las decisiones no dependen solo de una persona.", mid: "La iniciativa recae más en una sola parte. Una persona impulsa y cierra más temas.", low: "La iniciativa es débil o unilateral. El contacto es irregular y pierde dirección.", i: "Interpretación: este bloque muestra si la relación avanza sola o si una sola persona la sostiene." },
+        engagement: { high: "El compromiso está relativamente equilibrado. Tiempo y atención se reparten de forma estable.", mid: "El compromiso es desigual. Una parte carga más responsabilidades compartidas.", low: "El compromiso baja o se vuelve inestable. Quedan temas pendientes y crece la distancia.", i: "Interpretación: no es solo tiempo, también calidad de presencia y cumplimiento." },
+        closeness: { high: "La cercanía está presente también en días normales, no solo en momentos especiales.", mid: "La cercanía aparece, pero no se mantiene. El contacto sube y luego baja con claridad.", low: "La cercanía es limitada o esporádica. Tras tensión, hay más retirada que reparación.", i: "Interpretación: la cercanía se construye por repetición y continuidad." },
+        stability: { high: "La relación mantiene ritmo y previsibilidad. Los acuerdos se cumplen con más frecuencia.", mid: "La estabilidad es irregular. Se hacen planes, pero se desordenan con facilidad.", low: "La estabilidad es baja. Los temas se quedan abiertos y la tensión se acumula.", i: "Interpretación: la tensión no es el problema por sí sola; lo clave es si se resuelve o se arrastra." },
+      },
+      pt: {
+        initiative: { high: "A iniciativa aparece dos dois lados. O contacto e as decisões não dependem de uma só pessoa.", mid: "A iniciativa cai mais para um lado. Uma pessoa inicia e fecha mais assuntos.", low: "A iniciativa é fraca ou unilateral. O contacto torna-se irregular e sem direção.", i: "Interpretação: esta área mostra se a relação se sustenta sozinha ou exige esforço constante de uma parte." },
+        engagement: { high: "O envolvimento está relativamente equilibrado. Tempo e atenção são partilhados.", mid: "O envolvimento é desigual. Uma parte assume mais peso nas responsabilidades comuns.", low: "O envolvimento desce ou oscila. Assuntos ficam por resolver e cresce o distanciamento.", i: "Interpretação: não se trata só de tempo, mas da qualidade da presença e da execução." },
+        closeness: { high: "A proximidade está presente também no dia a dia, não apenas em momentos bons.", mid: "A proximidade aparece, mas não se mantém. O contacto alterna entre intensidade e afastamento.", low: "A proximidade é reduzida ou esporádica. Depois da tensão, há mais retração do que reparação.", i: "Interpretação: a proximidade depende de continuidade, não de picos isolados." },
+        stability: { high: "A relação tem ritmo e previsibilidade. Os acordos são cumpridos com maior consistência.", mid: "A estabilidade é irregular. Planos são feitos, mas desalinham-se com facilidade.", low: "A estabilidade é baixa. Temas ficam abertos e a tensão passa para as situações seguintes.", i: "Interpretação: a tensão em si não é o problema; o ponto é se ela é resolvida ou acumulada." },
+      },
     };
-    const areaKey = sectionMap[key] || "communication";
-    const score =
-      areaKey === "communication"
-        ? areaScores.communication
-        : areaKey === "emotional"
-          ? areaScores.emotional
-          : areaKey === "stability"
-            ? areaScores.behavior
-            : areaScores.trust;
-    const section = pack.sections[areaKey] || pack.sections.communication;
-    return {
-      body: fillScore(section.body, score),
-      check: section.check,
-    };
+    const d = (byLocale[L] || byLocale.en)[areaKey];
+    return { body: `${d[range]}\n\nAktualny wynik obszaru: ${Math.round(score)}/100.`, check: d.i };
   }
 
   function buildNoChangeScenario(locale, areaScores, trajectory, alertCount) {
-    const pack = getPremiumRewritePack(locale);
-    return pack.noChange;
+    const L = getPremiumRewriteLocale(locale);
+    if (L === "pl") {
+      return "Jesli nic sie nie zmieni, jakosc relacji bedzie spadac stopniowo. Najpierw pojawi sie wiecej odkladanych tematow i mniej domkniec, potem zmeczenie i dystans. Najczesciej nie ma jednego momentu kryzysu - sa powtarzajace sie rzeczy, na ktore nikt nie reaguje.";
+    }
+    if (L === "de") {
+      return "Wenn sich nichts aendert, sinkt die Beziehungsqualitaet schrittweise. Erst bleiben mehr Themen offen, dann steigen Erschoepfung und Distanz. Meist gibt es keinen einzelnen Krisenmoment, sondern wiederkehrende Dinge ohne Reaktion.";
+    }
+    if (L === "es") {
+      return "Si nada cambia, la calidad de la relacion bajara de forma gradual. Primero habra mas temas abiertos y menos cierres, luego cansancio y distancia. Normalmente no hay un unico momento de crisis, sino repeticion sin reaccion.";
+    }
+    if (L === "pt") {
+      return "Se nada mudar, a qualidade da relacao vai cair de forma gradual. Primeiro aumentam os temas por fechar, depois surgem desgaste e distanciamento. Na maioria dos casos nao existe um unico momento de crise, mas repeticao sem resposta.";
+    }
+    return "If nothing changes, relationship quality will decline gradually. First, more topics stay unresolved and fewer things get closed. Then fatigue and distance increase. Most often there is no single crisis moment - there is repeated pattern with no response.";
   }
 
   function buildPatternAndMeaning(locale, areaScores, trajectory, alertCount) {
-    const pack = getPremiumRewritePack(locale);
+    const L = getPremiumRewriteLocale(locale);
+    if (L === "pl") {
+      return {
+        pattern: "Najczesciej nie chodzi o jedna sytuacje, tylko o schemat: te same sprawy wracaja w innej formie, kontakt zmienia sie skokowo, a napiecie nie ma punktu zamkniecia.",
+        meaning: "Relacja nie pogarsza sie nagle. Zmienia sie wtedy, gdy jeden obszar jest stale przeciazony - najczesciej inicjatywa albo zaangazowanie. To uruchamia reakcje w innych obszarach: mniej bliskosci, wiecej napiecia i slabsza stabilnosc.",
+      };
+    }
+    if (L === "de") {
+      return {
+        pattern: "Meist geht es nicht um einen einzelnen Vorfall, sondern um ein Muster: dieselben Themen kommen in neuer Form zurueck, der Kontakt schwankt stark, und Spannung erreicht keinen echten Abschluss.",
+        meaning: "Eine Beziehung verschlechtert sich selten ploetzlich. Sie kippt, wenn ein Bereich dauerhaft ueberlastet ist - meist Initiative oder Engagement. Dann reagieren die anderen Bereiche mit weniger Naehe, mehr Spannung und geringerer Stabilitaet.",
+      };
+    }
+    if (L === "es") {
+      return {
+        pattern: "Casi nunca es una sola situacion, sino un patron: los mismos temas vuelven con otra forma, el contacto cambia de golpe y la tension no llega a cerrarse.",
+        meaning: "La relacion no empeora de un dia para otro. Cambia cuando un area queda sobrecargada de forma constante, normalmente iniciativa o compromiso. Eso afecta al resto: menos cercania, mas tension y menos estabilidad.",
+      };
+    }
+    if (L === "pt") {
+      return {
+        pattern: "Na maioria dos casos nao e uma situacao isolada, mas um padrao: os mesmos temas voltam noutra forma, o contacto oscila de forma brusca e a tensao nao chega a fecho.",
+        meaning: "A relacao nao se deteriora de repente. Ela muda quando uma area fica sobrecarregada por muito tempo, normalmente iniciativa ou envolvimento. Isso afeta as outras areas: menos proximidade, mais tensao e menos estabilidade.",
+      };
+    }
     return {
-      pattern: pack.pattern,
-      meaning: pack.meaning,
+      pattern: "Most often this is not one situation but a recurring pattern: the same issues return in new form, contact shifts abruptly, and tension never reaches true closure.",
+      meaning: "A relationship does not deteriorate all at once. It changes when one area stays under constant strain - usually initiative or involvement. Then other areas react: less closeness, higher tension, and lower stability.",
     };
   }
 
   function getPremiumReportNarrative(locale) {
-    const pack = getPremiumRewritePack(locale);
+    const L = getPremiumRewriteLocale(locale);
+    const opening = {
+      pl: "Interpretacja skrocona: to wynik aktualnego ukladu relacji, a nie ocena calej historii.",
+      en: "Short interpretation: this score describes the current structure, not the full history of the relationship.",
+      de: "Kurzinterpretation: dieser Wert zeigt die aktuelle Struktur, nicht die gesamte Beziehungsgeschichte.",
+      es: "Interpretacion breve: este resultado describe la estructura actual, no toda la historia de la relacion.",
+      pt: "Interpretacao breve: este resultado mostra a estrutura atual, nao toda a historia da relacao.",
+    };
     return {
-      opening: pack.ui.subhead,
-      benchmarkNote: pack.benchmarkNote,
+      opening: opening[L] || opening.en,
+      benchmarkNote: "",
       dimensions: {},
-      pattern: pack.pattern,
-      meaning: pack.meaning,
-      recheck: pack.recheck,
+      pattern: "",
+      meaning: "",
+      recheck: "",
     };
   }
 
   function getOutcomeActionsContent(locale) {
-    const pack = getPremiumRewritePack(locale);
-    const o = pack.outcome;
+    const L = getPremiumRewriteLocale(locale);
+    const map = {
+      pl: {
+        heading: "Dzialania szczegolowe",
+        highImpact: "Najwazniejsze teraz",
+        mediumImpact: "Dodatkowe kroki",
+        lowImpact: "Plan 3 krokow",
+        whyLabel: "Dlaczego",
+        changeLabel: "Co zrobic",
+        high: {
+          highImpact: [
+            { title: "Najwazniejszy obszar do zmiany", explanation: "Skup sie na najslabszym obszarze i nie rozpraszaj dzialan.", why: "Rozproszenie utrzymuje chaos.", change: "Jedna zmiana, jeden obszar." },
+            { title: "Inicjatywa", explanation: "Jesli inicjatywa jest niska, przestan ciagnac wszystko samodzielnie i sprawdz reakcje drugiej strony.", why: "Jednostronny wysilek szybko meczy.", change: "Daj przestrzen i obserwuj, czy druga strona przejmuje czesc inicjatywy." },
+          ],
+          mediumImpact: [
+            { title: "Zaangazowanie i bliskosc", explanation: "Sprawdz, gdzie znika czas i uwaga. Bez tego nie da sie wyrownac zaangazowania.", why: "Brak obecnosci oslabia kontakt.", change: "Ustal jeden staly punkt kontaktu tygodniowo." },
+          ],
+          lowImpact: [
+            { title: "3 kroki", explanation: "Wybierz jeden obszar. Wprowadz jedna zmiane. Obserwuj kilka dni, czy cos realnie sie zmienia.", why: "Mniej znaczy skuteczniej.", change: "Trzymaj sie jednego planu przez tydzien." },
+          ],
+        },
+        mid: {
+          highImpact: [
+            { title: "Ustalenie priorytetu", explanation: "Wybierz glowny problem i zapisz konkretny cel na 7 dni.", why: "Bez celu wracacie do starego schematu.", change: "Jedno mierzalne ustalenie." },
+            { title: "Napiecie", explanation: "Skup sie na jednej sprawie i doprowadz ja do konca, bez dodawania nowych tematow.", why: "Dokladanie tematow zwieksza chaos.", change: "Domkniecie jednego watku przed kolejnym." },
+          ],
+          mediumImpact: [
+            { title: "Stabilnosc", explanation: "Wprowadz jeden powtarzalny element: czas, kontakt albo rytm rozmowy.", why: "Relacja potrzebuje rytmu.", change: "Powtarzalny punkt tygodniowy." },
+          ],
+          lowImpact: [
+            { title: "3 kroki", explanation: "Wybierz obszar, jedna zmiana, obserwacja efektu przez kilka dni.", why: "Prosty plan jest latwiejszy do utrzymania.", change: "Nie zmieniaj kilku rzeczy naraz." },
+          ],
+        },
+        low: {
+          highImpact: [
+            { title: "Tryb naprawczy", explanation: "Najpierw zatrzymaj dalsze rozjezdzanie: minimum kontaktu, minimum domkniec, minimum odpowiedzialnosci.", why: "Bez podstaw relacja traci strukture.", change: "Ustal minimum, ktore musi byc utrzymane codziennie." },
+            { title: "Wyrazne granice", explanation: "Ustal, co jest nie do przyjecia i jaka jest konsekwencja powtorzenia.", why: "Brak granic podtrzymuje przeciazenie.", change: "Jedna jasna granica i jej egzekwowanie." },
+          ],
+          mediumImpact: [
+            { title: "Kontakt", explanation: "Nie czekaj na idealny moment. Krotkie, regularne domkniecia sa wazniejsze niz dlugie rozmowy raz na jakis czas.", why: "Nieregularnosc pogarsza dystans.", change: "Krotki, staly rytm kontaktu." },
+          ],
+          lowImpact: [
+            { title: "3 kroki", explanation: "Wybierz najslabszy obszar, wdroz jedna zmiane, sprawdz efekt po tygodniu.", why: "Bez obserwacji trudno ocenic, czy cos dziala.", change: "Kontrola po 7 dniach." },
+          ],
+        },
+      },
+      en: {
+        heading: "Detailed actions",
+        highImpact: "Top priority now",
+        mediumImpact: "Additional actions",
+        lowImpact: "Simple 3-step plan",
+        whyLabel: "Why",
+        changeLabel: "Action",
+        high: {
+          highImpact: [
+            { title: "Most important area to change", explanation: "Focus on the weakest area and avoid spreading effort.", why: "Scattered effort keeps the same loop alive.", change: "One area, one concrete change." },
+            { title: "Initiative", explanation: "If initiative is low, stop over-carrying everything and observe whether the other side takes initiative without prompting.", why: "One-sided effort creates fatigue.", change: "Create space and measure real response." },
+          ],
+          mediumImpact: [{ title: "Involvement and closeness", explanation: "Identify where time and attention are really disappearing.", why: "Without this, balance will not improve.", change: "Set one fixed weekly connection point." }],
+          lowImpact: [{ title: "3 steps", explanation: "Choose one area. Introduce one change. Observe for a few days.", why: "Simple plans are easier to sustain.", change: "Keep one plan for one week." }],
+        },
+        mid: {
+          highImpact: [
+            { title: "Set a clear priority", explanation: "Choose the main issue and write one measurable target for 7 days.", why: "Without priority, old patterns return.", change: "One measurable commitment." },
+            { title: "Tension", explanation: "Finish one specific issue before opening another one.", why: "Topic stacking increases chaos.", change: "Close one thread at a time." },
+          ],
+          mediumImpact: [{ title: "Stability", explanation: "Introduce one repeatable element: time, contact, or conversation rhythm.", why: "Relationships need rhythm.", change: "Use one recurring weekly anchor." }],
+          lowImpact: [{ title: "3 steps", explanation: "One area, one change, few-day observation.", why: "This keeps execution realistic.", change: "Do not change many things at once." }],
+        },
+        low: {
+          highImpact: [
+            { title: "Stabilization mode", explanation: "Set minimum standards for contact, closure, and responsibility.", why: "Without baseline, structure keeps collapsing.", change: "Define daily minimum rules and check them." },
+            { title: "Clear boundaries", explanation: "Define what is unacceptable and what happens if repeated.", why: "No boundaries means repeated overload.", change: "One clear boundary with consequence." },
+          ],
+          mediumImpact: [{ title: "Contact rhythm", explanation: "Use short and regular closure points instead of rare long talks.", why: "Irregular contact deepens distance.", change: "Set a short fixed check-in rhythm." }],
+          lowImpact: [{ title: "3 steps", explanation: "Pick weakest area, implement one change, review after 7 days.", why: "No review means no real correction.", change: "Run one weekly review checkpoint." }],
+        },
+      },
+      de: {
+        heading: "Konkrete Maßnahmen",
+        highImpact: "Wichtigster Hebel jetzt",
+        mediumImpact: "Weitere Schritte",
+        lowImpact: "Einfacher 3-Schritte-Plan",
+        whyLabel: "Warum",
+        changeLabel: "Maßnahme",
+        high: {
+          highImpact: [
+            { title: "Wichtigster Bereich", explanation: "Auf den schwächsten Bereich fokussieren, nicht alles gleichzeitig ändern.", why: "Verteilte Energie hält das Muster stabil.", change: "Ein Bereich, eine klare Änderung." },
+            { title: "Initiative", explanation: "Bei niedriger Initiative nicht allein weitertragen, sondern Raum geben und Reaktion prüfen.", why: "Einseitiger Aufwand erschöpft.", change: "Raum schaffen und Verhalten beobachten." },
+          ],
+          mediumImpact: [{ title: "Engagement und Nähe", explanation: "Klar benennen, wo Zeit und Aufmerksamkeit verloren gehen.", why: "Ohne Diagnose keine Korrektur.", change: "Einen festen Wochenpunkt setzen." }],
+          lowImpact: [{ title: "3 Schritte", explanation: "Einen Bereich wählen, eine Änderung umsetzen, einige Tage beobachten.", why: "Einfacher Plan ist umsetzbar.", change: "Eine Woche konsequent halten." }],
+        },
+        mid: {
+          highImpact: [
+            { title: "Priorität setzen", explanation: "Hauptproblem wählen und 7-Tage-Ziel schriftlich festhalten.", why: "Ohne Priorität kehrt der alte Loop zurück.", change: "Ein messbares Wochenziel." },
+            { title: "Spannung schließen", explanation: "Ein Thema vollständig schließen, bevor ein neues geöffnet wird.", why: "Themenstapel erhöhen Reibung.", change: "Ein Thema nach dem anderen." },
+          ],
+          mediumImpact: [{ title: "Stabilität", explanation: "Ein wiederkehrendes Element einführen: Zeit, Kontakt oder Gesprächsritual.", why: "Rhythmus stabilisiert.", change: "Einen festen Wochenrhythmus sichern." }],
+          lowImpact: [{ title: "3 Schritte", explanation: "Ein Bereich, eine Änderung, kurze Beobachtung.", why: "So bleibt es realistisch.", change: "Keine Mehrfach-Experimente parallel." }],
+        },
+        low: {
+          highImpact: [
+            { title: "Stabilisierungsmodus", explanation: "Mindeststandard für Kontakt, Abschluss und Verbindlichkeit festlegen.", why: "Ohne Basis nimmt der Abbau zu.", change: "Tägliche Mindestregeln definieren." },
+            { title: "Klare Grenzen", explanation: "Nicht verhandelbare Grenze plus Konsequenz bei Wiederholung.", why: "Ohne Grenze bleibt Überlastung bestehen.", change: "Eine klare Grenze konsequent umsetzen." },
+          ],
+          mediumImpact: [{ title: "Kontaktstruktur", explanation: "Kurze regelmäßige Klärungen statt seltener langer Gespräche.", why: "Unregelmäßigkeit verstärkt Distanz.", change: "Kurzen festen Check-in-Rhythmus setzen." }],
+          lowImpact: [{ title: "3 Schritte", explanation: "Schwächsten Bereich wählen, eine Änderung umsetzen, nach 7 Tagen prüfen.", why: "Ohne Prüfung keine Korrektur.", change: "Wöchentlichen Review-Punkt fixieren." }],
+        },
+      },
+      es: {
+        heading: "Acciones detalladas",
+        highImpact: "Prioridad principal",
+        mediumImpact: "Acciones adicionales",
+        lowImpact: "Plan simple de 3 pasos",
+        whyLabel: "Por qué",
+        changeLabel: "Acción",
+        high: {
+          highImpact: [
+            { title: "Área más importante", explanation: "Enfócate en el área más débil y no repartas energía en todo a la vez.", why: "La dispersión mantiene el mismo patrón.", change: "Un área, un cambio concreto." },
+            { title: "Iniciativa", explanation: "Si la iniciativa es baja, deja de sostener todo por tu cuenta y observa la respuesta real.", why: "El esfuerzo unilateral desgasta.", change: "Crear espacio y medir reacción." },
+          ],
+          mediumImpact: [{ title: "Compromiso y cercanía", explanation: "Detecta dónde se pierde tiempo y atención de forma real.", why: "Sin eso no hay equilibrio.", change: "Fija un punto semanal estable." }],
+          lowImpact: [{ title: "3 pasos", explanation: "Elige un área, aplica un cambio, observa unos días.", why: "Lo simple se sostiene mejor.", change: "Mantén un solo plan por una semana." }],
+        },
+        mid: {
+          highImpact: [
+            { title: "Prioridad clara", explanation: "Elige el problema principal y define una meta medible para 7 días.", why: "Sin prioridad vuelve el patrón antiguo.", change: "Un compromiso medible." },
+            { title: "Tensión", explanation: "Cierra un tema concreto antes de abrir otro.", why: "Acumular temas aumenta el caos.", change: "Un cierre completo cada vez." },
+          ],
+          mediumImpact: [{ title: "Estabilidad", explanation: "Introduce un elemento repetible: tiempo, contacto o ritmo de conversación.", why: "La relación necesita ritmo.", change: "Un ancla semanal fija." }],
+          lowImpact: [{ title: "3 pasos", explanation: "Un área, un cambio, observación corta.", why: "Así se mantiene ejecutable.", change: "No cambiar varias cosas al mismo tiempo." }],
+        },
+        low: {
+          highImpact: [
+            { title: "Modo de estabilización", explanation: "Define mínimos de contacto, cierre y responsabilidad.", why: "Sin base, la estructura sigue cayendo.", change: "Reglas mínimas diarias con revisión." },
+            { title: "Límites claros", explanation: "Define qué es inaceptable y la consecuencia si se repite.", why: "Sin límites se mantiene la sobrecarga.", change: "Una frontera clara con consecuencia." },
+          ],
+          mediumImpact: [{ title: "Ritmo de contacto", explanation: "Mejor cierres cortos y regulares que conversaciones largas esporádicas.", why: "La irregularidad amplía la distancia.", change: "Ritmo fijo de check-in breve." }],
+          lowImpact: [{ title: "3 pasos", explanation: "Elige área débil, aplica un cambio, revisa en 7 días.", why: "Sin revisión no hay corrección.", change: "Un punto semanal de evaluación." }],
+        },
+      },
+      pt: {
+        heading: "Ações detalhadas",
+        highImpact: "Prioridade principal",
+        mediumImpact: "Ações adicionais",
+        lowImpact: "Plano simples de 3 passos",
+        whyLabel: "Porquê",
+        changeLabel: "Ação",
+        high: {
+          highImpact: [
+            { title: "Área mais importante", explanation: "Foca na área mais fraca e evita espalhar esforço por tudo ao mesmo tempo.", why: "Esforço disperso mantém o mesmo padrão.", change: "Uma área, uma mudança concreta." },
+            { title: "Iniciativa", explanation: "Se a iniciativa estiver baixa, deixa de suportar tudo sozinho e observa a resposta real.", why: "Esforço unilateral gera desgaste.", change: "Criar espaço e medir reação." },
+          ],
+          mediumImpact: [{ title: "Envolvimento e proximidade", explanation: "Identifica onde tempo e atenção desaparecem de forma real.", why: "Sem isso, não há equilíbrio.", change: "Define um ponto semanal estável." }],
+          lowImpact: [{ title: "3 passos", explanation: "Escolhe uma área, aplica uma mudança, observa por alguns dias.", why: "Plano simples é mais sustentável.", change: "Mantém um plano único por uma semana." }],
+        },
+        mid: {
+          highImpact: [
+            { title: "Prioridade clara", explanation: "Escolhe o problema principal e define meta mensurável para 7 dias.", why: "Sem prioridade, o padrão antigo volta.", change: "Um compromisso mensurável." },
+            { title: "Tensão", explanation: "Fecha um tema concreto antes de abrir outro.", why: "Empilhar temas aumenta o caos.", change: "Um fecho completo de cada vez." },
+          ],
+          mediumImpact: [{ title: "Estabilidade", explanation: "Introduz um elemento repetível: tempo, contacto ou ritmo de conversa.", why: "A relação precisa de ritmo.", change: "Uma âncora semanal fixa." }],
+          lowImpact: [{ title: "3 passos", explanation: "Uma área, uma mudança, observação curta.", why: "Mantém execução realista.", change: "Não mudar muitas coisas em paralelo." }],
+        },
+        low: {
+          highImpact: [
+            { title: "Modo de estabilização", explanation: "Define mínimos de contacto, fecho e responsabilidade.", why: "Sem base, a estrutura continua a cair.", change: "Regras mínimas diárias com revisão." },
+            { title: "Limites claros", explanation: "Define o que é inaceitável e qual a consequência se repetir.", why: "Sem limites, a sobrecarga mantém-se.", change: "Uma fronteira clara com consequência." },
+          ],
+          mediumImpact: [{ title: "Ritmo de contacto", explanation: "Melhor fechos curtos e regulares do que conversas longas esporádicas.", why: "Irregularidade aumenta distanciamento.", change: "Ritmo fixo de check-in curto." }],
+          lowImpact: [{ title: "3 passos", explanation: "Escolhe área fraca, aplica uma mudança, revê em 7 dias.", why: "Sem revisão, não há correção.", change: "Um checkpoint semanal." }],
+        },
+      },
+    };
+    const base = map.en;
+    const c = map[L] || base;
     return {
-      heading: o.heading,
-      highImpact: o.highImpact,
-      mediumImpact: o.mediumImpact,
-      lowImpact: o.lowImpact,
-      whyLabel: o.whyLabel,
-      changeLabel: o.changeLabel,
-      high: o.high,
-      mid: o.mid,
-      low: o.low,
+      heading: c.heading,
+      highImpact: c.highImpact,
+      mediumImpact: c.mediumImpact,
+      lowImpact: c.lowImpact,
+      whyLabel: c.whyLabel,
+      changeLabel: c.changeLabel,
+      high: c.high,
+      mid: c.mid,
+      low: c.low,
     };
   }
 
