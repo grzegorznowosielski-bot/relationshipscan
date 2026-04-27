@@ -5977,20 +5977,17 @@
     }
 
     const logoLink = document.querySelector(".site-header .logo");
-    const ui = RESULT_LAYOUT_UI[locale] || RESULT_LAYOUT_UI.en;
     const headlineEl = document.getElementById("result-headline");
     const scoreEl = document.getElementById("result-score-display");
     const leadEl = document.getElementById("result-lead");
     const interpEl = document.getElementById("result-interpretation");
-    const insightsEl = document.getElementById("result-free-insights");
-    const tipsEl = document.getElementById("result-tips");
     const donutEl = document.getElementById("result-donut");
     const donutValueEl = document.getElementById("result-donut-value");
     const rangeMarker = document.getElementById("result-range-marker");
     const ctaBlock = document.getElementById("premium-block");
     const personalizedEl = document.getElementById("paywall-personalized-sentence");
     const paywallScoreValueEl = document.getElementById("paywall-score-value");
-    if (!scoreEl || !headlineEl || !leadEl || !interpEl || !insightsEl || !tipsEl) return;
+    if (!scoreEl || !headlineEl || !leadEl || !interpEl) return;
 
     document.documentElement.lang = locale;
     localizeResultPageUi(locale);
@@ -6008,13 +6005,6 @@
       headlineEl.textContent = chrome.noResultTitle;
       leadEl.textContent = chrome.noResultBody;
       interpEl.innerHTML = "";
-      const noResUi = RESULT_LAYOUT_UI[locale] || RESULT_LAYOUT_UI.en;
-      const fbIns = noResUi.freeInsightBullets && noResUi.freeInsightBullets.length
-        ? noResUi.freeInsightBullets
-        : RESULT_LAYOUT_UI.en.freeInsightBullets;
-      const fbTips = noResUi.freeTips && noResUi.freeTips.length ? noResUi.freeTips : RESULT_LAYOUT_UI.en.freeTips;
-      insightsEl.innerHTML = fbIns.map((t) => `<li>${escapeHtml(t)}</li>`).join("");
-      tipsEl.innerHTML = fbTips.map((t) => `<li>${escapeHtml(t)}</li>`).join("");
       const teaserPh = getPaywallTeaserPlaceholderLines(locale);
       setText("locked-teaser-1", teaserPh[0]);
       setText("locked-teaser-2", teaserPh[1]);
@@ -6045,14 +6035,6 @@
     leadEl.textContent = "";
     interpEl.innerHTML = renderPrePaywallDescription(locale, band);
     const uiResolved = RESULT_LAYOUT_UI[locale] || RESULT_LAYOUT_UI.en;
-    const insightLines =
-      uiResolved.freeInsightBullets && uiResolved.freeInsightBullets.length
-        ? uiResolved.freeInsightBullets
-        : RESULT_LAYOUT_UI.en.freeInsightBullets;
-    const tipLines =
-      uiResolved.freeTips && uiResolved.freeTips.length ? uiResolved.freeTips : RESULT_LAYOUT_UI.en.freeTips;
-    insightsEl.innerHTML = insightLines.map((t) => `<li>${escapeHtml(t)}</li>`).join("");
-    tipsEl.innerHTML = tipLines.map((t) => `<li>${escapeHtml(t)}</li>`).join("");
 
     if (donutValueEl) donutValueEl.textContent = String(score);
     if (donutEl) donutEl.style.setProperty("--result-percent", `${score}%`);
