@@ -1,4 +1,4 @@
-import { createGrant, log, readJsonBody, setCors, stripe } from "../_shared.js";
+import { createGrant, log, readJsonBody, sendTikTokEvent, setCors, stripe } from "../_shared.js";
 
 export default async function handler(req, res) {
   setCors(res, req.headers.origin);
@@ -24,10 +24,14 @@ export default async function handler(req, res) {
     let paymentIntentId = paymentIntentInput || null;
     let paymentStatus = null;
     let paymentIntentStatus = null;
+    let amountTotal = null;
+    let amountCurrency = null;
 
     if (sessionId) {
       const session = await stripe().checkout.sessions.retrieve(sessionId, { expand: ["payment_intent"] });
       paymentStatus = session.payment_status || null;
+      amountTotal = typeof session.amount_total === "number" ? session.amount_total : null;
+      amountCurrency = session.currency || null;
       if (!paymentIntentId) {
         paymentIntentId =
           typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id || null;
@@ -57,6 +61,15 @@ export default async function handler(req, res) {
     }
 
     const grant = createGrant({ sessionId, paymentIntentId });
+    const eventId = `stripe_checkout_${sessionId || paymentIntentId || "unknown"}`;
+    await sendTikTokEvent(req, {
+      event: "CompletePayment",
+      eventId,
+      pageUrl: `${process.env.FRONTEND_URL || "https://relationshipscan.app"}/pl/success.html`,
+      value: typeof amountTotal === "number" ? amountTotal / 100 : undefined,
+      currency: amountCurrency || "PLN",
+      externalId: paymentIntentId || sessionId || null,
+    });
     log("confirm_return.paid", {
       sessionId: sessionId || null,
       paymentIntentId: paymentIntentId || null,

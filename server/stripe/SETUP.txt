@@ -29,6 +29,8 @@ meta: stripe-verify-api-base
    - STRIPE_WEBHOOK_SECRET
    - FRONTEND_URL=https://relationshipscan.app
    - ACCESS_GRANT_TTL_HOURS=24
+   - TIKTOK_PIXEL_ID=D7NR5V3C77UCPV3KTR80
+   - TIKTOK_ACCESS_TOKEN=<token z TikTok Events API>
 3. Ustaw custom domain:
    https://payments.relationshipscan.app
 
@@ -76,7 +78,19 @@ Weryfikacja po Stripe API:
 
 Dopiero wtedy backend zwraca grantToken.
 
-6) KONTROLA DOSTEPU W FRONTEND
+6) TIKTOK EVENTS API (SERVER-SIDE)
+----------------------------------
+Backend wysyła event "CompletePayment" do TikTok Events API po potwierdzeniu płatności:
+- webhook: checkout.session.completed / checkout.session.async_payment_succeeded (status paid)
+- confirm-return: fallback po udanym verify
+
+Wymagane ENV:
+- TIKTOK_PIXEL_ID
+- TIKTOK_ACCESS_TOKEN
+
+Token trzymaj wyłącznie po stronie backendu (Vercel ENV), nigdy w JS frontendu.
+
+7) KONTROLA DOSTEPU W FRONTEND
 ------------------------------
 - Front zapisuje wyłącznie stateless grantToken podpisany po stronie backendu.
 - Każde wejście na report/result sprawdza:

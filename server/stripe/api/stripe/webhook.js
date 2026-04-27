@@ -1,4 +1,4 @@
-import { getWebhookSecret, log, readRawBody, setCors, stripe } from "../_shared.js";
+import { getWebhookSecret, log, readRawBody, sendTikTokEvent, setCors, stripe } from "../_shared.js";
 
 async function getSessionObject(maybeSession) {
   if (!maybeSession) return null;
@@ -40,6 +40,17 @@ export default async function handler(req, res) {
           paymentStatus: session?.payment_status || null,
           paymentIntentId,
         });
+        if (session?.payment_status === "paid") {
+          const eventId = `stripe_checkout_${session.id || paymentIntentId || "unknown"}`;
+          await sendTikTokEvent(req, {
+            event: "CompletePayment",
+            eventId,
+            pageUrl: `${process.env.FRONTEND_URL || "https://relationshipscan.app"}/pl/success.html`,
+            value: typeof session?.amount_total === "number" ? session.amount_total / 100 : undefined,
+            currency: session?.currency || "PLN",
+            externalId: paymentIntentId || session?.id || null,
+          });
+        }
         break;
       }
       case "payment_intent.succeeded":
