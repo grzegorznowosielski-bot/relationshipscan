@@ -5985,6 +5985,7 @@
     const donutValueEl = document.getElementById("result-donut-value");
     const rangeMarker = document.getElementById("result-range-marker");
     const ctaBlock = document.getElementById("premium-block");
+    const premiumCta = document.getElementById("premium-cta");
     const personalizedEl = document.getElementById("paywall-personalized-sentence");
     const paywallScoreValueEl = document.getElementById("paywall-score-value");
     if (!scoreEl || !headlineEl || !leadEl || !interpEl) return;
@@ -6070,6 +6071,23 @@
     setText("locked-teaser-3", teaserLines[2]);
 
     if (ctaBlock) ctaBlock.hidden = false;
+
+    if (premiumCta && !premiumCta.dataset.ttqBound) {
+      premiumCta.dataset.ttqBound = "1";
+      premiumCta.addEventListener("click", (event) => {
+        const href = premiumCta.getAttribute("href");
+        if (!href) return;
+        if (event.defaultPrevented) return;
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        if (typeof window.ttq !== "undefined" && typeof window.ttq.track === "function") {
+          window.ttq.track("InitiateCheckout");
+        }
+        window.setTimeout(() => {
+          window.location.href = href;
+        }, 120);
+      });
+    }
   }
 
   async function initSuccess() {
@@ -6126,6 +6144,27 @@
       clearPaidFlag();
       setText("success-body", ui.failed || copyByLocale.en.failed);
       return;
+    }
+
+    const eventFingerprint =
+      String(evidence.sessionId || verify.sessionId || evidence.paymentIntent || verify.paymentIntentId || "paid");
+    const completePaymentStorageKey = `ttq_complete_payment_${eventFingerprint}`;
+    let alreadyTracked = false;
+    try {
+      alreadyTracked = window.sessionStorage.getItem(completePaymentStorageKey) === "1";
+    } catch (e) {
+      alreadyTracked = false;
+    }
+    if (!alreadyTracked && typeof window.ttq !== "undefined" && typeof window.ttq.track === "function") {
+      window.ttq.track("CompletePayment", {
+        value: 39,
+        currency: "PLN",
+      });
+      try {
+        window.sessionStorage.setItem(completePaymentStorageKey, "1");
+      } catch (e) {
+        // Ignore storage failures.
+      }
     }
 
     window.setTimeout(() => {
