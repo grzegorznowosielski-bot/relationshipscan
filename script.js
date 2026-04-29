@@ -2952,8 +2952,8 @@
   };
 
   function getSeverity(score) {
-    if (score <= 40) return "Low";
-    if (score <= 70) return "Medium";
+    if (score <= 39) return "Low";
+    if (score <= 69) return "Medium";
     return "High";
   }
 
@@ -4634,7 +4634,7 @@
     };
   }
 
-  function getAreaInterpretation(areaKey, score) {
+  function getAreaScoreInterpretation(areaKey, score) {
     const severity = getSeverity(100 - score);
     const byArea = {
       communication: {
@@ -4662,7 +4662,7 @@
   }
 
   function getAreaInterpretationByLocale(areaKey, score, locale) {
-    if (locale === "in" || locale === "en") return getAreaInterpretation(areaKey, score);
+    if (locale === "in" || locale === "en") return getAreaScoreInterpretation(areaKey, score);
     const severity = getSeverity(100 - score);
     if (locale === "de") {
       const byAreaDe = {
@@ -6549,6 +6549,10 @@
       behavior: Math.max(0, Math.min(100, Number(details.areas.behavior || score))),
       trust: Math.max(0, Math.min(100, Number(details.areas.trust || score))),
     };
+    const tensionRaw = Number(details.areas.tension ?? details.tension);
+    const tensionScore = Number.isFinite(tensionRaw)
+      ? Math.max(0, Math.min(100, Math.round(tensionRaw)))
+      : Math.max(0, Math.min(100, Math.round(100 - (areaScores.communication + areaScores.emotional + areaScores.behavior + areaScores.trust) / 4)));
     const benchmarkScores = {
       overall: score,
       communication: areaScores.communication,
@@ -6676,16 +6680,16 @@
     const operationalStability = buildOperationalDimension(locale, "stability", areaScores, trajectory);
     const operationalClarity = buildOperationalDimension(locale, "clarity", areaScores, trajectory);
     required.communicationEl.innerHTML = `<p>${escapeHtml(operationalCommunication.body)}</p><p><strong>${escapeHtml(getInterpretationLead(locale))}</strong> ${escapeHtml(
-      getAreaInterpretation(locale, "initiative")
+      getAreaInterpretationByLocale("communication", areaScores.communication, locale)
     )}</p>`;
     required.emotionalEl.innerHTML = `<p>${escapeHtml(operationalEmotional.body)}</p><p><strong>${escapeHtml(getInterpretationLead(locale))}</strong> ${escapeHtml(
-      getAreaInterpretation(locale, "engagement")
+      getAreaInterpretationByLocale("emotional", areaScores.emotional, locale)
     )}</p>`;
     required.stabilityEl.innerHTML = `<p>${escapeHtml(operationalStability.body)}</p><p><strong>${escapeHtml(getInterpretationLead(locale))}</strong> ${escapeHtml(
-      getAreaInterpretation(locale, "closeness")
+      getAreaInterpretationByLocale("behavior", areaScores.behavior, locale)
     )}</p>`;
     required.clarityEl.innerHTML = `<p>${escapeHtml(operationalClarity.body)}</p><p><strong>${escapeHtml(getInterpretationLead(locale))}</strong> ${escapeHtml(
-      getAreaInterpretation(locale, "stability")
+      getAreaInterpretationByLocale("trust", areaScores.trust, locale)
     )}</p>`;
     const checksMap = [
       ["report-communication-checks", [operationalCommunication.check]],
@@ -7848,11 +7852,11 @@
       pt: "Trust Index e visão geral",
     };
     const body = {
-      pl: `Trust Index: ${score}/100. Inicjatywa ${Math.round(areaScores.communication)}/100, zaangażowanie ${Math.round(areaScores.emotional)}/100, bliskość ${Math.round(areaScores.behavior)}/100, stabilność ${Math.round(areaScores.trust)}/100, napięcie ${tensionScore}/100.`,
-      en: `Trust Index: ${score}/100. Initiative ${Math.round(areaScores.communication)}/100, involvement ${Math.round(areaScores.emotional)}/100, closeness ${Math.round(areaScores.behavior)}/100, stability ${Math.round(areaScores.trust)}/100, tension ${tensionScore}/100.`,
-      de: `Trust Index: ${score}/100. Initiative ${Math.round(areaScores.communication)}/100, Engagement ${Math.round(areaScores.emotional)}/100, Nähe ${Math.round(areaScores.behavior)}/100, Stabilität ${Math.round(areaScores.trust)}/100, Spannung ${tensionScore}/100.`,
-      es: `Trust Index: ${score}/100. Iniciativa ${Math.round(areaScores.communication)}/100, compromiso ${Math.round(areaScores.emotional)}/100, cercanía ${Math.round(areaScores.behavior)}/100, estabilidad ${Math.round(areaScores.trust)}/100, tensión ${tensionScore}/100.`,
-      pt: `Trust Index: ${score}/100. Iniciativa ${Math.round(areaScores.communication)}/100, envolvimento ${Math.round(areaScores.emotional)}/100, proximidade ${Math.round(areaScores.behavior)}/100, estabilidade ${Math.round(areaScores.trust)}/100, tensão ${tensionScore}/100.`,
+      pl: `Trust Index: ${score}/100. Inicjatywa ${Math.round(areaScores.communication)}/100, zaangażowanie ${Math.round(areaScores.behavior)}/100, bliskość ${Math.round(areaScores.emotional)}/100, stabilność ${Math.round(areaScores.trust)}/100, napięcie ${tensionScore}/100.`,
+      en: `Trust Index: ${score}/100. Initiative ${Math.round(areaScores.communication)}/100, engagement ${Math.round(areaScores.behavior)}/100, closeness ${Math.round(areaScores.emotional)}/100, stability ${Math.round(areaScores.trust)}/100, tension ${tensionScore}/100.`,
+      de: `Trust Index: ${score}/100. Initiative ${Math.round(areaScores.communication)}/100, Engagement ${Math.round(areaScores.behavior)}/100, Nähe ${Math.round(areaScores.emotional)}/100, Stabilität ${Math.round(areaScores.trust)}/100, Spannung ${tensionScore}/100.`,
+      es: `Trust Index: ${score}/100. Iniciativa ${Math.round(areaScores.communication)}/100, compromiso ${Math.round(areaScores.behavior)}/100, cercanía ${Math.round(areaScores.emotional)}/100, estabilidad ${Math.round(areaScores.trust)}/100, tensión ${tensionScore}/100.`,
+      pt: `Trust Index: ${score}/100. Iniciativa ${Math.round(areaScores.communication)}/100, envolvimento ${Math.round(areaScores.behavior)}/100, proximidade ${Math.round(areaScores.emotional)}/100, estabilidade ${Math.round(areaScores.trust)}/100, tensão ${tensionScore}/100.`,
     };
     return { heading: heading[L] || heading.en, body: body[L] || body.en };
   }
