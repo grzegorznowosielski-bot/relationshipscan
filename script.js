@@ -7920,7 +7920,7 @@
     return map[getPremiumRewriteLocale(locale)] || map.en;
   }
 
-  function buildOperationalDimension(locale, key, areaScores, trajectory) {
+  function buildOperationalDimensionRewrite(locale, key, areaScores, trajectory) {
     const L = getPremiumRewriteLocale(locale);
     const sectionMap = { communication: "initiative", emotional: "engagement", stability: "closeness", clarity: "stability" };
     const areaKey = sectionMap[key] || "initiative";
@@ -7982,7 +7982,7 @@
     return { body: `${d[range]}\n\nAktualny wynik obszaru: ${Math.round(score)}/100.`, check: d.i };
   }
 
-  function buildNoChangeScenario(locale, areaScores, trajectory, alertCount) {
+  function buildNoChangeScenarioRewrite(locale, areaScores, trajectory, alertCount) {
     const L = getPremiumRewriteLocale(locale);
     if (L === "pl") {
       return "Jesli nic sie nie zmieni, jakosc relacji bedzie spadac stopniowo. Najpierw pojawi sie wiecej odkladanych tematow i mniej domkniec, potem zmeczenie i dystans. Najczesciej nie ma jednego momentu kryzysu - sa powtarzajace sie rzeczy, na ktore nikt nie reaguje.";
@@ -7999,7 +7999,7 @@
     return "If nothing changes, relationship quality will decline gradually. First, more topics stay unresolved and fewer things get closed. Then fatigue and distance increase. Most often there is no single crisis moment - there is repeated pattern with no response.";
   }
 
-  function buildPatternAndMeaning(locale, areaScores, trajectory, alertCount) {
+  function buildPatternAndMeaningRewrite(locale, areaScores, trajectory, alertCount) {
     const L = getPremiumRewriteLocale(locale);
     if (L === "pl") {
       return {
@@ -8031,7 +8031,7 @@
     };
   }
 
-  function getPremiumReportNarrative(locale) {
+  function getPremiumReportNarrativeRewrite(locale) {
     const L = getPremiumRewriteLocale(locale);
     const opening = {
       pl: "Interpretacja skrocona: to wynik aktualnego ukladu relacji, a nie ocena calej historii.",
@@ -8050,7 +8050,7 @@
     };
   }
 
-  function getOutcomeActionsContent(locale) {
+  function getOutcomeActionsContentRewrite(locale) {
     const L = getPremiumRewriteLocale(locale);
     const map = {
       pl: {
