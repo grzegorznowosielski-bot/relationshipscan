@@ -766,9 +766,9 @@
   }
 
   const PAYMENT_LINKS = {
-    pl: "https://buy.stripe.com/eVqaEZ2S7beFc0iaar4ow03",
-    en: "https://buy.stripe.com/fZubJ3dwL0A1ggybev4ow05",
-    default: "https://buy.stripe.com/4gM8wR3Wb3MdaWeeqH4ow04",
+    pl: "https://buy.stripe.com/14AcN70JZ82t3tM6Yf4ow06",
+    en: "https://buy.stripe.com/28E9AV9gv3Mde8qeqH4ow08",
+    default: "https://buy.stripe.com/14AdRb2S782t6FYbev4ow07",
   };
 
   function getPaymentLink() {
@@ -805,11 +805,11 @@
   function getPriceDisplayCompact(locale) {
     switch (getBillingCurrency(locale)) {
       case "pln":
-        return "39 zł";
+        return "19,00 zł";
       case "usd":
-        return "$7.99";
+        return "$5.99";
       default:
-        return "€6.99";
+        return "4,99 €";
     }
   }
 

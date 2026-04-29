@@ -2,9 +2,9 @@ RelationshipScan — ceny i linki Stripe (warstwa strony)
 =======================================================
 
 MAPOWANIE (script.js):
-  - pl  → 39 zł  + STRIPE_LINK_PLN
-  - en, in → $9.99  + STRIPE_LINK_USD
-  - de, es, pt → €9.99  + STRIPE_LINK_EUR
+  - pl  → 19,00 zł  + STRIPE_LINK_PLN
+  - en, in → $5.99  + STRIPE_LINK_USD
+  - de, es, pt → 4,99 €  + STRIPE_LINK_EUR
 
 GDZIE WKLEIĆ LINKI (script.js, ok. linia po normalizeLocale):
   const STRIPE_LINK_PLN = "https://buy.stripe.com/...";
