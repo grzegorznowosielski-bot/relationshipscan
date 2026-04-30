@@ -2000,10 +2000,12 @@
         "Tension remains instead of fading",
       ],
       "premiumEyebrow": "Full report",
-      "premiumTitle": "What you see here is only part of the picture",
+      "premiumTitle": "This is only part of your result.",
       "premiumSubhead":
-        "The full report shows:\n– what keeps repeating\n– where the relationship is losing balance\n– what may happen if nothing changes",
-      "premiumIntro": "On this screen you see a short summary, not the full narrative.",
+        "Our system detected a pattern that often leads to:\n– emotional distance\n– one-sided effort\n– recurring tension",
+      "premiumIntro":
+        "The full analysis shows:\n– what exactly is breaking down\n– who is investing more / less\n– whether the situation is stabilizing or getting worse\n– what happens next if nothing changes",
+      "microTension": "If you’re thinking about this, it’s usually not random.",
       "lockedTitles": [
         "Where conversations break",
         "Where distance is growing",
@@ -2032,7 +2034,7 @@
         "What to base your decision on without guessing"
       ],
       "priceSuffix": "one-time payment",
-      "ctaButton": "Unlock full report",
+      "ctaButton": "Unlock full analysis",
       "ctaSecondary": "See what drives this score",
       "unlockedTitle": "Full report unlocked",
       "unlockedBody": "You now have full access. Read the whole report.",
@@ -2069,8 +2071,10 @@
       "premiumEyebrow": "Pełny raport",
       "premiumTitle": "To, co widzisz, to tylko część",
       "premiumSubhead":
-        "Pełny raport pokaże dokładnie:\n– co się powtarza\n– gdzie relacja się rozjeżdża\n– co się stanie, jeśli nic się nie zmieni",
-      "premiumIntro": "Na tym ekranie widzisz skrót, a nie pełną narrację.",
+        "System wykrył schemat, który często prowadzi do:\n– narastającego dystansu\n– nierównego zaangażowania\n– powtarzających się napięć",
+      "premiumIntro":
+        "Pełna analiza pokaże:\n– co dokładnie nie działa\n– kto wnosi więcej / mniej\n– czy sytuacja się pogłębia\n– co się stanie dalej, jeśli nic się nie zmieni",
+      "microTension": "Jeśli się nad tym zastanawiasz, to zwykle nie jest przypadek.",
       "lockedTitles": [
         "W którym momencie rozmowa się urywa",
         "Po czym dokładnie widać oddalenie",
@@ -2099,7 +2103,7 @@
         "Na czym oprzeć decyzję bez zgadywania"
       ],
       "priceSuffix": "jednorazowa płatność",
-      "ctaButton": "Odblokuj pełny raport",
+      "ctaButton": "Zobacz pełną analizę",
       "ctaSecondary": "Zobacz, co napędza wynik",
       "unlockedTitle": "Pełny raport odblokowany",
       "unlockedBody": "Masz pełny dostęp. Przeczytaj cały raport.",
@@ -2134,10 +2138,12 @@
         "Spannung bleibt bestehen, statt abzuklingen",
       ],
       "premiumEyebrow": "Vollständiger Bericht",
-      "premiumTitle": "Was du hier siehst, ist nur ein Teil des Bildes",
+      "premiumTitle": "Das ist nur ein Teil deines Ergebnisses.",
       "premiumSubhead":
-        "Der vollständige Bericht zeigt:\n– was sich wiederholt\n– wo die Beziehung aus dem Gleichgewicht gerät\n– was passieren kann, wenn sich nichts ändert",
-      "premiumIntro": "Hier siehst du eine komprimierte Einordnung, nicht die vollständige Geschichte.",
+        "Unser System erkennt ein Muster, das oft zu Folgendem führt:\n– mehr emotionaler Distanz\n– einseitigem Einsatz\n– wiederkehrender Spannung",
+      "premiumIntro":
+        "Die vollständige Analyse zeigt:\n– was genau gerade bricht\n– wer mehr / weniger investiert\n– ob sich die Lage stabilisiert oder verschärft\n– was als Nächstes passiert, wenn nichts geändert wird",
+      "microTension": "Wenn du darüber nachdenkst, ist es meist kein Zufall.",
       "lockedTitles": [
         "Wo Gespräche abbrechen",
         "Wo Abstand wächst",
@@ -2166,7 +2172,7 @@
         "Worauf du eine Entscheidung ohne Raten stützt"
       ],
       "priceSuffix": "einmalige Zahlung",
-      "ctaButton": "Vollständigen Bericht freischalten",
+      "ctaButton": "Vollständige Analyse freischalten",
       "ctaSecondary": "Sieh, was den Wert treibt",
       "unlockedTitle": "Vollständiger Bericht freigeschaltet",
       "unlockedBody": "Du hast jetzt vollen Zugriff. Lies den ganzen Bericht.",
@@ -2201,10 +2207,12 @@
         "la tensión permanece en lugar de disminuir",
       ],
       "premiumEyebrow": "Informe completo",
-      "premiumTitle": "Lo que ves aquí es solo una parte",
+      "premiumTitle": "Esto es solo una parte de tu resultado.",
       "premiumSubhead":
-        "El informe completo muestra:\n– qué se repite\n– dónde la relación pierde equilibrio\n– qué puede pasar si nada cambia",
-      "premiumIntro": "En esta pantalla ves un resumen, no el relato completo.",
+        "El sistema detectó un patrón que suele llevar a:\n– distancia emocional\n– esfuerzo desigual\n– tensión repetida",
+      "premiumIntro":
+        "El análisis completo muestra:\n– qué se está rompiendo exactamente\n– quién está aportando más / menos\n– si la situación se estabiliza o empeora\n– qué puede pasar después si no cambia nada",
+      "microTension": "Si lo estás pensando, normalmente no es casualidad.",
       "lockedTitles": [
         "Dónde se cortan vuestras conversaciones",
         "Dónde crece la distancia",
@@ -2233,7 +2241,7 @@
         "En qué basar una decisión sin adivinar"
       ],
       "priceSuffix": "pago único",
-      "ctaButton": "Desbloquear informe completo",
+      "ctaButton": "Desbloquear análisis completo",
       "ctaSecondary": "Ver qué mueve el resultado",
       "unlockedTitle": "Informe completo desbloqueado",
       "unlockedBody": "Ya tienes acceso total. Lee todo el informe.",
@@ -2268,10 +2276,12 @@
         "a tensão permanece em vez de diminuir",
       ],
       "premiumEyebrow": "Relatório completo",
-      "premiumTitle": "O que vês aqui é apenas uma parte",
+      "premiumTitle": "Isto é apenas uma parte do teu resultado.",
       "premiumSubhead":
-        "O relatório completo mostra:\n– o que se repete\n– onde a relação perde equilíbrio\n– o que pode acontecer se nada mudar",
-      "premiumIntro": "Neste ecrã vês um resumo, não a narrativa completa.",
+        "O sistema identificou um padrão que muitas vezes leva a:\n– distância emocional\n– esforço desequilibrado\n– tensão recorrente",
+      "premiumIntro":
+        "A análise completa mostra:\n– o que está realmente a falhar\n– quem está a investir mais / menos\n– se a situação está a estabilizar ou a piorar\n– o que pode acontecer a seguir se nada mudar",
+      "microTension": "Se estás a pensar nisso, normalmente não é por acaso.",
       "lockedTitles": [
         "Onde as conversas quebram",
         "Onde a distância cresce",
@@ -2300,7 +2310,7 @@
         "Em que basear uma decisão sem adivinhar"
       ],
       "priceSuffix": "pagamento único",
-      "ctaButton": "Desbloquear relatório completo",
+      "ctaButton": "Desbloquear análise completa",
       "ctaSecondary": "Ver o que move o resultado",
       "unlockedTitle": "Relatório completo desbloqueado",
       "unlockedBody": "Agora tens acesso total. Lê o relatório inteiro.",
@@ -2857,15 +2867,42 @@
   function renderPrePaywallDescription(locale, band) {
     const lang = ["pl", "en", "de", "es", "pt"].includes(locale) ? locale : "en";
     const content = (PREPAYWALL_SECTION_CONTENT[lang] && PREPAYWALL_SECTION_CONTENT[lang][band]) || PREPAYWALL_SECTION_CONTENT.en.napiecia;
-    let html = `<h3>${escapeHtml(content.title)}</h3><p>${escapeHtml(content.subtitle)}</p>`;
-    content.sections.forEach((section) => {
-      html += `<h4>${escapeHtml(section.heading)}</h4>`;
-      if (section.paragraph) html += `<p>${escapeHtml(section.paragraph)}</p>`;
-      if (section.list && section.list.length) {
-        html += `<ul>${section.list.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+    const compactFallbacks = {
+      pl: [
+        "Kontakt jest nierówny.",
+        "Jedna osoba częściej zaczyna kontakt.",
+        "Po napięciu sprawy nie są domykane."
+      ],
+      en: [
+        "Contact is uneven.",
+        "One person starts contact more often.",
+        "Issues are left unresolved after tension."
+      ],
+      de: [
+        "Der Kontakt ist ungleichmäßig.",
+        "Eine Person beginnt den Kontakt häufiger.",
+        "Nach Spannung bleiben Themen offen."
+      ],
+      es: [
+        "El contacto es irregular.",
+        "Una persona inicia el contacto con más frecuencia.",
+        "Tras la tensión, los asuntos quedan sin cerrar."
+      ],
+      pt: [
+        "O contacto é irregular.",
+        "Uma pessoa inicia o contacto com mais frequência.",
+        "Depois da tensão, os assuntos ficam por resolver."
+      ]
+    };
+    let bullets = [];
+    for (const section of content.sections || []) {
+      if (Array.isArray(section.list) && section.list.length) {
+        bullets = section.list.slice(0, 3);
+        break;
       }
-    });
-    return html;
+    }
+    if (!bullets.length) bullets = compactFallbacks[lang] || compactFallbacks.en;
+    return `<h3>${escapeHtml(content.title)}</h3><ul>${bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
   }
 
   /** Raport pogłębiony: podsumowanie i profil (wg pasma wyniku) */
@@ -5742,6 +5779,7 @@
     setText("premium-subhead", ui.premiumSubhead);
     setText("premium-intro-a", ui.premiumIntro);
     setText("paywall-emotional-hook", ui.paywallHook);
+    setText("premium-micro-tension", ui.microTension || "");
     setText("paywall-score-label", ui.scoreLabel);
     setText("locked-title-1", ui.lockedTitles[0]);
     setText("locked-title-2", ui.lockedTitles[1]);
