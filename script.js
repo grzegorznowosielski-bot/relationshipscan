@@ -604,7 +604,7 @@
         5: "Yes",
       },
       progressHints: {
-        early: "This takes less than a minute",
+        early: "Take your time with these questions",
         mid: "You are already halfway through",
         late: "Just a moment — you are finishing",
       },
@@ -628,7 +628,7 @@
         5: "Zdecydowanie tak",
       },
       progressHints: {
-        early: "Zajmie to mniej niż minutę",
+        early: "Odpowiadaj we własnym tempie",
         mid: "Już połowa za Tobą",
         late: "Jeszcze chwila — kończysz",
       },
@@ -724,7 +724,7 @@
         5: "Yes",
       },
       progressHints: {
-        early: "This takes less than a minute",
+        early: "Take your time with these questions",
         mid: "You are already halfway through",
         late: "Just a moment — you are finishing",
       },
@@ -775,21 +775,21 @@
     const path = window.location.pathname.toLowerCase();
     const lang = path.split("/")[1];
     if (lang === "pl") return PAYMENT_LINKS.pl;
-    if (lang === "en") return PAYMENT_LINKS.en;
+    if (lang === "en" || lang === "in") return PAYMENT_LINKS.en;
     return PAYMENT_LINKS.default;
   }
 
   function getBillingCurrency(locale) {
     const L = normalizeLocale(locale);
     if (L === "pl") return "pln";
-    if (L === "en") return "usd";
+    if (L === "en" || L === "in") return "usd";
     return "eur";
   }
 
   function getStripeLinkForLocale(locale) {
     const normalized = normalizeLocale(locale);
     if (normalized === "pl") return PAYMENT_LINKS.pl;
-    if (normalized === "en") return PAYMENT_LINKS.en;
+    if (normalized === "en" || normalized === "in") return PAYMENT_LINKS.en;
     return PAYMENT_LINKS.default;
   }
 

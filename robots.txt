@@ -1,7 +1,11 @@
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
 User-agent: *
 Allow: /
 
-# Keep conversion flow pages out of index via meta robots (already in HTML).
-# robots.txt remains open so bots can crawl and discover canonical/hreflang.
-
+# Individual test results and paid reports use noindex meta tags.
 Sitemap: https://relationshipscan.app/sitemap.xml
